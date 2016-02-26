@@ -13,3 +13,11 @@ hs_err_pid*
 
 *.DS_Store
 *.m~
+
+
+#### ECLIPSE JAVA IGNORE ####
+.metadata
+
+
+# Code Recommenders
+.recommenders/
