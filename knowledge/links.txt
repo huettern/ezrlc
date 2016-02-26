@@ -1,0 +1,3 @@
+Touchstone format explained
+
+http://cp.literature.agilent.com/litweb/pdf/ads2004a/cktsim/ck04a8.html

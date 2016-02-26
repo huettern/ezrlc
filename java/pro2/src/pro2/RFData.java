@@ -66,10 +66,23 @@ public class RFData {
 		    		for(int i=0; i<data.length; i++) {
 		    			// first entry is unit of freq
 		    			if(++i==1){
-		    				if(data[i].contains("HZ"))
+		    				if(data[i].equalsIgnoreCase("HZ"))
 		    					this.freqMultiplier = 1;
-		    				if(data[i].contains("KHZ"))
+		    				if(data[i].equalsIgnoreCase("KHZ"))
 		    					this.freqMultiplier = 1000;
+		    				if(data[i].equalsIgnoreCase("MHZ"))
+		    					this.freqMultiplier = 1000000;
+		    				if(data[i].equalsIgnoreCase("GHZ"))
+		    					this.freqMultiplier = 1000000000;
+		    			}
+		    			// next entry is 
+		    			else if(++i==2) {
+		    				if(data[i].equalsIgnoreCase("S"))
+		    					this.freqMultiplier = 1;
+		    				if(data[i].equalsIgnoreCase("Y"))
+		    					this.freqMultiplier = 1000;
+		    				if(data[i].equalsIgnoreCase("Z"))
+		    					this.freqMultiplier = 1000000;
 		    			}
 		    		}
 		    		
