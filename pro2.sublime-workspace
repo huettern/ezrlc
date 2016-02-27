@@ -1,0 +1,301 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"show",
+				"showid"
+			],
+			[
+				"ar",
+				"arguments"
+			],
+			[
+				"pas",
+				"parseonce"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 284,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "knowledge/links.txt",
+			"settings":
+			{
+				"buffer_size": 100,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 173,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/noah/git/pro2/sample_files/bsp14.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp13.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp12.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp11.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp6.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp5.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp4.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp3.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp2.s1p",
+		"/Users/noah/git/pro2/sample_files/bsp1.s1p",
+		"/Users/noah/git/pro2/.travis.yml",
+		"/Users/noah/Desktop/2015_04_24_IPDoku/[10] Software/Software_3/SpectrumAnalyzer/Makefile",
+		"/Users/noah/ownCloud/Server/transfer_notes.txt",
+		"/Volumes/e_18_data11$/E1861_Unterrichte_EIT/E1861_2Ea/pro2E/Beispiele von Datenfiles/bsp3.s1p",
+		"/Volumes/e_18_data11$/E1861_Unterrichte_EIT/E1861_2Ea/pro2E/Beispiele von Datenfiles/bsp12.s1p",
+		"/Volumes/fhnw/wifi/$ sudo rmmod wl",
+		"/Volumes/Home/noah/showmanager/showmanager.py",
+		"/Users/noah/ownCloud/Web/lungta/ressources/klangmassage/bildlinks.txt",
+		"/Users/noah/ownCloud/Modellbau/qav250/cleanflight_backup_1.21.2016.14.55.txt",
+		"/Users/noah/Documents/tmp/wp-config.php",
+		"/Users/noah/Desktop/2015_04_24_IPDoku.zip",
+		"/Users/noah/Downloads/The.Blacklist.S03E10.HDTV.KILLERS.en.srt",
+		"/Users/noah/ownCloud/Linux/chip/eduroam-linux-Fachhochschule_Nordwestschweiz.sh",
+		"/Volumes/C/Windows/System32/drivers/etc/hosts"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"UUID_SUB",
+			"matches",
+			"upload",
+			"pid",
+			"T",
+			",",
+			"motor",
+			"old",
+			"mount",
+			"bigdow",
+			"d76",
+			"869",
+			"f73",
+			"9e0",
+			" ",
+			"\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			",\n"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": ".gitignore",
+					"settings":
+					{
+						"buffer_size": 284,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								284,
+								284
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "knowledge/links.txt",
+					"settings":
+					{
+						"buffer_size": 100,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								100,
+								100
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "README.md",
+					"settings":
+					{
+						"buffer_size": 173,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								173,
+								173
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
