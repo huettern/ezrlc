@@ -2,7 +2,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   echo -e "Starting to update gh-pages\n"
 
   #copy data we're interested in to other place
-  cp -R coverage $HOME/coverage
+  cp -R /home/travis/build/noah95/pro2/java/pro2/target $HOME/target
 
   #go to home and setup git
   cd $HOME
@@ -14,12 +14,12 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
 
   #go into diractory and copy data we're interested in to that directory
   cd gh-pages
-  cp -Rf $HOME/coverage/* .
+  cp -Rf $HOME/target/* .
 
   #add, commit and push files
   git add -f .
   git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
 
-  echo -e "Done magic with coverage\n"
+  echo -e "Done magic with target\n"
 fi
