@@ -2,3 +2,10 @@ language: java
 script: mvn install -f java/pro2/pom.xml
 jdk:
   - oraclejdk8
+  - oraclejdk7
+  - openjdk6
+
+notifications:
+	email:
+		on_success: never # default: change
+		on_failure: change # default: always
