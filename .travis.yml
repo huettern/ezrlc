@@ -1,6 +1,8 @@
 language: java
 sudo: true
 script: mvn install -f java/pro2/pom.xml
+before_script:
+- chmod +x update-gh-pages.sh
 jdk:
 - oraclejdk8
 # - oraclejdk7
