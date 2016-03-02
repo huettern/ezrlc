@@ -20,6 +20,7 @@ Build Path -> Libraries
 6. Expand the library entrty, double click Source attachement, and add the external folder src from the extracted archive
 7. Repeat for JFreeChart
 
-## Installing ant
+## Installing ant and maven
 ### On Mac
 `brew install ant`
+`brew install maven`
