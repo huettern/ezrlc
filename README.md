@@ -1,5 +1,12 @@
 # pro2 [![Build Status](https://travis-ci.org/noah95/pro2.svg?branch=master)](https://travis-ci.org/noah95/pro2)
 
+## Build
+```
+mvn -f java/pro2/pom.xml clean compile assembly:single
+cp java/pro2/target/*.jar .
+```
+
+
 ## Installing maven for eclipse
 
 Help -> Install new Software -> Work with..
