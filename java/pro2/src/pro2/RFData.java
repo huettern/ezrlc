@@ -4,9 +4,11 @@
 package pro2;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @author noah
@@ -17,8 +19,10 @@ public class RFData {
 	/**
 	 * 
 	 */
+	private UUID uid;
+	
 	private String fname = "";
-
+	
 	private long dataEntrys = 0;
 	private long commentEntrys = 0;
 	private long instructionEntrys = 0;
@@ -29,7 +33,18 @@ public class RFData {
 		// TODO Auto-generated constructor stub
 		this.fname = fname;
 		System.out.println("Filename " +this.fname);
-		
+		this.uid = UUID.randomUUID();
+	}
+	
+	public RFData(File file) {
+		// TODO Auto-generated constructor stub
+		this.fname = file.getAbsolutePath();
+		System.out.println("Filename " +this.fname);
+		this.uid = UUID.randomUUID();
+	}
+
+	public UUID getUID() {
+		return this.uid;
 	}
 	
 	public void parse () throws IOException {
@@ -100,6 +115,11 @@ public class RFData {
 		
 	    System.out.println("lines=" +lineno +" comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntrys);
 		System.out.println("Freq multiplier="+this.freqMultiplier);
+	}
+
+	public String getFileName() {
+		// TODO Auto-generated method stub
+		return this.fname;
 	}
 
 }
