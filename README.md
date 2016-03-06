@@ -1,4 +1,7 @@
-# pro2 [![Build Status](https://travis-ci.org/noah95/pro2.svg?branch=master)](https://travis-ci.org/noah95/pro2)
+# pro2 
+Circle-CI Build: [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/master.svg?style=svg)](https://circleci.com/gh/noah95/pro2/tree/master)
+
+------------
 
 ## Build
 ```
