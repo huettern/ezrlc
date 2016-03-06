@@ -5,7 +5,7 @@ machine:
 ## Customize dependencies
 dependencies:
   pre:
-  - mvn dependency:resolve
+  - mvn -f java/pro2/pom.xml dependency:resolve
 
   ## Customize test commands
 test:
