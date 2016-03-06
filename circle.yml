@@ -1,0 +1,14 @@
+machine:
+  java:
+    version: openjdk7
+
+## Customize dependencies
+dependencies:
+  pre:
+  - mvn dependency:resolve
+
+  ## Customize test commands
+test:
+  override: 
+  - mvn install -f java/pro2/pom.xml
+  - mvn -f java/pro2/pom.xml clean compile assembly:single
