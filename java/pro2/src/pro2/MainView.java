@@ -41,14 +41,12 @@ import javax.swing.SwingConstants;
 import javax.swing.JList;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.border.TitledBorder;
 
 public class MainView extends JFrame implements ActionListener {
 
 	private Controller controller;
-	private JButton btnLoadDataFile;
 	private JFileChooser openFileChooser;
-	
-	private JTree fileTree;
 	private DefaultMutableTreeNode fileTreeTop = new DefaultMutableTreeNode("Input Files");
 	
 	// Storing the Files in a MenuItem List and a second one containing the UIDs
@@ -99,57 +97,62 @@ public class MainView extends JFrame implements ActionListener {
 		splitPane.setLeftComponent(navPanel);
 		GridBagLayout gbl_navPanel = new GridBagLayout();
 		gbl_navPanel.columnWidths = new int[]{79, 0};
-		gbl_navPanel.rowHeights = new int[]{0, 76, 0, 0, 0, 0};
+		gbl_navPanel.rowHeights = new int[] {0, 0};
 		gbl_navPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_navPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_navPanel.rowWeights = new double[]{1.0, 1.0};
 		navPanel.setLayout(gbl_navPanel);
 		
-		JLabel lblInputFiles = new JLabel("Input Files");
-		GridBagConstraints gbc_lblInputFiles = new GridBagConstraints();
-		gbc_lblInputFiles.insets = new Insets(10, 5, 5, 5);
-		gbc_lblInputFiles.gridx = 0;
-		gbc_lblInputFiles.gridy = 0;
-		navPanel.add(lblInputFiles, gbc_lblInputFiles);
+		JPanel pnlInFile = new JPanel();
+		pnlInFile.setMaximumSize(new Dimension(0, 0));
+		pnlInFile.setPreferredSize(new Dimension(0, 0));
+		pnlInFile.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Input File", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_pnlInFile = new GridBagConstraints();
+		gbc_pnlInFile.fill = GridBagConstraints.BOTH;
+		gbc_pnlInFile.insets = new Insets(0, 0, 5, 0);
+		gbc_pnlInFile.gridx = 0;
+		gbc_pnlInFile.gridy = 0;
+		navPanel.add(pnlInFile, gbc_pnlInFile);
+		GridBagLayout gbl_pnlInFile = new GridBagLayout();
+		gbl_pnlInFile.columnWidths = new int[]{0, 0};
+		gbl_pnlInFile.rowHeights = new int[]{0, 0, 0};
+		gbl_pnlInFile.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_pnlInFile.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		pnlInFile.setLayout(gbl_pnlInFile);
 		
-		fileTree = new JTree(fileTreeTop);
-		fileTree.setPreferredSize(new Dimension(79, 200));
-		fileTree.setMaximumSize(new Dimension(79, 79));
-		fileTree.setBorder(new LineBorder(new Color(0, 0, 0)));
-		GridBagConstraints gbc_fileTree = new GridBagConstraints();
-		gbc_fileTree.fill = GridBagConstraints.HORIZONTAL;
-		gbc_fileTree.insets = new Insets(5, 5, 5, 0);
-		gbc_fileTree.weightx = 1.0;
-		gbc_fileTree.anchor = GridBagConstraints.NORTHWEST;
-		gbc_fileTree.gridx = 0;
-		gbc_fileTree.gridy = 1;
-		navPanel.add(fileTree, gbc_fileTree);
-		fileTree.setRootVisible(false); 
+		JLabel lblNoInputFile = new JLabel("No Input File");
+		lblNoInputFile.setBackground(Color.LIGHT_GRAY);
+		lblNoInputFile.setPreferredSize(new Dimension(90, 16));
+		GridBagConstraints gbc_lblNoInputFile = new GridBagConstraints();
+		gbc_lblNoInputFile.weightx = 1.0;
+		gbc_lblNoInputFile.insets = new Insets(5, 0, 5, 0);
+		gbc_lblNoInputFile.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblNoInputFile.gridx = 0;
+		gbc_lblNoInputFile.gridy = 0;
+		pnlInFile.add(lblNoInputFile, gbc_lblNoInputFile);
 		
-		btnLoadDataFile = new JButton("Load Data File");
-		btnLoadDataFile.addActionListener(this);
-		GridBagConstraints gbc_btnLoadDataFile = new GridBagConstraints();
-		gbc_btnLoadDataFile.insets = new Insets(0, 5, 5, 0);
-		gbc_btnLoadDataFile.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnLoadDataFile.weightx = 1.0;
-		gbc_btnLoadDataFile.gridx = 0;
-		gbc_btnLoadDataFile.gridy = 2;
-		navPanel.add(btnLoadDataFile, gbc_btnLoadDataFile);
+		JButton btnLoadFile = new JButton("Load File..");
+		GridBagConstraints gbc_btnLoadFile = new GridBagConstraints();
+		gbc_btnLoadFile.insets = new Insets(0, 0, 5, 0);
+		gbc_btnLoadFile.weightx = 1.0;
+		gbc_btnLoadFile.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnLoadFile.gridx = 0;
+		gbc_btnLoadFile.gridy = 1;
+		pnlInFile.add(btnLoadFile, gbc_btnLoadFile);
 		
-		JLabel lblModels = new JLabel("Models");
-		GridBagConstraints gbc_lblModels = new GridBagConstraints();
-		gbc_lblModels.insets = new Insets(10, 0, 5, 0);
-		gbc_lblModels.gridx = 0;
-		gbc_lblModels.gridy = 3;
-		navPanel.add(lblModels, gbc_lblModels);
-		
-		JList modelList = new JList();
-		modelList.setBorder(new LineBorder(new Color(0, 0, 0)));
-		GridBagConstraints gbc_modelList = new GridBagConstraints();
-		gbc_modelList.insets = new Insets(0, 5, 0, 0);
-		gbc_modelList.fill = GridBagConstraints.BOTH;
-		gbc_modelList.gridx = 0;
-		gbc_modelList.gridy = 4;
-		navPanel.add(modelList, gbc_modelList);
+				
+		JPanel pnlModel = new JPanel();
+		pnlModel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Models", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_pnlModel = new GridBagConstraints();
+		gbc_pnlModel.fill = GridBagConstraints.BOTH;
+		gbc_pnlModel.gridx = 0;
+		gbc_pnlModel.gridy = 1;
+		navPanel.add(pnlModel, gbc_pnlModel);
+		GridBagLayout gbl_pnlModel = new GridBagLayout();
+		gbl_pnlModel.columnWidths = new int[]{0};
+		gbl_pnlModel.rowHeights = new int[]{0};
+		gbl_pnlModel.columnWeights = new double[]{Double.MIN_VALUE};
+		gbl_pnlModel.rowWeights = new double[]{Double.MIN_VALUE};
+		pnlModel.setLayout(gbl_pnlModel);
 		
 		JPanel workPanel = new JPanel();
 		workPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -192,8 +195,8 @@ public class MainView extends JFrame implements ActionListener {
 		
 		DefaultMutableTreeNode item = new DefaultMutableTreeNode(name);
 		this.fileTreeTop.add(item);
-		DefaultTreeModel model = (DefaultTreeModel)fileTree.getModel();
-		model.reload();
+	//	DefaultTreeModel model = (DefaultTreeModel)fileTree.getModel();
+	//	model.reload();
 
 		this.fileTreeItemsUID.add(uid);
 	}
@@ -208,18 +211,5 @@ public class MainView extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// check source
-		if(e.getSource() == btnLoadDataFile) {
-			System.out.println("btnLoadDataFile");
-			openFileChooser = new JFileChooser();
-			int returnVal = openFileChooser.showOpenDialog(this);
-
-	        if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            File file = openFileChooser.getSelectedFile();
-	            this.controller.loadFile(file);
-	        } else {
-	            System.out.println("Open command cancelled by user.");
-	        }	
-		}
 	}
 }
