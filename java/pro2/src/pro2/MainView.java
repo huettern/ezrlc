@@ -92,11 +92,11 @@ public class MainView extends JFrame implements ActionListener {
 		contentPanel.add(splitPane);
 		
 		JPanel navPanel = new JPanel();
-		navPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		navPanel.setBorder(null);
 		navPanel.setMinimumSize(new Dimension(200, 200));
 		splitPane.setLeftComponent(navPanel);
 		GridBagLayout gbl_navPanel = new GridBagLayout();
-		gbl_navPanel.columnWidths = new int[]{79, 0};
+		gbl_navPanel.columnWidths = new int[] {0, 0};
 		gbl_navPanel.rowHeights = new int[] {0, 0};
 		gbl_navPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_navPanel.rowWeights = new double[]{1.0, 1.0};
@@ -107,21 +107,21 @@ public class MainView extends JFrame implements ActionListener {
 		pnlInFile.setPreferredSize(new Dimension(0, 0));
 		pnlInFile.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Input File", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlInFile = new GridBagConstraints();
+		gbc_pnlInFile.anchor = GridBagConstraints.NORTH;
 		gbc_pnlInFile.fill = GridBagConstraints.BOTH;
-		gbc_pnlInFile.insets = new Insets(0, 0, 5, 0);
+		gbc_pnlInFile.insets = new Insets(5, 0, 5, 0);
 		gbc_pnlInFile.gridx = 0;
 		gbc_pnlInFile.gridy = 0;
 		navPanel.add(pnlInFile, gbc_pnlInFile);
 		GridBagLayout gbl_pnlInFile = new GridBagLayout();
-		gbl_pnlInFile.columnWidths = new int[]{0, 0};
-		gbl_pnlInFile.rowHeights = new int[]{0, 0, 0};
-		gbl_pnlInFile.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_pnlInFile.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlInFile.columnWidths = new int[]{0};
+		gbl_pnlInFile.rowHeights = new int[]{0, 0};
+		gbl_pnlInFile.columnWeights = new double[]{0.0};
+		gbl_pnlInFile.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		pnlInFile.setLayout(gbl_pnlInFile);
 		
 		JLabel lblNoInputFile = new JLabel("No Input File");
 		lblNoInputFile.setBackground(Color.LIGHT_GRAY);
-		lblNoInputFile.setPreferredSize(new Dimension(90, 16));
 		GridBagConstraints gbc_lblNoInputFile = new GridBagConstraints();
 		gbc_lblNoInputFile.weightx = 1.0;
 		gbc_lblNoInputFile.insets = new Insets(5, 0, 5, 0);
@@ -143,16 +143,34 @@ public class MainView extends JFrame implements ActionListener {
 		JPanel pnlModel = new JPanel();
 		pnlModel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Models", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlModel = new GridBagConstraints();
+		gbc_pnlModel.anchor = GridBagConstraints.NORTH;
+		gbc_pnlModel.insets = new Insets(0, 0, 5, 0);
 		gbc_pnlModel.fill = GridBagConstraints.BOTH;
 		gbc_pnlModel.gridx = 0;
 		gbc_pnlModel.gridy = 1;
 		navPanel.add(pnlModel, gbc_pnlModel);
 		GridBagLayout gbl_pnlModel = new GridBagLayout();
-		gbl_pnlModel.columnWidths = new int[]{0};
-		gbl_pnlModel.rowHeights = new int[]{0};
-		gbl_pnlModel.columnWeights = new double[]{Double.MIN_VALUE};
-		gbl_pnlModel.rowWeights = new double[]{Double.MIN_VALUE};
+		gbl_pnlModel.columnWidths = new int[] {0};
+		gbl_pnlModel.rowHeights = new int[]{0, 0};
+		gbl_pnlModel.columnWeights = new double[]{1.0};
+		gbl_pnlModel.rowWeights = new double[]{1.0, 0.0};
 		pnlModel.setLayout(gbl_pnlModel);
+		
+		JList lstModles = new JList();
+		lstModles.setBorder(new LineBorder(new Color(0, 0, 0)));
+		GridBagConstraints gbc_lstModles = new GridBagConstraints();
+		gbc_lstModles.insets = new Insets(0, 0, 5, 0);
+		gbc_lstModles.fill = GridBagConstraints.BOTH;
+		gbc_lstModles.gridx = 0;
+		gbc_lstModles.gridy = 0;
+		pnlModel.add(lstModles, gbc_lstModles);
+		
+		JButton btnNewModel = new JButton("New Model");
+		GridBagConstraints gbc_btnNewModel = new GridBagConstraints();
+		gbc_btnNewModel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewModel.gridx = 0;
+		gbc_btnNewModel.gridy = 1;
+		pnlModel.add(btnNewModel, gbc_btnNewModel);
 		
 		JPanel workPanel = new JPanel();
 		workPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
