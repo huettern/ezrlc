@@ -120,7 +120,7 @@ public class RFData {
 		    					this.dataType = MeasurementType.Z;
 		    			}
 		    			// next entry is unit
-		    			else if(++i==3) {
+		    			else if(++i==2) {
 		    				if(data[i].equalsIgnoreCase("MA"))
 		    					this.dataUnit = MeasurementUnit.MA;
 		    				if(data[i].equalsIgnoreCase("DB"))
@@ -129,11 +129,11 @@ public class RFData {
 		    					this.dataUnit = MeasurementUnit.RI;
 		    			}
 		    			// next entry is constant 'R'
-		    			else if(++i==4) {
+		    			else if(++i==3) {
 		    				// TODO: Check if this can be ignored
 		    			}
 		    			// next entry is equivelant measurement resistance
-		    			else if(++i==5) {
+		    			else if(++i==4) {
 		    				this.r = Float.valueOf(data[i]);
 		    			}
 		    		}
