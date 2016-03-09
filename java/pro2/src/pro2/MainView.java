@@ -57,8 +57,8 @@ public class MainView extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public MainView() {
-		setSize(new Dimension(400, 200));
-		setMinimumSize(new Dimension(400, 200));
+		setSize(new Dimension(808, 574));
+		setMinimumSize(new Dimension(600, 400));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1261, 774);
@@ -93,6 +93,7 @@ public class MainView extends JFrame implements ActionListener {
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane splitPane = new JSplitPane();
+		splitPane.setEnabled(false);
 		contentPanel.add(splitPane);
 		
 		JPanel navPanel = new JPanel();
