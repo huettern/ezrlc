@@ -17,6 +17,23 @@ import java.util.UUID;
 public class RFData {
 
 	/**
+	 * Defines the available data types in the datafile
+	 *
+	 */
+	public enum MeasurementType {
+	    S, Y, Z
+	}
+	
+	/**
+	 * Defines the available data units in the datafile
+	 * @author noah
+	 *
+	 */
+	public enum MeasurementUnit {
+		 MA, DB, RI
+	}
+	
+	/**
 	 * 
 	 */
 	private UUID uid;
@@ -27,6 +44,9 @@ public class RFData {
 	private long commentEntrys = 0;
 	private long instructionEntrys = 0;
 	private int freqMultiplier = 1;
+	private MeasurementType dataType = MeasurementType.S;
+	private MeasurementUnit dataUnit = MeasurementUnit.MA;
+	private float r = 0;
 	
 	
 	public RFData(String fname) {
@@ -80,7 +100,7 @@ public class RFData {
 		    		// parse each entry
 		    		for(int i=0; i<data.length; i++) {
 		    			// first entry is unit of freq
-		    			if(++i==1){
+		    			if(i==0){
 		    				if(data[i].equalsIgnoreCase("HZ"))
 		    					this.freqMultiplier = 1;
 		    				if(data[i].equalsIgnoreCase("KHZ"))
@@ -90,18 +110,33 @@ public class RFData {
 		    				if(data[i].equalsIgnoreCase("GHZ"))
 		    					this.freqMultiplier = 1000000000;
 		    			}
-		    			// next entry is 
-		    			else if(++i==2) {
+		    			// next entry is parameter type
+		    			else if(i==1) {
 		    				if(data[i].equalsIgnoreCase("S"))
-		    					this.freqMultiplier = 1;
+		    					this.dataType = MeasurementType.S;
 		    				if(data[i].equalsIgnoreCase("Y"))
-		    					this.freqMultiplier = 1000;
+		    					this.dataType = MeasurementType.Y;
 		    				if(data[i].equalsIgnoreCase("Z"))
-		    					this.freqMultiplier = 1000000;
+		    					this.dataType = MeasurementType.Z;
+		    			}
+		    			// next entry is unit
+		    			else if(++i==3) {
+		    				if(data[i].equalsIgnoreCase("MA"))
+		    					this.dataUnit = MeasurementUnit.MA;
+		    				if(data[i].equalsIgnoreCase("DB"))
+		    					this.dataUnit = MeasurementUnit.DB;
+		    				if(data[i].equalsIgnoreCase("RI"))
+		    					this.dataUnit = MeasurementUnit.RI;
+		    			}
+		    			// next entry is constant 'R'
+		    			else if(++i==4) {
+		    				// TODO: Check if this can be ignored
+		    			}
+		    			// next entry is equivelant measurement resistance
+		    			else if(++i==5) {
+		    				this.r = Float.valueOf(data[i]);
 		    			}
 		    		}
-		    		
-		    		
 		    	}
 		    	// check if first char is a number which means data
 		    	else if (Character.isDigit(line.charAt(0))) {
@@ -115,6 +150,7 @@ public class RFData {
 		
 	    System.out.println("lines=" +lineno +" comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntrys);
 		System.out.println("Freq multiplier="+this.freqMultiplier);
+		System.out.println("Type: "+this.dataType+" Units: "+this.dataUnit+" R: "+this.r);
 	}
 
 	public String getFileName() {

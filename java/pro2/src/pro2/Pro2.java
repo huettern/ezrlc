@@ -24,21 +24,45 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-		EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {                                           
-                Model model = new Model();
-                MainView view = new MainView();
-                view.setVisible(true);
-                Controller controller = new Controller(model,view);
-                view.setController(controller);
-                model.setController(controller);
-                
-                controller.contol();
-            }
-        });  
+		// TODO Auto-generated method stub
+		String[] files = {"../../sample_files/bsp1.s1p",
+				"../../sample_files/bsp2.s1p",
+				"../../sample_files/bsp3.s1p",
+				"../../sample_files/bsp4.s1p",
+				"../../sample_files/bsp5.s1p",
+				"../../sample_files/bsp6.s1p",
+				"../../sample_files/bsp11.s1p",
+				"../../sample_files/bsp12.s1p",
+				"../../sample_files/bsp13.s1p",
+				"../../sample_files/bsp14.s1p"
+				};
+		for (String string : files) {
+			RFData data = new RFData(string);
+			try {
+				data.parse();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("------------------------------------------------");
+		}
 		
 		
+//		EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {                                           
+//                Model model = new Model();
+//                MainView view = new MainView();
+//                view.setVisible(true);
+//                Controller controller = new Controller(model,view);
+//                view.setController(controller);
+//                model.setController(controller);
+//                
+//                controller.contol();
+//            }
+//        });  
+//		
+//		
 		
 		
 //		
