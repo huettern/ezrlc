@@ -8,7 +8,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import pro2.DataEntry.*;
 
 /**
  * @author noah
@@ -40,13 +44,14 @@ public class RFData {
 	
 	private String fname = "";
 	
-	private long dataEntrys = 0;
+	private long dataEntries = 0;
 	private long commentEntrys = 0;
 	private long instructionEntrys = 0;
 	private int freqMultiplier = 1;
 	private MeasurementType dataType = MeasurementType.S;
 	private MeasurementUnit dataUnit = MeasurementUnit.MA;
 	private float r = 0;
+	private List<DataEntry> data = new ArrayList<DataEntry>();
 	
 	
 	public RFData(String fname) {
@@ -71,6 +76,8 @@ public class RFData {
 		FileReader file;
 		String line;
 		int lineno = 0;
+		double freq, data1, data2;
+		String[] linedata;
 		
 		// Try opening the input file
 		try {
@@ -96,59 +103,68 @@ public class RFData {
 		    		this.instructionEntrys++;
 		    		// split line into array
 		    		// delimiter is space or tab
-		    		String[] data = line.split("\\t| ");
+		    		linedata = line.split("\\t| ");
 		    		// parse each entry
-		    		for(int i=0; i<data.length; i++) {
+		    		for(int i=0; i<linedata.length; i++) {
 		    			// first entry is unit of freq
-		    			if(i==0){
-		    				if(data[i].equalsIgnoreCase("HZ"))
+		    			if(i==1){
+		    				if(linedata[i].equalsIgnoreCase("HZ"))
 		    					this.freqMultiplier = 1;
-		    				if(data[i].equalsIgnoreCase("KHZ"))
+		    				if(linedata[i].equalsIgnoreCase("KHZ"))
 		    					this.freqMultiplier = 1000;
-		    				if(data[i].equalsIgnoreCase("MHZ"))
+		    				if(linedata[i].equalsIgnoreCase("MHZ"))
 		    					this.freqMultiplier = 1000000;
-		    				if(data[i].equalsIgnoreCase("GHZ"))
+		    				if(linedata[i].equalsIgnoreCase("GHZ"))
 		    					this.freqMultiplier = 1000000000;
 		    			}
 		    			// next entry is parameter type
-		    			else if(i==1) {
-		    				if(data[i].equalsIgnoreCase("S"))
+		    			else if(i==2) {
+		    				if(linedata[i].equalsIgnoreCase("S"))
 		    					this.dataType = MeasurementType.S;
-		    				if(data[i].equalsIgnoreCase("Y"))
+		    				if(linedata[i].equalsIgnoreCase("Y"))
 		    					this.dataType = MeasurementType.Y;
-		    				if(data[i].equalsIgnoreCase("Z"))
+		    				if(linedata[i].equalsIgnoreCase("Z"))
 		    					this.dataType = MeasurementType.Z;
 		    			}
 		    			// next entry is unit
-		    			else if(++i==2) {
-		    				if(data[i].equalsIgnoreCase("MA"))
+		    			else if(i==3) {
+		    				if(linedata[i].equalsIgnoreCase("MA"))
 		    					this.dataUnit = MeasurementUnit.MA;
-		    				if(data[i].equalsIgnoreCase("DB"))
+		    				if(linedata[i].equalsIgnoreCase("DB"))
 		    					this.dataUnit = MeasurementUnit.DB;
-		    				if(data[i].equalsIgnoreCase("RI"))
+		    				if(linedata[i].equalsIgnoreCase("RI"))
 		    					this.dataUnit = MeasurementUnit.RI;
 		    			}
 		    			// next entry is constant 'R'
-		    			else if(++i==3) {
+		    			else if(i==4) {
 		    				// TODO: Check if this can be ignored
 		    			}
 		    			// next entry is equivelant measurement resistance
-		    			else if(++i==4) {
-		    				this.r = Float.valueOf(data[i]);
+		    			else if(i==5) {
+		    				this.r = Float.valueOf(linedata[i]);
 		    			}
 		    		}
 		    	}
 		    	// check if first char is a number which means data
 		    	else if (Character.isDigit(line.charAt(0))) {
-		    		this.dataEntrys++;
+		    		this.dataEntries++;
+		    		// split line into array
+		    		// delimiter is space or tab
+		    		linedata = line.split("\\t| ");
+		    		freq = this.freqMultiplier*Double.valueOf(linedata[0]);
+		    		data1 = Double.valueOf(linedata[1]);
+		    		data2 = Double.valueOf(linedata[2]);
+		    		data.add(new DataEntry(this.dataType, this.dataUnit, freq, data1, data2));
 		    		
 		    	}
 		    	
 		    	lineno++;
 	    	}
 	    }
+	    // close file stream
+	    br.close();
 		
-	    System.out.println("lines=" +lineno +" comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntrys);
+	    System.out.println("lines=" +lineno +" comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntries);
 		System.out.println("Freq multiplier="+this.freqMultiplier);
 		System.out.println("Type: "+this.dataType+" Units: "+this.dataUnit+" R: "+this.r);
 	}
