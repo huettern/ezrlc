@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import pro2.DataEntry.*;
-
 /**
  * @author noah
  *
@@ -51,7 +49,12 @@ public class RFData {
 	private MeasurementType dataType = MeasurementType.S;
 	private MeasurementUnit dataUnit = MeasurementUnit.MA;
 	private float r = 0;
-	private List<DataEntry> data = new ArrayList<DataEntry>();
+	private List<DataEntry> rawData = new ArrayList<DataEntry>();
+	
+	private List<Complex> data = new ArrayList<Complex>();
+	
+	
+	
 	
 	
 	public RFData(String fname) {
@@ -154,19 +157,35 @@ public class RFData {
 		    		freq = this.freqMultiplier*Double.valueOf(linedata[0]);
 		    		data1 = Double.valueOf(linedata[1]);
 		    		data2 = Double.valueOf(linedata[2]);
-		    		data.add(new DataEntry(this.dataType, this.dataUnit, freq, data1, data2));
-		    		
+		    		rawData.add(new DataEntry(this.dataType, this.dataUnit, freq, data1, data2));	
 		    	}
-		    	
 		    	lineno++;
 	    	}
 	    }
 	    // close file stream
 	    br.close();
+	    
+	    this.normalizeRawData();
+	    this.adjustNormalizedData();
 		
 	    System.out.println("lines=" +lineno +" comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntries);
 		System.out.println("Freq multiplier="+this.freqMultiplier);
 		System.out.println("Type: "+this.dataType+" Units: "+this.dataUnit+" R: "+this.r);
+	}
+	
+	/**
+	 * Normalizes the input data according to the input unit
+	 * Normalized output is in complex numbers
+	 */
+	private void normalizeRawData() {
+		
+	}
+	
+	/**
+	 * Adjusts the normalized values to S-Parameters including Z0-Compensation
+	 */
+	private void adjustNormalizedData() {
+		
 	}
 
 	public String getFileName() {
