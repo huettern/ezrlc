@@ -4,12 +4,20 @@
 package pro2;
 
 import java.awt.EventQueue;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.util.ArrayUtilities;
 
 /**
  * @author noah
@@ -21,9 +29,9 @@ public class Pro2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/* MVC stuff
-		 * 
-		 */
+		RFData rfData = null;
+		
+		
 		// TODO Auto-generated method stub
 		String[] files = {"../../sample_files/bsp1.s1p",
 				"../../sample_files/bsp2.s1p",
@@ -37,16 +45,69 @@ public class Pro2 {
 				"../../sample_files/bsp14.s1p"
 				};
 		for (String string : files) {
-			RFData data = new RFData(string);
+			rfData = new RFData(string);
 			try {
-				data.parse();
+				rfData.parse();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			System.out.println("Writing to file..");
+			try {
+				FileWriter writer = new FileWriter(string+".tmp");
+				for (Complex cpx : rfData.getzData()) {
+					writer.write(cpx.sprintRI()+"\r\n");
+				}
+				writer.close();
+				System.out.println(".. Done");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 			System.out.println("------------------------------------------------");
 		}
 		
+		
+
+		//================================================================================
+	    // XY Test
+	    //================================================================================
+//		JFrame frame = new JFrame("Charts");
+//		frame.setSize(600, 400);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setVisible(true);
+//        
+//		DefaultXYDataset ds = new DefaultXYDataset();
+//        
+//		rfData = new RFData("../../sample_files/bsp2.s1p");
+//		try {
+//			rfData.parse();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		double[][] tempArray = new double[2][(int)rfData.size()];
+//		for (int i = 0; i < rfData.size(); i++) {
+//			tempArray[0][i]=rfData.getfData().get(i);
+//			tempArray[1][i]=rfData.getzData().get(i).re();
+//		}
+//		
+//        ds.addSeries("series1", tempArray);
+//        JFreeChart chart = 
+//        		ChartFactory.createXYLineChart("Test Chart",
+//        		                "x", "y", ds, PlotOrientation.VERTICAL, true, true,
+//        		                false);
+//        ChartPanel cp = new ChartPanel(chart);
+//        cp.setVisible(true);
+//        frame.getContentPane().add(cp);
+//        frame.setVisible(true);
+		
+
+		//================================================================================
+	    // Complex Test
+	    //================================================================================
 //		System.out.println("------------------------------------------------");
 //		System.out.println("Complex Test");
 //		System.out.println("------------------------------------------------");
@@ -74,6 +135,26 @@ public class Pro2 {
 //		System.out.println(a.sprintRI() +" / " +b.sprintRI() +" = " +div2.sprintRI());
 //		System.out.println(a.sprintRI() +" / " +c.sprintRI() +" = " +div3.sprintRI());
 //		System.out.println(a.sprintRI() +" / " +d.sprintRI() +" = " +div4.sprintRI());
+//
+//		Complex add1 = new Complex(Complex.add(a, a));
+//		Complex add2 = new Complex(Complex.add(a, b));
+//		Complex add3 = new Complex(Complex.add(a, c));
+//		Complex add4 = new Complex(Complex.add(a, d));
+//
+//		System.out.println(a.sprintRI() +" + " +a.sprintRI() +" = " +add1.sprintRI());
+//		System.out.println(a.sprintRI() +" + " +b.sprintRI() +" = " +add2.sprintRI());
+//		System.out.println(a.sprintRI() +" + " +c.sprintRI() +" = " +add3.sprintRI());
+//		System.out.println(a.sprintRI() +" + " +d.sprintRI() +" = " +add4.sprintRI());
+//
+//		Complex sub1 = new Complex(Complex.sub(a, a));
+//		Complex sub2 = new Complex(Complex.sub(a, b));
+//		Complex sub3 = new Complex(Complex.sub(a, c));
+//		Complex sub4 = new Complex(Complex.sub(a, d));
+//
+//		System.out.println(a.sprintRI() +" - " +a.sprintRI() +" = " +sub1.sprintRI());
+//		System.out.println(a.sprintRI() +" - " +b.sprintRI() +" = " +sub2.sprintRI());
+//		System.out.println(a.sprintRI() +" - " +c.sprintRI() +" = " +sub3.sprintRI());
+//		System.out.println(a.sprintRI() +" - " +d.sprintRI() +" = " +sub4.sprintRI());
 		
 		
 		

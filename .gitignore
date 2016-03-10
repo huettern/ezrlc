@@ -34,4 +34,6 @@ buildNumber.properties
 .mvn/timing.properties
 
 # Other
+*.tmp
 *log.txt
+matlab/incomming/s-param_toolbox/*

@@ -226,7 +226,8 @@ public class Complex {
      * @param cpx
      */
     public String sprintRI () {
-    	return String.format("%f + %f i", this.re, this.im);
+    	if(this.im < 0) return String.format("%f %fi", this.re, this.im);
+    	else return String.format("%f +%fi", this.re, this.im);	
     }
     
 

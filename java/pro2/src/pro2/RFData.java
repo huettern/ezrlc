@@ -103,7 +103,6 @@ public class RFData {
 	public void parse () throws IOException {
 		FileReader file;
 		String line;
-		int lineno = 0;
 		double freq, data1, data2;
 		String[] linedata;
 		
@@ -119,7 +118,6 @@ public class RFData {
 		
 		// Add file to a buffer to read line by line
 		BufferedReader br = new BufferedReader(file);
-		lineno = 1;
 	    while ((line = br.readLine()) != null) {
 	    	if(line.length() != 0) {
 		    	// check if first char is '!', which means a comment
@@ -184,7 +182,6 @@ public class RFData {
 		    		data2 = Double.valueOf(linedata[2]);
 		    		rawData.add(new DataEntry(this.dataType, this.dataUnit, freq, data1, data2));	
 		    	}
-		    	lineno++;
 	    	}
 	    }
 	    // close file stream
@@ -198,7 +195,7 @@ public class RFData {
 			fData.add(entry.getFreq());
 		}
 		
-	    System.out.println("lines=" +lineno +" comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntries);
+	    System.out.println("comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntries);
 		System.out.println("Freq multiplier="+this.freqMultiplier);
 		System.out.println("Type: "+this.dataType+" Units: "+this.dataUnit+" R: "+this.r);
 	}
@@ -268,9 +265,10 @@ public class RFData {
 			//
 			// Z=Ro*((1+S)/(1-S))
 			//
-			complextmp2 = new Complex(1,0);			// constant 1 as complex number
+			complextmp2 = new Complex(1.0,0);			// constant 1 as complex number
 			complextmp3 = new Complex(this.r,0);	// resistance as complex number
 			for (Complex complex : normalizedData) {
+				// TODO: Calculations in the next line aren't correct!
 				complextmp1 = Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex)));
 				zData.add(complextmp1);
 			}

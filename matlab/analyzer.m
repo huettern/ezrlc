@@ -6,7 +6,7 @@
 % 
 addpath 'incomming/s-param_toolbox/sbox'
 
-IN.inFilenmbr=1;
+IN.inFilenmbr=14;
 IN.file = ['../sample_files/bsp' int2str(IN.inFilenmbr) '.s1p'];
 IN.filecomp = ['../sample_files/bsp' int2str(IN.inFilenmbr) '.s1p.tmp'];
 
@@ -27,8 +27,7 @@ parsed = data(:);
 
 % Plotting
 subplot(221)
-semilogx(freq,abs(parsed),'+-b')
-semilogx(freq,abs(A),'*-r')
+loglog(freq,abs(parsed),'b')
 title('magnitude')
 grid on
 
