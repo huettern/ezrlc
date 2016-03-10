@@ -47,7 +47,7 @@ import java.awt.Frame;
 public class MainView extends JFrame implements ActionListener {
 
 	private Controller controller;
-	private JFileChooser openFileChooser;
+	private JFileChooser openFileChooser = new JFileChooser();
 	private DefaultMutableTreeNode fileTreeTop = new DefaultMutableTreeNode("Input Files");
 	
 	// Storing the Files in a MenuItem List and a second one containing the UIDs
@@ -62,6 +62,8 @@ public class MainView extends JFrame implements ActionListener {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1261, 774);
+		
+		
 
 		
 		// First, setup the menu bar
@@ -230,5 +232,16 @@ public class MainView extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		//handle the file chooser
+		if(e.getSource() == btnLoadFile) {
+			int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+			
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+	            File file = fc.getSelectedFile();
+	            log.append("Opening: " + file.getName() + "." + newline);
+			}
+		}
+		
 	}
 }
