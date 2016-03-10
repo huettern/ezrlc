@@ -40,4 +40,8 @@ public class DataEntry {
 	public double getData2 () {
 		return this.data2;
 	}
+
+	public Double getFreq() {
+		return this.freq;
+	}
 }

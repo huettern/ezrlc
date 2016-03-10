@@ -17,6 +17,9 @@ import java.util.UUID;
  *
  */
 public class RFData {
+	//================================================================================
+    // Datatypes
+    //================================================================================
 
 	/**
 	 * Defines the available data types in the datafile
@@ -35,6 +38,10 @@ public class RFData {
 		 MA, DB, RI
 	}
 	
+	//================================================================================
+    // Private Data
+    //================================================================================
+
 	/**
 	 * 
 	 */
@@ -60,9 +67,15 @@ public class RFData {
 	// Impedance data
 	private List<Complex> zData = new ArrayList<Complex>();
 	
+	// Frequency points
+	private List<Double> fData = new ArrayList<Double>();
 	
 	
 	
+	//================================================================================
+    // Constructors
+    //================================================================================
+
 	
 	public RFData(String fname) {
 		// TODO Auto-generated constructor stub
@@ -77,6 +90,11 @@ public class RFData {
 		System.out.println("Filename " +this.fname);
 		this.uid = UUID.randomUUID();
 	}
+	
+	//================================================================================
+    // Non static Functions
+    //================================================================================
+
 
 	public UUID getUID() {
 		return this.uid;
@@ -174,12 +192,20 @@ public class RFData {
 	    
 	    this.normalizeRawData();
 	    this.adjustNormalizedData();
+	    
+	    // Copy f-Information
+	    for (DataEntry entry : rawData) {
+			fData.add(entry.getFreq());
+		}
 		
 	    System.out.println("lines=" +lineno +" comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntries);
 		System.out.println("Freq multiplier="+this.freqMultiplier);
 		System.out.println("Type: "+this.dataType+" Units: "+this.dataUnit+" R: "+this.r);
 	}
 	
+	//================================================================================
+    // Private Functions
+    //================================================================================
 	/**
 	 * Normalizes the input data according to the input unit
 	 * Normalized output is in complex numbers
@@ -250,7 +276,7 @@ public class RFData {
 			}
 			break;
 		case Y:
-			
+			// TODO Implement Y parameter reading
 			break;
 		case Z:
 			// if the data is already impedance, conpy impedance...
@@ -276,10 +302,49 @@ public class RFData {
 			System.out.println("FATAL: sData or zData entries not equal normalized entries");
 		}
 	}
-
+	
+	//================================================================================
+    // Getters
+    //================================================================================
+	/**
+	 * Returns the filename of the dataset source
+	 * @return
+	 */
 	public String getFileName() {
 		// TODO Auto-generated method stub
 		return this.fname;
+	}
+	
+	/**
+	 * Returns the number of datapoints in the RFData set
+	 * @return
+	 */
+	public long size() {
+		return this.dataEntries;
+	}
+	
+	/**
+	 * Returns the Frequency list of the datapoints
+	 * @return
+	 */
+	public ArrayList<Double> getfData() {
+		return new ArrayList<Double>(fData);
+	}
+	
+	/**
+	 * Returns a list of Z Data
+	 * @return
+	 */
+	public ArrayList<Complex> getzData() {
+		return new ArrayList<Complex>(zData);
+	}
+	
+	/** 
+	 * Returns a list of S Data
+	 * @return
+	 */
+	public ArrayList<Complex> getsData() {
+		return new ArrayList<Complex>(sData);
 	}
 
 }
