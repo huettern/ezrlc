@@ -50,8 +50,15 @@ public class RFData {
 	private MeasurementUnit dataUnit = MeasurementUnit.MA;
 	private float r = 0;
 	private List<DataEntry> rawData = new ArrayList<DataEntry>();
+
+	// Normalized data, independant of input MeasurementUnit 
+	private List<Complex> normalizedData = new ArrayList<Complex>();
 	
-	private List<Complex> data = new ArrayList<Complex>();
+	// Scattering data
+	private List<Complex> sData = new ArrayList<Complex>();
+	
+	// Impedance data
+	private List<Complex> zData = new ArrayList<Complex>();
 	
 	
 	
@@ -178,14 +185,96 @@ public class RFData {
 	 * Normalized output is in complex numbers
 	 */
 	private void normalizeRawData() {
-		
+		double angle = 0;
+		double mag = 0;
+		switch (this.dataUnit)
+		{
+		case RI:
+			// convert raw data to complex number
+			for (DataEntry rawEntry : this.rawData) {
+				normalizedData.add(new Complex(rawEntry.getData1(), rawEntry.getData2()));
+			}
+			break;
+		case MA:
+			// convert raw data from absolute and angle to complex
+			// angle = (d2*pi)/180
+			// real = d1*cos(angle)
+			// imag = d1*sin(angle)
+			for (DataEntry rawEntry : this.rawData) {
+				angle = (rawEntry.getData2()*Math.PI)/180.0;
+				mag = rawEntry.getData1();
+				normalizedData.add(new Complex(mag*Math.cos(angle), mag*Math.sin(angle)));
+			}
+			break;
+		case DB:
+			// Convert raw data from DB absolute and angle to complex
+			// angle = (d2*pi)/180
+			// mag = 10^(d1/20)
+			// real = mag*cos(angle)
+			// imag = mag*sin(angle)
+			for (DataEntry rawEntry : this.rawData) {
+				angle = (rawEntry.getData2()*Math.PI)/180.0;
+				mag = Math.pow(10, rawEntry.getData1()/20.0 );
+				normalizedData.add(new Complex(mag*Math.cos(angle), mag*Math.sin(angle)));
+			}
+			break;
+			default:
+				break;
+		}
+		// Check if output size is equal to input size
+		if(this.rawData.size() != this.normalizedData.size()) {
+			System.out.println("FATAL: normalized entries not equal raw entries");
+		}
 	}
 	
 	/**
 	 * Adjusts the normalized values to S-Parameters including Z0-Compensation
 	 */
 	private void adjustNormalizedData() {
-		
+		Complex complextmp1, complextmp2, complextmp3;
+		switch (this.dataType) {
+		case S:
+			// If the data is already scattering, then copy the scattering data...
+			for (Complex entry : normalizedData) {
+				sData.add(new Complex(entry));
+			}
+			// ...And calculate z data
+			//
+			// Z=Ro*((1+S)/(1-S))
+			//
+			complextmp2 = new Complex(1,0);			// constant 1 as complex number
+			complextmp3 = new Complex(this.r,0);	// resistance as complex number
+			for (Complex complex : normalizedData) {
+				complextmp1 = Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex)));
+				zData.add(complextmp1);
+			}
+			break;
+		case Y:
+			
+			break;
+		case Z:
+			// if the data is already impedance, conpy impedance...
+			for (Complex entry : normalizedData) {
+				zData.add(new Complex(entry));
+			}
+			// ..And calculate S data
+			//
+			// S=(Z-R0)/(Z+Ro)
+			//
+			complextmp3 = new Complex(this.r,0);	// resistance as complex number
+			for (Complex entry : normalizedData) {
+				complextmp1 = Complex.div(Complex.sub(entry, complextmp3), Complex.add(entry, complextmp3));
+				sData.add(complextmp1);
+			}
+			break;
+		default:
+			break;
+		}
+		// Check if output size is equal to input size
+		if(this.normalizedData.size() != this.zData.size() ||
+				this.normalizedData.size() != this.sData.size()) {
+			System.out.println("FATAL: sData or zData entries not equal normalized entries");
+		}
 	}
 
 	public String getFileName() {

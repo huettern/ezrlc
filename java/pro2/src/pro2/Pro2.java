@@ -47,6 +47,35 @@ public class Pro2 {
 			System.out.println("------------------------------------------------");
 		}
 		
+//		System.out.println("------------------------------------------------");
+//		System.out.println("Complex Test");
+//		System.out.println("------------------------------------------------");
+//		Complex a = new Complex(5, 3);
+//		Complex b = new Complex(0, -1);
+//		Complex c = new Complex(0, 0);
+//		Complex d = new Complex(-9, -2);
+//
+//		Complex mul1 = new Complex(Complex.mul(a, a));
+//		Complex mul2 = new Complex(Complex.mul(a, b));
+//		Complex mul3 = new Complex(Complex.mul(a, c));
+//		Complex mul4 = new Complex(Complex.mul(a, d));
+//
+//		System.out.println(a.sprintRI() +" * " +a.sprintRI() +" = " +mul1.sprintRI());
+//		System.out.println(a.sprintRI() +" * " +b.sprintRI() +" = " +mul2.sprintRI());
+//		System.out.println(a.sprintRI() +" * " +c.sprintRI() +" = " +mul3.sprintRI());
+//		System.out.println(a.sprintRI() +" * " +d.sprintRI() +" = " +mul4.sprintRI());
+//
+//		Complex div1 = new Complex(Complex.div(a, a));
+//		Complex div2 = new Complex(Complex.div(a, b));
+//		Complex div3 = new Complex(Complex.div(a, c));
+//		Complex div4 = new Complex(Complex.div(a, d));
+//
+//		System.out.println(a.sprintRI() +" / " +a.sprintRI() +" = " +div1.sprintRI());
+//		System.out.println(a.sprintRI() +" / " +b.sprintRI() +" = " +div2.sprintRI());
+//		System.out.println(a.sprintRI() +" / " +c.sprintRI() +" = " +div3.sprintRI());
+//		System.out.println(a.sprintRI() +" / " +d.sprintRI() +" = " +div4.sprintRI());
+		
+		
 		
 //		EventQueue.invokeLater(new Runnable() {
 //            @Override

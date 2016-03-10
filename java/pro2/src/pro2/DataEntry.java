@@ -25,4 +25,19 @@ public class DataEntry {
 		this.data1=data1;
 		this.data2=data2;
 	}
+	
+	/**
+	 * Returns the first data entry
+	 * @return
+	 */
+	public double getData1 () {
+		return this.data1;
+	}
+	
+	/** Returns the second data entry
+	 * @return
+	 */
+	public double getData2 () {
+		return this.data2;
+	}
 }

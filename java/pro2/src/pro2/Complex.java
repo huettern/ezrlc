@@ -17,14 +17,70 @@ public class Complex {
 		this.im = imag;
 	}
 	
+	public Complex(Complex cpx) {
+		this.re = cpx.re;
+		this.im = cpx.im;
+	}
+	
+	//********************
+	// STATIC FUNCTIONS
+	//********************
+	/**
+	 * Returns a new complex number c=a*b
+	 * @param a
+	 * @param b
+	 * @return a*b
+	 */
+	public static Complex mul (Complex a, Complex b) {
+        double real = a.re * b.re - a.im * b.im;
+        double imag = a.re * b.im + a.im * b.re;
+        return new Complex(real, imag);
+	}
+	
+	/**
+	 * Divides a and b: c=a/b
+	 * @param a
+	 * @param b
+	 * @return a/b
+	 */
+	public static Complex div  (Complex a, Complex b) {
+		Complex denominatorRec = new Complex(1.0 / (b.re*b.re + b.im*b.im), 0);
+		Complex numerator = new Complex(a.re*b.re+a.im*b.im, a.im*b.re-a.re*b.im);
+		return new Complex(Complex.mul(denominatorRec, numerator));
+	}
+	
+	/**
+	 * Adds two complex numbers to a new complex number
+	 * c=a+b
+	 * @param a
+	 * @param b
+	 * @return a+b
+	 */
+	public static Complex add (Complex a, Complex b) {
+		return new Complex(a.re + b.re, a.im + b.im);
+	}
+	
+	/**
+	 * Substracts two complex numbers
+	 * c=a-b
+	 * @param a
+	 * @param b
+	 * @return a-b
+	 */
+	public static Complex sub(Complex a, Complex b) {
+		return new Complex(a.re - b.re, a.im - b.im);
+	}
+
+	//********************
+	// NON STATIC FUNCTIONS
+	//********************
 
     /**
      * Return real part
      * @return
      */
     public double re() {
-    	return re; 
-    	
+    	return re; 	
     }
     
     /**
@@ -155,6 +211,22 @@ public class Complex {
      */
     public Complex tan() {
         return sin().divides(cos());
+    }
+    
+    /**
+     * Prints the complex number to syso
+     * @param cpx
+     */
+    public void printRI () {
+    	System.out.println(this.re +" + " +this.im +"i");
+    }
+    
+    /**
+     * Prints the complex number to a string
+     * @param cpx
+     */
+    public String sprintRI () {
+    	return String.format("%f + %f i", this.re, this.im);
     }
     
 
