@@ -128,8 +128,8 @@ public class MainView extends JFrame implements ActionListener {
 		JButton btnLoadFile = new JButton("Load File...");
 		btnLoadFile.setBounds(5, 65, 189, 29);
 		pnlInFile.add(btnLoadFile);
-		
-				
+
+						
 		JPanel pnlModel = new JPanel();
 		pnlModel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Models", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlModel = new GridBagConstraints();
