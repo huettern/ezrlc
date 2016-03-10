@@ -42,6 +42,8 @@ import javax.swing.JList;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.Frame;
 
 public class MainView extends JFrame implements ActionListener {
@@ -53,6 +55,11 @@ public class MainView extends JFrame implements ActionListener {
 	// Storing the Files in a MenuItem List and a second one containing the UIDs
 	private List<UUID> fileTreeItemsUID = new ArrayList<UUID>();   
 	
+	//local Variable
+	JButton btnLoadFile, btnNewModel;
+	JLabel lblNoInputFile;
+	File file;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -63,8 +70,6 @@ public class MainView extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1261, 774);
 		
-		
-
 		
 		// First, setup the menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -127,7 +132,8 @@ public class MainView extends JFrame implements ActionListener {
 		gbl_pnlInFile.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		pnlInFile.setLayout(gbl_pnlInFile);
 		
-		JLabel lblNoInputFile = new JLabel("No Input File");
+		file = new File("No file open");
+		lblNoInputFile = new JLabel(file.getName());
 		lblNoInputFile.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_lblNoInputFile = new GridBagConstraints();
 		gbc_lblNoInputFile.fill = GridBagConstraints.HORIZONTAL;
@@ -136,9 +142,10 @@ public class MainView extends JFrame implements ActionListener {
 		gbc_lblNoInputFile.gridy = 0;
 		pnlInFile.add(lblNoInputFile, gbc_lblNoInputFile);
 		
-		JButton btnLoadFile = new JButton("Load File...");
+		btnLoadFile = new JButton("Load File...");
 		btnLoadFile.setBounds(5, 65, 189, 29);
 		pnlInFile.add(btnLoadFile);
+		btnLoadFile.addActionListener(this);
 
 						
 		GridBagConstraints gbc_btnLoadFile = new GridBagConstraints();
@@ -173,7 +180,7 @@ public class MainView extends JFrame implements ActionListener {
 		gbc_lstModles.gridy = 0;
 		pnlModel.add(lstModles, gbc_lstModles);
 		
-		JButton btnNewModel = new JButton("New Model");
+		btnNewModel = new JButton("New Model");
 		GridBagConstraints gbc_btnNewModel = new GridBagConstraints();
 		gbc_btnNewModel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewModel.gridx = 0;
@@ -198,9 +205,6 @@ public class MainView extends JFrame implements ActionListener {
 		
 		JLabel statusLabel = new JLabel("Status Here....");
 		statusPanel.add(statusLabel);
-
-		
-		
 		
 		
 		
@@ -237,15 +241,20 @@ public class MainView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		
 		//handle the file chooser
-//		if(e.getSource() == btnLoadFile) {
-//			int returnVal = fc.showOpenDialog(FileChooserDemo.this);
-//			
-//			if (returnVal == JFileChooser.APPROVE_OPTION) {
-//	            File file = fc.getSelectedFile();
-//	            log.append("Opening: " + file.getName() + "." + newline);
-//			}
-//		}
+		if(e.getSource() == btnLoadFile) {
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			        "Textfiles", "s1p");
+			openFileChooser.setFileFilter(filter);
+			int returnVal = openFileChooser.showOpenDialog(MainView.this);
+			
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+	            file = openFileChooser.getSelectedFile();
+			}
+		}
 		
 	}
 }
+
+
