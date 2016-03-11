@@ -56,9 +56,9 @@ public class MainView extends JFrame implements ActionListener {
 	private List<UUID> fileTreeItemsUID = new ArrayList<UUID>();   
 	
 	//local Variable
-	JButton btnLoadFile, btnNewModel;
-	JLabel lblNoInputFile;
-	File file;
+	private JButton btnLoadFile, btnNewModel;
+	private JLabel lblInputFile;
+	private File file;
 	
 	/**
 	 * Create the frame.
@@ -109,9 +109,9 @@ public class MainView extends JFrame implements ActionListener {
 		splitPane.setLeftComponent(navPanel);
 		GridBagLayout gbl_navPanel = new GridBagLayout();
 		gbl_navPanel.columnWidths = new int[] {0, 0};
-		gbl_navPanel.rowHeights = new int[] {0, 0};
+		gbl_navPanel.rowHeights = new int[] {0, 0, 0};
 		gbl_navPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_navPanel.rowWeights = new double[]{0.0, 1.0};
+		gbl_navPanel.rowWeights = new double[]{0.0, 0.0, 1.0};
 		navPanel.setLayout(gbl_navPanel);
 		
 		JPanel pnlInFile = new JPanel();
@@ -127,26 +127,25 @@ public class MainView extends JFrame implements ActionListener {
 		navPanel.add(pnlInFile, gbc_pnlInFile);
 		GridBagLayout gbl_pnlInFile = new GridBagLayout();
 		gbl_pnlInFile.columnWidths = new int[]{189, 0};
-		gbl_pnlInFile.rowHeights = new int[] {30, 30, 0};
+		gbl_pnlInFile.rowHeights = new int[] {30, 29, 0};
 		gbl_pnlInFile.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_pnlInFile.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		pnlInFile.setLayout(gbl_pnlInFile);
 		
-		file = new File("No file open");
-		lblNoInputFile = new JLabel(file.getName());
-		lblNoInputFile.setBackground(Color.LIGHT_GRAY);
-		GridBagConstraints gbc_lblNoInputFile = new GridBagConstraints();
-		gbc_lblNoInputFile.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNoInputFile.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNoInputFile.gridx = 0;
-		gbc_lblNoInputFile.gridy = 0;
-		pnlInFile.add(lblNoInputFile, gbc_lblNoInputFile);
+		file = null;
+		lblInputFile = new JLabel("");
+		lblInputFile.setBackground(Color.LIGHT_GRAY);
+		GridBagConstraints gbc_lblInputFile = new GridBagConstraints();
+		gbc_lblInputFile.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblInputFile.insets = new Insets(0, 0, 5, 0);
+		gbc_lblInputFile.gridx = 0;
+		gbc_lblInputFile.gridy = 0;
+		pnlInFile.add(lblInputFile, gbc_lblInputFile);
 		
 		btnLoadFile = new JButton("Load File...");
 		btnLoadFile.setBounds(5, 65, 189, 29);
 		pnlInFile.add(btnLoadFile);
 		btnLoadFile.addActionListener(this);
-
 						
 		GridBagConstraints gbc_btnLoadFile = new GridBagConstraints();
 		gbc_btnLoadFile.fill = GridBagConstraints.HORIZONTAL;
@@ -154,15 +153,39 @@ public class MainView extends JFrame implements ActionListener {
 		gbc_btnLoadFile.gridy = 1;
 		pnlInFile.add(btnLoadFile, gbc_btnLoadFile);
 		
+		JPanel pnlPanel = new JPanel();
+		pnlPanel.setMaximumSize(new Dimension(0, 0));
+		pnlPanel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Plot", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_pnlPanel = new GridBagConstraints();
+		gbc_pnlPanel.anchor = GridBagConstraints.NORTH;
+		gbc_pnlPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_pnlPanel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_pnlPanel.gridx = 0;
+		gbc_pnlPanel.gridy = 1;
+		navPanel.add(pnlPanel, gbc_pnlPanel);
+		GridBagLayout gbl_pnlPanel = new GridBagLayout();
+		gbl_pnlPanel.columnWidths = new int[] {52};
+		gbl_pnlPanel.rowHeights = new int[] {29};
+		gbl_pnlPanel.columnWeights = new double[]{1.0};
+		gbl_pnlPanel.rowWeights = new double[]{0.0};
+		pnlPanel.setLayout(gbl_pnlPanel);
+		
+		JButton btnNewPlot = new JButton("New Plot");
+		GridBagConstraints gbc_btnNewPlot = new GridBagConstraints();
+		gbc_btnNewPlot.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewPlot.gridx = 0;
+		gbc_btnNewPlot.gridy = 0;
+		pnlPanel.add(btnNewPlot, gbc_btnNewPlot);
+		
 		
 		JPanel pnlModel = new JPanel();
 		pnlModel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Models", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlModel = new GridBagConstraints();
-		gbc_pnlModel.anchor = GridBagConstraints.NORTH;
 		gbc_pnlModel.insets = new Insets(0, 0, 5, 0);
+		gbc_pnlModel.anchor = GridBagConstraints.NORTH;
 		gbc_pnlModel.fill = GridBagConstraints.BOTH;
 		gbc_pnlModel.gridx = 0;
-		gbc_pnlModel.gridy = 1;
+		gbc_pnlModel.gridy = 2;
 		navPanel.add(pnlModel, gbc_pnlModel);
 		GridBagLayout gbl_pnlModel = new GridBagLayout();
 		gbl_pnlModel.columnWidths = new int[]{189, 0};
@@ -245,12 +268,13 @@ public class MainView extends JFrame implements ActionListener {
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			        "Textfiles", "s1p");
+			        "Textfiles", "s1p", "z1p", "y1p");
 			openFileChooser.setFileFilter(filter);
 			int returnVal = openFileChooser.showOpenDialog(MainView.this);
 			
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 	            file = openFileChooser.getSelectedFile();
+				lblInputFile.setText(file.getName());
 			}
 		}
 		
