@@ -38,6 +38,7 @@ import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.JList;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -64,9 +65,6 @@ public class MainView extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public MainView() {
-		setSize(new Dimension(808, 574));
-		setMinimumSize(new Dimension(600, 400));
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1261, 774);
 		
@@ -193,6 +191,7 @@ public class MainView extends JFrame implements ActionListener {
 		pnlModel.setLayout(gbl_pnlModel);
 		
 		JList lstModles = new JList();
+		lstModles.setPreferredSize(new Dimension(200, 300));
 		lstModles.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_lstModles = new GridBagConstraints();
 		gbc_lstModles.fill = GridBagConstraints.BOTH;
@@ -210,6 +209,7 @@ public class MainView extends JFrame implements ActionListener {
 		btnNewModel.addActionListener(this);
 		
 		JPanel workPanel = new JPanel();
+		workPanel.setPreferredSize(new Dimension(800, 600));
 		workPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		splitPane.setRightComponent(workPanel);
 		
@@ -228,7 +228,15 @@ public class MainView extends JFrame implements ActionListener {
 		JLabel statusLabel = new JLabel("Status Here....");
 		statusPanel.add(statusLabel);
 		
-		
+		// Window size
+		pack();
+		setMinimumSize(getPreferredSize());
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.metal");
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 		
 		
 //		JMenuBar menuBar = new JMenuBar();
