@@ -232,11 +232,7 @@ public class MainView extends JFrame implements ActionListener {
 		pack();
 		setMinimumSize(getPreferredSize());
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
-		try {
-			UIManager.setLookAndFeel("javax.swing.plaf.metal");
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
+
 		
 		
 //		JMenuBar menuBar = new JMenuBar();
