@@ -56,7 +56,7 @@ public class MainView extends JFrame implements ActionListener {
 	private List<UUID> fileTreeItemsUID = new ArrayList<UUID>();   
 	
 	//local Variable
-	private JButton btnLoadFile, btnNewModel;
+	private JButton btnLoadFile, btnNewModel, btnNewPlot;
 	private JLabel lblInputFile;
 	private File file;
 	
@@ -127,7 +127,7 @@ public class MainView extends JFrame implements ActionListener {
 		navPanel.add(pnlInFile, gbc_pnlInFile);
 		GridBagLayout gbl_pnlInFile = new GridBagLayout();
 		gbl_pnlInFile.columnWidths = new int[]{189, 0};
-		gbl_pnlInFile.rowHeights = new int[] {30, 29, 0};
+		gbl_pnlInFile.rowHeights = new int[] {29, 29, 0};
 		gbl_pnlInFile.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_pnlInFile.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		pnlInFile.setLayout(gbl_pnlInFile);
@@ -143,15 +143,12 @@ public class MainView extends JFrame implements ActionListener {
 		pnlInFile.add(lblInputFile, gbc_lblInputFile);
 		
 		btnLoadFile = new JButton("Load File...");
-		btnLoadFile.setBounds(5, 65, 189, 29);
-		pnlInFile.add(btnLoadFile);
-		btnLoadFile.addActionListener(this);
-						
 		GridBagConstraints gbc_btnLoadFile = new GridBagConstraints();
 		gbc_btnLoadFile.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnLoadFile.gridx = 0;
 		gbc_btnLoadFile.gridy = 1;
 		pnlInFile.add(btnLoadFile, gbc_btnLoadFile);
+		btnLoadFile.addActionListener(this);
 		
 		JPanel pnlPanel = new JPanel();
 		pnlPanel.setMaximumSize(new Dimension(0, 0));
@@ -170,12 +167,13 @@ public class MainView extends JFrame implements ActionListener {
 		gbl_pnlPanel.rowWeights = new double[]{0.0};
 		pnlPanel.setLayout(gbl_pnlPanel);
 		
-		JButton btnNewPlot = new JButton("New Plot");
+		btnNewPlot = new JButton("New Plot");
 		GridBagConstraints gbc_btnNewPlot = new GridBagConstraints();
 		gbc_btnNewPlot.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewPlot.gridx = 0;
 		gbc_btnNewPlot.gridy = 0;
 		pnlPanel.add(btnNewPlot, gbc_btnNewPlot);
+		btnNewPlot.addActionListener(this);
 		
 		
 		JPanel pnlModel = new JPanel();
@@ -209,6 +207,7 @@ public class MainView extends JFrame implements ActionListener {
 		gbc_btnNewModel.gridx = 0;
 		gbc_btnNewModel.gridy = 1;
 		pnlModel.add(btnNewModel, gbc_btnNewModel);
+		btnNewModel.addActionListener(this);
 		
 		JPanel workPanel = new JPanel();
 		workPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -264,18 +263,26 @@ public class MainView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
+			
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			        "Textfiles", "s1p", "z1p", "y1p");
+			        "Touchstone File Format", "s1p", "z1p", "y1p");
 			openFileChooser.setFileFilter(filter);
-			int returnVal = openFileChooser.showOpenDialog(MainView.this);
+			int returnVal = openFileChooser.showDialog(null, "Open File");
 			
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 	            file = openFileChooser.getSelectedFile();
 				lblInputFile.setText(file.getName());
 			}
+		}
+		
+		//handle new Plots
+		if(e.getSource() == btnNewPlot) {	
+		}
+		
+		//handle new Model
+		if(e.getSource() == btnNewModel) {
 		}
 		
 	}
