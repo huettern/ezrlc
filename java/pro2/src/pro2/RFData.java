@@ -269,7 +269,7 @@ public class RFData {
 			complextmp3 = new Complex(this.r,0);	// resistance as complex number
 			for (Complex complex : normalizedData) {
 				// TODO: Calculations in the next line aren't correct!
-				complextmp1 = Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex)));
+				complextmp1 = new Complex(Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex))));
 				zData.add(complextmp1);
 			}
 			break;
@@ -287,7 +287,7 @@ public class RFData {
 			//
 			complextmp3 = new Complex(this.r,0);	// resistance as complex number
 			for (Complex entry : normalizedData) {
-				complextmp1 = Complex.div(Complex.sub(entry, complextmp3), Complex.add(entry, complextmp3));
+				complextmp1 = new Complex(Complex.div(Complex.sub(entry, complextmp3), Complex.add(entry, complextmp3)));
 				sData.add(complextmp1);
 			}
 			break;

@@ -42,7 +42,8 @@ public class Pro2 {
 				"../../sample_files/bsp11.s1p",
 				"../../sample_files/bsp12.s1p",
 				"../../sample_files/bsp13.s1p",
-				"../../sample_files/bsp14.s1p"
+				"../../sample_files/bsp14.s1p",
+				"../../sample_files/r100zRI.s1p"
 				};
 		for (String string : files) {
 			rfData = new RFData(string);
@@ -66,8 +67,15 @@ public class Pro2 {
 			} 
 			System.out.println("------------------------------------------------");
 		}
-		
-		
+
+		Complex complex = new Complex(1,-3);
+		Complex complextmp1;
+		Complex complextmp2 = new Complex(1.0,0);			// constant 1 as complex number
+		Complex complextmp3 = new Complex(50,0);	// resistance as complex number
+
+		// Z=Ro*((1+S)/(1-S))
+		complextmp1 = new Complex(Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex))));
+		complextmp1.printRI();
 
 		//================================================================================
 	    // XY Test
