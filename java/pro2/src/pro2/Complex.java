@@ -218,7 +218,8 @@ public class Complex {
      * @param cpx
      */
     public void printRI () {
-    	System.out.println(this.re +" + " +this.im +"i");
+    	if(this.im < 0) System.out.printf("%f %fi", this.re, this.im);
+    	else System.out.printf("%f +%fi", this.re, this.im);	
     }
     
     /**
