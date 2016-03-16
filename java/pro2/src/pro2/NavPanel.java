@@ -23,8 +23,6 @@ public class NavPanel extends JPanel implements ActionListener {
 	//================================================================================
     // local variables
     //================================================================================
-	private JFileChooser openFileChooser = new JFileChooser();
-	
 	private JButton btnLoadFile, btnNewModel, btnNewPlot;
 	private JLabel lblInputFile;
 	private File file;
@@ -37,6 +35,7 @@ public class NavPanel extends JPanel implements ActionListener {
 		
 	}
 		
+	
 	/**
 	 * Builds the navigation Panel
 	 */

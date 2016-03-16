@@ -21,6 +21,7 @@ public class WorkPanel extends JPanel {
 	public void build () {
 		this.setPreferredSize(new Dimension(800, 600));
 		this.setBorder(new LineBorder(Color.LIGHT_GRAY));	
+		
 	}
 
 
