@@ -215,7 +215,7 @@ public class RFData {
 		case RI:
 			// convert raw data to complex number
 			for (DataEntry rawEntry : this.rawData) {
-				normalizedData.add(new Complex(rawEntry.getData1(), rawEntry.getData2()));
+				normalizedData.add(new Complex(this.r*rawEntry.getData1(), this.r*rawEntry.getData2()));
 			}
 			break;
 		case MA:
@@ -226,7 +226,7 @@ public class RFData {
 			for (DataEntry rawEntry : this.rawData) {
 				angle = (rawEntry.getData2()*Math.PI)/180.0;
 				mag = rawEntry.getData1();
-				normalizedData.add(new Complex(mag*Math.cos(angle), mag*Math.sin(angle)));
+				normalizedData.add(new Complex(this.r*mag*Math.cos(angle), this.r*mag*Math.sin(angle)));
 			}
 			break;
 		case DB:
@@ -238,7 +238,7 @@ public class RFData {
 			for (DataEntry rawEntry : this.rawData) {
 				angle = (rawEntry.getData2()*Math.PI)/180.0;
 				mag = Math.pow(10, rawEntry.getData1()/20.0 );
-				normalizedData.add(new Complex(mag*Math.cos(angle), mag*Math.sin(angle)));
+				normalizedData.add(new Complex(this.r*mag*Math.cos(angle), this.r*mag*Math.sin(angle)));
 			}
 			break;
 			default:

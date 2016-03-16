@@ -43,7 +43,8 @@ public class Pro2 {
 				"../../sample_files/bsp12.s1p",
 				"../../sample_files/bsp13.s1p",
 				"../../sample_files/bsp14.s1p",
-				"../../sample_files/r100zRI.s1p"
+				"../../sample_files/r100zRI.s1p",
+				"../../sample_files/r100l10uZRI.s1p"
 				};
 		for (String string : files) {
 			rfData = new RFData(string);

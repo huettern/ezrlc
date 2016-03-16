@@ -7,12 +7,12 @@
 clf
 addpath 'incomming/s-param_toolbox/sbox'
 
-IN.inFilenmbr=14;
-IN.file = ['../sample_files/bsp' int2str(IN.inFilenmbr) '.s1p'];
-IN.filecomp = ['../sample_files/bsp' int2str(IN.inFilenmbr) '.s1p.tmp'];
+% IN.inFilenmbr=14;
+% IN.file = ['../sample_files/bsp' int2str(IN.inFilenmbr) '.s1p'];
+% IN.filecomp = ['../sample_files/bsp' int2str(IN.inFilenmbr) '.s1p.tmp'];
 
-% IN.file = ['../sample_files/r100zRI.s1p'];
-% IN.filecomp = ['../sample_files/r100zRI.s1p.tmp'];
+IN.file = ['../sample_files/r100l10uZRI.s1p'];
+IN.filecomp = ['../sample_files/r100l10uZRI.s1p.tmp'];
 
 % read Datafile
 fid_log = fopen('SXPParse_log.txt','w');
@@ -26,7 +26,7 @@ data = s2z(data);
 data2=data(:); % Data to compare
 
 % Extract data from one port
-parsed = data(:);
+parsed = data2(:);
 
 % Calculate Error
 abs_error=abs(A)-abs(parsed);
@@ -71,7 +71,7 @@ subplot(2,1,2)
 hold on
 grid on
 %plot(freq,real(parsed)','LineWidth',1)
-plot(freq,imag(parsed)','LineWidth',1)
+plot(freq,imag(50*50*parsed)','LineWidth',1)
 %plot(freq,real(A)','LineWidth',1)
 plot(freq,imag(A)','LineWidth',1)
 legend('Imag MATLAB','Imag Java')
