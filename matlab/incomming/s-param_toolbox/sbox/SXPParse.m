@@ -262,19 +262,19 @@ end
 j=sqrt(-1);
 switch opt.format
     case 'ri'
-        data = opt.Zo.*raw_data_A + opt.Zo.*j*raw_data_B;
+        data = raw_data_A + j*raw_data_B;
     case 'ma'
-        data = opt.Zo.*(raw_data_A .* cos(raw_data_B*pi/180)) + opt.Zo.*(j* raw_data_A .* sin(raw_data_B*pi/180));
+        data = raw_data_A .* cos(raw_data_B*pi/180) + j* raw_data_A .* sin(raw_data_B*pi/180);
     case 'db'
         t_mag = 10.^(raw_data_A/20); t_ang = raw_data_B*pi/180;
-        data = opt.Zo.*t_mag .* cos(t_ang) + opt.Zo.*j* t_mag .* sin(t_ang);
+        data = t_mag .* cos(t_ang) + j* t_mag .* sin(t_ang);
 end
 % now adjust data f(opt.param) Z,Y,G,H,A
 switch opt.param
     case 'y'
-        data = y2s(data*opt.Zo); % to check in standard if Zo always or Yo
+        data = y2s(data/opt.Zo); % to check in standard if Zo always or Yo
     case 'z'
-        data = z2s(data/opt.Zo);
+        data = z2s(data*opt.Zo);
     case 'a'
         data = a2s(data); % to double check units...
     case 'g'
