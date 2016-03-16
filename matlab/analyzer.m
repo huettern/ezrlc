@@ -4,6 +4,11 @@
 % IN.file = '../sample_files/bsp1.s1p';
 % 
 % 
+clear
+clf
+addpath incomming/s-param_toolbox/sbox/
+
+IN.file = '../sample_files/r100l10uZRI.s1p';
 
 % read Datafile
 fid_log = fopen('SXPParse_log.txt','w');
@@ -11,11 +16,8 @@ fid_log = fopen('SXPParse_log.txt','w');
 
 
 % Extract data from one port
-parsed = zeros(length(data),1);
-for k = 1 : length(data)
-    parsed(k) = data(:,:,k);
-end
-
+data = s2z(data);
+parsed = data(:);
 
 
 % Plotting
@@ -30,6 +32,8 @@ title('phase')
 grid on
 
 subplot(222)
+plot(freq,real(parsed))
+grid on
 %smithchart(parsed)
 
 
