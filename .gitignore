@@ -36,4 +36,3 @@ buildNumber.properties
 # Other
 *.tmp
 *log.txt
-matlab/incomming/s-param_toolbox/*
