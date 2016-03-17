@@ -40,7 +40,7 @@ public class FileChooser extends JComponent implements Accessible{
 	
 	public void fileFilter() {
 		FileNameExtensionFilter fileFilter = new FileNameExtensionFilter(
-		        "Touchstone File Format", "s1p", "z1p", "y1p");
+		        "Touchstone File Format (*.s1p, *.z1p, *.y1p)", "s1p", "z1p", "y1p");
 		fileChooser.setFileFilter(fileFilter);
 		
 	}
