@@ -43,8 +43,16 @@ public class Pro2 {
 				"../../sample_files/bsp12.s1p",
 				"../../sample_files/bsp13.s1p",
 				"../../sample_files/bsp14.s1p",
-				"../../sample_files/r100zRI.s1p",
-				"../../sample_files/r100l10uZRI.s1p"
+				"../../sample_files/r100zRI.s1p", 
+				"../../sample_files/r100l10uZRI.s1p",
+				"../../sample_files/r100l10uZMA.s1p",
+				"../../sample_files/r100l10uZDB.s1p",
+				"../../sample_files/r100l10SZRI.s1p",
+				"../../sample_files/r100l10SZMA.s1p",
+				"../../sample_files/r100l10SZDB.s1p",
+				"../../sample_files/r100l10YZRI.s1p",
+				"../../sample_files/r100l10YZMA.s1p",
+				"../../sample_files/r100l10YZDB.s1p"
 				};
 		for (String string : files) {
 			rfData = new RFData(string);
@@ -57,7 +65,7 @@ public class Pro2 {
 			System.out.println("Writing to file..");
 			try {
 				FileWriter writer = new FileWriter(string+".tmp");
-				for (Complex cpx : rfData.getzData()) {
+				for (Complex cpx : rfData.getsData()) {
 					writer.write(cpx.sprintRI()+"\r\n");
 				}
 				writer.close();

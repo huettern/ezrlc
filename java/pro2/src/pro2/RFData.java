@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.UUID;
 
 /**
@@ -66,6 +67,9 @@ public class RFData {
 	
 	// Impedance data
 	private List<Complex> zData = new ArrayList<Complex>();
+	
+	// Admittance data
+	private List<Complex> yData = new ArrayList<Complex>();
 	
 	// Frequency points
 	private List<Double> fData = new ArrayList<Double>();
@@ -188,6 +192,7 @@ public class RFData {
 	    br.close();
 	    
 	    this.normalizeRawData();
+	    this.compensateMeasurementResistance();
 	    this.adjustNormalizedData();
 	    
 	    // Copy f-Information
@@ -199,7 +204,7 @@ public class RFData {
 		System.out.println("Freq multiplier="+this.freqMultiplier);
 		System.out.println("Type: "+this.dataType+" Units: "+this.dataUnit+" R: "+this.r);
 	}
-	
+
 	//================================================================================
     // Private Functions
     //================================================================================
@@ -215,7 +220,7 @@ public class RFData {
 		case RI:
 			// convert raw data to complex number
 			for (DataEntry rawEntry : this.rawData) {
-				normalizedData.add(new Complex(this.r*rawEntry.getData1(), this.r*rawEntry.getData2()));
+				normalizedData.add(new Complex(rawEntry.getData1(), rawEntry.getData2()));
 			}
 			break;
 		case MA:
@@ -226,7 +231,7 @@ public class RFData {
 			for (DataEntry rawEntry : this.rawData) {
 				angle = (rawEntry.getData2()*Math.PI)/180.0;
 				mag = rawEntry.getData1();
-				normalizedData.add(new Complex(this.r*mag*Math.cos(angle), this.r*mag*Math.sin(angle)));
+				normalizedData.add(new Complex(mag*Math.cos(angle), mag*Math.sin(angle)));
 			}
 			break;
 		case DB:
@@ -238,7 +243,7 @@ public class RFData {
 			for (DataEntry rawEntry : this.rawData) {
 				angle = (rawEntry.getData2()*Math.PI)/180.0;
 				mag = Math.pow(10, rawEntry.getData1()/20.0 );
-				normalizedData.add(new Complex(this.r*mag*Math.cos(angle), this.r*mag*Math.sin(angle)));
+				normalizedData.add(new Complex(mag*Math.cos(angle), mag*Math.sin(angle)));
 			}
 			break;
 			default:
@@ -251,6 +256,39 @@ public class RFData {
 	}
 	
 	/**
+	 * Compensates the measurement resistance
+	 */
+	private void compensateMeasurementResistance() {
+		double factor = 1;
+		
+		// Switch by datatype
+		switch (this.dataType) {
+		case S:
+			// Do nothing with the data
+			break;
+			
+		case Y:
+			// Multiply real and imaginary part by the resistance
+			factor=1.0/this.r;
+			break;
+		case Z:
+			// Multiply real and imaginary part by the resistance
+			factor=this.r;
+			break;
+
+		default:
+			break;
+		}
+		
+		// Change every item in the list
+		for (final ListIterator<Complex> c = normalizedData.listIterator(); c.hasNext();) {
+		  Complex element = c.next();
+		  element = element.times(factor);
+		  c.set(element);
+		}
+	}
+	
+	/**
 	 * Adjusts the normalized values to S-Parameters including Z0-Compensation
 	 */
 	private void adjustNormalizedData() {
@@ -258,6 +296,9 @@ public class RFData {
 		switch (this.dataType) {
 		case S:
 			// If the data is already scattering, then copy the scattering data...
+			//
+			// S=S
+			//
 			for (Complex entry : normalizedData) {
 				sData.add(new Complex(entry));
 			}
@@ -272,12 +313,43 @@ public class RFData {
 				complextmp1 = new Complex(Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex))));
 				zData.add(complextmp1);
 			}
+			//
+			// Y=1/Z
+			//
+			complextmp1 = new Complex(1,0);
+			for (Complex entry : zData) {
+				yData.add(Complex.div(complextmp1, entry));
+			}
 			break;
 		case Y:
-			// TODO Implement Y parameter reading
+			// If the data is already scattering, then copy the scattering data...
+			//
+			// Y=Y
+			//
+			for (Complex entry : normalizedData) {
+				yData.add(new Complex(entry));
+			}
+			//
+			// Z=1/Y
+			//
+			complextmp1 = new Complex(1,0);
+			for (Complex entry : normalizedData) {
+				zData.add(Complex.div(complextmp1, entry));
+			}
+			//
+			// S=(Z-R0)/(Z+Ro)
+			//
+			complextmp3 = new Complex(this.r,0);	// resistance as complex number
+			for (Complex entry : zData) {
+				complextmp1 = new Complex(Complex.div(Complex.sub(entry, complextmp3), Complex.add(entry, complextmp3)));
+				sData.add(complextmp1);
+			}
 			break;
 		case Z:
 			// if the data is already impedance, conpy impedance...
+			//
+			// Z=Z
+			//
 			for (Complex entry : normalizedData) {
 				zData.add(new Complex(entry));
 			}
@@ -289,6 +361,13 @@ public class RFData {
 			for (Complex entry : normalizedData) {
 				complextmp1 = new Complex(Complex.div(Complex.sub(entry, complextmp3), Complex.add(entry, complextmp3)));
 				sData.add(complextmp1);
+			}
+			//
+			// Y=1/Z
+			//
+			complextmp1 = new Complex(1,0);
+			for (Complex entry : zData) {
+				yData.add(Complex.div(complextmp1, entry));
 			}
 			break;
 		default:
