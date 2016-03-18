@@ -1,4 +1,4 @@
-function y = s2y(s);
+function y = s2y(Zo,s);
 
 % Y = s2y(S)
 %
@@ -13,5 +13,5 @@ function y = s2y(s);
 I = diag(ones(1, size(s,2)));
 
 for i=1:size(s,3)
-   y(:,:,i) = (I-s(:,:,i)) * inv(I+s(:,:,i));
+   y(:,:,i) = (1/Zo).*(I-s(:,:,i)) * inv(I+s(:,:,i));
 end;
