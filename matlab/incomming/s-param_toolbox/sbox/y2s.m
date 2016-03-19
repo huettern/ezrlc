@@ -1,4 +1,4 @@
-function s = y2s(y)
+function s = y2s(Zo,y)
 % S = y2s(Y)
 %
 % Admittance to Scattering transformation
@@ -14,7 +14,7 @@ function s = y2s(y)
     else nF = 1;  
     end;
   
-I = diag(ones(1, size(y,2)));
+I = (1/Zo).*diag(ones(1, size(y,2)));
 
 
   for i=1:nF

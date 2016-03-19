@@ -1,4 +1,4 @@
-function z = s2z(s);
+function z = s2z(Zo,s);
 
 % Z = s2z(S)
 %
@@ -14,5 +14,5 @@ function z = s2z(s);
 I = diag(ones(1, size(s,2)));
 
 for i=1:size(s,3)
-    z(:,:,i) = (I+s(:,:,i)) * inv(I-s(:,:,i));
+    z(:,:,i) = Zo.*((I+s(:,:,i)) * inv(I-s(:,:,i)));
 end;

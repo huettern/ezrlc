@@ -1,4 +1,4 @@
-function s = z2s(z);
+function s = z2s(Zo,z);
 
 % S = z2s(Z)
 %
@@ -8,7 +8,7 @@ function s = z2s(z);
 %
 % s = inv(z+I) * (z-I)
 
-I = diag(ones(1, size(z,2)));
+I = Zo.*diag(ones(1, size(z,2)));
 
 for i=1:size(z,3)
     s(:,:,i) = inv(z(:,:,i)+I) * (z(:,:,i)-I) ;
