@@ -12,8 +12,8 @@ addpath 'incomming/s-param_toolbox/sbox'
  %IN.file = ['../sample_files/bsp' int2str(IN.inFilenmbr) '.s1p'];
  %IN.filecomp = ['../sample_files/bsp' int2str(IN.inFilenmbr) '.s1p.tmp'];
 
- IN.file = ['../sample_files/r100l10uYRI.s1p'];
- IN.filecomp = ['../sample_files/r100l10uYRI.s1p.tmp'];
+ IN.file = ['../sample_files/r100l10uSRI.s1p'];
+ IN.filecomp = ['../sample_files/r100l10uSRI.s1p.tmp'];
 
 % read Datafile
 fid_log = fopen('SXPParse_log.txt','w');

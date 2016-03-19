@@ -14,7 +14,7 @@ function s = y2s(Zo,y)
     else nF = 1;  
     end;
   
-I = Zo.*diag(ones(1, size(y,2)));
+I = (1/Zo).*diag(ones(1, size(y,2)));
 
 
   for i=1:nF
