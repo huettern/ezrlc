@@ -1,4 +1,4 @@
-package pro2;
+package pro2.View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -41,6 +41,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JList;
 import javax.swing.tree.DefaultTreeModel;
+
+import pro2.Controller;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -49,8 +52,8 @@ import java.awt.Frame;
 
 public class MainView extends JFrame {
 	
-	private NavPanel navPanel = new NavPanel();
-	private WorkPanel workPanel = new WorkPanel();
+	private NavPanel navPanel;
+	private WorkPanel workPanel;
 	
 	private Controller controller;
 	private DefaultMutableTreeNode fileTreeTop = new DefaultMutableTreeNode("Input Files");
@@ -66,7 +69,7 @@ public class MainView extends JFrame {
 	 */
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1261, 774);
+		setBounds(100, 100, 553, 402);
 		
 		//menuBar
 		JMenuBar menuBar = new JMenuBar();
@@ -101,8 +104,10 @@ public class MainView extends JFrame {
 		contentPanel.add(splitPane);
 		
 		//Add navPanel & workPanel
+		navPanel = new NavPanel(this);
 		splitPane.setLeftComponent(navPanel);
 		navPanel.build();
+		workPanel = new WorkPanel(this);
 		splitPane.setRightComponent(workPanel);
 		workPanel.build();
 

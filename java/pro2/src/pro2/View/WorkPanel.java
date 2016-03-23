@@ -1,4 +1,4 @@
-package pro2;
+package pro2.View;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,10 +9,16 @@ import javax.swing.border.LineBorder;
 public class WorkPanel extends JPanel {
 	
 	//================================================================================
+    // Local Variables
+    //================================================================================
+	private MainView mainView;
+	
+
+	//================================================================================
     // Constructors
     //================================================================================
-	public void WorkPanel() {
-
+	public WorkPanel(MainView mainView) {
+		this.mainView = mainView;
 	}
 	
 	/**

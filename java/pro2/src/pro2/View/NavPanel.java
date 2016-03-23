@@ -1,4 +1,4 @@
-package pro2;
+package pro2.View;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,13 +19,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class NavPanel extends JPanel implements ActionListener {
-	public NavPanel() {
-	}
 	
 	//================================================================================
-    // local variables
+    // Local Variables
     //================================================================================
-	private FileChooser fileChooser = new FileChooser();
+	private MainView mainView;
+	
+	private FileChooser fileChooser;
+	private PlotDialog plotDialog;
 	
 	private JButton btnLoadFile, btnNewModel, btnNewPlot;
 	private JLabel lblInputFile;
@@ -35,8 +36,10 @@ public class NavPanel extends JPanel implements ActionListener {
 	//================================================================================
     // Constructors
     //================================================================================
-	public void NavPanel() {
-		
+	public NavPanel(MainView mainView) {
+		this.mainView = mainView;	
+		this.fileChooser = new FileChooser(this.mainView);
+		this.plotDialog = new PlotDialog(this.mainView);
 	}
 		
 	
@@ -187,20 +190,11 @@ public class NavPanel extends JPanel implements ActionListener {
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
 			lblInputFile.setText(fileChooser.windowFileChooser());
-			
-			/*FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			        "Touchstone File Format", "s1p", "z1p", "y1p");
-			openFileChooser.setFileFilter(filter);
-			int returnVal = openFileChooser.showDialog(null, "Open File");
-			
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            file = openFileChooser.getSelectedFile();
-				lblInputFile.setText(file.getName());
-			}*/
 		}
 		
 		//handle new Plots
 		if(e.getSource() == btnNewPlot) {	
+			plotDialog.buildDialog();
 		}
 		
 		//handle new Model

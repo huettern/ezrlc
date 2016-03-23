@@ -1,4 +1,4 @@
-package pro2;
+package pro2.View;
 
 import java.io.File;
 
@@ -12,25 +12,20 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class FileChooser extends JComponent implements Accessible{
 	
 	//================================================================================
-    // local variables
+    // Local Variables
     //================================================================================
+	private MainView mainView;
 	JFileChooser fileChooser = new JFileChooser();
 	private File file;
 	
 	//================================================================================
     // Constructors
     //================================================================================
-	public void FileChooser() {
-		
+	public FileChooser(MainView mainView) {
+		this.mainView = mainView;
 	}
 	
 	public String windowFileChooser() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (Exception exception) { 
-			exception.printStackTrace(); 
-		}
-		
 		int returnVal = fileChooser.showDialog(null, "Open File");
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
