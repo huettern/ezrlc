@@ -1,6 +1,10 @@
 package pro2.Plot;
 
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
@@ -40,11 +44,11 @@ public class Axis {
 	//================================================================================
     // Constructors
     //================================================================================
-	public Axis(RectangularPlot parent, Orientation or, int x, int y) {
+	public Axis(RectangularPlot parent, Orientation or, Point origin) {
 		this.or = or;
 		this.parent = parent;
-		this.origin_x = x;
-		this.origin_y = y;
+		this.origin_x = origin.x;
+		this.origin_y = origin.y;
 		this.evalSize();
 	}
 	
@@ -63,6 +67,7 @@ public class Axis {
 		for(int i = 0; i <= label_count; i++)
 		{
 			g.drawString(this.formatAxisValue(label_val[i]), label_posx[i], label_posy[i]);
+			//this.drawCenteredString(g,this.formatAxisValue(label_val[i]),new Rectangle(new Point(label_posx[i], label_posy[i])), new Font("Arial", Font.PLAIN, 12));
 		}
 	}
 
@@ -111,11 +116,11 @@ public class Axis {
 			
 			// Calculate String positions
 			label_count = this.step;
-			double spacing = ((this.end_y-this.start_y)/this.step);
+			double spacing = ((this.start_y-this.end_y)/this.step);
 			double data_spacing = ((this.max-this.min)/this.step);
 			for(int i = 0; i <= label_count; i++)
 			{
-				label_posy[i] = this.origin_y - (int)(i*spacing);
+				label_posy[i] = this.start_y - (int)(i*spacing);
 				label_posx[i] = this.start_x + this.label_offset;
 				label_val[i] = this.min + (i*data_spacing);
 			}
@@ -124,6 +129,28 @@ public class Axis {
 	
 	private String formatAxisValue(double d) {
 		return String.format("%.1f", d);
+	}
+	
+	/**
+	 * Draw a String centered in the middle of a Rectangle.
+	 *
+	 * @param g The Graphics instance.
+	 * @param text The String to draw.
+	 * @param rect The Rectangle to center the text in.
+	 */
+	private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
+	    // Get the FontMetrics
+	    FontMetrics metrics = g.getFontMetrics(font);
+	    // Determine the X coordinate for the text
+	    int x = (rect.width - metrics.stringWidth(text)) / 2;
+	    // Determine the Y coordinate for the text
+	    int y = ((rect.height - metrics.getHeight()) / 2) - metrics.getAscent();
+	    // Set the font
+	    g.setFont(font);
+	    // Draw the String
+	    g.drawString(text, x, y);
+	    // Dispose the Graphics
+	    g.dispose();
 	}
 
 
