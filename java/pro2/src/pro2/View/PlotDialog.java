@@ -29,7 +29,12 @@ public class PlotDialog {
 	}
 	
 	private void setPlotOptions() {
+		//rechteck
 		//JRadioButton birdButton = new JRadioButton(birdString);
+		
+		//y-Achse Z,
+		//x-Achse Freuqenz, real, imaginär
+
 	}
 
 }
