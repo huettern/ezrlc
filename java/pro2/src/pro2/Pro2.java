@@ -3,12 +3,16 @@
  */
 package pro2;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.GridBagLayout;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
@@ -18,6 +22,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.util.ArrayUtilities;
+
+import pro2.Plot.Figure;
 
 /**
  * @author noah
@@ -29,62 +35,98 @@ public class Pro2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		RFData rfData = null;
 		
 		
-		// TODO Auto-generated method stub
-		String[] files = {"../../sample_files/bsp1.s1p",
-				"../../sample_files/bsp2.s1p",
-				"../../sample_files/bsp3.s1p",
-				"../../sample_files/bsp4.s1p",
-				"../../sample_files/bsp5.s1p",
-				"../../sample_files/bsp6.s1p",
-				"../../sample_files/bsp11.s1p",
-				"../../sample_files/bsp12.s1p",
-				"../../sample_files/bsp13.s1p",
-				"../../sample_files/bsp14.s1p",
-				"../../sample_files/r100zRI.s1p", 
-				"../../sample_files/r100l10uZRI.s1p",
-				"../../sample_files/r100l10uZMA.s1p",
-				"../../sample_files/r100l10uZDB.s1p",
-				"../../sample_files/r100l10SZRI.s1p",
-				"../../sample_files/r100l10SZMA.s1p",
-				"../../sample_files/r100l10SZDB.s1p",
-				"../../sample_files/r100l10YZRI.s1p",
-				"../../sample_files/r100l10YZMA.s1p",
-				"../../sample_files/r100l10YZDB.s1p"
-				};
-		for (String string : files) {
-			rfData = new RFData(string);
-			try {
-				rfData.parse();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("Writing to file..");
-			try {
-				FileWriter writer = new FileWriter(string+".tmp");
-				for (Complex cpx : rfData.getsData()) {
-					writer.write(cpx.sprintRI()+"\r\n");
-				}
-				writer.close();
-				System.out.println(".. Done");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-			System.out.println("------------------------------------------------");
-		}
+		JFrame frame = new JFrame("Test");
+        frame.setSize(500, 400);
+        frame.setLocationRelativeTo(null);
 
-		Complex complex = new Complex(1,-3);
-		Complex complextmp1;
-		Complex complextmp2 = new Complex(1.0,0);			// constant 1 as complex number
-		Complex complextmp3 = new Complex(50,0);	// resistance as complex number
+        Figure plot = new Figure("Graph 1");
+        
+        frame.getContentPane().add(plot);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.pack();
+		frame.setVisible(true);
+        
+        
+        
+//		JFrame frame = new JFrame();
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setBounds(100, 100, 1000, 800);
+//		frame.setVisible(true);
+////		GridBagLayout gbl = new GridBagLayout();
+////		frame.setLayout(gbl);
+////		
+//		
+//		JPanel pnl = new JPanel();
+//		//frame.add(pnl);
+//		frame.getContentPane().add(pnl);
+//		
+//		
+//		pnl.setVisible(true);
+//		pnl.setBackground(Color.WHITE);
+		
+		
+		
+		
+		//================================================================================
+	    // RF Data Test
+	    //================================================================================
 
-		// Z=Ro*((1+S)/(1-S))
-		complextmp1 = new Complex(Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex))));
-		complextmp1.printRI();
+//		RFData rfData = null;
+//		// TODO Auto-generated method stub
+//		String[] files = {"../../sample_files/bsp1.s1p",
+//				"../../sample_files/bsp2.s1p",
+//				"../../sample_files/bsp3.s1p",
+//				"../../sample_files/bsp4.s1p",
+//				"../../sample_files/bsp5.s1p",
+//				"../../sample_files/bsp6.s1p",
+//				"../../sample_files/bsp11.s1p",
+//				"../../sample_files/bsp12.s1p",
+//				"../../sample_files/bsp13.s1p",
+//				"../../sample_files/bsp14.s1p",
+//				"../../sample_files/r100zRI.s1p", 
+//				"../../sample_files/r100l10uZRI.s1p",
+//				"../../sample_files/r100l10uZMA.s1p",
+//				"../../sample_files/r100l10uZDB.s1p",
+//				"../../sample_files/r100l10SZRI.s1p",
+//				"../../sample_files/r100l10SZMA.s1p",
+//				"../../sample_files/r100l10SZDB.s1p",
+//				"../../sample_files/r100l10YZRI.s1p",
+//				"../../sample_files/r100l10YZMA.s1p",
+//				"../../sample_files/r100l10YZDB.s1p"
+//				};
+//		for (String string : files) {
+//			rfData = new RFData(string);
+//			try {
+//				rfData.parse();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			System.out.println("Writing to file..");
+//			try {
+//				FileWriter writer = new FileWriter(string+".tmp");
+//				for (Complex cpx : rfData.getsData()) {
+//					writer.write(cpx.sprintRI()+"\r\n");
+//				}
+//				writer.close();
+//				System.out.println(".. Done");
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} 
+//			System.out.println("------------------------------------------------");
+//		}
+//
+//		Complex complex = new Complex(1,-3);
+//		Complex complextmp1;
+//		Complex complextmp2 = new Complex(1.0,0);			// constant 1 as complex number
+//		Complex complextmp3 = new Complex(50,0);	// resistance as complex number
+//
+//		// Z=Ro*((1+S)/(1-S))
+//		complextmp1 = new Complex(Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex))));
+//		complextmp1.printRI();
 
 		//================================================================================
 	    // XY Test
