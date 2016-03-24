@@ -5,6 +5,8 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -30,6 +32,7 @@ public class Axis {
 	private int end_x, end_y;
 	
 	private int origin_x, origin_y;
+	private int size;
 	
 	private double min = 0;
 	private double max = 0;
@@ -40,6 +43,9 @@ public class Axis {
 	private double[] label_val = new double[200];
 	private int label_count = 0;
 	private int label_offset = 0;	// Position offset from the axis
+	
+	private Point[] tic_pos = new Point[200];
+	private int ticLenght = 10;
 
 	//================================================================================
     // Constructors
@@ -49,6 +55,26 @@ public class Axis {
 		this.parent = parent;
 		this.origin_x = origin.x;
 		this.origin_y = origin.y;
+		
+		for(int i=0; i<200; i++) {
+			tic_pos[i] = new Point (0,0);
+		}
+		this.evalSize();
+	}
+	public Axis(RectangularPlot parent, Orientation or, Point origin, int size, double min, double max, int step, int labelOffset) {
+		this.or = or;
+		this.parent = parent;
+		this.origin_x = origin.x;
+		this.origin_y = origin.y;
+		this.size = size;
+		this.min = min;
+		this.max = max;
+		this.step = step;
+		this.label_offset = labelOffset;
+
+		for(int i=0; i<200; i++) {
+			tic_pos[i] = new Point (0,0);
+		}
 		this.evalSize();
 	}
 	
@@ -66,8 +92,9 @@ public class Axis {
 		
 		for(int i = 0; i <= label_count; i++)
 		{
-			g.drawString(this.formatAxisValue(label_val[i]), label_posx[i], label_posy[i]);
-			//this.drawCenteredString(g,this.formatAxisValue(label_val[i]),new Rectangle(new Point(label_posx[i], label_posy[i])), new Font("Arial", Font.PLAIN, 12));
+			//g.drawString(this.formatAxisValue(label_val[i]), label_posx[i], label_posy[i]);
+			this.drawCenteredString(g,this.formatAxisValue(label_val[i]),new Point(label_posx[i], label_posy[i]), new Font("Arial", Font.PLAIN, 12));
+			this.drawTick(g, tic_pos[i]);
 		}
 	}
 
@@ -84,6 +111,31 @@ public class Axis {
 	public void setLabelOffset(int off) {
 		this.label_offset=off;
 	}
+
+	//================================================================================
+    // Getter Functions
+    //================================================================================
+	/**
+	 * Returns the location of the axis tics
+	 * @return
+	 */
+	public List<Point> getTicPoints() {
+		List<Point> points = new ArrayList<Point>();
+		for(int i = 0; i <= this.label_count; i++) {
+			points.add(tic_pos[i]);
+		}
+		return points; 
+	}
+	
+	/**
+	 * Returns the Origin of the axis
+	 * @return
+	 */
+	public Point getOrigin () {
+		return new Point(this.origin_x, this.origin_y);
+	}
+	
+	
 	//================================================================================
     // Private Functions
     //================================================================================
@@ -92,10 +144,10 @@ public class Axis {
 			// Calculate origins
 			this.start_x = this.origin_x;
 			this.start_y = parent.getHeight()-this.origin_y;
-			this.end_x = parent.getWidth();
+			this.end_x = parent.getWidth() - this.size;
 			this.end_y = start_y;
 			
-			// Calculate String positions
+			// Calculate String and tic positions
 			label_count = this.step;
 			double spacing = ((this.end_x-this.start_x)/this.step);
 			double data_spacing = ((this.max-this.min)/this.step);
@@ -104,7 +156,11 @@ public class Axis {
 				label_posx[i] = this.origin_x + (int)(i*spacing);
 				label_posy[i] = this.start_y + this.label_offset;
 				label_val[i] = this.min + (i*data_spacing);
+				tic_pos[i].x = this.origin_x + (int)(i*spacing);
+				tic_pos[i].y = this.start_y;
 			}
+			
+			
 			
 		}
 		else if(or == Orientation.VERTICAL) {
@@ -112,7 +168,7 @@ public class Axis {
 			this.start_x = this.origin_x;
 			this.start_y = parent.getHeight()-this.origin_y;
 			this.end_x = this.start_x;
-			this.end_y = 0;
+			this.end_y = this.size;
 			
 			// Calculate String positions
 			label_count = this.step;
@@ -123,6 +179,8 @@ public class Axis {
 				label_posy[i] = this.start_y - (int)(i*spacing);
 				label_posx[i] = this.start_x + this.label_offset;
 				label_val[i] = this.min + (i*data_spacing);
+				tic_pos[i].x = this.start_x;
+				tic_pos[i].y = this.start_y - (int)(i*spacing);
 			}
 		}
 	}
@@ -138,19 +196,41 @@ public class Axis {
 	 * @param text The String to draw.
 	 * @param rect The Rectangle to center the text in.
 	 */
-	private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
+	private void drawCenteredString(Graphics g, String text, Point point, Font font) {
 	    // Get the FontMetrics
-	    FontMetrics metrics = g.getFontMetrics(font);
+	    FontMetrics metrics = g.getFontMetrics();
 	    // Determine the X coordinate for the text
-	    int x = (rect.width - metrics.stringWidth(text)) / 2;
+	    int x = point.x - (metrics.stringWidth(text) / 2);
 	    // Determine the Y coordinate for the text
-	    int y = ((rect.height - metrics.getHeight()) / 2) - metrics.getAscent();
+	    int y = point.y ;//+ (int)(metrics.getHeight() / 2) ;//+ metrics.getAscent();
 	    // Set the font
-	    g.setFont(font);
+	    //g.setFont(font);
 	    // Draw the String
 	    g.drawString(text, x, y);
 	    // Dispose the Graphics
-	    g.dispose();
+	    //g.dispose();
+	}
+	
+	/**
+	 * Draws an axis tic at the given location
+	 * @param g
+	 * @param loc
+	 */
+	private void drawTick (Graphics g, Point loc) {
+		int sx = 0, sy = 0, ex = 0, ey = 0;
+		if(this.or == Orientation.HORIZONTAL) {
+			sx = loc.x;
+			sy = loc.y-(int)(this.ticLenght/2);
+			ex = loc.x;
+			ey = loc.y+(int)(this.ticLenght/2);
+		}
+		if(this.or == Orientation.VERTICAL) {
+			sx = loc.x-(int)(this.ticLenght/2);
+			sy = loc.y;
+			ex = loc.x+(int)(this.ticLenght/2);
+			ey = loc.y;
+		}
+		g.drawLine(sx, sy, ex, ey);
 	}
 
 
