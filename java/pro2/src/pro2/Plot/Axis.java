@@ -135,6 +135,38 @@ public class Axis {
 		return new Point(this.origin_x, this.origin_y);
 	}
 	
+	/**
+	 * Retursn the startpoint of the axis
+	 * @return
+	 */
+	public Point getStart () {
+		return new Point(this.start_x, this.start_y);
+	}
+	
+	/**
+	 * Returns the endpoint of the axis
+	 * @return
+	 */
+	public Point getEnd () {
+		return new Point(this.end_x, this.end_y);
+	}
+	
+	/**
+	 * Returns the axis minimum value
+	 * @return
+	 */
+	public double getMin () {
+		return this.min;
+	}
+	
+	/**
+	 * returns the axis maximum value
+	 * @return
+	 */
+	public double getMax () {
+		return this.max;
+	}
+	
 	
 	//================================================================================
     // Private Functions

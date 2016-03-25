@@ -10,6 +10,8 @@ import java.awt.Font;
 
 public class Figure extends JPanel {
 
+	private RectangularPlot rectPlot;
+	
 	public Figure(String title) {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -29,14 +31,19 @@ public class Figure extends JPanel {
 		add(lblTitle, gbc_lblTitle);
 
 
-		RectangularPlot plot = new RectangularPlot();
+		rectPlot = new RectangularPlot();
 		GridBagConstraints gbc_plot = new GridBagConstraints();
 		gbc_plot.insets = new Insets(0, 40, 40, 40);
 		gbc_plot.weightx = 1.0;
 		gbc_plot.fill = GridBagConstraints.BOTH;
 		gbc_plot.gridx = 0;
 		gbc_plot.gridy = 1;
-		add(plot, gbc_plot);	
+		add(rectPlot, gbc_plot);	
+	}
+
+	public void addDataSet(PlotDataSet z_data) {
+		// TODO Auto-generated method stub
+		rectPlot.addDataSet(z_data);
 	}
 
 }

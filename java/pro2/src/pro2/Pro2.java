@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.util.ArrayUtilities;
 
 import pro2.Plot.Figure;
+import pro2.Plot.PlotDataSet;
 
 /**
  * @author noah
@@ -35,15 +37,44 @@ public class Pro2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
+		RFData rfData = new RFData("../../sample_files/r100l10uZRI.s1p");;
+		try {
+			rfData.parse();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		JFrame frame = new JFrame("Test");
         frame.setSize(500, 400);
         frame.setLocationRelativeTo(null);
 
-        Figure plot = new Figure("Graph 1");
+        Figure fig = new Figure("Graph 1");
         
-        frame.getContentPane().add(plot);
+//        List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
+//        // Extract imaginary part
+//        int i = 0;
+//        for (Complex in : rfData.getzData()) {
+//			z_imag.set(i, in.im());
+//			i++;
+//		}
+//        PlotDataSet z_data = new PlotDataSet(rfData.getfData(), z_imag);
+        
+        // Create test data set
+        List<Double> xtest = new ArrayList<Double>();
+        List<Double> ytest = new ArrayList<Double>();
+        for(int i = 0; i<100; i++) {
+        	xtest.add(Double.valueOf(i));
+        	ytest.add(Double.valueOf(i/10.0));
+        }
+        PlotDataSet testset = new PlotDataSet(xtest, ytest);
+        
+        //fig.addDataSet(z_data);
+        fig.addDataSet(testset);
+        
+        frame.getContentPane().add(fig);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.pack();
 		frame.setVisible(true);

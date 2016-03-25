@@ -3,10 +3,13 @@ package pro2.Plot;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import pro2.Plot.Grid.Orientation;
+import pro2.Plot.PlotDataSet;
 
 public class RectangularPlot extends JPanel {
 
@@ -18,7 +21,9 @@ public class RectangularPlot extends JPanel {
 
 	private Grid horGrid;
 	private Grid verGrid;
-
+	
+	private List<PlotDataSet> dataSets = new ArrayList<PlotDataSet>();
+	
 	//================================================================================
     // Constructors
     //================================================================================
@@ -53,6 +58,18 @@ public class RectangularPlot extends JPanel {
         this.verAxis.paint(g);
         this.verGrid.paint(g);
         this.horGrid.paint(g);
+        
+        for (PlotDataSet plotDataSet : this.dataSets) {
+			plotDataSet.paint(g);
+		}
     }
+
+
+	public void addDataSet(PlotDataSet dataSet) {
+		// TODO Auto-generated method stub
+		dataSet.setAxis(horAxis, verAxis);
+		this.dataSets.add(dataSet);
+		
+	}
 
 }
