@@ -26,9 +26,9 @@ public class NavPanel extends JPanel implements ActionListener {
 	private MainView mainView;
 	
 	private FileChooser fileChooser;
-	private PlotDialog plotDialog;
+	private GraphDialog GraphDialog;
 	
-	private JButton btnLoadFile, btnNewModel, btnNewPlot;
+	private JButton btnLoadFile, btnNewModel, btnNewGraph;
 	private JLabel lblInputFile;
 	private File file;
 	
@@ -39,10 +39,13 @@ public class NavPanel extends JPanel implements ActionListener {
 	public NavPanel(MainView mainView) {
 		this.mainView = mainView;	
 		this.fileChooser = new FileChooser(this.mainView);
-		this.plotDialog = new PlotDialog(this.mainView);
+		this.GraphDialog = new GraphDialog(this.mainView);
 	}
 		
 	
+	//================================================================================
+    // Public Functions
+    //================================================================================
 	/**
 	 * Builds the navigation Panel
 	 */
@@ -58,7 +61,7 @@ public class NavPanel extends JPanel implements ActionListener {
 		this.setLayout(gbl_navPanel);
 		
 		this.buildFilePanel();
-		this.buildPlotPanel();
+		this.buildGraphPanel();
 		this.buildModelPanel();
 	}
 	
@@ -112,12 +115,12 @@ public class NavPanel extends JPanel implements ActionListener {
 	}
 		
 	/**
-	 * build the plot panel
+	 * build the Graph panel
 	 */
-	private void buildPlotPanel() {
+	private void buildGraphPanel() {
 		JPanel pnlPanel = new JPanel();
 		pnlPanel.setMaximumSize(new Dimension(0, 0));
-		pnlPanel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Plot", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		pnlPanel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Graph", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlPanel = new GridBagConstraints();
 		gbc_pnlPanel.anchor = GridBagConstraints.NORTH;
 		gbc_pnlPanel.insets = new Insets(0, 0, 5, 0);
@@ -132,14 +135,17 @@ public class NavPanel extends JPanel implements ActionListener {
 		gbl_pnlPanel.rowWeights = new double[]{0.0};
 		pnlPanel.setLayout(gbl_pnlPanel);
 		
-		//New Plot Button
-		btnNewPlot = new JButton("New Plot");
-		GridBagConstraints gbc_btnNewPlot = new GridBagConstraints();
-		gbc_btnNewPlot.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewPlot.gridx = 0;
-		gbc_btnNewPlot.gridy = 0;
-		pnlPanel.add(btnNewPlot, gbc_btnNewPlot);
-		btnNewPlot.addActionListener(this);
+		//New Graph Button
+		btnNewGraph = new JButton("New Graph");
+		btnNewGraph.setPreferredSize(new Dimension(87, 23));
+		btnNewGraph.setMinimumSize(new Dimension(87, 23));
+		btnNewGraph.setMaximumSize(new Dimension(87, 23));
+		GridBagConstraints gbc_btnNewGraph = new GridBagConstraints();
+		gbc_btnNewGraph.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewGraph.gridx = 0;
+		gbc_btnNewGraph.gridy = 0;
+		pnlPanel.add(btnNewGraph, gbc_btnNewGraph);
+		btnNewGraph.addActionListener(this);
 	}
 		
 	/**
@@ -175,6 +181,9 @@ public class NavPanel extends JPanel implements ActionListener {
 		
 		//New Model Button
 		btnNewModel = new JButton("New Model");
+		btnNewModel.setPreferredSize(new Dimension(87, 23));
+		btnNewModel.setMinimumSize(new Dimension(87, 23));
+		btnNewModel.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnNewModel = new GridBagConstraints();
 		gbc_btnNewModel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewModel.gridx = 0;
@@ -192,9 +201,9 @@ public class NavPanel extends JPanel implements ActionListener {
 			lblInputFile.setText(fileChooser.windowFileChooser());
 		}
 		
-		//handle new Plots
-		if(e.getSource() == btnNewPlot) {	
-			plotDialog.buildDialog();
+		//handle new Graphs
+		if(e.getSource() == btnNewGraph) {	
+			GraphDialog.buildDialog();
 		}
 		
 		//handle new Model
