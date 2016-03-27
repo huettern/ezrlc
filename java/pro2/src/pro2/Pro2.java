@@ -38,7 +38,7 @@ public class Pro2 {
 	 */
 	public static void main(String[] args) {
 
-		RFData rfData = new RFData("../../sample_files/r100l10uZRI.s1p");;
+		RFData rfData = new RFData("../../sample_files/bsp11.s1p");;
 		try {
 			rfData.parse();
 		} catch (IOException e) {
@@ -53,26 +53,37 @@ public class Pro2 {
 
         Figure fig = new Figure("Graph 1");
         
-//        List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
-//        // Extract imaginary part
-//        int i = 0;
-//        for (Complex in : rfData.getzData()) {
-//			z_imag.set(i, in.im());
-//			i++;
-//		}
-//        PlotDataSet z_data = new PlotDataSet(rfData.getfData(), z_imag);
+        List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
+        // Extract imaginary part
+        int i = 0;
+        for (Complex in : rfData.getzData()) {
+			z_imag.add(in.im());
+			i++;
+		}
+        PlotDataSet z_data = new PlotDataSet(rfData.getfData(), z_imag);
         
         // Create test data set
         List<Double> xtest = new ArrayList<Double>();
         List<Double> ytest = new ArrayList<Double>();
-        for(int i = 0; i<100; i++) {
+        
+        for( i = 0; i<100; i++) {
         	xtest.add(Double.valueOf(i));
-        	ytest.add(Double.valueOf(i/10.0));
+        	ytest.add(Double.valueOf(i/100.0));
         }
         PlotDataSet testset = new PlotDataSet(xtest, ytest);
+
+        List<Double> xtest2 = new ArrayList<Double>();
+        List<Double> ytest2 = new ArrayList<Double>();
+        xtest2.add(50.0);
+        xtest2.add(60.0);
+        ytest2.add(0.10);
+        ytest2.add(0.20);
+        PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
+
         
-        //fig.addDataSet(z_data);
-        fig.addDataSet(testset);
+        fig.addDataSet(z_data);
+        //fig.addDataSet(testset);
+        //fig.addDataSet(testset2);
         
         frame.getContentPane().add(fig);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

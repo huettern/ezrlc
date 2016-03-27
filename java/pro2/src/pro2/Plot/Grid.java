@@ -37,6 +37,14 @@ public class Grid {
 	//================================================================================
     // Constructors
     //================================================================================
+	/**
+	 * Add a new Grid
+	 * @param parent: Parent plot
+	 * @param or: Orientation of the plot lines, either HORIZONTAL or VERTICAL
+	 * @param color: Color of the grid
+	 * @param ax: Parent Axis
+	 * @param size: Size of the grid, relative to the parent plot (0 is maximum)
+	 */
 	public Grid(RectangularPlot parent, Orientation or, Color color, Axis ax, int size) {
 		this.parent = parent;
 		this.or = or;
@@ -61,6 +69,9 @@ public class Grid {
 	//================================================================================
     // Private Functions
     //================================================================================
+	/**
+	 * Calculates all the necessary pixel values to paint the plot
+	 */
 	private void evalSize() {
 		List<Point> points = this.ax.getTicPoints();
 		points.remove(0);	// Remove first entry

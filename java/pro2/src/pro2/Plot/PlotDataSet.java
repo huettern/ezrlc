@@ -31,11 +31,23 @@ public class PlotDataSet {
 	//================================================================================
     // Constructors
     //================================================================================
+	/**
+	 * Add new Dataset. Both parameters must be of the same size!!
+	 * @param x: X Data
+	 * @param y: Y Data
+	 */
 	public PlotDataSet(List<Double> x,List<Double> y) {
+		if(x.size() != y.size()) {
+			System.out.println("PlotDataSet: Error! Data not the same size");
+			return;
+		}
 		this.x_data = x;
 		this.y_data = y;
 		this.points = x.size();
 		this.data_pts = new ArrayList<Point>(this.points);
+		for(int i =0; i < this.points; i++) {
+			this.data_pts.add(new Point(0,0));
+		}
 		
 		// Get the datas max and min
 		x_max = MathUtil.getMax(this.x_data);
@@ -44,65 +56,75 @@ public class PlotDataSet {
 		y_min = MathUtil.getMin(this.y_data);
 
 		this.x_span = this.x_max - this.x_min;
+		if(this.x_span == 0) this.x_span = Double.MIN_VALUE;
 		this.y_span = this.y_max - this.y_min;
+		if(this.y_span == 0) this.y_span = Double.MIN_VALUE;
+		
+		System.out.println("New Dataset added. x_min:" +this.x_min +" x_max:" +this.x_max +" y_min:" +this.y_min +" y_max:" +this.y_max);
 	}
 
 	//================================================================================
     // Private Functions
     //================================================================================
+	/**
+	 * Evaluates the pixel positions of the individual datapoints
+	 */
 	private void eval() {
-		// Get Axis points
-		Point xstart = this.x_axis.getStart();
-		Point xend = this.x_axis.getEnd();
-		Point ystart = this.y_axis.getStart();
-		Point yend = this.y_axis.getEnd();
-		
-		// Calculate X and Y lenght in pixels
-		int pdx = xend.x - xstart.x;
-		int pdy = yend.y - ystart.y; 
-		
-		// Get Axis start and end values
-		double xmin = this.x_axis.getMin();
-		double xmax = this.x_axis.getMax();
-		double ymin = this.y_axis.getMin();
-		double ymax = this.y_axis.getMax();
-		
-		// Calculate X and Y laenght in values
-		double vdx = xmax - xmin;
-		double vdy = ymax - ymin;
-		
 		int i = 0;
-		Double tmp = 0.0;
 		for (Point point : this.data_pts) {
-			// get x pixel values
-			tmp = ( (x_data.get(i) * vdx) / this.x_span);
-			tmp = ( (tmp * pdx) / this.x_span);
-			point.x = tmp.intValue() + xstart.x;
-			// get y pixel values
-			tmp = ( (y_data.get(i) * vdy) / this.y_span);
-			tmp = ( (tmp * pdy) / this.y_span);
-			point.y = tmp.intValue() + ystart.y;
+			point.x = this.x_axis.getPixelValue(this.x_data.get(i));
+			point.y = this.y_axis.getPixelValue(this.y_data.get(i));
 			i++;
 		}
 	}
 	
+	/** 
+	 * Draws a data point at the given position
+	 * @param g
+	 * @param pt
+	 */
 	private void drawPoint (Graphics g, Point pt) {
 		g.drawOval(pt.x-1, pt.y-1, 2, 2);
+	}
+	
+	/**
+	 * Connects the two datapoints with a line
+	 * @param g
+	 * @param a
+	 * @param b
+	 */
+	private void connectPoints(Graphics g, Point a, Point b) {
+		g.drawLine(a.x, a.y, b.x, b.y);
 	}
 	
 	//================================================================================
     // Public Functions
     //================================================================================
+	/**
+	 * Paint the Dataset
+	 * @param g
+	 */
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		this.eval();
 		
-		for (Point point : this.data_pts) {
-			this.drawPoint(g, point);
+//		for (Point point : this.data_pts) {
+//			this.drawPoint(g, point);
+//		}
+//		
+		for(int i = 0; i<(this.points-1); i++) {
+			this.drawPoint(g, this.data_pts.get(i));
+			this.connectPoints(g, this.data_pts.get(i), this.data_pts.get(i+1));
 		}
-		
+
+		this.drawPoint(g, this.data_pts.get(this.points-1));
 	}
 	
+	/**
+	 * Set the parent Axis of the dataset
+	 * @param x: x Axis
+	 * @param y: y Axis
+	 */
 	public void setAxis(Axis x, Axis y) {
 		this.x_axis=x;
 		this.y_axis=y;

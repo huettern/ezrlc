@@ -50,17 +50,17 @@ public class Axis {
 	//================================================================================
     // Constructors
     //================================================================================
-	public Axis(RectangularPlot parent, Orientation or, Point origin) {
-		this.or = or;
-		this.parent = parent;
-		this.origin_x = origin.x;
-		this.origin_y = origin.y;
-		
-		for(int i=0; i<200; i++) {
-			tic_pos[i] = new Point (0,0);
-		}
-		this.evalSize();
-	}
+	/**
+	 * Add a new Axis
+	 * @param parent: The parent plot
+	 * @param or: Orientation either HORIZONTAL or VERTICAL
+	 * @param origin: Origin point of the axis
+	 * @param size: Length of the axis relative to the parent plot (0 is maximum)
+	 * @param min; Minimum Value of the axis
+	 * @param max: Maximum Value of the axis
+	 * @param step: Number of steps
+	 * @param labelOffset: Location of the Value labels, relative to the axi
+	 */
 	public Axis(RectangularPlot parent, Orientation or, Point origin, int size, double min, double max, int step, int labelOffset) {
 		this.or = or;
 		this.parent = parent;
@@ -100,7 +100,6 @@ public class Axis {
 
 	public void setMinimum(double min) {
 		this.min=min;
-		
 	}
 	public void setMaximum(double max) {
 		this.max=max;	
@@ -110,6 +109,26 @@ public class Axis {
 	}
 	public void setLabelOffset(int off) {
 		this.label_offset=off;
+	}
+	
+	/**
+	 * Returns the pixel location of the given value
+	 * @param d
+	 * @return
+	 */
+	public int getPixelValue(double d) {
+		this.evalSize();
+		if(this.or==Orientation.HORIZONTAL) {
+			double dy = this.end_x - this.start_x;
+			double dx = this.max - this.min;
+			return (int)((dy/dx)*(d-this.min)+this.start_x);
+		}
+		else if (this.or==Orientation.VERTICAL) {
+			double dy = this.end_y - this.start_y;
+			double dx = this.max - this.min;
+			return (int)((dy/dx)*(d-this.min)+this.start_y);
+		}
+		else return 0;
 	}
 
 	//================================================================================
@@ -171,6 +190,9 @@ public class Axis {
 	//================================================================================
     // Private Functions
     //================================================================================
+	/**
+	 * Caluclates all the necessary pixel values of the Axis to paint it
+	 */
 	private void evalSize() {
 		if(or == Orientation.HORIZONTAL) {
 			// Calculate origins
@@ -191,9 +213,6 @@ public class Axis {
 				tic_pos[i].x = this.origin_x + (int)(i*spacing);
 				tic_pos[i].y = this.start_y;
 			}
-			
-			
-			
 		}
 		else if(or == Orientation.VERTICAL) {
 			// Calculate origins
@@ -217,6 +236,11 @@ public class Axis {
 		}
 	}
 	
+	/**
+	 * Formats the axis Label
+	 * @param d
+	 * @return
+	 */
 	private String formatAxisValue(double d) {
 		return String.format("%.1f", d);
 	}

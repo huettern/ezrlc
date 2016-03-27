@@ -23,6 +23,13 @@ public class GridLine {
 	//================================================================================
     // Constructors
     //================================================================================
+	/**
+	 * Create a gridline
+	 * @param style: Style of the line
+	 * @param color: Color of the line
+	 * @param start: Start point
+	 * @param end: End point
+	 */
 	public GridLine(GridLineStyle style, Color color, Point start, Point end) {
 		this.style = style;
 		this.color = color;
@@ -33,6 +40,10 @@ public class GridLine {
 	//================================================================================
     // Public Functions
     //================================================================================
+	/**
+	 * Paints the gridline
+	 * @param g
+	 */
 	public void paint(Graphics g) {
 		Color col = g.getColor();
 		g.setColor(this.color);
