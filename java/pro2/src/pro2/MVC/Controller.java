@@ -1,6 +1,6 @@
-package pro2;
+package pro2.MVC;
 
-import pro2.Model;
+import pro2.MVC.Model;
 import pro2.View.MainView;
 
 import java.awt.event.ActionEvent;

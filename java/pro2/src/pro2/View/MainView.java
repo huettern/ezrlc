@@ -42,7 +42,7 @@ import javax.swing.UIManager;
 import javax.swing.JList;
 import javax.swing.tree.DefaultTreeModel;
 
-import pro2.Controller;
+import pro2.MVC.Controller;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.border.TitledBorder;

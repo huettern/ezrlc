@@ -6,7 +6,7 @@
  * @author noah
  */
 
-package pro2;
+package pro2.util;
 
 public class Complex {
     private double re;   // the real part

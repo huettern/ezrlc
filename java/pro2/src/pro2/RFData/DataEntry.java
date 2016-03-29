@@ -1,6 +1,6 @@
-package pro2;
+package pro2.RFData;
 
-import pro2.RFData.*;
+import pro2.RFData.RFData.*;
 
 public class DataEntry {
 

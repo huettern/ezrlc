@@ -24,10 +24,13 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.util.ArrayUtilities;
 
+import pro2.MVC.Controller;
+import pro2.MVC.Model;
 import pro2.Plot.Figure;
 import pro2.Plot.PlotDataSet;
-
+import pro2.RFData.RFData;
 import pro2.View.MainView;
+import pro2.util.Complex;
 
 /**
  * @author noah
@@ -39,32 +42,54 @@ public class Pro2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		/* MVC stuff
+		 * 
+		 */
+		EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {                                           
+                Model model = new Model();
+                MainView view = new MainView();
+                view.setVisible(true);
+                Controller controller = new Controller(model,view);
+                view.setController(controller);
+                model.setController(controller);
+                
+                controller.contol();
+            }
+        });  
 
+		//================================================================================
+	    // Plot Test
+	    //================================================================================
+		
+		/* Create a little frame containing the testplot */
+		JFrame frame = new JFrame("Test");
+        frame.setSize(500, 400);
+        frame.setLocationRelativeTo(null);
+        
+		/* Read a Datafile and extract the necessary infos */
+		// Read datafile
 		RFData rfData = new RFData("../../sample_files/bsp11.s1p");;
 		try {
+			// Parse datafile
 			rfData.parse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		JFrame frame = new JFrame("Test");
-        frame.setSize(500, 400);
-        frame.setLocationRelativeTo(null);
-
-        Figure fig = new Figure("Graph 1");
-        
-        List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
+		// Get Z Data
+		List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
         // Extract imaginary part
         int i = 0;
         for (Complex in : rfData.getzData()) {
 			z_imag.add(in.im());
 			i++;
 		}
+        // Create a new Dataset using the z Data (y Axis) and f Data (x Axis)
         PlotDataSet z_data = new PlotDataSet(rfData.getfData(), z_imag);
-        
-        // Create test data set
+
+        /* Create test data set one and two */
         List<Double> xtest = new ArrayList<Double>();
         List<Double> ytest = new ArrayList<Double>();
         
@@ -82,14 +107,14 @@ public class Pro2 {
         ytest2.add(0.20);
         PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
 
-        
-        fig.addDataSet(z_data);
-        //fig.addDataSet(testset);
-        //fig.addDataSet(testset2);
+        /* Create Plot */
+        Figure fig = new Figure("Graph 1");
+        fig.addDataSet(z_data);		// Real data from s1p files
+        //fig.addDataSet(testset);	// Testset 1, linear from x=0 to 99, y=x/100
+        //fig.addDataSet(testset2);	// Testset 2, two single datapoints
         
         frame.getContentPane().add(fig);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.pack();
 		frame.setVisible(true);
         
         
