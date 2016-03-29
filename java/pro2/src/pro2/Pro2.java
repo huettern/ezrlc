@@ -3,13 +3,29 @@
  */
 package pro2;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.GridBagLayout;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.util.ArrayUtilities;
+
+import pro2.Plot.Figure;
+import pro2.Plot.PlotDataSet;
 
 import pro2.View.MainView;
 
@@ -23,24 +39,243 @@ public class Pro2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/* MVC stuff
-		 * 
-		 */
-		EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {                                           
-                Model model = new Model();
-                MainView view = new MainView();
-                view.setVisible(true);
-                Controller controller = new Controller(model,view);
-                view.setController(controller);
-                model.setController(controller);
-                
-                controller.contol();
-            }
-        });  
+
+		RFData rfData = new RFData("../../sample_files/bsp11.s1p");;
+		try {
+			rfData.parse();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
+		JFrame frame = new JFrame("Test");
+        frame.setSize(500, 400);
+        frame.setLocationRelativeTo(null);
+
+        Figure fig = new Figure("Graph 1");
+        
+        List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
+        // Extract imaginary part
+        int i = 0;
+        for (Complex in : rfData.getzData()) {
+			z_imag.add(in.im());
+			i++;
+		}
+        PlotDataSet z_data = new PlotDataSet(rfData.getfData(), z_imag);
+        
+        // Create test data set
+        List<Double> xtest = new ArrayList<Double>();
+        List<Double> ytest = new ArrayList<Double>();
+        
+        for( i = 0; i<100; i++) {
+        	xtest.add(Double.valueOf(i));
+        	ytest.add(Double.valueOf(i/100.0));
+        }
+        PlotDataSet testset = new PlotDataSet(xtest, ytest);
+
+        List<Double> xtest2 = new ArrayList<Double>();
+        List<Double> ytest2 = new ArrayList<Double>();
+        xtest2.add(50.0);
+        xtest2.add(60.0);
+        ytest2.add(0.10);
+        ytest2.add(0.20);
+        PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
+
+        
+        fig.addDataSet(z_data);
+        //fig.addDataSet(testset);
+        //fig.addDataSet(testset2);
+        
+        frame.getContentPane().add(fig);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.pack();
+		frame.setVisible(true);
+        
+        
+        
+//		JFrame frame = new JFrame();
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setBounds(100, 100, 1000, 800);
+//		frame.setVisible(true);
+////		GridBagLayout gbl = new GridBagLayout();
+////		frame.setLayout(gbl);
+////		
+//		
+//		JPanel pnl = new JPanel();
+//		//frame.add(pnl);
+//		frame.getContentPane().add(pnl);
+//		
+//		
+//		pnl.setVisible(true);
+//		pnl.setBackground(Color.WHITE);
+		
+		
+		
+		
+		//================================================================================
+	    // RF Data Test
+	    //================================================================================
+
+//		RFData rfData = null;
+//		// TODO Auto-generated method stub
+//		String[] files = {"../../sample_files/bsp1.s1p",
+//				"../../sample_files/bsp2.s1p",
+//				"../../sample_files/bsp3.s1p",
+//				"../../sample_files/bsp4.s1p",
+//				"../../sample_files/bsp5.s1p",
+//				"../../sample_files/bsp6.s1p",
+//				"../../sample_files/bsp11.s1p",
+//				"../../sample_files/bsp12.s1p",
+//				"../../sample_files/bsp13.s1p",
+//				"../../sample_files/bsp14.s1p",
+//				"../../sample_files/r100zRI.s1p", 
+//				"../../sample_files/r100l10uZRI.s1p",
+//				"../../sample_files/r100l10uZMA.s1p",
+//				"../../sample_files/r100l10uZDB.s1p",
+//				"../../sample_files/r100l10SZRI.s1p",
+//				"../../sample_files/r100l10SZMA.s1p",
+//				"../../sample_files/r100l10SZDB.s1p",
+//				"../../sample_files/r100l10YZRI.s1p",
+//				"../../sample_files/r100l10YZMA.s1p",
+//				"../../sample_files/r100l10YZDB.s1p"
+//				};
+//		for (String string : files) {
+//			rfData = new RFData(string);
+//			try {
+//				rfData.parse();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			System.out.println("Writing to file..");
+//			try {
+//				FileWriter writer = new FileWriter(string+".tmp");
+//				for (Complex cpx : rfData.getsData()) {
+//					writer.write(cpx.sprintRI()+"\r\n");
+//				}
+//				writer.close();
+//				System.out.println(".. Done");
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} 
+//			System.out.println("------------------------------------------------");
+//		}
+//
+//		Complex complex = new Complex(1,-3);
+//		Complex complextmp1;
+//		Complex complextmp2 = new Complex(1.0,0);			// constant 1 as complex number
+//		Complex complextmp3 = new Complex(50,0);	// resistance as complex number
+//
+//		// Z=Ro*((1+S)/(1-S))
+//		complextmp1 = new Complex(Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex))));
+//		complextmp1.printRI();
+
+		//================================================================================
+	    // XY Test
+	    //================================================================================
+//		JFrame frame = new JFrame("Charts");
+//		frame.setSize(600, 400);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setVisible(true);
+//        
+//		DefaultXYDataset ds = new DefaultXYDataset();
+//        
+//		rfData = new RFData("../../sample_files/bsp2.s1p");
+//		try {
+//			rfData.parse();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		double[][] tempArray = new double[2][(int)rfData.size()];
+//		for (int i = 0; i < rfData.size(); i++) {
+//			tempArray[0][i]=rfData.getfData().get(i);
+//			tempArray[1][i]=rfData.getzData().get(i).re();
+//		}
+//		
+//        ds.addSeries("series1", tempArray);
+//        JFreeChart chart = 
+//        		ChartFactory.createXYLineChart("Test Chart",
+//        		                "x", "y", ds, PlotOrientation.VERTICAL, true, true,
+//        		                false);
+//        ChartPanel cp = new ChartPanel(chart);
+//        cp.setVisible(true);
+//        frame.getContentPane().add(cp);
+//        frame.setVisible(true);
+		
+
+		//================================================================================
+	    // Complex Test
+	    //================================================================================
+//		System.out.println("------------------------------------------------");
+//		System.out.println("Complex Test");
+//		System.out.println("------------------------------------------------");
+//		Complex a = new Complex(5, 3);
+//		Complex b = new Complex(0, -1);
+//		Complex c = new Complex(0, 0);
+//		Complex d = new Complex(-9, -2);
+//
+//		Complex mul1 = new Complex(Complex.mul(a, a));
+//		Complex mul2 = new Complex(Complex.mul(a, b));
+//		Complex mul3 = new Complex(Complex.mul(a, c));
+//		Complex mul4 = new Complex(Complex.mul(a, d));
+//
+//		System.out.println(a.sprintRI() +" * " +a.sprintRI() +" = " +mul1.sprintRI());
+//		System.out.println(a.sprintRI() +" * " +b.sprintRI() +" = " +mul2.sprintRI());
+//		System.out.println(a.sprintRI() +" * " +c.sprintRI() +" = " +mul3.sprintRI());
+//		System.out.println(a.sprintRI() +" * " +d.sprintRI() +" = " +mul4.sprintRI());
+//
+//		Complex div1 = new Complex(Complex.div(a, a));
+//		Complex div2 = new Complex(Complex.div(a, b));
+//		Complex div3 = new Complex(Complex.div(a, c));
+//		Complex div4 = new Complex(Complex.div(a, d));
+//
+//		System.out.println(a.sprintRI() +" / " +a.sprintRI() +" = " +div1.sprintRI());
+//		System.out.println(a.sprintRI() +" / " +b.sprintRI() +" = " +div2.sprintRI());
+//		System.out.println(a.sprintRI() +" / " +c.sprintRI() +" = " +div3.sprintRI());
+//		System.out.println(a.sprintRI() +" / " +d.sprintRI() +" = " +div4.sprintRI());
+//
+//		Complex add1 = new Complex(Complex.add(a, a));
+//		Complex add2 = new Complex(Complex.add(a, b));
+//		Complex add3 = new Complex(Complex.add(a, c));
+//		Complex add4 = new Complex(Complex.add(a, d));
+//
+//		System.out.println(a.sprintRI() +" + " +a.sprintRI() +" = " +add1.sprintRI());
+//		System.out.println(a.sprintRI() +" + " +b.sprintRI() +" = " +add2.sprintRI());
+//		System.out.println(a.sprintRI() +" + " +c.sprintRI() +" = " +add3.sprintRI());
+//		System.out.println(a.sprintRI() +" + " +d.sprintRI() +" = " +add4.sprintRI());
+//
+//		Complex sub1 = new Complex(Complex.sub(a, a));
+//		Complex sub2 = new Complex(Complex.sub(a, b));
+//		Complex sub3 = new Complex(Complex.sub(a, c));
+//		Complex sub4 = new Complex(Complex.sub(a, d));
+//
+//		System.out.println(a.sprintRI() +" - " +a.sprintRI() +" = " +sub1.sprintRI());
+//		System.out.println(a.sprintRI() +" - " +b.sprintRI() +" = " +sub2.sprintRI());
+//		System.out.println(a.sprintRI() +" - " +c.sprintRI() +" = " +sub3.sprintRI());
+//		System.out.println(a.sprintRI() +" - " +d.sprintRI() +" = " +sub4.sprintRI());
+		
+		
+		
+//		EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {                                           
+//                Model model = new Model();
+//                MainView view = new MainView();
+//                view.setVisible(true);
+//                Controller controller = new Controller(model,view);
+//                view.setController(controller);
+//                model.setController(controller);
+//                
+//                controller.contol();
+//            }
+//        });  
+//		
+//		
 		
 		
 //		

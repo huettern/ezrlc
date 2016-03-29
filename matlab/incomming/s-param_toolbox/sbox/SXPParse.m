@@ -272,9 +272,9 @@ end
 % now adjust data f(opt.param) Z,Y,G,H,A
 switch opt.param
     case 'y'
-        data = y2s(data*opt.Zo); % to check in standard if Zo always or Yo
+        data = y2s(opt.Zo,data/opt.Zo); % to check in standard if Zo always or Yo
     case 'z'
-        data = z2s(data/opt.Zo);
+        data = z2s(opt.Zo,data*opt.Zo);
     case 'a'
         data = a2s(data); % to double check units...
     case 'g'
