@@ -16,7 +16,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar" sourcepath="/Users/noah/git/java_lib/jfreechart-1.0.19/source"/>
-	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar" sourcepath="/Users/noah/git/java_lib/jcommon-1.0.23/src"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

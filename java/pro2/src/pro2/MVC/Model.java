@@ -1,9 +1,9 @@
-package pro2;
+package pro2.MVC;
 
 import java.io.File;
 import java.util.*;
 
-import pro2.RFData;
+import pro2.RFData.RFData;
 
 public class Model {
 	
