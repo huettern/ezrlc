@@ -15,14 +15,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.DefaultXYDataset;
-import org.jfree.util.ArrayUtilities;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Model;
@@ -50,10 +42,13 @@ public class Pro2 {
             public void run() {                                           
                 Model model = new Model();
                 MainView view = new MainView();
-                view.setVisible(true);
                 Controller controller = new Controller(model,view);
+                
                 view.setController(controller);
                 model.setController(controller);
+                
+                view.build();
+                view.setVisible(true);
                 
                 controller.contol();
             }
@@ -109,7 +104,7 @@ public class Pro2 {
 
         /* Create Plot */
         Figure fig = new Figure("Graph 1");
-        fig.addDataSet(z_data);		// Real data from s1p files
+        //fig.addDataSet(z_data);		// Real data from s1p files
         //fig.addDataSet(testset);	// Testset 1, linear from x=0 to 99, y=x/100
         //fig.addDataSet(testset2);	// Testset 2, two single datapoints
         

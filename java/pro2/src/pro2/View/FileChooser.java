@@ -9,24 +9,26 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import pro2.MVC.Controller;
+
 public class FileChooser extends JComponent implements Accessible{
 	
 	//================================================================================
     // Local Variables
     //================================================================================
-	private MainView mainView;
+	private Controller controller;
 	JFileChooser fileChooser = new JFileChooser();
 	private File file;
 	
 	//================================================================================
     // Constructors
     //================================================================================
-	public FileChooser(MainView mainView) {
-		this.mainView = mainView;
+	public FileChooser(Controller controller) {
+		this.controller = controller;
 	}
 	
 	public String windowFileChooser() {
-		int returnVal = fileChooser.showDialog(this.mainView, "Open File");
+		int returnVal = fileChooser.showDialog(this.controller.getMainView(), "Open File");
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
 		}
@@ -38,6 +40,11 @@ public class FileChooser extends JComponent implements Accessible{
 		        "Touchstone File Format (*.s1p, *.z1p, *.y1p)", "s1p", "z1p", "y1p");
 		fileChooser.setFileFilter(fileFilter);
 		
+	}
+
+	public File getFile() {
+		// TODO Auto-generated method stub
+		return fileChooser.getSelectedFile();
 	}
 
 }
