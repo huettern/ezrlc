@@ -14,6 +14,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -138,6 +139,10 @@ public class MainView extends JFrame {
 		JLabel statusLabel = new JLabel("Status Here....");
 		statusPanel.add(statusLabel);
 		
+		 // Window properties
+		setTitle("EZRLC");
+		ImageIcon icon = new ImageIcon(getClass().getResource("pro2LogoTransparent.png"));
+		setIconImage(icon.getImage());
 		
 		// Window size
 		pack();
