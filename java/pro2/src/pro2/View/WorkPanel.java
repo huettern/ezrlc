@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import pro2.Plot.Figure;
+
 public class WorkPanel extends JPanel {
 	
 	//================================================================================
@@ -26,8 +28,10 @@ public class WorkPanel extends JPanel {
 	 */
 	public void build () {
 		this.setPreferredSize(new Dimension(800, 600));
-		this.setBorder(new LineBorder(Color.LIGHT_GRAY));	
+		this.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		
+		//Figure fig = new Figure("Graph 2");
+		//this.add(fig);
 	}
 
 

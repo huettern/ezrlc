@@ -22,14 +22,15 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 
 
-public class GraphDialog extends JFrame {
+public class GraphDialog extends JFrame implements ActionListener {
 
 	//================================================================================
     // Local Variables
     //================================================================================
 	private MainView mainView;
-	JDialog GraphDialog;
+	JDialog graphDialog;
 	private JTextField txtGrahpName;
+	private JButton btnCreate, btnCancel;
 	
 	
 	//================================================================================
@@ -47,17 +48,17 @@ public class GraphDialog extends JFrame {
 	 * Builds the Graph Panel
 	 */
 	public void buildDialog() {
-		GraphDialog = new JDialog(this.mainView);
-		GraphDialog.setResizable(false);
-		GraphDialog.setTitle("New Graph");		
-		GraphDialog.setModal(true);
-		GraphDialog.setLocation(250, 150);
-		GraphDialog.setSize(300, 350);
-		GraphDialog.getContentPane().setLayout(null);
+		graphDialog = new JDialog(this.mainView);
+		graphDialog.setResizable(false);
+		graphDialog.setTitle("New Graph");		
+		graphDialog.setModal(true);
+		graphDialog.setLocation(250, 150);
+		graphDialog.setSize(300, 350);
+		graphDialog.getContentPane().setLayout(null);
 		
 		setGraphOptions();
 		
-		GraphDialog.setVisible(true);
+		graphDialog.setVisible(true);
 	}
 	
 	
@@ -72,7 +73,7 @@ public class GraphDialog extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setToolTipText("");
 		tabbedPane.setBounds(0, 0, 294, 322);
-		GraphDialog.getContentPane().add(tabbedPane);
+		graphDialog.getContentPane().add(tabbedPane);
 		
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(0, 0));
@@ -128,23 +129,39 @@ public class GraphDialog extends JFrame {
 		panel.add(rdbtnRectangular, gbc_rdbtnRectangular);
 		
 		// Buttons Create and Cancel
-		JButton btnCreate = new JButton("Create");
+		btnCreate = new JButton("Create");
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
 		gbc_btnCreate.anchor = GridBagConstraints.SOUTH;
 		gbc_btnCreate.insets = new Insets(0, 0, 0, 5);
 		gbc_btnCreate.gridx = 1;
 		gbc_btnCreate.gridy = 4;
 		panel.add(btnCreate, gbc_btnCreate);
+		btnCreate.addActionListener(this);
 		
-		JButton btnCancel = new JButton("Cancel");
+		btnCancel = new JButton("Cancel");
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.anchor = GridBagConstraints.SOUTH;
 		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
 		gbc_btnCancel.gridx = 2;
 		gbc_btnCancel.gridy = 4;
 		panel.add(btnCancel, gbc_btnCancel);
+		btnCancel.addActionListener(this);
 		
 		//y-Achse Z,
 		//x-Achse Freuqenz, real, imaginär
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//create new graph
+		if(e.getSource() == btnCreate) {
+			
+		}
+		
+		//close graph window
+		if(e.getSource() == btnCancel) {
+			graphDialog.dispose();
+		}
 	}
 }

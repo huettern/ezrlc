@@ -14,6 +14,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -35,6 +36,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
@@ -130,7 +133,11 @@ public class MainView extends JFrame {
 		statusPanel.add(statusLabel);
 		
 		
-		// Window size
+		// Window properties
+		setTitle("EZRLC");
+		ImageIcon icon = new ImageIcon(getClass().getResource("pro2LogoTransparent.png"));
+		setIconImage(icon.getImage());
+		
 		pack();
 		setMinimumSize(getPreferredSize());
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
