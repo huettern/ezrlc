@@ -19,25 +19,38 @@ import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
+
+import pro2.MVC.Controller;
+
 import java.awt.Insets;
 
 
+<<<<<<< HEAD
 public class GraphDialog extends JFrame implements ActionListener {
+=======
+public class GraphDialog implements ActionListener{
+>>>>>>> backend
 
 	//================================================================================
     // Local Variables
     //================================================================================
+<<<<<<< HEAD
 	private MainView mainView;
+=======
+	private Controller controller;
+>>>>>>> backend
 	JDialog graphDialog;
 	private JTextField txtGrahpName;
 	private JButton btnCreate, btnCancel;
 	
+	private JButton btnCreate;
+	private JButton btnCancel;
 	
 	//================================================================================
     // Constructors
     //================================================================================
-	public GraphDialog(MainView mainView) {
-		this.mainView = mainView;
+	public GraphDialog(Controller controller) {
+		this.controller = controller;
 	}
 
 	
@@ -48,7 +61,11 @@ public class GraphDialog extends JFrame implements ActionListener {
 	 * Builds the Graph Panel
 	 */
 	public void buildDialog() {
+<<<<<<< HEAD
 		graphDialog = new JDialog(this.mainView);
+=======
+		graphDialog = new JDialog(controller.getMainView());
+>>>>>>> backend
 		graphDialog.setResizable(false);
 		graphDialog.setTitle("New Graph");		
 		graphDialog.setModal(true);
@@ -148,7 +165,20 @@ public class GraphDialog extends JFrame implements ActionListener {
 		btnCancel.addActionListener(this);
 		
 		//y-Achse Z,
-		//x-Achse Freuqenz, real, imaginär
+		//x-Achse Freuqenz, real, imaginï¿½r
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == btnCreate) {
+			this.controller.getMainView().addGraph(txtGrahpName.getText());
+			graphDialog.dispose();
+		}
+		if(e.getSource() == btnCancel) {
+			graphDialog.dispose();
+		}
 	}
 
 

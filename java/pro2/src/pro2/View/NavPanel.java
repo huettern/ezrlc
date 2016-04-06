@@ -18,12 +18,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import pro2.MVC.Controller;
+
 public class NavPanel extends JPanel implements ActionListener {
 	
 	//================================================================================
     // Local Variables
     //================================================================================
-	private MainView mainView;
+	private Controller controller;
 	
 	private FileChooser fileChooser;
 	private GraphDialog GraphDialog;
@@ -36,10 +38,10 @@ public class NavPanel extends JPanel implements ActionListener {
 	//================================================================================
     // Constructors
     //================================================================================
-	public NavPanel(MainView mainView) {
-		this.mainView = mainView;	
-		this.fileChooser = new FileChooser(this.mainView);
-		this.GraphDialog = new GraphDialog(this.mainView);
+	public NavPanel(Controller controller) {
+		this.controller = controller;	
+		this.fileChooser = new FileChooser(controller);
+		this.GraphDialog = new GraphDialog(controller);
 	}
 		
 	
@@ -192,13 +194,18 @@ public class NavPanel extends JPanel implements ActionListener {
 		btnNewModel.addActionListener(this);
 	}
 	
-	
+
+	//================================================================================
+    // Public Functions
+    //================================================================================
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
 			lblInputFile.setText(fileChooser.windowFileChooser());
+			File f = fileChooser.getFile();
+			controller.loadFile(f);
 		}
 		
 		//handle new Graphs

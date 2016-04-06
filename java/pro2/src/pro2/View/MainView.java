@@ -66,11 +66,20 @@ public class MainView extends JFrame {
 	private List<UUID> fileTreeItemsUID = new ArrayList<UUID>();   
 	
 
+
+	//================================================================================
+    // Constructors
+    //================================================================================
+	public MainView() {
 	
+	}
+	//================================================================================
+    // Public Functions
+    //================================================================================
 	/**
 	 * Create the frame.
 	 */
-	public MainView() {
+	public void build () {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 553, 402);
 		
@@ -107,10 +116,10 @@ public class MainView extends JFrame {
 		contentPanel.add(splitPane);
 		
 		//Add navPanel & workPanel
-		navPanel = new NavPanel(this);
+		navPanel = new NavPanel(this.controller);
 		splitPane.setLeftComponent(navPanel);
 		navPanel.build();
-		workPanel = new WorkPanel(this);
+		workPanel = new WorkPanel(this.controller);
 		splitPane.setRightComponent(workPanel);
 		workPanel.build();
 
@@ -132,6 +141,10 @@ public class MainView extends JFrame {
 		JLabel statusLabel = new JLabel("Status Here....");
 		statusPanel.add(statusLabel);
 		
+		 // Window properties
+		setTitle("EZRLC");
+		ImageIcon icon = new ImageIcon(getClass().getResource("pro2LogoTransparent.png"));
+		setIconImage(icon.getImage());
 		
 		// Window properties
 		setTitle("EZRLC");
@@ -171,6 +184,18 @@ public class MainView extends JFrame {
 	 */
 	public void setController (Controller controller) {
 		this.controller = controller;
+	}
+
+	
+	public void addGraph(String text) {
+		// TODO Auto-generated method stub
+		workPanel.addGraph(text);
+	}
+	
+	public void addNewFile(File f) {
+		// TODO Auto-generated method stub
+		this.controller.loadFile(f);
+		
 	}
 
 	
