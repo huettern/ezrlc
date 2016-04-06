@@ -2,6 +2,9 @@ package pro2.View;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,15 @@ public class WorkPanel extends JPanel {
     //================================================================================
 	public WorkPanel(Controller controller) {
 		this.controller = controller;
+
+		this.setBorder(null);
+		
+		GridBagLayout gbl_workPanel = new GridBagLayout();
+		gbl_workPanel.columnWidths = new int[] {0};
+		gbl_workPanel.rowHeights = new int[] {0};
+		gbl_workPanel.columnWeights = new double[]{1.0};
+		gbl_workPanel.rowWeights = new double[]{0.0};
+		this.setLayout(gbl_workPanel);
 	}
 	
 	/**
@@ -42,8 +54,12 @@ public class WorkPanel extends JPanel {
     // Public Functions
     //================================================================================
 	public void addGraph(String text) {
-		this.figures.add(new Figure(text));
-		this.add(figures.get(figures.size()-1));
+		Figure f = new Figure(this.controller, text);
+		
+		this.figures.add(f);
+		this.add(figures.get(figures.size()-1), new GridBagConstraints(0, 0, 1, 1, 1, 1, 
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
+				new Insets(0, 0, 0, 0), 0, 0));
 		this.updateUI();
 	}
 

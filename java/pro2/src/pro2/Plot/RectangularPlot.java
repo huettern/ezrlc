@@ -39,11 +39,11 @@ public class RectangularPlot extends JPanel {
 		//horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin);
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 0, 100, 10, 20);	// Use for test data
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 1e6, 1e9, 10, 20); 	// Use for r100l10uZRI
-		this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 1000, 1e8, 10, 20); 	// Use for bsp11
+		this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 0, 1, 2, 20); 	// Use for bsp11
 		//verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin);
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 1, 20, -20); // Use for test data
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 70e3, 20, -20); // Use for r100l10uZRI
-		this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 1500, 20, -20); // Use for bsp11
+		this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 1, 2, -20); // Use for bsp11
 		
 		// Add Grid
 		this.verGrid = new Grid(this, Orientation.VERTICAL, Color.LIGHT_GRAY, horAxis, 40);
