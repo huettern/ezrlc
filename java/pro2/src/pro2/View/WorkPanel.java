@@ -8,10 +8,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-<<<<<<< HEAD
-=======
 import pro2.MVC.Controller;
->>>>>>> backend
 import pro2.Plot.Figure;
 
 public class WorkPanel extends JPanel {

@@ -24,27 +24,16 @@ import pro2.MVC.Controller;
 
 import java.awt.Insets;
 
-
-<<<<<<< HEAD
-public class GraphDialog extends JFrame implements ActionListener {
-=======
 public class GraphDialog implements ActionListener{
->>>>>>> backend
-
 	//================================================================================
     // Local Variables
     //================================================================================
-<<<<<<< HEAD
-	private MainView mainView;
-=======
 	private Controller controller;
->>>>>>> backend
+	
 	JDialog graphDialog;
 	private JTextField txtGrahpName;
 	private JButton btnCreate, btnCancel;
 	
-	private JButton btnCreate;
-	private JButton btnCancel;
 	
 	//================================================================================
     // Constructors
@@ -61,11 +50,7 @@ public class GraphDialog implements ActionListener{
 	 * Builds the Graph Panel
 	 */
 	public void buildDialog() {
-<<<<<<< HEAD
-		graphDialog = new JDialog(this.mainView);
-=======
 		graphDialog = new JDialog(controller.getMainView());
->>>>>>> backend
 		graphDialog.setResizable(false);
 		graphDialog.setTitle("New Graph");		
 		graphDialog.setModal(true);
@@ -181,17 +166,4 @@ public class GraphDialog implements ActionListener{
 		}
 	}
 
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		//create new graph
-		if(e.getSource() == btnCreate) {
-			
-		}
-		
-		//close graph window
-		if(e.getSource() == btnCancel) {
-			graphDialog.dispose();
-		}
-	}
 }

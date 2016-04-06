@@ -141,11 +141,6 @@ public class MainView extends JFrame {
 		JLabel statusLabel = new JLabel("Status Here....");
 		statusPanel.add(statusLabel);
 		
-		 // Window properties
-		setTitle("EZRLC");
-		ImageIcon icon = new ImageIcon(getClass().getResource("pro2LogoTransparent.png"));
-		setIconImage(icon.getImage());
-		
 		// Window properties
 		setTitle("EZRLC");
 		ImageIcon icon = new ImageIcon(getClass().getResource("pro2LogoTransparent.png"));
