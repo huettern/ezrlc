@@ -58,59 +58,59 @@ public class Pro2 {
 	    // Plot Test
 	    //================================================================================
 		
-		/* Create a little frame containing the testplot */
-		JFrame frame = new JFrame("Test");
-        frame.setSize(500, 400);
-        frame.setLocationRelativeTo(null);
-        
-		/* Read a Datafile and extract the necessary infos */
-		// Read datafile
-		RFData rfData = new RFData("../../sample_files/bsp11.s1p");;
-		try {
-			// Parse datafile
-			rfData.parse();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// Get Z Data
-		List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
-        // Extract imaginary part
-        int i = 0;
-        for (Complex in : rfData.getzData()) {
-			z_imag.add(in.im());
-			i++;
-		}
-        // Create a new Dataset using the z Data (y Axis) and f Data (x Axis)
-        PlotDataSet z_data = new PlotDataSet(rfData.getfData(), z_imag);
-
-        /* Create test data set one and two */
-        List<Double> xtest = new ArrayList<Double>();
-        List<Double> ytest = new ArrayList<Double>();
-        
-        for( i = 0; i<100; i++) {
-        	xtest.add(Double.valueOf(i));
-        	ytest.add(Double.valueOf(i/100.0));
-        }
-        PlotDataSet testset = new PlotDataSet(xtest, ytest);
-
-        List<Double> xtest2 = new ArrayList<Double>();
-        List<Double> ytest2 = new ArrayList<Double>();
-        xtest2.add(50.0);
-        xtest2.add(60.0);
-        ytest2.add(0.10);
-        ytest2.add(0.20);
-        PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
-
-        /* Create Plot */
-        Figure fig = new Figure("Graph 1");
-        //fig.addDataSet(z_data);		// Real data from s1p files
-        //fig.addDataSet(testset);	// Testset 1, linear from x=0 to 99, y=x/100
-        //fig.addDataSet(testset2);	// Testset 2, two single datapoints
-        
-        frame.getContentPane().add(fig);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+//		/* Create a little frame containing the testplot */
+//		JFrame frame = new JFrame("Test");
+//        frame.setSize(500, 400);
+//        frame.setLocationRelativeTo(null);
+//        
+//		/* Read a Datafile and extract the necessary infos */
+//		// Read datafile
+//		RFData rfData = new RFData("../../sample_files/bsp11.s1p");;
+//		try {
+//			// Parse datafile
+//			rfData.parse();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		// Get Z Data
+//		List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
+//        // Extract imaginary part
+//        int i = 0;
+//        for (Complex in : rfData.getzData()) {
+//			z_imag.add(in.im());
+//			i++;
+//		}
+//        // Create a new Dataset using the z Data (y Axis) and f Data (x Axis)
+//        PlotDataSet z_data = new PlotDataSet(rfData.getfData(), z_imag);
+//
+//        /* Create test data set one and two */
+//        List<Double> xtest = new ArrayList<Double>();
+//        List<Double> ytest = new ArrayList<Double>();
+//        
+//        for( i = 0; i<100; i++) {
+//        	xtest.add(Double.valueOf(i));
+//        	ytest.add(Double.valueOf(i/100.0));
+//        }
+//        PlotDataSet testset = new PlotDataSet(xtest, ytest);
+//
+//        List<Double> xtest2 = new ArrayList<Double>();
+//        List<Double> ytest2 = new ArrayList<Double>();
+//        xtest2.add(50.0);
+//        xtest2.add(60.0);
+//        ytest2.add(0.10);
+//        ytest2.add(0.20);
+//        PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
+//
+//        /* Create Plot */
+//        Figure fig = new Figure("Graph 1");
+//        //fig.addDataSet(z_data);		// Real data from s1p files
+//        //fig.addDataSet(testset);	// Testset 1, linear from x=0 to 99, y=x/100
+//        //fig.addDataSet(testset2);	// Testset 2, two single datapoints
+//        
+//        frame.getContentPane().add(fig);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setVisible(true);
         
         
         
