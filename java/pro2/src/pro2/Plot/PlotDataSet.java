@@ -130,6 +130,12 @@ public class PlotDataSet {
 		this.y_axis=y;
 	}
 	
+	public List<Double> getXData () {
+		return this.x_data;
+	}
+	public List<Double> getYData () {
+		return this.y_data;
+	}
 	
 
 }

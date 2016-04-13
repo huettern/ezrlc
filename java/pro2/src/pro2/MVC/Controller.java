@@ -1,6 +1,8 @@
 package pro2.MVC;
 
 import pro2.MVC.Model;
+import pro2.Plot.PlotDataSet;
+import pro2.RFData.RFData;
 import pro2.View.MainView;
 
 import java.awt.Frame;
@@ -10,8 +12,24 @@ import java.io.File;
 import java.util.UUID;
 
 public class Controller {
+
+	//================================================================================
+    // Public Data
+    //================================================================================
+	public enum DataSource {FILE, MODEL};
+	
+	
+	
+	//================================================================================
+    // Private Data
+    //================================================================================
 	private Model model;
     private MainView view;
+    
+
+	//================================================================================
+    // Public Functions
+    //================================================================================
 
 	public Controller(Model model, MainView view) {
 		// TODO Auto-generated constructor stub
@@ -33,14 +51,27 @@ public class Controller {
         System.out.println("Opening: " + file.getName());
         // Read the file
         UUID uid = this.model.newInputFile(file);
-        if(uid != null) {
-        	// Put the file on the view
-        	this.view.addFileListItem(file.getName(), uid);
-        }
+        view.setFileName(file.getName());
 	}
 
 	public MainView getMainView() {
 		// TODO Auto-generated method stub
 		return this.view;
+	}
+	
+	public void manualNotify () {
+		model.manualNotify();
+	}
+	
+	/**
+	 * Adds a new Dataset in the model
+	 * @param src Datasource (File or Model)
+	 * @param id Model ID, if File then not used
+	 * @param measType RFData.MeasurementType
+	 * @param cpxMod RFData.ComplexModifier
+	 * @return	unique data identifier of the plotdataset
+	 */
+	public int createDataset(DataSource src, int id, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
+		return model.createDataset(src,id,measType,cpxMod);
 	}
 }

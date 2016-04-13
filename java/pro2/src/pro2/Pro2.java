@@ -50,6 +50,9 @@ public class Pro2 {
                 view.build();
                 view.setVisible(true);
                 
+                // Add observers
+                model.addObserver(view);
+                
                 controller.contol();
             }
         });  

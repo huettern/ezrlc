@@ -34,12 +34,16 @@ public class RFData {
 	
 	/**
 	 * Defines the available data units in the datafile
-	 * @author noah
 	 *
 	 */
 	public enum MeasurementUnit {
 		 MA, DB, RI
 	}
+	
+	public enum ComplexModifier {
+		REAL, IMAG, MAG, ANGLE
+	}
+	
 	
 	//================================================================================
     // Private Data
@@ -424,6 +428,15 @@ public class RFData {
 	 */
 	public ArrayList<Complex> getsData() {
 		return new ArrayList<Complex>(sData);
+	}
+
+	
+	/** 
+	 * Returns a list of Y Data
+	 * @return
+	 */
+	public ArrayList<Complex> getyData() {
+		return new ArrayList<Complex>(yData);
 	}
 
 }

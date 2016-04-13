@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -20,7 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import pro2.MVC.Controller;
 
-public class NavPanel extends JPanel implements ActionListener {
+public class NavPanel extends JPanel implements ActionListener, Observer {
 	
 	//================================================================================
     // Local Variables
@@ -216,6 +218,22 @@ public class NavPanel extends JPanel implements ActionListener {
 		//handle new Model
 		if(e.getSource() == btnNewModel) {
 		}
+		
+	}
+
+
+	/**
+	 * Sets the file name label
+	 * @param name
+	 */
+	public void setFileName(String name) {
+		lblInputFile.setText(name);
+	}
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
 	}
 	

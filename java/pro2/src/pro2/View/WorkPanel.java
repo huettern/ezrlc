@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -14,7 +16,7 @@ import javax.swing.border.LineBorder;
 import pro2.MVC.Controller;
 import pro2.Plot.Figure;
 
-public class WorkPanel extends JPanel {
+public class WorkPanel extends JPanel implements Observer {
 	
 	//================================================================================
     // Local Variables
@@ -59,6 +61,14 @@ public class WorkPanel extends JPanel {
 				GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
 				new Insets(0, 0, 0, 0), 0, 0));
 		this.updateUI();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		for (Figure figure : figures) {
+			figure.update(o, arg);
+		}
+		
 	}
 
 
