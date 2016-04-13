@@ -46,8 +46,10 @@ public class WorkPanel extends JPanel implements Observer {
 	 */
 	public void build () {
 		this.setPreferredSize(new Dimension(800, 600));
-		this.setBorder(new LineBorder(Color.LIGHT_GRAY));	
+		this.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		
+		//Figure fig = new Figure("Graph 2");
+		//this.add(fig);
 	}
 	
 	//================================================================================

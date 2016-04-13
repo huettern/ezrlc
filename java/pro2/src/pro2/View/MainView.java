@@ -38,6 +38,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
@@ -141,12 +143,11 @@ public class MainView extends JFrame implements Observer {
 		JLabel statusLabel = new JLabel("Status Here....");
 		statusPanel.add(statusLabel);
 		
-		 // Window properties
+		// Window properties
 		setTitle("EZRLC");
 		ImageIcon icon = new ImageIcon(getClass().getResource("pro2LogoTransparent.png"));
 		setIconImage(icon.getImage());
 		
-		// Window size
 		pack();
 		setMinimumSize(getPreferredSize());
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);

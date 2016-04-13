@@ -24,18 +24,16 @@ import pro2.MVC.Controller;
 
 import java.awt.Insets;
 
-
 public class GraphDialog implements ActionListener{
-
 	//================================================================================
     // Local Variables
     //================================================================================
 	private Controller controller;
+	
 	JDialog graphDialog;
 	private JTextField txtGrahpName;
+	private JButton btnCreate, btnCancel;
 	
-	private JButton btnCreate;
-	private JButton btnCancel;
 	
 	//================================================================================
     // Constructors
@@ -167,4 +165,5 @@ public class GraphDialog implements ActionListener{
 			graphDialog.dispose();
 		}
 	}
+
 }
