@@ -49,7 +49,7 @@ public class RectPlotAddMeasurementWindow {
 		pnlDataSource.setToolTipText("");
 		pnlDataSource.setName("");
 		GridBagConstraints gbc_pnlDataSource = new GridBagConstraints();
-		gbc_pnlDataSource.insets = new Insets(0, 5, 5, 5);
+		gbc_pnlDataSource.insets = new Insets(5, 5, 5, 5);
 		gbc_pnlDataSource.fill = GridBagConstraints.BOTH;
 		gbc_pnlDataSource.gridx = 0;
 		gbc_pnlDataSource.gridy = 0;
@@ -69,7 +69,7 @@ public class RectPlotAddMeasurementWindow {
 		gbc_rdbtnFile.gridy = 0;
 		pnlDataSource.add(rdbtnFile, gbc_rdbtnFile);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel("Filename");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
@@ -191,11 +191,15 @@ public class RectPlotAddMeasurementWindow {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnCancel.setBounds(152, 0, 65, 23);
+		btnCancel.setBounds(81, 2, 89, 22);
 		panel.add(btnCancel);
 		
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(227, 0, 47, 23);
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnOk.setBounds(180, 2, 89, 22);
 		panel.add(btnOk);
 	}
 	
