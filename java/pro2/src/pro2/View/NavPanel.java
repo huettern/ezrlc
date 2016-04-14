@@ -180,7 +180,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		lstModles.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_lstModles = new GridBagConstraints();
 		gbc_lstModles.fill = GridBagConstraints.BOTH;
-		gbc_lstModles.insets = new Insets(4, 0, 4, 0);
+		gbc_lstModles.insets = new Insets(4, 4, 4, 4);
 		gbc_lstModles.gridx = 0;
 		gbc_lstModles.gridy = 0;
 		pnlModel.add(lstModles, gbc_lstModles);
