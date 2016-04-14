@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pro2.Plot.GridLine.GridLineStyle;
+import pro2.Plot.RectPlot.RectangularPlot;
 
 public class Grid {
 	//================================================================================

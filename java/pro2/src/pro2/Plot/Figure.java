@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
+import pro2.Plot.RectPlot.RectPlotSettingsWindow;
+import pro2.Plot.RectPlot.RectangularPlot;
 import pro2.RFData.RFData.ComplexModifier;
 import pro2.RFData.RFData.MeasurementType;
 

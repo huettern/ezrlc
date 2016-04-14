@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import pro2.Plot.Axis.Orientation;
+import pro2.Plot.RectPlot.RectangularPlot;
 
 public class Axis {
 
