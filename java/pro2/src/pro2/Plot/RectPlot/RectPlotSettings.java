@@ -6,12 +6,12 @@ public class RectPlotSettings {
     // Public Data
     //================================================================================
 
-	public int xAxisMinimum = 0;
-	public int xAxisMaximum = 0;
+	public double xAxisMinimum = 0;
+	public double xAxisMaximum = 0;
 	public int xAxisSteps = 0;
 	
-	public int yAxisMinimum = 0;
-	public int yAxisMaximum = 0;
+	public double yAxisMinimum = 0;
+	public double yAxisMaximum = 0;
 	public int yAxisSteps = 0;
 	
 	//================================================================================

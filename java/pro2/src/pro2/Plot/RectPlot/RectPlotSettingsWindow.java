@@ -56,9 +56,9 @@ public class RectPlotSettingsWindow implements ActionListener {
 		dialog.setLocation(250, 150);
 		dialog.setSize(300, 350);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{294, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{322, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		dialog.getContentPane().setLayout(gridBagLayout);
 		
@@ -88,10 +88,10 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_pnlX.gridy = 0;
 		tabAxis.add(pnlX, gbc_pnlX);
 		GridBagLayout gbl_pnlX = new GridBagLayout();
-		gbl_pnlX.columnWidths = new int[]{0, 0, 0};
-		gbl_pnlX.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_pnlX.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlX.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlX.columnWidths = new int[] {0, 0};
+		gbl_pnlX.rowHeights = new int[] {0, 0, 0};
+		gbl_pnlX.columnWeights = new double[]{0.0, 1.0};
+		gbl_pnlX.rowWeights = new double[]{1.0, 1.0, 1.0};
 		pnlX.setLayout(gbl_pnlX);
 		
 		JLabel lblMinimum = new JLabel("Minimum:");
@@ -103,11 +103,30 @@ public class RectPlotSettingsWindow implements ActionListener {
 		pnlX.add(lblMinimum, gbc_lblMinimum);
 		
 		// Spinner Model for Axis min and max
-		SpinnerNumberModel smdlAxisSize = new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
-		SpinnerNumberModel smdlStep = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
+		//	SpinnerNumberModel smdlAxisSize = new SpinnerNumberModel(0, Double.MIN_VALUE, Double.MAX_VALUE, Double.MIN_VALUE);
+//		Double current = new Double(0);
+//	    Double min = new Double(Double.MIN_VALUE);
+//	    Double max = new Double(Double.MAX_VALUE);
+//	    Double step = new Double(Double.MIN_VALUE);
+
+		// Spinner settings for Axis min and max
+	    double acurrent = 0;
+	    double amin = -(1e50);
+	    double amax = 1e50;
+	    double astep = 1e-9;
+	    
+	    // Spinner settings for Axis step
+	    double scurrent = 2;
+	    double smin = 1;
+	    double smax = 100;
+	    double sstep = 1;
+	    
+	    
+	  //  System.out.println("cur"+current+"min"+min+"max"+max+"stp"+step);
+		
 		
 		spinXmin = new JSpinner();
-		spinXmin.setModel(smdlAxisSize);
+		spinXmin.setModel(new SpinnerNumberModel(acurrent, amin, amax, astep));
 		GridBagConstraints gbc_spinXmin = new GridBagConstraints();
 		gbc_spinXmin.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinXmin.insets = new Insets(0, 0, 5, 0);
@@ -124,7 +143,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		pnlX.add(lblMaximum, gbc_lblMaximum);
 		
 		spinXmax = new JSpinner();
-		spinXmin.setModel(smdlAxisSize);
+		spinXmax.setModel(new SpinnerNumberModel(acurrent, amin, amax, astep));
 		GridBagConstraints gbc_spinXmax = new GridBagConstraints();
 		gbc_spinXmax.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinXmax.insets = new Insets(0, 0, 5, 0);
@@ -141,7 +160,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		pnlX.add(lblSteps, gbc_lblSteps);
 		
 		spinXstep = new JSpinner();
-		spinXmin.setModel(smdlStep);
+		spinXstep.setModel(new SpinnerNumberModel(scurrent, smin, smax, sstep));
 		GridBagConstraints gbc_spinXstep = new GridBagConstraints();
 		gbc_spinXstep.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinXstep.gridx = 1;
@@ -172,7 +191,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		pnlY.add(lblMinimum_1, gbc_lblMinimum_1);
 		
 		spinYmin = new JSpinner();
-		spinXmin.setModel(smdlAxisSize);
+		spinYmin.setModel(new SpinnerNumberModel(acurrent, amin, amax, astep));
 		GridBagConstraints gbc_spinYmin = new GridBagConstraints();
 		gbc_spinYmin.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinYmin.insets = new Insets(0, 0, 5, 0);
@@ -189,7 +208,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		pnlY.add(lblMaximum_1, gbc_lblMaximum_1);
 		
 		spinYmax = new JSpinner();
-		spinXmin.setModel(smdlAxisSize);
+		spinYmax.setModel(new SpinnerNumberModel(acurrent, amin, amax, astep));
 		GridBagConstraints gbc_spinYmax = new GridBagConstraints();
 		gbc_spinYmax.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinYmax.insets = new Insets(0, 0, 5, 0);
@@ -206,7 +225,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		pnlY.add(lblSteps_1, gbc_lblSteps_1);
 		
 		spinYstep = new JSpinner();
-		spinXmin.setModel(smdlStep);
+		spinYstep.setModel(new SpinnerNumberModel(scurrent, smin, smax, sstep));
 		GridBagConstraints gbc_spinYstep = new GridBagConstraints();
 		gbc_spinYstep.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinYstep.gridx = 1;
@@ -269,12 +288,14 @@ public class RectPlotSettingsWindow implements ActionListener {
 //			d = (Double) spinYstep.getValue();
 //			settings.yAxisSteps = d.intValue();
 			
-			settings.xAxisMaximum = (Integer) spinXmax.getValue();
-			settings.xAxisMinimum = (Integer) spinXmin.getValue();
-			settings.xAxisSteps = (Integer) spinXstep.getValue();
-			settings.yAxisMaximum = (Integer) spinYmax.getValue();
-			settings.yAxisMinimum = (Integer) spinYmin.getValue();
-			settings.yAxisSteps = (Integer) spinYstep.getValue();
+			settings.xAxisMaximum = (Double) spinXmax.getValue();
+			settings.xAxisMinimum = (Double) spinXmin.getValue();
+			d = (Double) spinXstep.getValue();
+			settings.xAxisSteps = d.intValue();
+			settings.yAxisMaximum = (Double) spinYmax.getValue();
+			settings.yAxisMinimum = (Double) spinYmin.getValue();
+			d = (Double) spinYstep.getValue();
+			settings.yAxisSteps = d.intValue();
 			
 			this.figure.updatePlotSettings();
 			
