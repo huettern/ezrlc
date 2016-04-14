@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
+import pro2.Plot.RectPlot.RectPlotSettings;
 import pro2.Plot.RectPlot.RectPlotSettingsWindow;
 import pro2.Plot.RectPlot.RectangularPlot;
 import pro2.RFData.RFData.ComplexModifier;
@@ -94,7 +95,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		add(panel, gbc_panel);
 		
 		// Settings Dialog
-		settingWindow = new RectPlotSettingsWindow(this.controller);
+		settingWindow = new RectPlotSettingsWindow(this.controller, this);
 	}
 
 	public void addDataSet(PlotDataSet z_data) {
@@ -102,10 +103,19 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		rectPlot.addDataSet(z_data);
 	}
 
+	/**
+	 * Updates the plot settings
+	 */
+	public void updatePlotSettings () {
+		rectPlot.setSettings(settingWindow.getSettings());
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==btnSettings) {
+			RectPlotSettings s = rectPlot.getSettings();
+			settingWindow.setSettings(s);
 			settingWindow.show();
 		}
 		if(e.getSource()==btnAddMeasurement) {

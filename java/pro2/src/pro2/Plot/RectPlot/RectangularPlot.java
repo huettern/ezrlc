@@ -1,4 +1,4 @@
-package pro2.Plot;
+package pro2.Plot.RectPlot;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 
 import pro2.MVC.Model;
 import pro2.Plot.Grid.Orientation;
+import pro2.Plot.Axis;
+import pro2.Plot.Grid;
 import pro2.Plot.PlotDataSet;
 
 public class RectangularPlot extends JPanel implements Observer {
@@ -28,6 +30,8 @@ public class RectangularPlot extends JPanel implements Observer {
 	private List<PlotDataSet> dataSets = new ArrayList<PlotDataSet>();
 	private List<Integer> dataSetIDs = new ArrayList<Integer>();
 	
+	private RectPlotSettings settings = new RectPlotSettings();
+	
 	//================================================================================
     // Constructors
     //================================================================================
@@ -41,15 +45,26 @@ public class RectangularPlot extends JPanel implements Observer {
 		// Origin of the plot
 		Point origin = new Point(100,30); 
 		
+		// Init settings
+		settings.xAxisMinimum = 0;
+		settings.xAxisMaximum = 1;
+		settings.xAxisSteps = 1;
+		settings.yAxisMinimum = 0;
+		settings.yAxisMaximum = 1;
+		settings.yAxisSteps = 1;
+		
+		
 		// Add Axis
 		//horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin);
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 0, 100, 10, 20);	// Use for test data
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 1e6, 1e9, 10, 20); 	// Use for r100l10uZRI
-		this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 0, 1000000.0, 2, 20); 	// Use for bsp11
+		this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 
+				settings.xAxisMinimum, settings.xAxisMaximum, settings.xAxisSteps, 20); 	// Use for bsp11
 		//verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin);
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 1, 20, -20); // Use for test data
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 70e3, 20, -20); // Use for r100l10uZRI
-		this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 2000, 2, -20); // Use for bsp11
+		this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 
+				settings.yAxisMinimum, settings.yAxisMaximum, settings.xAxisSteps, -20); // Use for bsp11
 		
 		// Add Grid
 		this.verGrid = new Grid(this, Orientation.VERTICAL, Color.LIGHT_GRAY, horAxis, 40);
@@ -57,7 +72,26 @@ public class RectangularPlot extends JPanel implements Observer {
 		
 		repaint();
 	}
+
+	//================================================================================
+    // Private Function
+    //================================================================================
+	/**
+	 * Updates the plot settings
+	 */
+	private void updateSettings() {
+		horAxis.setMinimum(settings.xAxisMinimum);
+		horAxis.setMaximum(settings.xAxisMaximum);
+		horAxis.setStep(settings.xAxisSteps);
+		
+		verAxis.setMinimum(settings.yAxisMinimum);
+		verAxis.setMaximum(settings.yAxisMaximum);
+		verAxis.setStep(settings.yAxisSteps);
+	}
 	
+	//================================================================================
+    // Public Function
+    //================================================================================
 	
 	/**
 	 * Paints the panel and its contents
@@ -77,7 +111,6 @@ public class RectangularPlot extends JPanel implements Observer {
         // Paint datasets
         for (PlotDataSet plotDataSet : this.dataSets) {
 			if(plotDataSet != null) {
-				System.out.println("plotting dataset");
 				plotDataSet.paint(g);
 			}
 		}
@@ -101,6 +134,16 @@ public class RectangularPlot extends JPanel implements Observer {
 	public void addDataSet(int id) {
 		this.dataSetIDs.add(id);
 		this.dataSets.add(null);
+	}
+	
+	public RectPlotSettings getSettings () {
+		return settings;
+	}
+	
+	public void setSettings(RectPlotSettings s) {
+		this.settings = s;
+		this.updateSettings();
+		repaint();
 	}
 
 

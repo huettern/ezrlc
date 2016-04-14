@@ -1,4 +1,4 @@
-package pro2.Plot;
+package pro2.Plot.RectPlot;
 
 import javax.swing.JDialog;
 
