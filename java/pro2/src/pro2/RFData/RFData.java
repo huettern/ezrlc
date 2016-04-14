@@ -55,6 +55,7 @@ public class RFData {
 	private UUID uid;
 	
 	private String fname = "";
+	private File file;
 	
 	private long dataEntries = 0;
 	private long commentEntrys = 0;
@@ -97,6 +98,7 @@ public class RFData {
 	public RFData(File file) {
 		// TODO Auto-generated constructor stub
 		this.fname = file.getAbsolutePath();
+		this.file = file;
 		System.out.println("Filename " +this.fname);
 		this.uid = UUID.randomUUID();
 	}
@@ -395,7 +397,7 @@ public class RFData {
 	 */
 	public String getFileName() {
 		// TODO Auto-generated method stub
-		return this.fname;
+		return this.file.getName();
 	}
 	
 	/**

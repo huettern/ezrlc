@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
+import pro2.Plot.RectPlot.RectPlotAddMeasurementWindow;
 import pro2.Plot.RectPlot.RectPlotSettings;
 import pro2.Plot.RectPlot.RectPlotSettingsWindow;
 import pro2.Plot.RectPlot.RectangularPlot;
@@ -30,6 +31,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	private RectangularPlot rectPlot;
 	private JButton btnSettings;
 	private RectPlotSettingsWindow settingWindow;
+	private RectPlotAddMeasurementWindow newMeasurementWindow;
 	private Controller controller;
 	private JButton btnAddMeasurement;
 	private JPanel panel;
@@ -96,6 +98,9 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		// Settings Dialog
 		settingWindow = new RectPlotSettingsWindow(this.controller, this);
+		
+		// New Measurement dialog
+		newMeasurementWindow = new RectPlotAddMeasurementWindow(this.controller, this);
 	}
 
 	public void addDataSet(PlotDataSet z_data) {
@@ -110,6 +115,21 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		rectPlot.setSettings(settingWindow.getSettings());
 	}
 	
+	/**
+	 * Adds a new Measurement to the Plot
+	 */
+	public void addNewMeasurement () {
+		// Create Dataset
+		int id = controller.createDataset(this.newMeasurementWindow.getNewMeasurement());
+		
+		// Save the data entry id in the list 
+		this.dataIDList.add(id);
+		rectPlot.addDataSet(id);
+		controller.manualNotify();
+		
+		rectPlot.repaint();
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -119,18 +139,8 @@ public class Figure extends JPanel implements ActionListener, Observer {
 			settingWindow.show();
 		}
 		if(e.getSource()==btnAddMeasurement) {
-			// TODO Put Dialog window here
-			
-			// DEBUG
-			int id = controller.createDataset(DataSource.FILE, 0, MeasurementType.Z, ComplexModifier.REAL);
-			// END DEBUG
-			
-			// Save the data entry id in the list 
-			this.dataIDList.add(id);
-			rectPlot.addDataSet(id);
-			controller.manualNotify();
-			
-			rectPlot.repaint();
+			newMeasurementWindow.setFilename(controller.getFilename());
+			newMeasurementWindow.show();
 		}
 	}
 

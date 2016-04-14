@@ -2,6 +2,7 @@ package pro2.MVC;
 
 import pro2.MVC.Model;
 import pro2.Plot.PlotDataSet;
+import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.RFData.RFData;
 import pro2.View.MainView;
 
@@ -73,5 +74,18 @@ public class Controller {
 	 */
 	public int createDataset(DataSource src, int id, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
 		return model.createDataset(src,id,measType,cpxMod);
+	}
+	/**
+	 * Adds a new Dataset in the model
+	 * @param nm RectPlotNewMeasurement
+	 * @return unique data identifier of the plotdataset
+	 */
+	public int createDataset(RectPlotNewMeasurement nm) {
+		return model.createDataset(nm);
+	}
+
+	public String getFilename() {
+		// TODO Auto-generated method stub
+		return model.getFilename();
 	}
 }

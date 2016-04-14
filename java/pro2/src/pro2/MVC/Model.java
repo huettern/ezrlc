@@ -5,6 +5,7 @@ import java.util.*;
 
 import pro2.MVC.Controller.DataSource;
 import pro2.Plot.PlotDataSet;
+import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.RFData.RFData;
 import pro2.RFData.RFData.ComplexModifier;
 import pro2.RFData.RFData.MeasurementType;
@@ -23,45 +24,17 @@ public class Model extends Observable {
 		
 	}
 
-	/**
-	 * Sets the controller object
-	 * @param controller
-	 */
-	public void setController (Controller controller) {
-		this.controller = controller;
-	}
+	//================================================================================
+    // Private Functions
+    //================================================================================
+	private int buildDataSet(RectPlotNewMeasurement nm) {
 
-	/**
-	 * Parses the given Inputfile and adds a new RFData object
-	 * @param file
-	 */
-	public UUID newInputFile(File file) {
-		try {
-			rfDataFile = new RFData(file);
-			rfDataFile.parse();
-		} catch (Exception e) {
-			// TODO: handle exception
-			return null;
-		}
-		return null;
-	}
-
-	
-	/**
-	 * Adds a new Dataset in the model
-	 * @param src Datasource (File or Model)
-	 * @param id Model ID, if File then not used
-	 * @param measType RFData.MeasurementType
-	 * @param cpxMod RFData.ComplexModifier
-	 * @return	unique data identifier of the plotdataset
-	 */
-	public int createDataset(Controller.DataSource src, int id, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
 		ArrayList<Complex> data = null;
 		List<Double> outdata = null;
 		// Get Data
-		if(src == DataSource.FILE) {
+		if(nm.src == DataSource.FILE) {
 			outdata = new ArrayList<Double>(rfDataFile.getzData().size());
-			switch (measType) {
+			switch (nm.type) {
 			case S:
 				data = this.rfDataFile.getsData();
 				break;
@@ -77,7 +50,7 @@ public class Model extends Observable {
 		}
 		
 		// Convert to Complex Modifier
-		switch(cpxMod) {
+		switch(nm.cpxMod) {
 		case REAL:
 	        // Extract real part
 	        for (Complex in : data) {
@@ -126,7 +99,60 @@ public class Model extends Observable {
 //	      PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
 //	      this.plotDataSetList.add(testset2);
 //	      return (this.plotDataSetList.size() - 1);
-	      
+	}
+	
+	//================================================================================
+    // Public Functions
+    //================================================================================
+
+	
+	/**
+	 * Sets the controller object
+	 * @param controller
+	 */
+	public void setController (Controller controller) {
+		this.controller = controller;
+	}
+
+	/**
+	 * Parses the given Inputfile and adds a new RFData object
+	 * @param file
+	 */
+	public UUID newInputFile(File file) {
+		try {
+			rfDataFile = new RFData(file);
+			rfDataFile.parse();
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+		return null;
+	}
+
+	/**
+	 * Adds a new Dataset in the model
+	 * @param nm RectPlotNewMeasurement
+	 * @return unique data identifier of the plotdataset
+	 */
+	public int createDataset(RectPlotNewMeasurement nm) {
+		return this.buildDataSet(nm);
+	}
+	
+	/**
+	 * Adds a new Dataset in the model
+	 * @param src Datasource (File or Model)
+	 * @param id Model ID, if File then not used
+	 * @param measType RFData.MeasurementType
+	 * @param cpxMod RFData.ComplexModifier
+	 * @return	unique data identifier of the plotdataset
+	 */
+	public int createDataset(Controller.DataSource src, int id, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
+		RectPlotNewMeasurement nm = new RectPlotNewMeasurement();
+		nm.src = src;
+		nm.modelID = id;
+		nm.type=measType;
+		nm.cpxMod=cpxMod;
+		return this.buildDataSet(nm);
 	}
 	
 	public void manualNotify() {
@@ -139,6 +165,12 @@ public class Model extends Observable {
 		// TODO Auto-generated method stub
 		return this.plotDataSetList.get(intValue);
 	}
+
+	public String getFilename() {
+		// TODO Auto-generated method stub
+		return this.rfDataFile.getFileName();
+	}
+
 	
 	
 
