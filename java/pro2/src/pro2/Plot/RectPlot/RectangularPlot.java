@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.JPanel;
 
+import pro2.MVC.Controller.DataSource;
 import pro2.MVC.Model;
 import pro2.Plot.Grid.Orientation;
 import pro2.Plot.Axis;
@@ -29,8 +32,21 @@ public class RectangularPlot extends JPanel implements Observer {
 	
 	private List<PlotDataSet> dataSets = new ArrayList<PlotDataSet>();
 	private List<Integer> dataSetIDs = new ArrayList<Integer>();
+	private List<RectPlotDataSetSettings> dataSetSettings = new ArrayList<RectPlotDataSetSettings>();
 	
 	private RectPlotSettings settings = new RectPlotSettings();
+	
+	// Data line settings
+	private List<Color> plotSetColors = Collections.unmodifiableList(Arrays.asList(
+				new Color(0, 113, 188),
+				new Color(216, 82, 24),
+				new Color(236, 176, 31),
+				new Color(125, 46, 141),
+				new Color(118, 171, 47),
+				new Color(76, 189, 237),
+				new Color(161, 19, 46)
+			));
+	private int PlotSetColorsCtr = 0;	//Holds the index of the next color to be used
 	
 	//================================================================================
     // Constructors
@@ -88,6 +104,50 @@ public class RectangularPlot extends JPanel implements Observer {
 		verAxis.setMaximum(settings.yAxisMaximum);
 		verAxis.setStep(settings.yAxisSteps);
 	}
+
+	/**
+	 * Updates the local stored datasets
+	 * @param model
+	 */
+	private void updateDatasets(Model model) {
+		int i = 0;
+		PlotDataSet dataSet;
+		for (Integer integer : dataSetIDs) {
+			dataSet = model.getDataSet(integer.intValue());
+			dataSet.setAxis(this.horAxis, this.verAxis);
+			dataSet.setDataSetSettings(this.dataSetSettings.get(i));
+			this.dataSets.set(i, dataSet);
+			i++;
+		}
+	}
+
+	/**
+	 * Gets the next color in the color palette and increments counter
+	 * @return
+	 */
+	private Color getNextColor() {
+		Color c = this.plotSetColors.get(this.PlotSetColorsCtr);
+		this.PlotSetColorsCtr++;
+		// If the counter reached the end of the pallete
+		if(this.PlotSetColorsCtr >= this.plotSetColors.size()) {
+			//start from the beginning
+			this.PlotSetColorsCtr = 0;
+		}
+		return c;
+	}
+
+	/**
+	 * Builds the labelname of the new plot
+	 * @param rpnm RectPlotNewMeasurement
+	 * @return string
+	 */
+	private String createLabelString(RectPlotNewMeasurement rpnm) {
+		String s;
+		
+		s = rpnm.src_name +" " +rpnm.type.name() +" " +rpnm.cpxMod.name();
+		
+		return s;
+	}
 	
 	//================================================================================
     // Public Function
@@ -117,25 +177,21 @@ public class RectangularPlot extends JPanel implements Observer {
     }
 
 	/**
-	 * Add a new Dataset to the plot
-	 * @param dataSet
-	 */
-	public void addDataSet(PlotDataSet dataSet) {
-		// TODO Auto-generated method stub
-		dataSet.setAxis(horAxis, verAxis);
-		this.dataSets.add(dataSet);
-		
-	}
-
-	/**
 	 * Add a new Dataset to the plot by ID
+	 * @param rectPlotNewMeasurement 
 	 * @param dataSet
 	 */
-	public void addDataSet(int id) {
+	public void addDataSet(int id, RectPlotNewMeasurement rectPlotNewMeasurement) {
+		RectPlotDataSetSettings set = new RectPlotDataSetSettings();
+		set.setLineColor(this.getNextColor());
+		set.setLabel(this.createLabelString(rectPlotNewMeasurement));
+		
 		this.dataSetIDs.add(id);
+		this.dataSetSettings.add(set);
 		this.dataSets.add(null);
 	}
 	
+
 	public RectPlotSettings getSettings () {
 		return settings;
 	}
@@ -149,21 +205,35 @@ public class RectangularPlot extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		int i = 0;
-		PlotDataSet dataSet;
-		
-		System.out.println("RectPlor update");
-		
 		Model model = (Model) o;
-		
-		for (Integer integer : dataSetIDs) {
-//			dataSet = new PlotDataSet( model.getDataSet(integer.intValue()).getXData(),
-//					 	model.getDataSet(integer.intValue()).getYData() );
-			dataSet = model.getDataSet(integer.intValue());
-			dataSet.setAxis(this.horAxis, this.verAxis);
-			this.dataSets.set(i, dataSet);
-			i++;
-		}
+		this.updateDatasets(model);
 	}
 
+
+	/**
+	 * Scales Axis to show all Data
+	 */
+	public void autoScale() {
+		double xmin = 0;
+		double xmax = 1;
+		double ymin = 0;
+		double ymax = 1;
+		
+		// Crawl all datasets for max / min values
+		for (PlotDataSet dataset : this.dataSets) {
+			if(dataset.getXMax() > xmax) { xmax = dataset.getXMax(); }
+			if(dataset.getXMin() < xmin) { xmin = dataset.getXMin(); }
+			if(dataset.getYMax() > ymax) { ymax = dataset.getYMax(); }
+			if(dataset.getYMin() < ymin) { ymin = dataset.getYMin(); }
+		}
+		
+		settings.xAxisMaximum=xmax;
+		settings.xAxisMinimum=xmin;
+		settings.yAxisMaximum=ymax;
+		settings.yAxisMinimum=ymin;
+		
+		updateSettings();
+		
+		repaint();
+	}
 }

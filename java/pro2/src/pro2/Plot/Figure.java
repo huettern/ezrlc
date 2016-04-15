@@ -25,6 +25,9 @@ import java.util.Observer;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.UIManager;
+import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
 
 public class Figure extends JPanel implements ActionListener, Observer {
 
@@ -34,9 +37,10 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	private RectPlotAddMeasurementWindow newMeasurementWindow;
 	private Controller controller;
 	private JButton btnAddMeasurement;
-	private JPanel panel;
 	
 	private List<Integer> dataIDList = new ArrayList<Integer>();
+	private JButton btnAutoscale;
+	private JPanel panel_1;
 	
 	public Figure(Controller controller, String title) {
 		super.setBackground(new Color(238,238,238));
@@ -46,43 +50,70 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		setBackground(UIManager.getColor("ToggleButton.background"));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{309, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.rowHeights = new int[]{0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0};
 		setLayout(gridBagLayout);
 
 		JLabel lblTitle = new JLabel(title);
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Lucida Grande", Font.BOLD, 18));
 		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
+		gbc_lblTitle.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblTitle.gridwidth = 2;
 		gbc_lblTitle.insets = new Insets(10, 10, 10, 10);
 		gbc_lblTitle.weightx = 1.0;
 		gbc_lblTitle.gridx = 0;
 		gbc_lblTitle.gridy = 0;
 		add(lblTitle, gbc_lblTitle);
 		
-		btnSettings = new JButton("Settings");
-		btnSettings.addActionListener(this);
+		panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.insets = new Insets(5, 0, 5, 5);
+		gbc_panel_1.fill = GridBagConstraints.VERTICAL;
+		gbc_panel_1.gridx = 1;
+		gbc_panel_1.gridy = 1;
+		add(panel_1, gbc_panel_1);
+		GridBagLayout gbl_panel_1 = new GridBagLayout();
+		gbl_panel_1.columnWidths = new int[]{95, 0};
+		gbl_panel_1.rowHeights = new int[]{29, 29, 0, 0};
+		gbl_panel_1.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel_1.setLayout(gbl_panel_1);
 		
 		btnAddMeasurement = new JButton("Add Measurement");
-		btnAddMeasurement.addActionListener(this);
 		GridBagConstraints gbc_btnAddMeasurement = new GridBagConstraints();
 		gbc_btnAddMeasurement.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnAddMeasurement.insets = new Insets(0, 0, 5, 0);
-		gbc_btnAddMeasurement.gridx = 1;
-		gbc_btnAddMeasurement.gridy = 1;
-		add(btnAddMeasurement, gbc_btnAddMeasurement);
+		gbc_btnAddMeasurement.insets = new Insets(5, 5, 0, 5);
+		gbc_btnAddMeasurement.gridx = 0;
+		gbc_btnAddMeasurement.gridy = 0;
+		panel_1.add(btnAddMeasurement, gbc_btnAddMeasurement);
+		btnAddMeasurement.addActionListener(this);
+		
+		btnSettings = new JButton("Settings");
 		GridBagConstraints gbc_btnSettings = new GridBagConstraints();
+		gbc_btnSettings.insets = new Insets(0, 5, 0, 5);
 		gbc_btnSettings.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSettings.insets = new Insets(0, 0, 5, 0);
-		gbc_btnSettings.gridx = 1;
-		gbc_btnSettings.gridy = 2;
-		add(btnSettings, gbc_btnSettings);
+		gbc_btnSettings.gridx = 0;
+		gbc_btnSettings.gridy = 1;
+		panel_1.add(btnSettings, gbc_btnSettings);
+		btnSettings.addActionListener(this);
+		
+		btnAutoscale = new JButton("Autoscale");
+		GridBagConstraints gbc_btnAutoscale = new GridBagConstraints();
+		gbc_btnAutoscale.insets = new Insets(0, 5, 0, 5);
+		gbc_btnAutoscale.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnAutoscale.gridx = 0;
+		gbc_btnAutoscale.gridy = 2;
+		panel_1.add(btnAutoscale, gbc_btnAutoscale);
+		btnAutoscale.addActionListener(this);
 
 
 		rectPlot = new RectangularPlot();
+		rectPlot.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_plot = new GridBagConstraints();
-		gbc_plot.weighty = 2.0;
-		gbc_plot.gridheight = 4;
+		gbc_plot.weighty = 1.0;
 		gbc_plot.insets = new Insets(5, 5, 5, 5);
 		gbc_plot.weightx = 1.0;
 		gbc_plot.fill = GridBagConstraints.BOTH;
@@ -90,22 +121,11 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_plot.gridy = 1;
 		add(rectPlot, gbc_plot);
 		
-		panel = new JPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 3;
-		add(panel, gbc_panel);
-		
 		// Settings Dialog
 		settingWindow = new RectPlotSettingsWindow(this.controller, this);
 		
 		// New Measurement dialog
 		newMeasurementWindow = new RectPlotAddMeasurementWindow(this.controller, this);
-	}
-
-	public void addDataSet(PlotDataSet z_data) {
-		// TODO Auto-generated method stub
-		rectPlot.addDataSet(z_data);
 	}
 
 	/**
@@ -124,7 +144,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		// Save the data entry id in the list 
 		this.dataIDList.add(id);
-		rectPlot.addDataSet(id);
+		rectPlot.addDataSet(id, this.newMeasurementWindow.getNewMeasurement());
 		controller.manualNotify();
 		
 		rectPlot.repaint();
@@ -141,6 +161,9 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		if(e.getSource()==btnAddMeasurement) {
 			newMeasurementWindow.setFilename(controller.getFilename());
 			newMeasurementWindow.show();
+		}
+		if(e.getSource()==btnAutoscale) {
+			rectPlot.autoScale();
 		}
 	}
 

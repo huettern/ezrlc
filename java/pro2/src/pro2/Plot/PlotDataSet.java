@@ -1,10 +1,12 @@
 package pro2.Plot;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import pro2.Plot.RectPlot.RectPlotDataSetSettings;
 import pro2.util.MathUtil;
 
 public class PlotDataSet {
@@ -27,6 +29,7 @@ public class PlotDataSet {
 	
 	private List<Point> data_pts;
 	
+	private RectPlotDataSetSettings settings = new RectPlotDataSetSettings();
 
 	//================================================================================
     // Constructors
@@ -112,12 +115,15 @@ public class PlotDataSet {
 //			this.drawPoint(g, point);
 //		}
 //		
+		Color oldCol = g.getColor();
+		g.setColor(this.settings.getLineColor());
 		for(int i = 0; i<(this.points-1); i++) {
 			this.drawPoint(g, this.data_pts.get(i));
 			this.connectPoints(g, this.data_pts.get(i), this.data_pts.get(i+1));
 		}
 
 		this.drawPoint(g, this.data_pts.get(this.points-1));
+		g.setColor(oldCol);
 	}
 	
 	/**
@@ -137,5 +143,40 @@ public class PlotDataSet {
 		return this.y_data;
 	}
 	
+	/**
+	 * Returns x max value
+	 * @return x max value
+	 */
+	public Double getXMax () {
+		return this.x_max;
+	}
+	/**
+	 * Returns y max value
+	 * @return y max value
+	 */
+	public Double getYMax () {
+		return this.y_max;
+	}
+	/**
+	 * Returns x min value
+	 * @return x min value
+	 */
+	public Double getXMin () {
+		return this.x_min;
+	}
+	/**
+	 * Returns y min value
+	 * @return y min value
+	 */
+	public Double getYMin () {
+		return this.y_min;
+	}
 
+	/**
+	 * Stores the RectPlotDataSetSettings
+	 * @param set RectPlotDataSetSettings
+	 */
+	public void setDataSetSettings(RectPlotDataSetSettings set) {
+		this.settings = set;
+	}
 }
