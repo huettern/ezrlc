@@ -37,7 +37,7 @@ public class GraphDialog implements ActionListener{
 	
 	//================================================================================
     // Constructors
-    //================================================================================
+    //================================================================================	
 	public GraphDialog(Controller controller) {
 		this.controller = controller;
 	}

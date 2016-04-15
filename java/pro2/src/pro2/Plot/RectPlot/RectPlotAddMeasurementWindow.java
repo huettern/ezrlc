@@ -74,11 +74,11 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 45, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		dialog.getContentPane().setLayout(gridBagLayout);
 		
 		JPanel pnlDataSource = new JPanel();
-		pnlDataSource.setBorder(new TitledBorder(null, "Data Source", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		pnlDataSource.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Source", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlDataSource.setToolTipText("");
 		pnlDataSource.setName("");
 		GridBagConstraints gbc_pnlDataSource = new GridBagConstraints();
@@ -131,7 +131,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpSource.add(rdbtnFile);
 		
 		JPanel pnlMeasurementType = new JPanel();
-		pnlMeasurementType.setBorder(new TitledBorder(null, "Measurement Type", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		pnlMeasurementType.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Measurement Type", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlMeasurementType = new GridBagConstraints();
 		gbc_pnlMeasurementType.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlMeasurementType.fill = GridBagConstraints.BOTH;
@@ -176,7 +176,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpMeasType.add(rdbtnZ);
 		
 		JPanel pnlComplexModifier = new JPanel();
-		pnlComplexModifier.setBorder(new TitledBorder(null, "Complex Modifier", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		pnlComplexModifier.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Complex Modifier", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlComplexModifier = new GridBagConstraints();
 		gbc_pnlComplexModifier.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlComplexModifier.fill = GridBagConstraints.BOTH;
@@ -229,24 +229,38 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpCpxMod.add(rdbtnImag);
 		btngrpCpxMod.add(rdbtnReal);
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.insets = new Insets(0, 5, 5, 5);
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 3;
-		dialog.getContentPane().add(panel, gbc_panel);
+		JPanel pnlButtons = new JPanel();
+		GridBagConstraints gbc_pnlButtons = new GridBagConstraints();
+		gbc_pnlButtons.insets = new Insets(0, 5, 5, 5);
+		gbc_pnlButtons.fill = GridBagConstraints.BOTH;
+		gbc_pnlButtons.gridx = 0;
+		gbc_pnlButtons.gridy = 3;
+		dialog.getContentPane().add(pnlButtons, gbc_pnlButtons);
+		GridBagLayout gbl_pnlButtons = new GridBagLayout();
+		gbl_pnlButtons.columnWidths = new int[]{0, 90, 90, 0};
+		gbl_pnlButtons.rowHeights = new int[]{22, 0};
+		gbl_pnlButtons.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlButtons.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		pnlButtons.setLayout(gbl_pnlButtons);
 		
+	
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(this);
-		btnCancel.setBounds(81, 2, 89, 22);
-		panel.add(btnCancel);
+		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+		gbc_btnCancel.fill = GridBagConstraints.BOTH;
+		gbc_btnCancel.insets = new Insets(0, 5, 0, 5);
+		gbc_btnCancel.gridx = 1;
+		gbc_btnCancel.gridy = 0;
+		pnlButtons.add(btnCancel, gbc_btnCancel);
 		
 		btnOk = new JButton("OK");
 		btnOk.addActionListener(this);
-		btnOk.setBounds(180, 2, 89, 22);
-		panel.add(btnOk);
+		GridBagConstraints gbc_btnOk = new GridBagConstraints();
+		gbc_btnOk.insets = new Insets(0, 5, 0, 5);
+		gbc_btnOk.fill = GridBagConstraints.BOTH;
+		gbc_btnOk.gridx = 2;
+		gbc_btnOk.gridy = 0;
+		pnlButtons.add(btnOk, gbc_btnOk);
 	}
 
 	//================================================================================

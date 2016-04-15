@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFormattedTextField;
+import javax.swing.border.LineBorder;
 
 public class RectPlotSettingsWindow implements ActionListener {
 	
@@ -57,14 +58,15 @@ public class RectPlotSettingsWindow implements ActionListener {
 		dialog.setSize(300, 350);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{322, 0};
+		gridBagLayout.rowHeights = new int[]{322, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		dialog.getContentPane().setLayout(gridBagLayout);
 		
 		JTabbedPane tabbed = new JTabbedPane(JTabbedPane.TOP);
 		tabbed.setToolTipText("");
 		GridBagConstraints gbc_tabbed = new GridBagConstraints();
+		gbc_tabbed.insets = new Insets(0, 0, 5, 0);
 		gbc_tabbed.fill = GridBagConstraints.BOTH;
 		gbc_tabbed.gridx = 0;
 		gbc_tabbed.gridy = 0;
@@ -80,9 +82,9 @@ public class RectPlotSettingsWindow implements ActionListener {
 		tabAxis.setLayout(gbl_tabAxis);
 		
 		JPanel pnlX = new JPanel();
-		pnlX.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "X-Axis", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlX.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "X-Axis", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlX = new GridBagConstraints();
-		gbc_pnlX.insets = new Insets(5, 5, 0, 5);
+		gbc_pnlX.insets = new Insets(5, 5, 5, 0);
 		gbc_pnlX.fill = GridBagConstraints.BOTH;
 		gbc_pnlX.gridx = 0;
 		gbc_pnlX.gridy = 0;
@@ -168,9 +170,9 @@ public class RectPlotSettingsWindow implements ActionListener {
 		pnlX.add(spinXstep, gbc_spinXstep);
 		
 		JPanel pnlY = new JPanel();
-		pnlY.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Y-Axis", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlY.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Y-Axis", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlY = new GridBagConstraints();
-		gbc_pnlY.insets = new Insets(5, 5, 5, 5);
+		gbc_pnlY.insets = new Insets(5, 5, 5, 0);
 		gbc_pnlY.fill = GridBagConstraints.BOTH;
 		gbc_pnlY.gridx = 0;
 		gbc_pnlY.gridy = 1;
@@ -233,23 +235,36 @@ public class RectPlotSettingsWindow implements ActionListener {
 		pnlY.add(spinYstep, gbc_spinYstep);
 		
 		JPanel pnlButton = new JPanel();
-		pnlButton.setLayout(null);
 		GridBagConstraints gbc_pnlButton = new GridBagConstraints();
-		gbc_pnlButton.insets = new Insets(0, 5, 5, 5);
+		gbc_pnlButton.insets = new Insets(0, 5, 0, 0);
 		gbc_pnlButton.fill = GridBagConstraints.BOTH;
 		gbc_pnlButton.gridx = 0;
 		gbc_pnlButton.gridy = 2;
 		tabAxis.add(pnlButton, gbc_pnlButton);
-		
-		btnOk = new JButton("Ok");
-		btnOk.addActionListener(this);
-		btnOk.setBounds(180, 2, 89, 22);
-		pnlButton.add(btnOk);
+		GridBagLayout gbl_pnlButton = new GridBagLayout();
+		gbl_pnlButton.columnWidths = new int[]{0, 90, 90, 0};
+		gbl_pnlButton.rowHeights = new int[]{22, 0};
+		gbl_pnlButton.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlButton.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		pnlButton.setLayout(gbl_pnlButton);
 		
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(this);
-		btnCancel.setBounds(81, 2, 89, 22);
-		pnlButton.add(btnCancel);
+		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+		gbc_btnCancel.fill = GridBagConstraints.BOTH;
+		gbc_btnCancel.insets = new Insets(0, 5, 0, 5);
+		gbc_btnCancel.gridx = 1;
+		gbc_btnCancel.gridy = 0;
+		pnlButton.add(btnCancel, gbc_btnCancel);
+		
+		btnOk = new JButton("OK");
+		btnOk.addActionListener(this);
+		GridBagConstraints gbc_btnOk = new GridBagConstraints();
+		gbc_btnOk.insets = new Insets(0, 5, 0, 5);
+		gbc_btnOk.fill = GridBagConstraints.BOTH;
+		gbc_btnOk.gridx = 2;
+		gbc_btnOk.gridy = 0;
+		pnlButton.add(btnOk, gbc_btnOk);
 		
 		JPanel tabColor = new JPanel();
 		tabbed.addTab("Color", null, tabColor, null);
