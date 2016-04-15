@@ -278,6 +278,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		// Source
 		if(this.getSelectedButton(this.btngrpSource) == rdbtnFile){
 			nm.src=DataSource.FILE;
+			nm.src_name=this.lblFileName.getText();
 		}
 		if(this.getSelectedButton(this.btngrpSource)  == rdbtnModel){
 			nm.src=DataSource.MODEL;

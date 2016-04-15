@@ -128,11 +128,6 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		newMeasurementWindow = new RectPlotAddMeasurementWindow(this.controller, this);
 	}
 
-	public void addDataSet(PlotDataSet z_data) {
-		// TODO Auto-generated method stub
-		rectPlot.addDataSet(z_data);
-	}
-
 	/**
 	 * Updates the plot settings
 	 */
@@ -149,7 +144,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		// Save the data entry id in the list 
 		this.dataIDList.add(id);
-		rectPlot.addDataSet(id);
+		rectPlot.addDataSet(id, this.newMeasurementWindow.getNewMeasurement());
 		controller.manualNotify();
 		
 		rectPlot.repaint();

@@ -6,6 +6,7 @@ import pro2.RFData.RFData;
 public class RectPlotNewMeasurement {
 	
 	public Controller.DataSource src;
+	public String src_name;
 	public int modelID;
 	public RFData.MeasurementType type;
 	public RFData.ComplexModifier cpxMod;
