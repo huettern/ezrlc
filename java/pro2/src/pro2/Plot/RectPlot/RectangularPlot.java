@@ -166,4 +166,30 @@ public class RectangularPlot extends JPanel implements Observer {
 		}
 	}
 
+	/**
+	 * Scales Axis to show all Data
+	 */
+	public void autoScale() {
+		double xmin = 0;
+		double xmax = 1;
+		double ymin = 0;
+		double ymax = 1;
+		
+		// Crawl all datasets for max / min values
+		for (PlotDataSet dataset : this.dataSets) {
+			if(dataset.getXMax() > xmax) { xmax = dataset.getXMax(); }
+			if(dataset.getXMin() < xmin) { xmin = dataset.getXMin(); }
+			if(dataset.getYMax() > ymax) { ymax = dataset.getYMax(); }
+			if(dataset.getYMin() < ymin) { ymin = dataset.getYMin(); }
+		}
+		
+		settings.xAxisMaximum=xmax;
+		settings.xAxisMinimum=xmin;
+		settings.yAxisMaximum=ymax;
+		settings.yAxisMinimum=ymin;
+		
+		updateSettings();
+		
+		repaint();
+	}
 }

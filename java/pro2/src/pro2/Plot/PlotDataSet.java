@@ -137,5 +137,32 @@ public class PlotDataSet {
 		return this.y_data;
 	}
 	
-
+	/**
+	 * Returns x max value
+	 * @return x max value
+	 */
+	public Double getXMax () {
+		return this.x_max;
+	}
+	/**
+	 * Returns y max value
+	 * @return y max value
+	 */
+	public Double getYMax () {
+		return this.y_max;
+	}
+	/**
+	 * Returns x min value
+	 * @return x min value
+	 */
+	public Double getXMin () {
+		return this.x_min;
+	}
+	/**
+	 * Returns y min value
+	 * @return y min value
+	 */
+	public Double getYMin () {
+		return this.y_min;
+	}
 }
