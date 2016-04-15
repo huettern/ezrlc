@@ -145,7 +145,7 @@ public class MainView extends JFrame implements Observer {
 		
 		// Window properties
 		setTitle("EZRLC");
-		ImageIcon icon = new ImageIcon(getClass().getResource("pro2LogoTransparent.png"));
+		ImageIcon icon = new ImageIcon(MainView.class.getResource("pro2LogoTransparent.png"));
 		setIconImage(icon.getImage());
 		
 		pack();
