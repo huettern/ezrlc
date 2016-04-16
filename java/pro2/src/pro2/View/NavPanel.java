@@ -101,7 +101,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		lblInputFile.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_lblInputFile = new GridBagConstraints();
 		gbc_lblInputFile.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblInputFile.insets = new Insets(0, 0, 0, 0);
+		gbc_lblInputFile.insets = new Insets(0, 4, 0, 0);
 		gbc_lblInputFile.gridx = 0;
 		gbc_lblInputFile.gridy = 0;
 		pnlInFile.add(lblInputFile, gbc_lblInputFile);
@@ -110,7 +110,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		btnLoadFile = new JButton("Load File...");
 		GridBagConstraints gbc_btnLoadFile = new GridBagConstraints();
 		gbc_btnLoadFile.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnLoadFile.insets = new Insets(4, 0, 4, 0);
+		gbc_btnLoadFile.insets = new Insets(4, 4, 4, 4);
 		gbc_btnLoadFile.gridx = 0;
 		gbc_btnLoadFile.gridy = 1;
 		pnlInFile.add(btnLoadFile, gbc_btnLoadFile);
@@ -146,7 +146,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
 		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnNewGraph = new GridBagConstraints();
-		gbc_btnNewGraph.insets = new Insets(4, 0, 4, 0);
+		gbc_btnNewGraph.insets = new Insets(4, 4, 4, 4);
 		gbc_btnNewGraph.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewGraph.gridx = 0;
 		gbc_btnNewGraph.gridy = 0;
@@ -192,7 +192,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//btnNewModel.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnNewModel = new GridBagConstraints();
 		gbc_btnNewModel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewModel.insets = new Insets(4, 0, 4, 0);
+		gbc_btnNewModel.insets = new Insets(4, 4, 4, 4);
 		gbc_btnNewModel.gridx = 0;
 		gbc_btnNewModel.gridy = 1;
 		pnlModel.add(btnNewModel, gbc_btnNewModel);

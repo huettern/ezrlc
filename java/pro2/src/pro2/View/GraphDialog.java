@@ -25,6 +25,7 @@ import pro2.MVC.Controller;
 import java.awt.Insets;
 
 public class GraphDialog implements ActionListener{
+
 	//================================================================================
     // Local Variables
     //================================================================================
@@ -135,7 +136,7 @@ public class GraphDialog implements ActionListener{
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
 		gbc_btnCreate.anchor = GridBagConstraints.SOUTH;
 		gbc_btnCreate.insets = new Insets(0, 0, 0, 5);
-		gbc_btnCreate.gridx = 1;
+		gbc_btnCreate.gridx = 2;
 		gbc_btnCreate.gridy = 4;
 		panel.add(btnCreate, gbc_btnCreate);
 		btnCreate.addActionListener(this);
@@ -144,7 +145,7 @@ public class GraphDialog implements ActionListener{
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.anchor = GridBagConstraints.SOUTH;
 		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
-		gbc_btnCancel.gridx = 2;
+		gbc_btnCancel.gridx = 1;
 		gbc_btnCancel.gridy = 4;
 		panel.add(btnCancel, gbc_btnCancel);
 		btnCancel.addActionListener(this);
