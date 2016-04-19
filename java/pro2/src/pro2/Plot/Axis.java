@@ -43,14 +43,24 @@ public class Axis {
 	private double min = 0;
 	private double max = 0;
 	private int step = 1;
+	
+	// Log scale params
+	private double log_a = 0;
+	private double log_b = 0;
+	private double logUpperBound = 1;
+	private double logLowerBound = 0;
+	
 
-	private int[] label_posx = new int[200];
-	private int[] label_posy = new int[200];
-	private double[] label_val = new double[200];
+	private static int MAX_NUM_POINTS = 400;
+	private int[] label_posx = new int[MAX_NUM_POINTS];
+	private int[] label_posy = new int[MAX_NUM_POINTS];
+	private double[] label_val = new double[MAX_NUM_POINTS];
 	private int label_count = 0;
 	private int label_offset = 0;	// Position offset from the axis
-	
-	private Point[] tic_pos = new Point[200];
+
+	private Point[] tic_pos = new Point[MAX_NUM_POINTS];		// major tics
+	private Point[] sub_tic_pos = new Point[MAX_NUM_POINTS];	// minor tics
+	private int sub_tic_cnt = 0;
 	private int ticLenght = 10;
 
 	//================================================================================
@@ -74,13 +84,16 @@ public class Axis {
 		this.origin_x = origin.x;
 		this.origin_y = origin.y;
 		this.size = size;
-		this.min = min;
-		this.max = max;
+//		this.min = min;
+//		this.max = max;
 		this.step = step;
 		this.label_offset = labelOffset;
+		this.setMinimum(min);
+		this.setMaximum(max);
 
-		for(int i=0; i<200; i++) {
+		for(int i=0; i<MAX_NUM_POINTS; i++) {
 			tic_pos[i] = new Point (0,0);
+			sub_tic_pos[i] = new Point (0,0);
 		}
 		this.evalSize();
 	}
@@ -103,13 +116,21 @@ public class Axis {
 			this.drawCenteredString(g,this.formatAxisValue(label_val[i]),new Point(label_posx[i], label_posy[i]), new Font("Arial", Font.PLAIN, 12));
 			this.drawTick(g, tic_pos[i]);
 		}
+		
+		// if log scale, draw sub tics
+		for(int i = 0; i <= this.sub_tic_cnt; i++) {
+			this.drawSubTick(g, sub_tic_pos[i]);
+		}
 	}
 
 	public void setMinimum(double min) {
+		if(this.scale == Scale.LOG && min == 0) min = Double.MIN_VALUE;
 		this.min=min;
+		logLowerBound = Math.log10(min);
 	}
 	public void setMaximum(double max) {
 		this.max=max;	
+		logUpperBound = Math.log10(max);
 	}
 	public void setStep(int step) {
 		this.step=step;	
@@ -125,24 +146,7 @@ public class Axis {
 	 */
 	public int getPixelValue(double d) {
 		this.evalSize();
-		if(this.or==Orientation.HORIZONTAL) {
-			if(this.scale == Scale.LINEAR) {
-				double dy = this.end_x - this.start_x;
-				double dx = this.max - this.min;
-				return (int)((dy/dx)*(d-this.min)+this.start_x);
-			}
-			else if(this.scale == Scale.LOG) {
-				double dy = this.end_x - this.start_x;
-				double dx = Math.log10(this.max) - Math.log10(this.min);
-				return (int)((dy/dx)*(d-Math.log10(this.min))+this.start_x);
-			}
-		}
-		else if (this.or==Orientation.VERTICAL) {
-			double dy = this.end_y - this.start_y;
-			double dx = this.max - this.min;
-			return (int)((dy/dx)*(d-this.min)+this.start_y);
-		}
-		return 0;
+		return this.getPixelValueWithoutEval(d);
 	}
 
 	//================================================================================
@@ -204,6 +208,43 @@ public class Axis {
 	//================================================================================
     // Private Functions
     //================================================================================
+
+	/**
+	 * Returns the pixel location of the given value
+	 * @param d
+	 * @return
+	 */
+	private int getPixelValueWithoutEval(double d) {
+		if(this.or==Orientation.HORIZONTAL) {
+			if(this.scale == Scale.LINEAR) {
+				double dy = this.end_x - this.start_x;
+				double dx = this.max - this.min;
+				return (int)((dy/dx)*(d-this.min)+this.start_x);
+			}
+			else if(this.scale == Scale.LOG) {
+//				double dy = this.end_x - this.start_x;
+//				double dx = Math.log10(this.max) - Math.log10(this.min);
+//				return (int)((dy/dx)*(d-Math.log10(this.min))+this.start_x);
+				
+				// y = a exp bx
+				//return (int)(this.log_a * Math.pow(10, this.log_b*d));
+				double delta = this.logUpperBound - this.logLowerBound;
+				double deltaV = Math.log10(d) - this.logLowerBound;
+				double width = this.end_x - this.start_x;
+				//return (int)Math.pow(10, (d*delta/width)+this.logLowerBound);
+				return (int)(((deltaV/delta) * width ) + this.start_x);
+				
+			}
+		}
+		else if (this.or==Orientation.VERTICAL) {
+			double dy = this.end_y - this.start_y;
+			double dx = this.max - this.min;
+			return (int)((dy/dx)*(d-this.min)+this.start_y);
+		}
+		return 0;
+	}
+
+	
 	/**
 	 * Caluclates all the necessary pixel values of the Axis to paint it
 	 */
@@ -233,15 +274,27 @@ public class Axis {
 				// calculate min and max exponent
 				double min_exp = Math.log10(this.min);
 				double max_exp = Math.log10(this.max);
-				label_count = (int) (Math.ceil(max_exp) - Math.ceil(min_exp));
+				label_count = (int) (Math.ceil(max_exp) - Math.ceil(min_exp)) + 1;
+				
+				// b = log (y1/y2) / (x1-x2)
+				this.log_b = Math.log10(this.start_x/this.end_x) / (this.min - this.max);
+				// a = y / (exp bx)
+				this.log_a = this.start_x / Math.pow(10, this.log_b*this.min);
 				
 				int startExp = (int) Math.ceil(min_exp);
-				for(int i = 0; i < label_count; i++) {
+				this.sub_tic_cnt = 0;
+				for(int i = 0; i <= label_count; i++) {
 					label_val[i] = Math.pow(10, startExp);
-					label_posx[i] = this.getPixelValue(label_val[i]);
+					label_posx[i] = this.getPixelValueWithoutEval(label_val[i]);
 					label_posy[i] = this.start_y + this.label_offset;
 					tic_pos[i].x = label_posx[i];
 					tic_pos[i].y = this.start_y;
+					for(double j=0.1; j<=0.9; j += 0.1) {
+						sub_tic_pos[this.sub_tic_cnt].x = 	this.getPixelValueWithoutEval(j*Math.pow(10, i));
+						this.sub_tic_cnt++;
+						this.sub_tic_cnt%=this.MAX_NUM_POINTS;
+					}
+					sub_tic_pos[i].y = this.start_y;
 					startExp++;
 				}
 			}
@@ -314,6 +367,28 @@ public class Axis {
 		}
 		if(this.or == Orientation.VERTICAL) {
 			sx = loc.x-(int)(this.ticLenght/2);
+			sy = loc.y;
+			ex = loc.x+(int)(this.ticLenght/2);
+			ey = loc.y;
+		}
+		g.drawLine(sx, sy, ex, ey);
+	}
+	
+	/**
+	 * Draws an axis sub tic at the given location
+	 * @param g
+	 * @param loc
+	 */
+	private void drawSubTick (Graphics g, Point loc) {
+		int sx = 0, sy = 0, ex = 0, ey = 0;
+		if(this.or == Orientation.HORIZONTAL) {
+			sx = loc.x;
+			sy = loc.y-(int)(this.ticLenght/2);
+			ex = loc.x;
+			ey = loc.y;
+		}
+		if(this.or == Orientation.VERTICAL) {
+			sx = loc.x;
 			sy = loc.y;
 			ex = loc.x+(int)(this.ticLenght/2);
 			ey = loc.y;
