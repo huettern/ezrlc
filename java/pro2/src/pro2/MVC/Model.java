@@ -168,7 +168,10 @@ public class Model extends Observable {
 
 	public String getFilename() {
 		// TODO Auto-generated method stub
-		return this.rfDataFile.getFileName();
+		if(this.rfDataFile != null) {
+			return this.rfDataFile.getFileName();
+		}
+		else return null;
 	}
 
 	
