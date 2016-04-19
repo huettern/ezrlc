@@ -327,7 +327,17 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
     // Public Functions
     //================================================================================
 	public void setFilename(String s) {
-		this.lblFileName.setText(s);
+		if(s != null) {
+			this.lblFileName.setText(s);
+			rdbtnFile.setEnabled(true);
+			rdbtnFile.setSelected(true);
+			rdbtnModel.setSelected(false);
+		}
+		else {
+			rdbtnFile.setEnabled(false);
+			rdbtnModel.setSelected(true);
+			this.lblFileName.setText("");
+		}
 	}
 	
 	public void show() {

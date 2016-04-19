@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 
 import pro2.MVC.Controller;
 import pro2.Plot.Figure;
+import pro2.util.UIUtil;
 
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -288,29 +289,14 @@ public class RectPlotSettingsWindow implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnOk) {
 			Double d;
+			
 			// Build Settings Object
-			
-//			d = (Double) spinXmax.getValue();
-//			settings.xAxisMaximum = d.intValue();
-//			d = (Double) spinXmin.getValue();
-//			settings.xAxisMinimum = d.intValue();
-//			d = (Double) spinXstep.getValue();
-//			settings.xAxisSteps = d.intValue();
-//			d = (Double) spinYmax.getValue();
-//			settings.yAxisMaximum = d.intValue();
-//			d = (Double) spinYmin.getValue();
-//			settings.yAxisMinimum = d.intValue();
-//			d = (Double) spinYstep.getValue();
-//			settings.yAxisSteps = d.intValue();
-			
-			settings.xAxisMaximum = (Double) spinXmax.getValue();
-			settings.xAxisMinimum = (Double) spinXmin.getValue();
-			d = (Double) spinXstep.getValue();
-			settings.xAxisSteps = d.intValue();
-			settings.yAxisMaximum = (Double) spinYmax.getValue();
-			settings.yAxisMinimum = (Double) spinYmin.getValue();
-			d = (Double) spinYstep.getValue();
-			settings.yAxisSteps = d.intValue();
+			settings.xAxisMaximum = UIUtil.getSpinnerDoubleValue(spinXmax);
+			settings.xAxisMinimum = UIUtil.getSpinnerDoubleValue(spinXmin);
+			settings.xAxisSteps = UIUtil.getSpinnerIntValue(spinXstep);
+			settings.yAxisMaximum = UIUtil.getSpinnerDoubleValue(spinYmax);
+			settings.yAxisMinimum = UIUtil.getSpinnerDoubleValue(spinYmin);
+			settings.yAxisSteps = UIUtil.getSpinnerIntValue(spinYstep);
 			
 			this.figure.updatePlotSettings();
 			
