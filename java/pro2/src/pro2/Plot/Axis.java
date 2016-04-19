@@ -23,10 +23,15 @@ public class Axis {
 		VERTICAL
 	};
 
+	public enum Scale {
+		LINEAR, LOG
+	};
+
 	//================================================================================
     // Private Data
     //================================================================================
 	private Orientation or;
+	private Scale scale;
 	private RectangularPlot parent;
 	
 	private int start_x, start_y;
@@ -60,10 +65,11 @@ public class Axis {
 	 * @param min; Minimum Value of the axis
 	 * @param max: Maximum Value of the axis
 	 * @param step: Number of steps
-	 * @param labelOffset: Location of the Value labels, relative to the axi
+	 * @param labelOffset: Location of the Value labels, relative to the axis
 	 */
-	public Axis(RectangularPlot parent, Orientation or, Point origin, int size, double min, double max, int step, int labelOffset) {
+	public Axis(RectangularPlot parent, Scale scale, Orientation or, Point origin, int size, double min, double max, int step, int labelOffset) {
 		this.or = or;
+		this.scale = scale;
 		this.parent = parent;
 		this.origin_x = origin.x;
 		this.origin_y = origin.y;
@@ -120,16 +126,23 @@ public class Axis {
 	public int getPixelValue(double d) {
 		this.evalSize();
 		if(this.or==Orientation.HORIZONTAL) {
-			double dy = this.end_x - this.start_x;
-			double dx = this.max - this.min;
-			return (int)((dy/dx)*(d-this.min)+this.start_x);
+			if(this.scale == Scale.LINEAR) {
+				double dy = this.end_x - this.start_x;
+				double dx = this.max - this.min;
+				return (int)((dy/dx)*(d-this.min)+this.start_x);
+			}
+			else if(this.scale == Scale.LOG) {
+				double dy = this.end_x - this.start_x;
+				double dx = Math.log10(this.max) - Math.log10(this.min);
+				return (int)((dy/dx)*(d-Math.log10(this.min))+this.start_x);
+			}
 		}
 		else if (this.or==Orientation.VERTICAL) {
 			double dy = this.end_y - this.start_y;
 			double dx = this.max - this.min;
 			return (int)((dy/dx)*(d-this.min)+this.start_y);
 		}
-		else return 0;
+		return 0;
 	}
 
 	//================================================================================
@@ -203,16 +216,34 @@ public class Axis {
 			this.end_y = start_y;
 			
 			// Calculate String and tic positions
-			label_count = this.step;
-			double spacing = ((this.end_x-this.start_x)/this.step);
-			double data_spacing = ((this.max-this.min)/this.step);
-			for(int i = 0; i <= label_count; i++)
-			{
-				label_posx[i] = this.origin_x + (int)(i*spacing);
-				label_posy[i] = this.start_y + this.label_offset;
-				label_val[i] = this.min + (i*data_spacing);
-				tic_pos[i].x = this.origin_x + (int)(i*spacing);
-				tic_pos[i].y = this.start_y;
+			if(this.scale == Scale.LINEAR) {
+				label_count = this.step;
+				double spacing = ((this.end_x-this.start_x)/this.step);
+				double data_spacing = ((this.max-this.min)/this.step);
+				for(int i = 0; i <= label_count; i++)
+				{
+					label_posx[i] = this.origin_x + (int)(i*spacing);
+					label_posy[i] = this.start_y + this.label_offset;
+					label_val[i] = this.min + (i*data_spacing);
+					tic_pos[i].x = this.origin_x + (int)(i*spacing);
+					tic_pos[i].y = this.start_y;
+				}
+			}
+			else if(this.scale == Scale.LOG) {
+				// calculate min and max exponent
+				double min_exp = Math.log10(this.min);
+				double max_exp = Math.log10(this.max);
+				label_count = (int) (Math.ceil(max_exp) - Math.ceil(min_exp));
+				
+				int startExp = (int) Math.ceil(min_exp);
+				for(int i = 0; i < label_count; i++) {
+					label_val[i] = Math.pow(10, startExp);
+					label_posx[i] = this.getPixelValue(label_val[i]);
+					label_posy[i] = this.start_y + this.label_offset;
+					tic_pos[i].x = label_posx[i];
+					tic_pos[i].y = this.start_y;
+					startExp++;
+				}
 			}
 		}
 		else if(or == Orientation.VERTICAL) {
