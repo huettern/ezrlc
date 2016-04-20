@@ -12,7 +12,6 @@ import java.util.Collections;
 
 import javax.swing.JPanel;
 
-import pro2.MVC.Controller.DataSource;
 import pro2.MVC.Model;
 import pro2.Plot.Grid.Orientation;
 import pro2.Plot.Axis;
@@ -20,7 +19,7 @@ import pro2.Plot.Grid;
 import pro2.Plot.PlotDataSet;
 
 public class RectangularPlot extends JPanel implements Observer {
-
+	private static final long serialVersionUID = 1L;
 	//================================================================================
     // Private Data
     //================================================================================
@@ -74,12 +73,12 @@ public class RectangularPlot extends JPanel implements Observer {
 		//horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin);
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 0, 100, 10, 20);	// Use for test data
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 1e6, 1e9, 10, 20); 	// Use for r100l10uZRI
-		this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 
+		this.horAxis = new Axis(this, Axis.Scale.LOG, Axis.Orientation.HORIZONTAL, origin, 40, 
 				settings.xAxisMinimum, settings.xAxisMaximum, settings.xAxisSteps, 20); 	// Use for bsp11
 		//verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin);
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 1, 20, -20); // Use for test data
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 70e3, 20, -20); // Use for r100l10uZRI
-		this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 
+		this.verAxis = new Axis(this, Axis.Scale.LINEAR, Axis.Orientation.VERTICAL, origin, 40, 
 				settings.yAxisMinimum, settings.yAxisMaximum, settings.xAxisSteps, -20); // Use for bsp11
 		
 		// Add Grid
