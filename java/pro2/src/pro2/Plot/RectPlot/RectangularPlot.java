@@ -12,7 +12,6 @@ import java.util.Collections;
 
 import javax.swing.JPanel;
 
-import pro2.MVC.Controller.DataSource;
 import pro2.MVC.Model;
 import pro2.Plot.Grid.Orientation;
 import pro2.Plot.Axis;
@@ -20,7 +19,7 @@ import pro2.Plot.Grid;
 import pro2.Plot.PlotDataSet;
 
 public class RectangularPlot extends JPanel implements Observer {
-
+	private static final long serialVersionUID = 1L;
 	//================================================================================
     // Private Data
     //================================================================================

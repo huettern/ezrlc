@@ -45,8 +45,6 @@ public class Axis {
 	private int step = 1;
 	
 	// Log scale params
-	private double log_a = 0;
-	private double log_b = 0;
 	private double logUpperBound = 1;
 	private double logLowerBound = 0;
 	
@@ -59,8 +57,7 @@ public class Axis {
 	private int label_offset = 0;	// Position offset from the axis
 
 	private Point[] tic_pos = new Point[MAX_NUM_POINTS];		// major tics
-	private Point[] sub_tic_pos = new Point[MAX_NUM_POINTS];	// minor tics
-	private int sub_tic_cnt = 0;
+	private List<Point> sub_tic_pos = new ArrayList<Point>();
 	private int ticLenght = 10;
 
 	//================================================================================
@@ -93,7 +90,7 @@ public class Axis {
 
 		for(int i=0; i<MAX_NUM_POINTS; i++) {
 			tic_pos[i] = new Point (0,0);
-			sub_tic_pos[i] = new Point (0,0);
+			//sub_tic_pos[i] = new Point (0,0);
 		}
 		this.evalSize();
 	}
@@ -118,8 +115,11 @@ public class Axis {
 		}
 		
 		// if log scale, draw sub tics
-		for(int i = 0; i <= this.sub_tic_cnt; i++) {
-			this.drawSubTick(g, sub_tic_pos[i]);
+//		for(int i = 0; i <= this.sub_tic_cnt; i++) {
+//			this.drawSubTick(g, sub_tic_pos[i]);
+//		}
+		for (Point p : this.sub_tic_pos) {
+			this.drawSubTick(g, p);
 		}
 	}
 
@@ -222,18 +222,10 @@ public class Axis {
 				return (int)((dy/dx)*(d-this.min)+this.start_x);
 			}
 			else if(this.scale == Scale.LOG) {
-//				double dy = this.end_x - this.start_x;
-//				double dx = Math.log10(this.max) - Math.log10(this.min);
-//				return (int)((dy/dx)*(d-Math.log10(this.min))+this.start_x);
-				
-				// y = a exp bx
-				//return (int)(this.log_a * Math.pow(10, this.log_b*d));
 				double delta = this.logUpperBound - this.logLowerBound;
 				double deltaV = Math.log10(d) - this.logLowerBound;
 				double width = this.end_x - this.start_x;
-				//return (int)Math.pow(10, (d*delta/width)+this.logLowerBound);
 				return (int)(((deltaV/delta) * width ) + this.start_x);
-				
 			}
 		}
 		else if (this.or==Orientation.VERTICAL) {
@@ -276,26 +268,28 @@ public class Axis {
 				double max_exp = Math.log10(this.max);
 				label_count = (int) (Math.ceil(max_exp) - Math.ceil(min_exp)) + 1;
 				
-				// b = log (y1/y2) / (x1-x2)
-				this.log_b = Math.log10(this.start_x/this.end_x) / (this.min - this.max);
-				// a = y / (exp bx)
-				this.log_a = this.start_x / Math.pow(10, this.log_b*this.min);
-				
 				int startExp = (int) Math.ceil(min_exp);
-				this.sub_tic_cnt = 0;
+				// Calculate string and major tic positions
 				for(int i = 0; i <= label_count; i++) {
 					label_val[i] = Math.pow(10, startExp);
 					label_posx[i] = this.getPixelValueWithoutEval(label_val[i]);
 					label_posy[i] = this.start_y + this.label_offset;
 					tic_pos[i].x = label_posx[i];
 					tic_pos[i].y = this.start_y;
-					for(double j=0.1; j<=0.9; j += 0.1) {
-						sub_tic_pos[this.sub_tic_cnt].x = 	this.getPixelValueWithoutEval(j*Math.pow(10, i));
-						this.sub_tic_cnt++;
-						this.sub_tic_cnt%=this.MAX_NUM_POINTS;
-					}
-					sub_tic_pos[i].y = this.start_y;
 					startExp++;
+				}
+				// calculate minor tic positions
+				sub_tic_pos = new ArrayList<Point>();
+				Point p = new Point();
+				for (double i = this.logLowerBound; i <= this.logUpperBound; i++) {
+					for (double j = 0.1; j < 1; j += 0.1) {
+						double value = j * Math.pow(10, i);
+						if( (value >= this.min) && (value <= this.max) ) {
+							p.x = this.getPixelValueWithoutEval(value);
+							p.y = this.start_y;
+							sub_tic_pos.add(new Point(p.x,p.y));
+						}
+					}
 				}
 			}
 		}
