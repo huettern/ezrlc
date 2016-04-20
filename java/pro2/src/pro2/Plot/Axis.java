@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import pro2.Plot.Axis.Orientation;
 import pro2.Plot.RectPlot.RectangularPlot;
+import pro2.util.UIUtil;
 
 public class Axis {
 
@@ -114,10 +115,6 @@ public class Axis {
 			this.drawTick(g, tic_pos[i]);
 		}
 		
-		// if log scale, draw sub tics
-//		for(int i = 0; i <= this.sub_tic_cnt; i++) {
-//			this.drawSubTick(g, sub_tic_pos[i]);
-//		}
 		for (Point p : this.sub_tic_pos) {
 			this.drawSubTick(g, p);
 		}
@@ -324,11 +321,21 @@ public class Axis {
 	 * @return
 	 */
 	private String formatAxisValue(double d) {
+		String s;
+		
+		// check if number is bigger than 4 digits
+		if( (d >= 1000 || d <= 0.001) && d != 0.0) {
+			// switch to scientific notation
+			s = UIUtil.num2Scientific(d);
+		}
+		else {
+			s = String.format("%.0f", d);
+		}
 		
 		
 		
-		
-		return String.format("%.1f", d);
+		//return String.format("%.1f", d);
+		return s;
 	}
 	
 	/**
@@ -344,7 +351,7 @@ public class Axis {
 	    // Determine the X coordinate for the text
 	    int x = point.x - (metrics.stringWidth(text) / 2);
 	    // Determine the Y coordinate for the text
-	    int y = point.y ;//+ (int)(metrics.getHeight() / 2) ;//+ metrics.getAscent();
+	    int y = point.y + (int)(metrics.getHeight() / 3) ;//+ metrics.getAscent();
 	    // Set the font
 	    //g.setFont(font);
 	    // Draw the String

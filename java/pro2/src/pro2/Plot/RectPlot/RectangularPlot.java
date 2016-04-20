@@ -87,7 +87,7 @@ public class RectangularPlot extends JPanel implements Observer {
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 1, 20, -20); // Use for test data
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 70e3, 20, -20); // Use for r100l10uZRI
 		this.verAxis = new Axis(this, Axis.Scale.LINEAR, Axis.Orientation.VERTICAL, origin, topMargin, 
-				settings.yAxisMinimum, settings.yAxisMaximum, settings.xAxisSteps, -20); // Use for bsp11
+				settings.yAxisMinimum, settings.yAxisMaximum, settings.xAxisSteps, -30); // Use for bsp11
 		
 		// Add Grid
 		this.verGrid = new Grid(this, Orientation.VERTICAL, Color.LIGHT_GRAY, horAxis, 40);

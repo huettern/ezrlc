@@ -1,5 +1,8 @@
 package pro2.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import javax.swing.JSpinner;
 
 public class UIUtil {
@@ -38,5 +41,12 @@ public class UIUtil {
 	 */
 	public static int getSpinnerIntValue (JSpinner spin) {
 		return getSpinnerDoubleValue(spin).intValue();
+	}
+	
+	public static String num2Scientific(double d) {
+		String s;
+		NumberFormat formatter = new DecimalFormat();
+		formatter = new DecimalFormat("0.###E0");
+	    return formatter.format(d); // 1.2345E-1
 	}
 }
