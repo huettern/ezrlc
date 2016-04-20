@@ -57,6 +57,7 @@ public class WorkPanel extends JPanel implements Observer {
     //================================================================================
 	public void addGraph(String text) {
 		Figure f = new Figure(this.controller, text);
+		f.buildRectPlot();
 		
 		this.figures.add(f);
 		this.add(figures.get(figures.size()-1), new GridBagConstraints(0, 0, 1, 1, 1, 1, 

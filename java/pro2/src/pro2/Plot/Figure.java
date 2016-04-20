@@ -8,6 +8,7 @@ import pro2.Plot.RectPlot.RectPlotAddMeasurementWindow;
 import pro2.Plot.RectPlot.RectPlotSettings;
 import pro2.Plot.RectPlot.RectPlotSettingsWindow;
 import pro2.Plot.RectPlot.RectangularPlot;
+import pro2.Plot.SmithChart.SmithChart;
 import pro2.RFData.RFData.ComplexModifier;
 import pro2.RFData.RFData.MeasurementType;
 
@@ -32,6 +33,7 @@ import javax.swing.border.LineBorder;
 public class Figure extends JPanel implements ActionListener, Observer {
 
 	private RectangularPlot rectPlot;
+	private SmithChart smithChart;
 	private JButton btnSettings;
 	private RectPlotSettingsWindow settingWindow;
 	private RectPlotAddMeasurementWindow newMeasurementWindow;
@@ -108,8 +110,12 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_btnAutoscale.gridy = 2;
 		panel_1.add(btnAutoscale, gbc_btnAutoscale);
 		btnAutoscale.addActionListener(this);
-
-
+	}
+	
+	/**
+	 * Builds a Rectangular Plot inside the figure
+	 */
+	public void buildRectPlot() {
 		rectPlot = new RectangularPlot();
 		rectPlot.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_plot = new GridBagConstraints();
@@ -120,12 +126,28 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_plot.gridx = 0;
 		gbc_plot.gridy = 1;
 		add(rectPlot, gbc_plot);
-		
+
 		// Settings Dialog
 		settingWindow = new RectPlotSettingsWindow(this.controller, this);
 		
 		// New Measurement dialog
 		newMeasurementWindow = new RectPlotAddMeasurementWindow(this.controller, this);
+	}
+	
+	/**
+	 * Builds a Smith Chart inside the figure
+	 */
+	public void buildSmithChart () {
+		smithChart = new SmithChart();
+		smithChart.setBorder(new LineBorder(new Color(0, 0, 0)));
+		GridBagConstraints gbc_plot = new GridBagConstraints();
+		gbc_plot.weighty = 1.0;
+		gbc_plot.insets = new Insets(5, 5, 5, 5);
+		gbc_plot.weightx = 1.0;
+		gbc_plot.fill = GridBagConstraints.BOTH;
+		gbc_plot.gridx = 0;
+		gbc_plot.gridy = 1;
+		add(smithChart, gbc_plot);
 	}
 
 	/**
