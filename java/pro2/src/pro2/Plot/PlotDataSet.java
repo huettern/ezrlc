@@ -2,7 +2,9 @@ package pro2.Plot;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,23 +109,25 @@ public class PlotDataSet {
 	 * Paint the Dataset
 	 * @param g
 	 */
-	public void paint(Graphics g) {
+	public void paint(Graphics g, Area clip) {
 		// TODO Auto-generated method stub
 		this.eval();
+		Graphics2D g2 = (Graphics2D)g.create();
+		g2.setClip(clip);
 		
 //		for (Point point : this.data_pts) {
 //			this.drawPoint(g, point);
 //		}
 //		
-		Color oldCol = g.getColor();
-		g.setColor(this.settings.getLineColor());
+		Color oldCol = g2.getColor();
+		g2.setColor(this.settings.getLineColor());
 		for(int i = 0; i<(this.points-1); i++) {
-			this.drawPoint(g, this.data_pts.get(i));
-			this.connectPoints(g, this.data_pts.get(i), this.data_pts.get(i+1));
+			this.drawPoint(g2, this.data_pts.get(i));
+			this.connectPoints(g2, this.data_pts.get(i), this.data_pts.get(i+1));
 		}
 
-		this.drawPoint(g, this.data_pts.get(this.points-1));
-		g.setColor(oldCol);
+		this.drawPoint(g2, this.data_pts.get(this.points-1));
+		g2.setColor(oldCol);
 	}
 	
 	/**
