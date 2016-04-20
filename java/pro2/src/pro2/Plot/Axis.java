@@ -161,6 +161,9 @@ public class Axis {
 		for(int i = 0; i <= this.label_count; i++) {
 			points.add(tic_pos[i]);
 		}
+		for (Point point : sub_tic_pos) {
+			points.add(point);
+		}
 		return points; 
 	}
 	
@@ -321,6 +324,10 @@ public class Axis {
 	 * @return
 	 */
 	private String formatAxisValue(double d) {
+		
+		
+		
+		
 		return String.format("%.1f", d);
 	}
 	
