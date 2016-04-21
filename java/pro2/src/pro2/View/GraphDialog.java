@@ -49,8 +49,6 @@ public class GraphDialog implements ActionListener{
 	 */	
 	public GraphDialog(Controller controller) {
 		this.controller = controller;
-		
-		buildDialog();
 	}
 
 	
@@ -176,7 +174,7 @@ public class GraphDialog implements ActionListener{
 		btnCancel = new JButton("Cancel");
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.fill = GridBagConstraints.BOTH;
-		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
+		gbc_btnCancel.insets = new Insets(0, 2, 0, 5);
 		gbc_btnCancel.gridx = 0;
 		gbc_btnCancel.gridy = 0;
 		pnlButtons.add(btnCancel, gbc_btnCancel);
@@ -184,6 +182,7 @@ public class GraphDialog implements ActionListener{
 		
 		btnCreate = new JButton("Create");
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
+		gbc_btnCreate.insets = new Insets(0, 5, 0, 2);
 		gbc_btnCreate.fill = GridBagConstraints.BOTH;
 		gbc_btnCreate.gridx = 1;
 		gbc_btnCreate.gridy = 0;
