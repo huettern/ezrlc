@@ -1,5 +1,7 @@
 package pro2.util;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -48,5 +50,14 @@ public class UIUtil {
 		NumberFormat formatter = new DecimalFormat();
 		formatter = new DecimalFormat("0.###E0");
 	    return formatter.format(d); // 1.2345E-1
+	}
+	/**
+	 * Draws a circle arround the given midpoint and radius
+	 * @param g Graphics object
+	 * @param p Midpoint of the circle
+	 * @param radius radius of the circle
+	 */
+	public static void drawCenterCircle (Graphics2D g, Point p, int radius) {
+		g.drawOval(p.x-radius, p.y-radius, 2*radius, 2*radius);
 	}
 }
