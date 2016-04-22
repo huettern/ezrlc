@@ -34,12 +34,16 @@ public class RFData {
 	
 	/**
 	 * Defines the available data units in the datafile
-	 * @author noah
 	 *
 	 */
 	public enum MeasurementUnit {
 		 MA, DB, RI
 	}
+	
+	public enum ComplexModifier {
+		REAL, IMAG, MAG, ANGLE
+	}
+	
 	
 	//================================================================================
     // Private Data
@@ -51,6 +55,7 @@ public class RFData {
 	private UUID uid;
 	
 	private String fname = "";
+	private File file;
 	
 	private long dataEntries = 0;
 	private long commentEntrys = 0;
@@ -93,6 +98,7 @@ public class RFData {
 	public RFData(File file) {
 		// TODO Auto-generated constructor stub
 		this.fname = file.getAbsolutePath();
+		this.file = file;
 		System.out.println("Filename " +this.fname);
 		this.uid = UUID.randomUUID();
 	}
@@ -391,7 +397,7 @@ public class RFData {
 	 */
 	public String getFileName() {
 		// TODO Auto-generated method stub
-		return this.fname;
+		return this.file.getName();
 	}
 	
 	/**
@@ -424,6 +430,15 @@ public class RFData {
 	 */
 	public ArrayList<Complex> getsData() {
 		return new ArrayList<Complex>(sData);
+	}
+
+	
+	/** 
+	 * Returns a list of Y Data
+	 * @return
+	 */
+	public ArrayList<Complex> getyData() {
+		return new ArrayList<Complex>(yData);
 	}
 
 }

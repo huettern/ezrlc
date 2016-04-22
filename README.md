@@ -34,3 +34,8 @@ Build Path -> Libraries
 ### On Mac
 `brew install ant`
 `brew install maven`
+
+##Installing Windowbuilder
+use this link:
+help > install new software > work with
+http://download.eclipse.org/windowbuilder/WB/release/R201506241200-1/4.5/

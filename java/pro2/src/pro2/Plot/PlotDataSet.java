@@ -1,10 +1,14 @@
 package pro2.Plot;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
+import pro2.Plot.RectPlot.RectPlotDataSetSettings;
 import pro2.util.MathUtil;
 
 public class PlotDataSet {
@@ -27,6 +31,7 @@ public class PlotDataSet {
 	
 	private List<Point> data_pts;
 	
+	private RectPlotDataSetSettings settings = new RectPlotDataSetSettings();
 
 	//================================================================================
     // Constructors
@@ -104,20 +109,25 @@ public class PlotDataSet {
 	 * Paint the Dataset
 	 * @param g
 	 */
-	public void paint(Graphics g) {
+	public void paint(Graphics g, Area clip) {
 		// TODO Auto-generated method stub
 		this.eval();
+		Graphics2D g2 = (Graphics2D)g.create();
+		g2.setClip(clip);
 		
 //		for (Point point : this.data_pts) {
 //			this.drawPoint(g, point);
 //		}
 //		
+		Color oldCol = g2.getColor();
+		g2.setColor(this.settings.getLineColor());
 		for(int i = 0; i<(this.points-1); i++) {
-			this.drawPoint(g, this.data_pts.get(i));
-			this.connectPoints(g, this.data_pts.get(i), this.data_pts.get(i+1));
+			this.drawPoint(g2, this.data_pts.get(i));
+			this.connectPoints(g2, this.data_pts.get(i), this.data_pts.get(i+1));
 		}
 
-		this.drawPoint(g, this.data_pts.get(this.points-1));
+		this.drawPoint(g2, this.data_pts.get(this.points-1));
+		g2.setColor(oldCol);
 	}
 	
 	/**
@@ -130,6 +140,47 @@ public class PlotDataSet {
 		this.y_axis=y;
 	}
 	
+	public List<Double> getXData () {
+		return this.x_data;
+	}
+	public List<Double> getYData () {
+		return this.y_data;
+	}
 	
+	/**
+	 * Returns x max value
+	 * @return x max value
+	 */
+	public Double getXMax () {
+		return this.x_max;
+	}
+	/**
+	 * Returns y max value
+	 * @return y max value
+	 */
+	public Double getYMax () {
+		return this.y_max;
+	}
+	/**
+	 * Returns x min value
+	 * @return x min value
+	 */
+	public Double getXMin () {
+		return this.x_min;
+	}
+	/**
+	 * Returns y min value
+	 * @return y min value
+	 */
+	public Double getYMin () {
+		return this.y_min;
+	}
 
+	/**
+	 * Stores the RectPlotDataSetSettings
+	 * @param set RectPlotDataSetSettings
+	 */
+	public void setDataSetSettings(RectPlotDataSetSettings set) {
+		this.settings = set;
+	}
 }

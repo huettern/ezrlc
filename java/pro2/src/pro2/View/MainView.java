@@ -14,6 +14,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -21,6 +22,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.UUID;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuBar;
@@ -35,6 +38,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
@@ -50,7 +55,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.Frame;
 
-public class MainView extends JFrame {
+public class MainView extends JFrame implements Observer {
 	
 	private NavPanel navPanel;
 	private WorkPanel workPanel;
@@ -63,11 +68,20 @@ public class MainView extends JFrame {
 	private List<UUID> fileTreeItemsUID = new ArrayList<UUID>();   
 	
 
+
+	//================================================================================
+    // Constructors
+    //================================================================================
+	public MainView() {
 	
+	}
+	//================================================================================
+    // Public Functions
+    //================================================================================
 	/**
 	 * Create the frame.
 	 */
-	public MainView() {
+	public void build () {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 553, 402);
 		
@@ -104,10 +118,10 @@ public class MainView extends JFrame {
 		contentPanel.add(splitPane);
 		
 		//Add navPanel & workPanel
-		navPanel = new NavPanel(this);
+		navPanel = new NavPanel(this.controller);
 		splitPane.setLeftComponent(navPanel);
 		navPanel.build();
-		workPanel = new WorkPanel(this);
+		workPanel = new WorkPanel(this.controller);
 		splitPane.setRightComponent(workPanel);
 		workPanel.build();
 
@@ -129,8 +143,11 @@ public class MainView extends JFrame {
 		JLabel statusLabel = new JLabel("Status Here....");
 		statusPanel.add(statusLabel);
 		
+		// Window properties
+		setTitle("EZRLC");
+		//ImageIcon icon = new ImageIcon(MainView.class.getResource("pro2LogoTransparent.png"));
+		//setIconImage(icon.getImage());
 		
-		// Window size
 		pack();
 		setMinimumSize(getPreferredSize());
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -143,20 +160,6 @@ public class MainView extends JFrame {
 		
 	}
 	
-	/**
-	 * Adds a new entry to the input file list
-	 * @param name
-	 * @param uid
-	 */
-	public void addFileListItem(String name, UUID uid) {
-		
-		DefaultMutableTreeNode item = new DefaultMutableTreeNode(name);
-		this.fileTreeTop.add(item);
-	//	DefaultTreeModel model = (DefaultTreeModel)fileTree.getModel();
-	//	model.reload();
-
-		this.fileTreeItemsUID.add(uid);
-	}
 	
 	/**
 	 * Sets the controller object
@@ -164,6 +167,35 @@ public class MainView extends JFrame {
 	 */
 	public void setController (Controller controller) {
 		this.controller = controller;
+	}
+
+	
+	public void addGraph(String text) {
+		// TODO Auto-generated method stub
+		workPanel.addGraph(text);
+	}
+	
+	public void addNewFile(File f) {
+		// TODO Auto-generated method stub
+		this.controller.loadFile(f);
+		
+	}
+	public void setFileName(String name) {
+		navPanel.setFileName(name);
+		
+	}
+	
+	/**
+	 * Gets called if model notifies Observers
+	 * @param o
+	 * @param arg
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		System.out.println("Main View update!");
+		workPanel.update(o, arg);
+		navPanel.update(o, arg);
+		
 	}
 
 	
