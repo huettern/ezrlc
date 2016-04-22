@@ -9,6 +9,32 @@ mvn -f java/pro2/pom.xml clean compile assembly:single
 cp java/pro2/target/*.jar .
 ```
 
+## Setup build environment on ubuntu
+Install maven compiler
+```
+sudo apt-get install maven
+```
+Install oracle jdk 8
+```
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+```
+Get Repository
+```
+git clone https://github.com/noah95/pro2.git
+cd pro2
+```
+Build it!
+```
+mvn -f java/pro2/pom.xm
+```
+Run it
+```
+java -jar pro2-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+```
+
 
 ## Installing maven for eclipse
 
