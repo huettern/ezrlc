@@ -37,25 +37,25 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-//		EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {                                           
+		EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {                                           
                 Model model = new Model();
                 MainView view = new MainView();
                 Controller controller = new Controller(model,view);
 //                
-//                view.setController(controller);
+                view.setController(controller);
                 model.setController(controller);
 //                
-//                view.build();
-//                view.setVisible(true);
-//                
-//                // Add observers
-//                model.addObserver(view);
-//                
-//                controller.contol();
-//            }
-//        });  
+                view.build();
+                view.setVisible(true);
+                
+                // Add observers
+                model.addObserver(view);
+                
+                controller.contol();
+            }
+        });  
 
 		//================================================================================
 	    // Smith Test
@@ -106,17 +106,17 @@ public class Pro2 {
 //        PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
 //
 //        /* Create Plot */
-        Figure fig = new Figure(controller,"Graph 1");
-        fig.buildSmithChart();
+//        Figure fig = new Figure(controller,"Graph 1");
+//        fig.buildSmithChart();
         
 //        fig.addDataSet(z_data);		// Real data from s1p files
 //        fig.addDataSet(testset);	// Testset 1, linear from x=0 to 99, y=x/100
 //        fig.addDataSet(testset2);	// Testset 2, two single datapoints
+////        
+//        frame.getContentPane().add(fig);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setVisible(true);
 //        
-        frame.getContentPane().add(fig);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-        
         
         
 //		JFrame frame = new JFrame();
