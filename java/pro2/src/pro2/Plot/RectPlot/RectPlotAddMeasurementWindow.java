@@ -239,7 +239,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		GridBagLayout gbl_pnlButtons = new GridBagLayout();
 		gbl_pnlButtons.columnWidths = new int[]{0, 90, 90, 0};
 		gbl_pnlButtons.rowHeights = new int[]{22, 0};
-		gbl_pnlButtons.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlButtons.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
 		gbl_pnlButtons.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		pnlButtons.setLayout(gbl_pnlButtons);
 		

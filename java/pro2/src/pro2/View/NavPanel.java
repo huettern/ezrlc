@@ -210,7 +210,9 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		if(e.getSource() == btnLoadFile) {
 			lblInputFile.setText(fileChooser.windowFileChooser());
 			File f = fileChooser.getFile();
-			controller.loadFile(f);
+			if (f != null) {
+				controller.loadFile(f);
+			}	
 		}
 		
 		//handle new Graphs
