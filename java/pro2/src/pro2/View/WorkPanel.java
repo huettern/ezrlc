@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
 
 import pro2.MVC.Controller;
 import pro2.Plot.Figure;
+import pro2.Plot.Figure.ENPlotType;
 
 public class WorkPanel extends JPanel implements Observer {
 	
@@ -55,9 +56,15 @@ public class WorkPanel extends JPanel implements Observer {
 	//================================================================================
     // Public Functions
     //================================================================================
-	public void addGraph(String text) {
+	public void addGraph(ENPlotType type, String text) {
 		Figure f = new Figure(this.controller, text);
-		f.buildRectPlot();
+		
+		if(type == ENPlotType.RECTANGULAR) {
+			f.buildRectPlot();
+		}
+		else if (type == ENPlotType.SMITH) {
+			f.buildSmithChart();
+		}
 		
 		this.figures.add(f);
 		this.add(figures.get(figures.size()-1), new GridBagConstraints(0, 0, 1, 1, 1, 1, 

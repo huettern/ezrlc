@@ -22,6 +22,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 
 import pro2.MVC.Controller;
+import pro2.Plot.Figure.ENPlotType;
 
 import java.awt.Insets;
 import javax.swing.border.TitledBorder;
@@ -39,6 +40,10 @@ public class GraphDialog implements ActionListener{
 	private ButtonGroup btngrpGraphSelect;
 	private JButton btnCreate, btnCancel;
 	private JTextField txtGraph;
+
+	private JRadioButton rdbtnRectangular;
+
+	private JRadioButton rdbtnSmithChart;
 	
 	
 	//================================================================================
@@ -134,7 +139,7 @@ public class GraphDialog implements ActionListener{
 		gbc_lblSelectTheDesired.gridy = 0;
 		pnlSelectType.add(lblSelectTheDesired, gbc_lblSelectTheDesired);
 		
-		JRadioButton rdbtnRectangular = new JRadioButton("Rectangular");
+		rdbtnRectangular = new JRadioButton("Rectangular");
 		rdbtnRectangular.setSelected(true);
 		GridBagConstraints gbc_rdbtnRectangular = new GridBagConstraints();
 		gbc_rdbtnRectangular.anchor = GridBagConstraints.WEST;
@@ -143,7 +148,7 @@ public class GraphDialog implements ActionListener{
 		gbc_rdbtnRectangular.gridy = 1;
 		pnlSelectType.add(rdbtnRectangular, gbc_rdbtnRectangular);
 		
-		JRadioButton rdbtnSmithChart = new JRadioButton("Smith Chart");
+		rdbtnSmithChart = new JRadioButton("Smith Chart");
 		GridBagConstraints gbc_rdbtnSmithChart = new GridBagConstraints();
 		gbc_rdbtnSmithChart.insets = new Insets(0, 5, 0, 5);
 		gbc_rdbtnSmithChart.anchor = GridBagConstraints.WEST;
@@ -198,7 +203,12 @@ public class GraphDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == btnCreate) {
-			this.controller.getMainView().addGraph(txtGraph.getText());
+			if(rdbtnRectangular.isSelected() == true) {
+				this.controller.getMainView().addGraph(ENPlotType.RECTANGULAR, txtGraph.getText());
+			}
+			else if(rdbtnSmithChart.isSelected() == true) {
+				this.controller.getMainView().addGraph(ENPlotType.SMITH, txtGraph.getText());
+			}
 			graphDialog.dispose();
 		}
 		if(e.getSource() == btnCancel) {

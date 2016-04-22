@@ -32,6 +32,9 @@ import javax.swing.border.LineBorder;
 
 public class Figure extends JPanel implements ActionListener, Observer {
 
+	public enum ENPlotType { RECTANGULAR, SMITH};
+	ENPlotType plotType = null;
+	
 	private RectangularPlot rectPlot;
 	private SmithChart smithChart;
 	private JButton btnSettings;
@@ -116,6 +119,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	 * Builds a Rectangular Plot inside the figure
 	 */
 	public void buildRectPlot() {
+		plotType = ENPlotType.RECTANGULAR;
 		rectPlot = new RectangularPlot();
 		rectPlot.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_plot = new GridBagConstraints();
@@ -138,6 +142,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	 * Builds a Smith Chart inside the figure
 	 */
 	public void buildSmithChart () {
+		plotType = ENPlotType.SMITH;
 		smithChart = new SmithChart();
 		smithChart.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_plot = new GridBagConstraints();

@@ -48,6 +48,7 @@ import javax.swing.JList;
 import javax.swing.tree.DefaultTreeModel;
 
 import pro2.MVC.Controller;
+import pro2.Plot.Figure.ENPlotType;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.border.TitledBorder;
@@ -170,9 +171,9 @@ public class MainView extends JFrame implements Observer {
 	}
 
 	
-	public void addGraph(String text) {
+	public void addGraph(ENPlotType type, String text) {
 		// TODO Auto-generated method stub
-		workPanel.addGraph(text);
+		workPanel.addGraph(type, text);
 	}
 	
 	public void addNewFile(File f) {
