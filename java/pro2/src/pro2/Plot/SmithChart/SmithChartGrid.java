@@ -120,6 +120,22 @@ public class SmithChartGrid {
 	}
 
 	//================================================================================
+    // Getters Functions
+    //================================================================================
+	public Point getCenter () {
+		return new Point(this.center);
+	}
+	public int getDiameter() {
+		return this.diameter;
+	}
+	public double getNorm () {
+		return this.zo;
+	}
+	public Area getDrawingArea () {
+		return new Area(imagPlotArea);
+	}
+	
+	//================================================================================
     // Public Functions
     //================================================================================
     public void paint(Graphics g)

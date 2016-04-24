@@ -34,4 +34,14 @@ public class MathUtil {
 		return res;
 	}
 	
+	/**
+	 * Calculates the hypothenuse
+	 * @param a
+	 * @param b
+	 * @return sqrt(a^2+b^2)
+	 */
+	public static double pythagoras(double a, double b) {
+		return Math.sqrt(Math.pow(a, 2)+Math.pow(b, 2));
+	}
+	
 }
