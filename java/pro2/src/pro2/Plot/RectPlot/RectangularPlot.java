@@ -81,7 +81,7 @@ public class RectangularPlot extends JPanel implements Observer {
 		//horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin);
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 0, 100, 10, 20);	// Use for test data
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 1e6, 1e9, 10, 20); 	// Use for r100l10uZRI
-		this.horAxis = new Axis(this, Axis.Scale.LOG, Axis.Orientation.HORIZONTAL, origin, rightMargin, 
+		this.horAxis = new Axis(this, Axis.Scale.LINEAR, Axis.Orientation.HORIZONTAL, origin, rightMargin, 
 				settings.xAxisMinimum, settings.xAxisMaximum, settings.xAxisSteps, 20); 	// Use for bsp11
 		//verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin);
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 1, 20, -20); // Use for test data
@@ -103,10 +103,22 @@ public class RectangularPlot extends JPanel implements Observer {
 	 * Updates the plot settings
 	 */
 	private void updateSettings() {
+		// Check if scale changed
+		if (settings.xScale != horAxis.getScale()) {
+			// Create new grid
+			this.verGrid = new Grid(this, Orientation.VERTICAL, Color.LIGHT_GRAY, horAxis, 40);
+			horAxis.setScale(settings.xScale);
+		}
+		if (settings.yScale != verAxis.getScale()) {
+			// Create new grid
+			this.horGrid = new Grid(this, Orientation.HORIZONTAL, Color.LIGHT_GRAY, verAxis, 40);
+			verAxis.setScale(settings.yScale);
+		}
+		
 		horAxis.setMinimum(settings.xAxisMinimum);
 		horAxis.setMaximum(settings.xAxisMaximum);
 		horAxis.setStep(settings.xAxisSteps);
-		
+
 		verAxis.setMinimum(settings.yAxisMinimum);
 		verAxis.setMaximum(settings.yAxisMaximum);
 		verAxis.setStep(settings.yAxisSteps);

@@ -1,18 +1,21 @@
 package pro2.Plot.RectPlot;
 
+import pro2.Plot.Axis.Scale;
+
 public class RectPlotSettings {
 	
 	//================================================================================
     // Public Data
     //================================================================================
-
 	public double xAxisMinimum = 0;
 	public double xAxisMaximum = 0;
 	public int xAxisSteps = 0;
+	public Scale xScale = Scale.LINEAR;
 	
 	public double yAxisMinimum = 0;
 	public double yAxisMaximum = 0;
 	public int yAxisSteps = 0;
+	public Scale yScale = Scale.LINEAR;
 	
 	//================================================================================
     // Constructors
