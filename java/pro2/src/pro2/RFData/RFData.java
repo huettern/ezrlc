@@ -460,13 +460,13 @@ public class RFData {
 	 * @param z z Data
 	 * @return SData
 	 */
-	public static ArrayList<Complex> z2s(double zo, List<Complex> z) {
+	public static List<Complex> z2s(double zo, List<Complex> z) {
 		List<Complex> s = new ArrayList<Complex>(z.size());
 		Complex c = new Complex(zo,0);
 		for (Complex complex : z) {
 			s.add(Complex.div(Complex.sub(complex, c), Complex.add(complex, c)));
 		}
-		return null;
+		return s;
 	}
 	
 	
