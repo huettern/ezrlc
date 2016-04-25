@@ -38,30 +38,35 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-//		EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {                                           
+		EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {                                           
                 Model model = new Model();
                 MainView view = new MainView();
                 Controller controller = new Controller(model,view);
+                
+                view.setController(controller);
+                model.setController(controller);
 //                
-//                view.setController(controller);
-//                model.setController(controller);
-////                
-//                view.build();
-//                view.setVisible(true);
-//                
-//                // Add observers
-//                model.addObserver(view);
-//                
-//                controller.contol();
-//            }
-//        });  
+                view.build();
+                view.setVisible(true);
+                
+                // Add observers
+                model.addObserver(view);
+                
+                controller.contol();
+            }
+        });  
 
 		//================================================================================
 	    // Smith Test
 	    //================================================================================
-		
+                
+         Model model = new Model();
+         MainView view = new MainView();
+         Controller controller = new Controller(model,view);
+                
+                
 		/* Create a little frame containing the testplot */
 		JFrame frame = new JFrame("Smith Test");
         frame.setSize(500, 400);
@@ -69,7 +74,7 @@ public class Pro2 {
         
 		/* Read a Datafile and extract the necessary infos */
 		// Read datafile
-		RFData rfData = new RFData("../../sample_files/bsp11.s1p");;
+		RFData rfData = new RFData("../../sample_files/bsp6.s1p");;
 		try {
 			// Parse datafile
 			rfData.parse();
@@ -88,10 +93,13 @@ public class Pro2 {
 //        
         /* Create Test Data set */
 		List<Complex> cpxtext = new ArrayList<Complex>();
-		cpxtext.add(new Complex(1.0, 1.0));
+		//cpxtext.add(new Complex(0.0, -1.0));
+		cpxtext=rfData.getsData();
+		
 		
 		List<Double> freq = new ArrayList<Double>();
-		freq.add(100.0);
+		//freq.add(100.0);
+		freq = rfData.getfData();
 		
 		fig.getSmithChart().addDataSet(cpxtext, freq);
 		

@@ -2,6 +2,8 @@ package pro2.Plot.SmithChart;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -13,8 +15,9 @@ import javax.swing.JPanel;
 
 import pro2.Plot.PlotDataSet;
 import pro2.util.Complex;
+import pro2.util.PointD;
 
-public class SmithChart extends JPanel implements Observer {
+public class SmithChart extends JPanel implements Observer, MouseListener {
 
 
 	//================================================================================
@@ -35,6 +38,7 @@ public class SmithChart extends JPanel implements Observer {
 		// Build SmithChartGrid
 		grid = new SmithChartGrid(this);
 		
+		addMouseListener(this);
 		
 	}
 
@@ -75,6 +79,41 @@ public class SmithChart extends JPanel implements Observer {
 			set.paint(g);
 		}
     }
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("X="+e.getX()+" Y="+e.getY());
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

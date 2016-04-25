@@ -110,6 +110,9 @@ public class SmithChartMath {
 		
 		double y_coordinate = center.y;
 		double x_coordinate = ((diameter*(normalized+1)/2) + (center.x-(this.diameter/2))); //stretch to display area
+		double rad=((center.x+(this.diameter/2))-x_coordinate)/2;
+		x_coordinate = x_coordinate + rad;
+		
 		return new PointD(x_coordinate, y_coordinate);
 	}
 	
@@ -132,7 +135,8 @@ public class SmithChartMath {
 		// angle s - rr
 		double alpha = Math.atan(ri/rr);
 		// angle ri - s
-		double epsilon = Math.acos( (Math.pow(s, 2) - Math.pow(rr, 2) - Math.pow(ri, 2)) / (-2.0*rr*ri) );
+		//double epsilon = Math.acos( (Math.pow(s, 2) - Math.pow(rr, 2) - Math.pow(ri, 2)) / (-2.0*rr*ri) );
+		double epsilon = alpha;
 		// y length 
 		double ys = rr* Math.sin(Math.PI - (alpha + epsilon));
 		// x length
@@ -142,7 +146,7 @@ public class SmithChartMath {
 		p.x = ((center.x + (diameter/2)))-xs-rr;
 		p.y = center.y - ys;
 		
-		System.out.println("rr="+rr+"ri="+ri+"s="+s+"alpha="+alpha+"epsilon="+epsilon+"ys="+ys+"xs"+xs);
+		//System.out.println("rr="+rr+"ri="+ri+"s="+s+"alpha="+alpha+"epsilon="+epsilon+"ys="+ys+"xs"+xs);
 		
 		return p;
 	}

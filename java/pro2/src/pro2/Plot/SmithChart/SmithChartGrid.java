@@ -308,6 +308,7 @@ public class SmithChartGrid {
 		
 		int y_coordinate = center.y;
 		int x_coordinate = (int)((diameter*(norm+1)/2) + (center.x-radius)); //stretch to display area
+		
 		return new Point(x_coordinate, y_coordinate);
 	}
 	
