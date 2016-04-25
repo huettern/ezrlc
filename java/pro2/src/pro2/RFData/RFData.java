@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
@@ -431,8 +432,16 @@ public class RFData {
 	public ArrayList<Complex> getsData() {
 		return new ArrayList<Complex>(sData);
 	}
-
 	
+	/**
+	 * Returns a list of S Data normalized to a given Resistance zo
+	 * @param zo reference resistance
+	 * @return
+	 */
+	public ArrayList<Complex> getSData(double zo) {
+		return new ArrayList<Complex>(RFData.z2s(zo, zData));
+	}
+
 	/** 
 	 * Returns a list of Y Data
 	 * @return
@@ -441,4 +450,24 @@ public class RFData {
 		return new ArrayList<Complex>(yData);
 	}
 
+	//================================================================================
+    // Public Static functions
+    //================================================================================
+	/**
+	 * Converts given z Data to S data
+	 *  s = (z-zo) / (z+zo)
+	 * @param zo reference resistance
+	 * @param z z Data
+	 * @return SData
+	 */
+	public static List<Complex> z2s(double zo, List<Complex> z) {
+		List<Complex> s = new ArrayList<Complex>(z.size());
+		Complex c = new Complex(zo,0);
+		for (Complex complex : z) {
+			s.add(Complex.div(Complex.sub(complex, c), Complex.add(complex, c)));
+		}
+		return s;
+	}
+	
+	
 }

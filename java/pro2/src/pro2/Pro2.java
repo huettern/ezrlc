@@ -47,7 +47,7 @@ public class Pro2 {
                 
                 view.setController(controller);
                 model.setController(controller);
-//                
+                
                 view.build();
                 view.setVisible(true);
                 
@@ -93,12 +93,50 @@ public class Pro2 {
 //        
         /* Create Test Data set */
 		List<Complex> cpxtext = new ArrayList<Complex>();
-		//cpxtext.add(new Complex(0.0, -1.0));
-		cpxtext=rfData.getsData();
+//		cpxtext.add(new Complex(1.0, 0.0));
+//		cpxtext.add(new Complex(1.0, 0.2));
+//		cpxtext.add(new Complex(1.0, 0.4));
+//		cpxtext.add(new Complex(1.0, 0.8));
+//		cpxtext.add(new Complex(1.0, 1.4));
+//		cpxtext.add(new Complex(1.0, 2.0));
+//		cpxtext.add(new Complex(1.0, 3.0));
+//		cpxtext.add(new Complex(1.0, 10.0));
+//		cpxtext.add(new Complex(1.0, 20.0));
+//		cpxtext.add(new Complex(1.0, 9999999.0));
+//		cpxtext.add(new Complex(1.0, -0.0));
+//		cpxtext.add(new Complex(1.0, -0.2));
+//		cpxtext.add(new Complex(1.0, -0.4));
+//		cpxtext.add(new Complex(1.0, -0.8));
+//		cpxtext.add(new Complex(1.0, -1.4));
+//		cpxtext.add(new Complex(1.0, -2.0));
+//		cpxtext.add(new Complex(1.0, -3.0));
+//		cpxtext.add(new Complex(1.0, -10.0));
+//		cpxtext.add(new Complex(1.0, -20.0));
+//		cpxtext.add(new Complex(1.0, -9999999.0));
+		cpxtext=rfData.getzData();
 		
 		
 		List<Double> freq = new ArrayList<Double>();
-		//freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
 		freq = rfData.getfData();
 		
 		fig.getSmithChart().addDataSet(cpxtext, freq);
