@@ -293,33 +293,39 @@ public class RectPlotSettingsWindow implements ActionListener {
 		//Buttons
 		JPanel pnlButton = new JPanel();
 		GridBagConstraints gbc_pnlButton = new GridBagConstraints();
-		gbc_pnlButton.insets = new Insets(0, 5, 0, 0);
+		gbc_pnlButton.insets = new Insets(0, 5, 0, 5);
 		gbc_pnlButton.fill = GridBagConstraints.BOTH;
 		gbc_pnlButton.gridx = 0;
 		gbc_pnlButton.gridy = 2;
 		tabAxis.add(pnlButton, gbc_pnlButton);
 		GridBagLayout gbl_pnlButton = new GridBagLayout();
-		gbl_pnlButton.columnWidths = new int[]{0, 90, 90, 0};
+		gbl_pnlButton.columnWidths = new int[]{0, 0, 0};
 		gbl_pnlButton.rowHeights = new int[]{22, 0};
-		gbl_pnlButton.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlButton.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		gbl_pnlButton.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		pnlButton.setLayout(gbl_pnlButton);
 		
 		btnCancel = new JButton("Cancel");
+		btnCancel.setMinimumSize(new Dimension(0, 0));
+		btnCancel.setMaximumSize(new Dimension(0, 0));
+		btnCancel.setPreferredSize(new Dimension(0, 0));
 		btnCancel.addActionListener(this);
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.fill = GridBagConstraints.BOTH;
-		gbc_btnCancel.insets = new Insets(0, 5, 0, 5);
-		gbc_btnCancel.gridx = 1;
+		gbc_btnCancel.insets = new Insets(0, 2, 0, 5);
+		gbc_btnCancel.gridx = 0;
 		gbc_btnCancel.gridy = 0;
 		pnlButton.add(btnCancel, gbc_btnCancel);
 		
 		btnOk = new JButton("OK");
+		btnOk.setMinimumSize(new Dimension(0, 0));
+		btnOk.setMaximumSize(new Dimension(0, 0));
+		btnOk.setPreferredSize(new Dimension(0, 0));
 		btnOk.addActionListener(this);
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
-		gbc_btnOk.insets = new Insets(0, 5, 0, 5);
+		gbc_btnOk.insets = new Insets(0, 5, 0, 2);
 		gbc_btnOk.fill = GridBagConstraints.BOTH;
-		gbc_btnOk.gridx = 2;
+		gbc_btnOk.gridx = 1;
 		gbc_btnOk.gridy = 0;
 		pnlButton.add(btnOk, gbc_btnOk);
 		
