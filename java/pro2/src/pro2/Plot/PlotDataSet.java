@@ -8,7 +8,7 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
-import pro2.Plot.RectPlot.RectPlotDataSetSettings;
+import pro2.Plot.RectPlot.DataSetSettings;
 import pro2.util.MathUtil;
 
 public class PlotDataSet {
@@ -31,7 +31,7 @@ public class PlotDataSet {
 	
 	private List<Point> data_pts;
 	
-	private RectPlotDataSetSettings settings = new RectPlotDataSetSettings();
+	private DataSetSettings settings = new DataSetSettings();
 
 	//================================================================================
     // Constructors
@@ -180,7 +180,7 @@ public class PlotDataSet {
 	 * Stores the RectPlotDataSetSettings
 	 * @param set RectPlotDataSetSettings
 	 */
-	public void setDataSetSettings(RectPlotDataSetSettings set) {
+	public void setDataSetSettings(DataSetSettings set) {
 		this.settings = set;
 	}
 }

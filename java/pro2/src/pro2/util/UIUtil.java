@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 
 public class UIUtil {
@@ -53,6 +54,36 @@ public class UIUtil {
 	 */
 	public static int getSpinnerIntValue (JSpinner spin) {
 		return getSpinnerDoubleValue(spin).intValue();
+	}
+	
+	/**
+	 * Reads the double value of a textfield and returns it
+	 * @param tf textfield
+	 * @return double value
+	 */
+	public static double getTextFieldDoubleValue (JFormattedTextField tf) {
+		Double d = 0.0;
+		int i = 0;
+		if(tf.getValue().getClass() == Double.class ||
+			tf.getValue().getClass() == double.class) {
+			d = (double) tf.getValue();
+		} else if (tf.getValue().getClass() == Integer.class || 
+				tf.getValue().getClass() == int.class) {
+			i = (Integer)tf.getValue();
+			d = (double) i;
+		} else if (tf.getValue().getClass() == long.class || 
+				tf.getValue().getClass() == Long.class) {
+			d = ((Long)tf.getValue()).doubleValue();
+		}
+		if(tf.getValue().getClass() == String.class) {
+			try {
+				String s =  (String)tf.getValue();
+				d = Double.valueOf(s);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		return d;
 	}
 	
 	public static String num2Scientific(double d) {

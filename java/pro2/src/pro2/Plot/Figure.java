@@ -9,6 +9,9 @@ import pro2.Plot.RectPlot.RectPlotSettings;
 import pro2.Plot.RectPlot.RectPlotSettingsWindow;
 import pro2.Plot.RectPlot.RectangularPlot;
 import pro2.Plot.SmithChart.SmithChart;
+import pro2.Plot.SmithChart.SmithChartAddMeasurementWindow;
+import pro2.Plot.SmithChart.SmithChartSettings;
+import pro2.Plot.SmithChart.SmithChartSettingsWindow;
 import pro2.RFData.RFData.ComplexModifier;
 import pro2.RFData.RFData.MeasurementType;
 
@@ -41,14 +44,17 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	private RectangularPlot rectPlot;
 	private SmithChart smithChart;
 	private JButton btnSettings;
-	private RectPlotSettingsWindow settingWindow;
-	private RectPlotAddMeasurementWindow newMeasurementWindow;
+	private RectPlotSettingsWindow rectPlotSettingWindow;
+	private RectPlotAddMeasurementWindow newRectMeasurementWindow;
+	private SmithChartAddMeasurementWindow newSmithMeasurementWindow;
 	private Controller controller;
 	private JButton btnAddMeasurement;
 	
 	private List<Integer> dataIDList = new ArrayList<Integer>();
 	private JButton btnAutoscale;
 	private JPanel panel_1;
+	
+	private SmithChartSettingsWindow smithChartSettingWindow;
 
 	private JButton btnDeleteGraph;
 
@@ -160,10 +166,10 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		add(rectPlot, gbc_plot);
 
 		// Settings Dialog
-		settingWindow = new RectPlotSettingsWindow(this.controller, this);
+		rectPlotSettingWindow = new RectPlotSettingsWindow(this.controller, this);
 		
 		// New Measurement dialog
-		newMeasurementWindow = new RectPlotAddMeasurementWindow(this.controller, this);
+		newRectMeasurementWindow = new RectPlotAddMeasurementWindow(this.controller, this);
 	}
 	
 	/**
@@ -181,44 +187,75 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_plot.gridx = 0;
 		gbc_plot.gridy = 1;
 		add(smithChart, gbc_plot);
+		
+		// Settings dialog
+		smithChartSettingWindow = new SmithChartSettingsWindow(this.controller, this);
+		
+		// New Measurement window
+		newSmithMeasurementWindow = new SmithChartAddMeasurementWindow(this.controller, this);
 	}
 
 	/**
 	 * Updates the plot settings
 	 */
 	public void updatePlotSettings () {
-		rectPlot.setSettings(settingWindow.getSettings());
+		if(plotType == ENPlotType.RECTANGULAR) {
+			rectPlot.setSettings(rectPlotSettingWindow.getSettings());
+		} else if (plotType == ENPlotType.SMITH) {
+			smithChart.setSettings(smithChartSettingWindow.getSettings());
+		}
 	}
 	
 	/**
 	 * Adds a new Measurement to the Plot
 	 */
 	public void addNewMeasurement () {
-		// Create Dataset
-		int id = controller.createDataset(this.newMeasurementWindow.getNewMeasurement());
+		int id;
+		if(plotType == ENPlotType.RECTANGULAR) {
+			// Create Dataset
+			id = controller.createDataset(this.newRectMeasurementWindow.getNewMeasurement());
+			// Save the data entry id in the list 
+			this.dataIDList.add(id);
+			rectPlot.addDataSet(id, this.newRectMeasurementWindow.getNewMeasurement());
+			controller.manualNotify();
+			rectPlot.repaint();		
+		} else if (plotType == ENPlotType.SMITH) {
+			id = controller.createDataset(this.newSmithMeasurementWindow.getNewMeasurement());
+			// Save the data entry in the list
+			this.dataIDList.add(id);
+			smithChart.addDataSet(id, this.newSmithMeasurementWindow.getNewMeasurement());
+			controller.manualNotify();
+			smithChart.repaint();
+		}
 		
-		// Save the data entry id in the list 
-		this.dataIDList.add(id);
-		rectPlot.addDataSet(id, this.newMeasurementWindow.getNewMeasurement());
-		controller.manualNotify();
-		
-		rectPlot.repaint();
+
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==btnSettings) {
-			RectPlotSettings s = rectPlot.getSettings();
-			settingWindow.setSettings(s);
-			settingWindow.show();
+			if(plotType == ENPlotType.RECTANGULAR) {
+				RectPlotSettings s = rectPlot.getSettings();
+				rectPlotSettingWindow.setSettings(s);
+				rectPlotSettingWindow.show();
+			} else if (plotType == ENPlotType.SMITH) {
+				SmithChartSettings s = smithChart.getSettings();
+				smithChartSettingWindow.setSettings(s);
+				smithChartSettingWindow.show();
+			}
 		}
 		if(e.getSource()==btnAddMeasurement) {
-			newMeasurementWindow.setFilename(controller.getFilename());
-			newMeasurementWindow.show();
+			if(plotType == ENPlotType.RECTANGULAR) {
+				newRectMeasurementWindow.setFilename(controller.getFilename());
+				newRectMeasurementWindow.show();
+			} else if (plotType == ENPlotType.SMITH) {
+				newSmithMeasurementWindow.setFilename(controller.getFilename());
+				newSmithMeasurementWindow.show();
+			}
 		}
 		if(e.getSource()==btnAutoscale) {
-			rectPlot.autoScale();
+			if(plotType == ENPlotType.RECTANGULAR) rectPlot.autoScale();
 		}
 		if(e.getSource()==btnDeleteGraph){
 			controller.deleteFigure(this);
@@ -229,7 +266,8 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		rectPlot.update(o, arg);
+		if(plotType == ENPlotType.RECTANGULAR) rectPlot.update(o, arg);
+		else if(plotType == ENPlotType.SMITH) smithChart.update(o, arg);
 	}
 
 }

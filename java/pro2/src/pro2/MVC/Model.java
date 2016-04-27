@@ -6,6 +6,8 @@ import java.util.*;
 import pro2.MVC.Controller.DataSource;
 import pro2.Plot.PlotDataSet;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
+import pro2.Plot.SmithChart.SmithChartDataSet;
+import pro2.Plot.SmithChart.SmithChartNewMeasurement;
 import pro2.RFData.RFData;
 import pro2.RFData.RFData.ComplexModifier;
 import pro2.RFData.RFData.MeasurementType;
@@ -16,8 +18,9 @@ public class Model extends Observable {
 	private Controller controller;
 	
 	private RFData rfDataFile;
-	
+
 	private List<PlotDataSet> plotDataSetList = new ArrayList<PlotDataSet>();
+	private List<SmithChartDataSet> smithPlotDataSetList = new ArrayList<SmithChartDataSet>();
 
 	public Model() {
 		// TODO Auto-generated constructor stub
@@ -101,6 +104,24 @@ public class Model extends Observable {
 //	      return (this.plotDataSetList.size() - 1);
 	}
 	
+	/**
+	 * Builds a new Smithchart dataset and returns its unique ID
+	 * @param nm SmithChartNewMeasurement
+	 * @return ID in the list of smith chart datasets
+	 */
+	private int buildSmithChartDataSet(SmithChartNewMeasurement nm) {
+		ArrayList<Complex> data = null;
+
+		// Get Data
+		if(nm.src == DataSource.FILE) {
+			data = rfDataFile.getzData();
+		}
+		
+		// Create set
+		SmithChartDataSet set  = new SmithChartDataSet(null, data, rfDataFile.getfData());
+		this.smithPlotDataSetList.add(set);
+		return this.smithPlotDataSetList.size()-1;
+	}
 	//================================================================================
     // Public Functions
     //================================================================================
@@ -139,6 +160,16 @@ public class Model extends Observable {
 	}
 	
 	/**
+	 * Adds a new Smithchart dataset in the model
+	 * @param nm SmithChartNewMeasurement
+	 * @return unique data identifier of the plotdataset
+	 */
+	public int createDataset(SmithChartNewMeasurement nm) {
+		return this.buildSmithChartDataSet(nm);
+	}
+	
+
+	/**
 	 * Adds a new Dataset in the model
 	 * @param src Datasource (File or Model)
 	 * @param id Model ID, if File then not used
@@ -155,6 +186,7 @@ public class Model extends Observable {
 		return this.buildDataSet(nm);
 	}
 	
+	
 	public void manualNotify() {
 		// mark as value changed
 		setChanged();
@@ -165,6 +197,11 @@ public class Model extends Observable {
 		// TODO Auto-generated method stub
 		return this.plotDataSetList.get(intValue);
 	}
+	
+	public SmithChartDataSet getSmithChartDataSet(int intValue) {
+		// TODO Auto-generated method stub
+		return this.smithPlotDataSetList.get(intValue);
+	}
 
 	public String getFilename() {
 		// TODO Auto-generated method stub
@@ -173,6 +210,8 @@ public class Model extends Observable {
 		}
 		else return null;
 	}
+
+	
 
 	
 	

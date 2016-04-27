@@ -39,7 +39,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	
 	private List<PlotDataSet> dataSets = new ArrayList<PlotDataSet>();
 	private List<Integer> dataSetIDs = new ArrayList<Integer>();
-	private List<RectPlotDataSetSettings> dataSetSettings = new ArrayList<RectPlotDataSetSettings>();
+	private List<DataSetSettings> dataSetSettings = new ArrayList<DataSetSettings>();
 	
 	private RectPlotSettings settings = new RectPlotSettings();
 	
@@ -210,7 +210,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	 * @param dataSet
 	 */
 	public void addDataSet(int id, RectPlotNewMeasurement rectPlotNewMeasurement) {
-		RectPlotDataSetSettings set = new RectPlotDataSetSettings();
+		DataSetSettings set = new DataSetSettings();
 		set.setLineColor(this.getNextColor());
 		set.setLabel(this.createLabelString(rectPlotNewMeasurement));
 		
