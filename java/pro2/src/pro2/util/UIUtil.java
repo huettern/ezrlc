@@ -1,7 +1,13 @@
 package pro2.util;
 
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -12,6 +18,10 @@ public class UIUtil {
 	public UIUtil() {
 		// TODO Auto-generated constructor stub
 	}
+
+	//================================================================================
+    // Private Functions
+    //================================================================================
 
 
 	//================================================================================
@@ -59,5 +69,24 @@ public class UIUtil {
 	 */
 	public static void drawCenterCircle (Graphics2D g, Point p, int radius) {
 		g.drawOval(p.x-radius, p.y-radius, 2*radius, 2*radius);
+	}
+	
+	
+	/**
+	 * Draws a centered string
+	 * @param g Grpahics object
+	 * @param p Location of string
+	 * @param text Text to draw
+	 */
+	public static void drawCenterString (Graphics g, Point p, String text) {
+		Graphics2D g2d = (Graphics2D)g;
+
+	    // Get the FontMetrics
+	    FontMetrics metrics = g2d.getFontMetrics();
+	    int x = p.x - (metrics.stringWidth(text) / 2);
+	    // Determine the Y coordinate for the text
+	    int y = p.y + (int)(metrics.getHeight() / 3);
+	    
+	    g2d.drawString(text, x, y);
 	}
 }
