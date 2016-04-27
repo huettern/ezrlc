@@ -36,3 +36,4 @@ buildNumber.properties
 # Other
 *.tmp
 *log.txt
+java/pro2/tmp.txt
