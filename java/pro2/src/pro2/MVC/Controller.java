@@ -4,6 +4,7 @@ import pro2.MVC.Model;
 import pro2.Plot.Figure;
 import pro2.Plot.PlotDataSet;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
+import pro2.Plot.SmithChart.SmithChartNewMeasurement;
 import pro2.RFData.RFData;
 import pro2.View.MainView;
 
@@ -85,6 +86,15 @@ public class Controller {
 		return model.createDataset(nm);
 	}
 
+	/**
+	 * Adds a new Dataset in the model
+	 * @param nm SmithChartNewMeasurement
+	 * @return unique data identifier of the plotdataset
+	 */
+	public int createDataset(SmithChartNewMeasurement nm) {
+		return model.createDataset(nm);
+	}
+	
 	public String getFilename() {
 		// TODO Auto-generated method stub
 		return model.getFilename();
@@ -94,4 +104,5 @@ public class Controller {
 		view.deleteFigure(figure);
 		
 	}
+
 }

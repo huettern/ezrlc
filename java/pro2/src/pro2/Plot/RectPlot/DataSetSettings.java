@@ -3,7 +3,7 @@ package pro2.Plot.RectPlot;
 import java.awt.Color;
 import java.awt.color.ColorSpace;
 
-public class RectPlotDataSetSettings {
+public class DataSetSettings {
 
 	//================================================================================
     // Private Data
@@ -14,7 +14,7 @@ public class RectPlotDataSetSettings {
 	//================================================================================
     // Constructors
     //================================================================================
-	public RectPlotDataSetSettings() {
+	public DataSetSettings() {
 		// TODO Auto-generated constructor stub
 	}
 

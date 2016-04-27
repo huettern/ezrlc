@@ -301,4 +301,8 @@ public class SmithChartGrid {
 			imagAxisLabelPointsNeg.add(sm.getPixelLocation(new Complex(0, -majorImagGridValues[i])).point());
 		}
 	}
+
+	public void setReferenceResistance(double referenceResistance) {
+		this.zo = referenceResistance;
+	}
 }

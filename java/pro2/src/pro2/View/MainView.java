@@ -117,7 +117,7 @@ public class MainView extends JFrame implements Observer {
 		
 		pack();
 		setMinimumSize(getPreferredSize());
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 	}
 	

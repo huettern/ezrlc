@@ -6,6 +6,7 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 
+import pro2.Plot.RectPlot.DataSetSettings;
 import pro2.util.Complex;
 import pro2.util.PointD;
 
@@ -21,7 +22,7 @@ public class SmithChartDataSet {
 	private List<Double> freq;
 	private int points;
 	
-	
+	private DataSetSettings settings = new DataSetSettings();
 		
 	private List<Point> data_pts = new ArrayList<Point>(); // Datapoints on the chart
 	
@@ -61,6 +62,7 @@ public class SmithChartDataSet {
 	public void paint(Graphics g) {
 		this.eval();
 		// Draw Data point
+		g.setColor(settings.getLineColor());
 		for (Point p : data_pts) {
 			g.fillOval(p.x-2, p.y-2, 4, 4);
 		}
@@ -84,6 +86,16 @@ public class SmithChartDataSet {
 			p =  sm.getPixelLocation(this.data.get(i));
 			data_pts.add(p.point());
 		}
+	}
+
+
+	public void setGrid(SmithChartGrid g) {
+		this.grid = g;
+	}
+
+
+	public void setDataSetSettings(DataSetSettings s) {
+		this.settings = s;
 	}
 	
 	
