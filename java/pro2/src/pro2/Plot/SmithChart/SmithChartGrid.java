@@ -93,8 +93,9 @@ public class SmithChartGrid {
 	//================================================================================
     // Constructor
     //================================================================================
-	public SmithChartGrid(SmithChart parent) {
+	public SmithChartGrid(SmithChart parent, double zo) {
 		this.parent = parent;
+		this.zo = zo;
 
 		// Major grid lines
 		for (int i = 0; i < majorImagGridValues.length; i++) {
@@ -133,7 +134,7 @@ public class SmithChartGrid {
 	public int getDiameter() {
 		return this.diameter;
 	}
-	public double getNorm () {
+	public double getZ0 () {
 		return this.zo;
 	}
 	public Area getDrawingArea () {
@@ -231,7 +232,7 @@ public class SmithChartGrid {
 		this.center.x = (parentWidth/2);
 		this.center.y = (parentHeight/2);
 		
-		SmithChartMath sm = new SmithChartMath(center, diameter, zo);
+		SmithChartMath sm = new SmithChartMath(center, diameter, 1);
 		
 		imagPlotArea = new Area(new  Ellipse2D.Double(center.x-radius, center.y-radius, diameter,diameter));
 		
@@ -311,7 +312,7 @@ public class SmithChartGrid {
 		Double norm;
 		
 		norm = Math.abs(val);
-		norm = (norm-zo)/(norm+zo);
+		norm = (norm-1)/(norm+1);
 		
 		int y_coordinate = center.y;
 		int x_coordinate = (int)((diameter*(norm+1)/2) + (center.x-radius)); //stretch to display area
@@ -328,7 +329,7 @@ public class SmithChartGrid {
 		Double norm,mul;
 		
 		norm = Math.abs(val);
-		norm = (norm-zo)/(norm+zo);
+		norm = (norm-1)/(norm+1);
 		
 		if(val < 0) {
 			mul = norm - 1.0;

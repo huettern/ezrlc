@@ -15,7 +15,7 @@ public class SmithChartMath {
 	private Point center;
 	private int diameter;
 
-	private double norm = 1;	// reference to which the values are normalized to
+	private double zo = 1;	// reference to which the values are normalized to
 	
 
 	//================================================================================
@@ -30,7 +30,7 @@ public class SmithChartMath {
 	public SmithChartMath(Point center, int diameter, double norm) {
 		this.center = center;
 		this.diameter = diameter;
-		this.norm = norm;
+		this.zo = norm;
 	}
 	
 
@@ -82,7 +82,7 @@ public class SmithChartMath {
 		double mul;
 		double normalized;
 		
-		normalized = SmithChartMath.normalizeValue(Math.abs(val), this.norm);
+		normalized = SmithChartMath.normalizeValue(Math.abs(val), this.zo);
 		
 		if(val < 0) {
 			mul = normalized - 1.0;
@@ -106,7 +106,7 @@ public class SmithChartMath {
 	public PointD getRealGridCenterPoint(double val){
 		double normalized;
 		
-		normalized = SmithChartMath.normalizeValue(Math.abs(val), this.norm);
+		normalized = SmithChartMath.normalizeValue(Math.abs(val), this.zo);
 		
 		double y_coordinate = center.y;
 		double x_coordinate = ((diameter*(normalized+1)/2) + (center.x-(this.diameter/2))); //stretch to display area

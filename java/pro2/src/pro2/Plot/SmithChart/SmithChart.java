@@ -25,6 +25,8 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
     //================================================================================
 	private SmithChartGrid grid;
 
+	private double zo = 50;
+	
 	private List<SmithChartDataSet> data_sets = new ArrayList<SmithChartDataSet>();
 	
 	
@@ -36,7 +38,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 		super.setBackground(Color.WHITE);
 		
 		// Build SmithChartGrid
-		grid = new SmithChartGrid(this);
+		grid = new SmithChartGrid(this, zo);
 		
 		addMouseListener(this);
 		

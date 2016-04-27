@@ -19,11 +19,10 @@ import javax.swing.JPanel;
 import pro2.MVC.Controller;
 import pro2.MVC.Model;
 import pro2.Plot.Figure;
-import pro2.Plot.PlotDataSet;
-import pro2.Plot.SmithChart.SmithChartDataSet;
 import pro2.RFData.RFData;
 import pro2.View.MainView;
 import pro2.util.Complex;
+import pro2.util.MathUtil;
 
 /**
  * @author noah
@@ -38,25 +37,25 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-		EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {                                           
-                Model model = new Model();
-                MainView view = new MainView();
-                Controller controller = new Controller(model,view);
-                
-                view.setController(controller);
-                model.setController(controller);
-                
-                view.build();
-                view.setVisible(true);
-                
-                // Add observers
-                model.addObserver(view);
-                
-                controller.contol();
-            }
-        });  
+//		EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {                                           
+//                Model model = new Model();
+//                MainView view = new MainView();
+//                Controller controller = new Controller(model,view);
+//                
+//                view.setController(controller);
+//                model.setController(controller);
+//                
+//                view.build();
+//                view.setVisible(true);
+//                
+//                // Add observers
+//                model.addObserver(view);
+//                
+//                controller.contol();
+//            }
+//        });  
 
 		//================================================================================
 	    // Smith Test
@@ -74,7 +73,7 @@ public class Pro2 {
         
 		/* Read a Datafile and extract the necessary infos */
 		// Read datafile
-		RFData rfData = new RFData("../../sample_files/bsp6.s1p");;
+		RFData rfData = new RFData("../../sample_files/bsp1.s1p");;
 		try {
 			// Parse datafile
 			rfData.parse();
@@ -93,7 +92,7 @@ public class Pro2 {
 //        
         /* Create Test Data set */
 		List<Complex> cpxtext = new ArrayList<Complex>();
-//		cpxtext.add(new Complex(1.0, 0.0));
+//		cpxtext.add(new Complex(10.0, 20.0));
 //		cpxtext.add(new Complex(1.0, 0.2));
 //		cpxtext.add(new Complex(1.0, 0.4));
 //		cpxtext.add(new Complex(1.0, 0.8));
@@ -114,32 +113,36 @@ public class Pro2 {
 //		cpxtext.add(new Complex(1.0, -20.0));
 //		cpxtext.add(new Complex(1.0, -9999999.0));
 		cpxtext=rfData.getzData();
-		
+		//cpxtext=rfData.getsData();
+
+		MathUtil.dumpListComplex("tmp.txt", cpxtext);
 		
 		List<Double> freq = new ArrayList<Double>();
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
-//		freq.add(100.0);
 		freq = rfData.getfData();
+		//MathUtil.dumpListDouble("tmp.txt", freq);
+		//freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
 		
 		fig.getSmithChart().addDataSet(cpxtext, freq);
+		fig.repaint();
 		
 		
 		

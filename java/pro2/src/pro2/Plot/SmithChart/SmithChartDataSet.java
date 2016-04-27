@@ -21,7 +21,8 @@ public class SmithChartDataSet {
 	private List<Double> freq;
 	private int points;
 	
-
+	
+		
 	private List<Point> data_pts = new ArrayList<Point>(); // Datapoints on the chart
 	
 	//================================================================================
@@ -75,7 +76,7 @@ public class SmithChartDataSet {
 	private void eval () {
 		PointD p;
 		
-		SmithChartMath sm = new SmithChartMath(grid.getCenter(), grid.getDiameter(), grid.getNorm());
+		SmithChartMath sm = new SmithChartMath(grid.getCenter(), grid.getDiameter(), grid.getZ0());
 		
 		data_pts = new ArrayList<Point>(this.points);
 		
