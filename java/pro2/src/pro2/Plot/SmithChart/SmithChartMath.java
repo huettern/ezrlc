@@ -78,7 +78,7 @@ public class SmithChartMath {
 	 * @param val imaginary value
 	 * @return center point
 	 */
-	public PointD getImagCenterPoint(double val) {
+	public PointD getImagGridCenterPoint(double val) {
 		double mul;
 		double normalized;
 		
@@ -129,7 +129,7 @@ public class SmithChartMath {
 		// real axis radius
 		double rr = center.x + (diameter/2) - this.getRealGridCenterPoint(val.re()).x;
 		// imag axis radius
-		double ri = center.y - this.getImagCenterPoint(val.im()).y;
+		double ri = center.y - this.getImagGridCenterPoint(val.im()).y;
 		// hypotenuse of rr and ri
 		double s = MathUtil.pythagoras(rr, ri);
 		// angle s - rr
