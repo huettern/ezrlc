@@ -468,6 +468,4 @@ public class RFData {
 		}
 		return s;
 	}
-	
-	
 }

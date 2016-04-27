@@ -32,6 +32,9 @@ import javax.swing.border.LineBorder;
 
 public class Figure extends JPanel implements ActionListener, Observer {
 
+	//================================================================================
+    // Private Data
+    //================================================================================
 	public enum ENPlotType { RECTANGULAR, SMITH};
 	ENPlotType plotType = null;
 	
@@ -46,7 +49,10 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	private List<Integer> dataIDList = new ArrayList<Integer>();
 	private JButton btnAutoscale;
 	private JPanel panel_1;
-	
+
+	//================================================================================
+    // Constructors
+    //================================================================================
 	public Figure(Controller controller, String title) {
 		super.setBackground(new Color(238,238,238));
 		
@@ -114,7 +120,17 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		panel_1.add(btnAutoscale, gbc_btnAutoscale);
 		btnAutoscale.addActionListener(this);
 	}
+
+	//================================================================================
+    // Getters
+    //================================================================================
+	public SmithChart getSmithChart () {
+		return this.smithChart;
+	}
 	
+	//================================================================================
+    // Public Functions
+    //================================================================================
 	/**
 	 * Builds a Rectangular Plot inside the figure
 	 */

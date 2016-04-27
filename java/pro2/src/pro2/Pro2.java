@@ -19,10 +19,10 @@ import javax.swing.JPanel;
 import pro2.MVC.Controller;
 import pro2.MVC.Model;
 import pro2.Plot.Figure;
-import pro2.Plot.PlotDataSet;
 import pro2.RFData.RFData;
 import pro2.View.MainView;
 import pro2.util.Complex;
+import pro2.util.MathUtil;
 
 /**
  * @author noah
@@ -37,30 +37,35 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-		EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {                                           
-                Model model = new Model();
-                MainView view = new MainView();
-                Controller controller = new Controller(model,view);
+//		EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {                                           
+//                Model model = new Model();
+//                MainView view = new MainView();
+//                Controller controller = new Controller(model,view);
 //                
-                view.setController(controller);
-                model.setController(controller);
+//                view.setController(controller);
+//                model.setController(controller);
 //                
-                view.build();
-                view.setVisible(true);
-                
-                // Add observers
-                model.addObserver(view);
-                
-                controller.contol();
-            }
-        });  
+//                view.build();
+//                view.setVisible(true);
+//                
+//                // Add observers
+//                model.addObserver(view);
+//                
+//                controller.contol();
+//            }
+//        });  
 
 		//================================================================================
 	    // Smith Test
 	    //================================================================================
-		
+                
+         Model model = new Model();
+         MainView view = new MainView();
+         Controller controller = new Controller(model,view);
+                
+                
 		/* Create a little frame containing the testplot */
 		JFrame frame = new JFrame("Smith Test");
         frame.setSize(500, 400);
@@ -68,7 +73,7 @@ public class Pro2 {
         
 		/* Read a Datafile and extract the necessary infos */
 		// Read datafile
-		RFData rfData = new RFData("../../sample_files/bsp11.s1p");;
+		RFData rfData = new RFData("../../sample_files/bsp1.s1p");;
 		try {
 			// Parse datafile
 			rfData.parse();
@@ -76,64 +81,69 @@ public class Pro2 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// Get Z Data
-		List<Double> z_imag = new ArrayList<Double>(rfData.getzData().size());
-        // Extract imaginary part
-        int i = 0;
-        for (Complex in : rfData.getzData()) {
-			z_imag.add(in.im());
-			i++;
-		}
-//        // Create a new Dataset using the z Data (y Axis) and f Data (x Axis)
-//        PlotDataSet z_data = new PlotDataSet(rfData.getfData(), z_imag);
-//
-//        /* Create test data set one and two */
-//        List<Double> xtest = new ArrayList<Double>();
-//        List<Double> ytest = new ArrayList<Double>();
-//        
-//        for( i = 0; i<100; i++) {
-//        	xtest.add(Double.valueOf(i));
-//        	ytest.add(Double.valueOf(i/100.0));
-//        }
-//        PlotDataSet testset = new PlotDataSet(xtest, ytest);
-//
-//        List<Double> xtest2 = new ArrayList<Double>();
-//        List<Double> ytest2 = new ArrayList<Double>();
-//        xtest2.add(50.0);
-//        xtest2.add(60.0);
-//        ytest2.add(0.10);
-//        ytest2.add(0.20);
-//        PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
-//
+		
 //        /* Create Plot */
-//        Figure fig = new Figure(controller,"Graph 1");
-//        fig.buildSmithChart();
+        Figure fig = new Figure(controller,"Graph 1");
+        fig.buildSmithChart();
         
-//        fig.addDataSet(z_data);		// Real data from s1p files
-//        fig.addDataSet(testset);	// Testset 1, linear from x=0 to 99, y=x/100
-//        fig.addDataSet(testset2);	// Testset 2, two single datapoints
-////        
-//        frame.getContentPane().add(fig);
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setVisible(true);
+        frame.getContentPane().add(fig);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 //        
-        
-        
-//		JFrame frame = new JFrame();
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setBounds(100, 100, 1000, 800);
-//		frame.setVisible(true);
-////		GridBagLayout gbl = new GridBagLayout();
-////		frame.setLayout(gbl);
-////		
-//		
-//		JPanel pnl = new JPanel();
-//		//frame.add(pnl);
-//		frame.getContentPane().add(pnl);
-//		
-//		
-//		pnl.setVisible(true);
-//		pnl.setBackground(Color.WHITE);
+        /* Create Test Data set */
+		List<Complex> cpxtext = new ArrayList<Complex>();
+//		cpxtext.add(new Complex(10.0, 20.0));
+//		cpxtext.add(new Complex(1.0, 0.2));
+//		cpxtext.add(new Complex(1.0, 0.4));
+//		cpxtext.add(new Complex(1.0, 0.8));
+//		cpxtext.add(new Complex(1.0, 1.4));
+//		cpxtext.add(new Complex(1.0, 2.0));
+//		cpxtext.add(new Complex(1.0, 3.0));
+//		cpxtext.add(new Complex(1.0, 10.0));
+//		cpxtext.add(new Complex(1.0, 20.0));
+//		cpxtext.add(new Complex(1.0, 9999999.0));
+//		cpxtext.add(new Complex(1.0, -0.0));
+//		cpxtext.add(new Complex(1.0, -0.2));
+//		cpxtext.add(new Complex(1.0, -0.4));
+//		cpxtext.add(new Complex(1.0, -0.8));
+//		cpxtext.add(new Complex(1.0, -1.4));
+//		cpxtext.add(new Complex(1.0, -2.0));
+//		cpxtext.add(new Complex(1.0, -3.0));
+//		cpxtext.add(new Complex(1.0, -10.0));
+//		cpxtext.add(new Complex(1.0, -20.0));
+//		cpxtext.add(new Complex(1.0, -9999999.0));
+		cpxtext=rfData.getzData();
+		//cpxtext=rfData.getsData();
+
+		MathUtil.dumpListComplex("tmp.txt", cpxtext);
+		
+		List<Double> freq = new ArrayList<Double>();
+		freq = rfData.getfData();
+		//MathUtil.dumpListDouble("tmp.txt", freq);
+		//freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+//		freq.add(100.0);
+		
+		fig.getSmithChart().addDataSet(cpxtext, freq);
+		fig.repaint();
+		
 		
 		
 
