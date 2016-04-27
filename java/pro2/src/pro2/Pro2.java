@@ -37,25 +37,25 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-//		EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {                                           
-//                Model model = new Model();
-//                MainView view = new MainView();
-//                Controller controller = new Controller(model,view);
-//                
-//                view.setController(controller);
-//                model.setController(controller);
-//                
-//                view.build();
-//                view.setVisible(true);
-//                
-//                // Add observers
-//                model.addObserver(view);
-//                
-//                controller.contol();
-//            }
-//        });  
+		EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {                                           
+                Model model = new Model();
+                MainView view = new MainView();
+                Controller controller = new Controller(model,view);
+                
+                view.setController(controller);
+                model.setController(controller);
+                
+                view.build();
+                view.setVisible(true);
+                
+                // Add observers
+                model.addObserver(view);
+                
+                controller.contol();
+            }
+        });  
 
 		//================================================================================
 	    // Smith Test
