@@ -22,11 +22,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 
 import pro2.MVC.Controller;
+import pro2.Plot.Figure.ENPlotType;
 
 import java.awt.Insets;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class GraphDialog implements ActionListener{
 
@@ -39,14 +41,17 @@ public class GraphDialog implements ActionListener{
 	private ButtonGroup btngrpGraphSelect;
 	private JButton btnCreate, btnCancel;
 	private JTextField txtGraph;
+
+	private JRadioButton rdbtnRectangular;
+
+	private JRadioButton rdbtnSmithChart;
+	private JLabel lblZ0;
+	private JTextField txtResistance;
+	private JLabel lblOhm;
 	
 	
 	//================================================================================
     // Constructors
-    //================================================================================	
-	/**
-	 * @wbp.parser.entryPoint
-	 */	
 	public GraphDialog(Controller controller) {
 		this.controller = controller;
 	}
@@ -57,6 +62,7 @@ public class GraphDialog implements ActionListener{
     //================================================================================
 	/**
 	 * Builds the Graph Panel
+	 * @wbp.parser.entryPoint
 	 */
 	public void buildDialog() {
 		graphDialog = new JDialog(controller.getMainView());
@@ -100,9 +106,9 @@ public class GraphDialog implements ActionListener{
 		gbc_pnlSelectType.gridy = 1;
 		graphDialog.getContentPane().add(pnlSelectType, gbc_pnlSelectType);
 		GridBagLayout gbl_pnlSelectType = new GridBagLayout();
-		gbl_pnlSelectType.columnWidths = new int[]{0, 0};
+		gbl_pnlSelectType.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gbl_pnlSelectType.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_pnlSelectType.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_pnlSelectType.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlSelectType.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlSelectType.setLayout(gbl_pnlSelectType);
 		
@@ -123,8 +129,8 @@ public class GraphDialog implements ActionListener{
 		gbc_txtGraph.gridy = 1;
 		pnlGraphName.add(txtGraph, gbc_txtGraph);
 		txtGraph.setColumns(10);
-
 		
+				
 		//Graph Select
 		JLabel lblSelectTheDesired = new JLabel("Select the desired type:");
 		GridBagConstraints gbc_lblSelectTheDesired = new GridBagConstraints();
@@ -134,26 +140,28 @@ public class GraphDialog implements ActionListener{
 		gbc_lblSelectTheDesired.gridy = 0;
 		pnlSelectType.add(lblSelectTheDesired, gbc_lblSelectTheDesired);
 		
-		JRadioButton rdbtnRectangular = new JRadioButton("Rectangular");
+		rdbtnRectangular = new JRadioButton("Rectangular");
 		rdbtnRectangular.setSelected(true);
 		GridBagConstraints gbc_rdbtnRectangular = new GridBagConstraints();
 		gbc_rdbtnRectangular.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnRectangular.insets = new Insets(0, 5, 0, 5);
+		gbc_rdbtnRectangular.insets = new Insets(0, 5, 5, 5);
 		gbc_rdbtnRectangular.gridx = 0;
 		gbc_rdbtnRectangular.gridy = 1;
 		pnlSelectType.add(rdbtnRectangular, gbc_rdbtnRectangular);
+		rdbtnRectangular.addActionListener(this);
 		
-		JRadioButton rdbtnSmithChart = new JRadioButton("Smith Chart");
+		btngrpGraphSelect = new ButtonGroup();
+		btngrpGraphSelect.add(rdbtnRectangular);
+		
+		rdbtnSmithChart = new JRadioButton("Smith Chart");
 		GridBagConstraints gbc_rdbtnSmithChart = new GridBagConstraints();
 		gbc_rdbtnSmithChart.insets = new Insets(0, 5, 0, 5);
 		gbc_rdbtnSmithChart.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnSmithChart.gridx = 0;
 		gbc_rdbtnSmithChart.gridy = 2;
 		pnlSelectType.add(rdbtnSmithChart, gbc_rdbtnSmithChart);
-		
-		btngrpGraphSelect = new ButtonGroup();
-		btngrpGraphSelect.add(rdbtnRectangular);
 		btngrpGraphSelect.add(rdbtnSmithChart);
+		rdbtnSmithChart.addActionListener(this);
 		
 		
 		//Buttons
@@ -194,16 +202,26 @@ public class GraphDialog implements ActionListener{
 	}
 
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == btnCreate) {
-			this.controller.getMainView().addGraph(txtGraph.getText());
+			if(rdbtnRectangular.isSelected() == true) {
+				this.controller.getMainView().addGraph(ENPlotType.RECTANGULAR, txtGraph.getText());
+			}
+			else if(rdbtnSmithChart.isSelected() == true) {
+				this.controller.getMainView().addGraph(ENPlotType.SMITH, txtGraph.getText());
+			}
 			graphDialog.dispose();
 		}
+		
 		if(e.getSource() == btnCancel) {
 			graphDialog.dispose();
-		}
+		}	
+		
 	}
 
 }

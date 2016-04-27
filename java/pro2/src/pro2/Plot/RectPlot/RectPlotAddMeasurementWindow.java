@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import java.awt.Dimension;
 
 public class RectPlotAddMeasurementWindow implements ActionListener {
 
@@ -121,6 +122,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		
 		cbModelList = new JComboBox();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 1;
@@ -237,28 +239,34 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_pnlButtons.gridy = 3;
 		dialog.getContentPane().add(pnlButtons, gbc_pnlButtons);
 		GridBagLayout gbl_pnlButtons = new GridBagLayout();
-		gbl_pnlButtons.columnWidths = new int[]{0, 90, 90, 0};
+		gbl_pnlButtons.columnWidths = new int[]{90, 90, 0};
 		gbl_pnlButtons.rowHeights = new int[]{22, 0};
-		gbl_pnlButtons.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_pnlButtons.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		gbl_pnlButtons.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		pnlButtons.setLayout(gbl_pnlButtons);
 		
 	
 		btnCancel = new JButton("Cancel");
+		btnCancel.setPreferredSize(new Dimension(0, 0));
+		btnCancel.setMinimumSize(new Dimension(0, 0));
+		btnCancel.setMaximumSize(new Dimension(0, 0));
 		btnCancel.addActionListener(this);
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.fill = GridBagConstraints.BOTH;
-		gbc_btnCancel.insets = new Insets(0, 5, 0, 5);
-		gbc_btnCancel.gridx = 1;
+		gbc_btnCancel.insets = new Insets(0, 2, 0, 5);
+		gbc_btnCancel.gridx = 0;
 		gbc_btnCancel.gridy = 0;
 		pnlButtons.add(btnCancel, gbc_btnCancel);
 		
 		btnOk = new JButton("OK");
+		btnOk.setMaximumSize(new Dimension(0, 0));
+		btnOk.setMinimumSize(new Dimension(0, 0));
+		btnOk.setPreferredSize(new Dimension(0, 0));
 		btnOk.addActionListener(this);
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
-		gbc_btnOk.insets = new Insets(0, 5, 0, 5);
+		gbc_btnOk.insets = new Insets(0, 5, 0, 2);
 		gbc_btnOk.fill = GridBagConstraints.BOTH;
-		gbc_btnOk.gridx = 2;
+		gbc_btnOk.gridx = 1;
 		gbc_btnOk.gridy = 0;
 		pnlButtons.add(btnOk, gbc_btnOk);
 	}

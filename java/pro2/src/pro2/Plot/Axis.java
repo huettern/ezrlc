@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import pro2.Plot.Axis.Orientation;
+import pro2.Plot.Axis.Scale;
 import pro2.Plot.RectPlot.RectangularPlot;
 import pro2.util.UIUtil;
 
@@ -135,7 +136,16 @@ public class Axis {
 	public void setLabelOffset(int off) {
 		this.label_offset=off;
 	}
-	
+	public void setScale(Scale scale) {
+		this.scale = scale;
+		for(int i=0; i<MAX_NUM_POINTS; i++) {
+			tic_pos[i] = new Point (0,0);
+			sub_tic_pos = new ArrayList<Point>(); 
+		}
+	}
+	public Scale getScale () {
+		return this.scale;
+	}
 	/**
 	 * Returns the pixel location of the given value
 	 * @param d
@@ -403,6 +413,7 @@ public class Axis {
 		}
 		g.drawLine(sx, sy, ex, ey);
 	}
+
 
 
 }

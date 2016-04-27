@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -15,6 +16,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import pro2.Plot.PlotDataSet;
+import pro2.util.Complex;
 import pro2.util.UIUtil;
 
 public class SmithChartGrid {
@@ -22,7 +24,7 @@ public class SmithChartGrid {
 	//================================================================================
     // Settings
     //================================================================================
-	double majorImagGridValues[] = {0.4,1.0,2.0,10.0};
+	double majorImagGridValues[] = {0.4,1.0,2.0,5.0,10.0};
 	double minorImagGridValues[] = {0.1,0.2,0.3,0.6,0.8,1.5};
 	double minorImagGridClipThreshold = 2.0;
 	
@@ -42,6 +44,9 @@ public class SmithChartGrid {
 	private List<Point> minorRealAxisPoints = new ArrayList<Point>();
 	private List<Point> majorImagAxisPoints = new ArrayList<Point>();
 	private List<Point> minorImagAxisPoints = new ArrayList<Point>();
+
+	private List<Point> imagAxisLabelPointsPos = new ArrayList<Point>();
+	private List<Point> imagAxisLabelPointsNeg = new ArrayList<Point>();
 	
 	
 	// angle circles
@@ -88,8 +93,9 @@ public class SmithChartGrid {
 	//================================================================================
     // Constructor
     //================================================================================
-	public SmithChartGrid(SmithChart parent) {
+	public SmithChartGrid(SmithChart parent, double zo) {
 		this.parent = parent;
+		this.zo = zo;
 
 		// Major grid lines
 		for (int i = 0; i < majorImagGridValues.length; i++) {
@@ -120,6 +126,22 @@ public class SmithChartGrid {
 	}
 
 	//================================================================================
+    // Getters Functions
+    //================================================================================
+	public Point getCenter () {
+		return new Point(this.center);
+	}
+	public int getDiameter() {
+		return this.diameter;
+	}
+	public double getZ0 () {
+		return this.zo;
+	}
+	public Area getDrawingArea () {
+		return new Area(imagPlotArea);
+	}
+	
+	//================================================================================
     // Public Functions
     //================================================================================
     public void paint(Graphics g)
@@ -129,6 +151,7 @@ public class SmithChartGrid {
     	// Paint outter border
 		Graphics2D g2 = (Graphics2D)g.create();
 		BasicStroke origStroke = (BasicStroke) g2.getStroke();
+		Rectangle whole = g2.getClipBounds();//g2 is my Graphics2D object
 		g2.setColor(Color.LIGHT_GRAY);
 		UIUtil.drawCenterCircle(g2, center, radius);
 		g2.setColor(Color.LIGHT_GRAY);
@@ -139,11 +162,10 @@ public class SmithChartGrid {
 		Point p = new Point(0,center.y);
 		int index = 0;
 		for (Point point : majorRealAxisPoints ) {
-			//g2.fillOval(point.x-2, point.y-2, 4, 4);
-			g2.drawString(String.format("%2.1f", majorGridRealValues.get(index++)), point.x, point.y);
-			rad=((center.x+radius)-point.x)/2;
-			p.x=point.x+rad;
-			UIUtil.drawCenterCircle(g2, p, rad);
+			rad=(center.x+radius)-point.x;
+			UIUtil.drawCenterCircle(g2, point, rad);
+			g2.drawString(String.format("%2.1f", majorGridRealValues.get(index++)), point.x-rad, point.y);
+			
 		}
 		g2.setColor(Color.LIGHT_GRAY);
 		
@@ -159,9 +181,8 @@ public class SmithChartGrid {
 		g2.setStroke(dashed);
 		p = new Point(0,center.y);
 		for (Point point : minorRealAxisPoints) {
-			rad=((center.x+radius)-point.x)/2;
-			p.x=point.x+rad;
-			UIUtil.drawCenterCircle(g2, p, rad);
+			rad=(center.x+radius)-point.x;
+			UIUtil.drawCenterCircle(g2, point, rad);
 		}
 		
 		// Draw minor imag grid
@@ -173,7 +194,17 @@ public class SmithChartGrid {
 			UIUtil.drawCenterCircle(g2, point, rad);
 		}
 		
-		
+		// Draw imag axis labels
+		g2.setClip(whole);
+		g2.setStroke(origStroke);
+		int i = 0;
+		for (Point point : imagAxisLabelPointsPos) {
+			UIUtil.drawCenterString(g2, point, String.format("%.1f", this.majorImagGridValues[i++]));
+		}
+		i = 0;
+		for (Point point : imagAxisLabelPointsNeg) {
+			UIUtil.drawCenterString(g2, point, String.format("%.1f", -this.majorImagGridValues[i++]));
+		}
     }
 	
 
@@ -199,34 +230,37 @@ public class SmithChartGrid {
 		this.center.x = (parentWidth/2);
 		this.center.y = (parentHeight/2);
 		
+		// smith chart math with reference 1
+		SmithChartMath sm = new SmithChartMath(center, diameter, 1);
+		
 		imagPlotArea = new Area(new  Ellipse2D.Double(center.x-radius, center.y-radius, diameter,diameter));
 		
 		// Major Real axis grid
 		majorRealAxisPoints = new ArrayList<Point>(majorGridRealValues.size());
 		for (Double d : majorGridRealValues) {
-			majorRealAxisPoints.add(getRealGridCenterPoint(d));
+			majorRealAxisPoints.add(sm.getRealGridCenterPoint(d).point());
 		}
 		
 		// Major imag circles
 		majorImagAxisPoints = new ArrayList<Point>(majorGridImagValues.size());
 		for (Double d : majorGridImagValues) {
-			majorImagAxisPoints.add(getImagGridCenterPoint (d));
+			majorImagAxisPoints.add(sm.getImagGridCenterPoint(d).point());
 		}
 		
 		// Minor Real axis grid
 		// center points
 		minorRealAxisPoints = new ArrayList<Point>(minorGridRealValues.size());
 		for (Double d : minorGridRealValues) {
-			minorRealAxisPoints.add(getRealGridCenterPoint(d));
+			minorRealAxisPoints.add(sm.getRealGridCenterPoint(d).point());
 		}
 		// clipping area
 		// upper half circle
-		p = new Point(getImagGridCenterPoint(this.minorRealGridClipThreshold));
+		p = new Point(sm.getImagGridCenterPoint(this.minorRealGridClipThreshold).point());
 		rad = (double)Math.abs(center.y - p.y);
 		Area a = new Area(new Ellipse2D.Double(p.x-rad, p.y-rad, 2.0*rad, 2.0*rad));
 
 		// lower half circle
-		p = new Point(getImagGridCenterPoint(-this.minorRealGridClipThreshold));
+		p = new Point(sm.getImagGridCenterPoint(-this.minorRealGridClipThreshold).point());
 		rad = (double)Math.abs(center.y - p.y);
 		Area a2  = new Area(new Ellipse2D.Double(p.x-rad, p.y-rad, 2.0*rad, 2.0*rad));
 
@@ -241,17 +275,17 @@ public class SmithChartGrid {
 		// Minor imag axis grid
 		minorImagAxisPoints = new ArrayList<Point>(minorGridImagValues.size());
 		for (Double d : minorGridImagValues) {
-			minorImagAxisPoints.add(getRealGridCenterPoint(d));
+			minorImagAxisPoints.add(sm.getRealGridCenterPoint(d).point());
 		}
 		
 		// Minor imag axis grid
 		// center points
 		minorImagAxisPoints = new ArrayList<Point>(minorGridImagValues.size());
 		for (Double d : minorGridImagValues) {
-			minorImagAxisPoints.add(getImagGridCenterPoint (d));
+			minorImagAxisPoints.add(sm.getImagGridCenterPoint(d).point());
 		}
 		// clipping area
-		p = new Point(getRealGridCenterPoint(this.minorImagGridClipThreshold));
+		p = new Point(sm.getRealGridCenterPoint(this.minorImagGridClipThreshold).point());
 		rad = (double)((center.x+radius)-p.x)/2;
 		p.x=(int) (p.x+rad);
 		a = new Area(new Ellipse2D.Double(p.x-rad, p.y-rad, 2.0*rad, 2.0*rad));
@@ -259,63 +293,12 @@ public class SmithChartGrid {
 		a2.subtract(a);
 		minorImagGridClippingArea=a2;
 		
-		// Clipping area for minor imag grid lines
-//		Double d = (minorImagGridClipThreshold-zo)/(minorImagGridClipThreshold+zo);
-//		p = new Point(0,0);
-//		p.y = center.y;
-//		p.x = (int)((diameter*(d+1)/2) + (center.x-radius)); //stretch to display area
-//		double rad=((center.x+radius)-p.x)/2;
-//		// Draw imag circles
-//		minorImagGridClippingArea = new Area(new  Ellipse2D.Double(p.x-rad, p.y-rad, 2*rad,2*rad));
-
-		
-		
-//		angleCircleCenterPoints = new ArrayList<Point>(gridAngleValues.size());
-//		for (Double d : gridAngleValues) {
-//			p = new Point();
-//			p.x = center.x+radius;
-//			p.y = (int)(center.y - (radius*Math.tan(d/2)));
-//			angleCircleCenterPoints.add(p);
-//		}
-	}
-	
-	/**
-	 * Returns the center point of a circle of the real axis
-	 * @param val The (not normalized) value of the axis point
-	 * @return Center point
-	 */
-	private Point getRealGridCenterPoint(double val){
-		Double norm;
-		
-		norm = Math.abs(val);
-		norm = (norm-zo)/(norm+zo);
-		
-		int y_coordinate = center.y;
-		int x_coordinate = (int)((diameter*(norm+1)/2) + (center.x-radius)); //stretch to display area
-		return new Point(x_coordinate, y_coordinate);
-	}
-	
-	/**
-	 * Calculates the center point of a imag axis circle
-	 * @param val The value of the gridline
-	 * @return returns the centerpoint of the circle
-	 */
-	private Point getImagGridCenterPoint(double val) {
-		Double norm,mul;
-		
-		norm = Math.abs(val);
-		norm = (norm-zo)/(norm+zo);
-		
-		if(val < 0) {
-			mul = norm - 1.0;
+		// Imag axis labels
+		imagAxisLabelPointsPos = new ArrayList<Point>(this.majorImagGridValues.length);
+		imagAxisLabelPointsNeg = new ArrayList<Point>(this.majorImagGridValues.length);
+		for (int i = 0; i < (this.majorImagGridValues.length); i++) {
+			imagAxisLabelPointsPos.add(sm.getPixelLocation(new Complex(0, majorImagGridValues[i])).point());
+			imagAxisLabelPointsNeg.add(sm.getPixelLocation(new Complex(0, -majorImagGridValues[i])).point());
 		}
-		else {
-			mul = 1.0 - norm;
-		}
-		// calcualte y coordinate
-		int y_coordinate = (int)(center.y - (radius*Math.tan(mul*Math.PI/4)));
-		// store them
-		return new Point(center.x+radius, y_coordinate);
 	}
-	
 }

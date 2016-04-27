@@ -48,6 +48,8 @@ import javax.swing.JList;
 import javax.swing.tree.DefaultTreeModel;
 
 import pro2.MVC.Controller;
+import pro2.Plot.Figure;
+import pro2.Plot.Figure.ENPlotType;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.border.TitledBorder;
@@ -83,24 +85,7 @@ public class MainView extends JFrame implements Observer {
 	 */
 	public void build () {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 553, 402);
-		
-		//menuBar
-		JMenuBar menuBar = new JMenuBar();
-		this.setJMenuBar(menuBar);
-		
-		JMenu fileMenu = new JMenu("File");
-		menuBar.add(fileMenu);
-		
-		JMenuItem fileNew = new JMenuItem("New File");
-		JMenuItem fileOpen = new JMenuItem("Open File");
-		JMenuItem fileSave = new JMenuItem("Save File");
-		JMenuItem fileExit = new JMenuItem("Exit");
-		fileMenu.add(fileNew);
-		fileMenu.add(fileOpen);
-		fileMenu.add(fileSave);
-		fileMenu.add(fileExit);
-		
+		setBounds(100, 100, 553, 402);		
 		
 		//MainPanel
 		JPanel mainPanel = new JPanel();
@@ -124,24 +109,6 @@ public class MainView extends JFrame implements Observer {
 		workPanel = new WorkPanel(this.controller);
 		splitPane.setRightComponent(workPanel);
 		workPanel.build();
-
-		//Toolbar
-		JToolBar toolBar = new JToolBar();
-		toolBar.setFloatable(false);
-		mainPanel.add(toolBar, BorderLayout.NORTH);
-		
-		JButton btnSave = new JButton("Save");
-		toolBar.add(btnSave);
-
-		
-		//Status
-		JPanel statusPanel = new JPanel();
-		statusPanel.setBackground(Color.GREEN);
-		mainPanel.add(statusPanel, BorderLayout.SOUTH);
-		statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		
-		JLabel statusLabel = new JLabel("Status Here....");
-		statusPanel.add(statusLabel);
 		
 		// Window properties
 		setTitle("EZRLC");
@@ -150,13 +117,7 @@ public class MainView extends JFrame implements Observer {
 		
 		pack();
 		setMinimumSize(getPreferredSize());
-		//setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-		
-		
-//		JMenuBar menuBar = new JMenuBar();
-//		GridBagConstraints gbc = new GridBagConstraints();
-//		mainPanel.add(menuBar, gbc);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 	}
 	
@@ -170,9 +131,9 @@ public class MainView extends JFrame implements Observer {
 	}
 
 	
-	public void addGraph(String text) {
+	public void addGraph(ENPlotType type, String text) {
 		// TODO Auto-generated method stub
-		workPanel.addGraph(text);
+		workPanel.addGraph(type, text);
 	}
 	
 	public void addNewFile(File f) {
@@ -195,6 +156,10 @@ public class MainView extends JFrame implements Observer {
 		System.out.println("Main View update!");
 		workPanel.update(o, arg);
 		navPanel.update(o, arg);
+		
+	}
+	public void deleteFigure(Figure figure) {
+		workPanel.deleteFigure(figure);
 		
 	}
 

@@ -3,7 +3,7 @@
 clf
 addpath 'incomming/s-param_toolbox/sbox'
 
-IN.file = ['../sample_files/r100l10uYRI.s1p'];
+IN.file = ['../sample_files/bsp6.s1p'];
  
 % read Datafile
 fid_log = fopen('SXPParse_log.txt','w');
@@ -20,35 +20,35 @@ fid_log = fopen('SXPParse_log.txt','w');
 
 scattering=data(:);
 
-imdecande=s2z(Zo, data);
-imdecande=imdecande(:);
+impedance=s2z(Zo, data);
+impedance=impedance(:);
 
 admittance=s2y(Zo, data);
 admittance=admittance(:);
 
-% Plott scattering
-subplot(221)
-semilogx(freq, real(scattering), 'LineWidth', 2)
-hold on
-semilogx(freq, imag(scattering), 'LineWidth', 2)
-grid on
-legend('real','imag')
-title('S')
-
-% Plott impedance
-subplot(222)
-loglog(freq, real(imdecande), 'LineWidth', 2)
-hold on
-loglog(freq, imag(imdecande), 'LineWidth', 2)
-grid on
-legend('real','imag')
-title('Z')
-
-% Plott admittance
-subplot(223)
-semilogx(freq, real(admittance), 'LineWidth', 2)
-hold on
-semilogx(freq, imag(admittance), 'LineWidth', 2)
-grid on
-legend('real','imag')
-title('Y')
+% % Plott scattering
+% subplot(221)
+% semilogx(freq, real(scattering), 'LineWidth', 2)
+% hold on
+% semilogx(freq, imag(scattering), 'LineWidth', 2)
+% grid on
+% legend('real','imag')
+% title('S')
+% 
+% % Plott impedance
+% subplot(222)
+% loglog(freq, real(imdecande), 'LineWidth', 2)
+% hold on
+% loglog(freq, imag(imdecande), 'LineWidth', 2)
+% grid on
+% legend('real','imag')
+% title('Z')
+% 
+% % Plott admittance
+% subplot(223)
+% semilogx(freq, real(admittance), 'LineWidth', 2)
+% hold on
+% semilogx(freq, imag(admittance), 'LineWidth', 2)
+% grid on
+% legend('real','imag')
+% title('Y')
