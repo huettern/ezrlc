@@ -153,32 +153,6 @@ public class GraphDialog implements ActionListener{
 		btngrpGraphSelect = new ButtonGroup();
 		btngrpGraphSelect.add(rdbtnRectangular);
 		
-		lblZ0 = new JLabel("Z0:");
-		GridBagConstraints gbc_lblZ0 = new GridBagConstraints();
-		gbc_lblZ0.anchor = GridBagConstraints.EAST;
-		gbc_lblZ0.insets = new Insets(0, 0, 5, 5);
-		gbc_lblZ0.gridx = 1;
-		gbc_lblZ0.gridy = 1;
-		pnlSelectType.add(lblZ0, gbc_lblZ0);
-		
-		txtResistance = new JTextField();
-		txtResistance.setHorizontalAlignment(SwingConstants.RIGHT);
-		GridBagConstraints gbc_txtResistance = new GridBagConstraints();
-		gbc_txtResistance.insets = new Insets(0, 0, 5, 1);
-		gbc_txtResistance.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtResistance.gridx = 2;
-		gbc_txtResistance.gridy = 1;
-		pnlSelectType.add(txtResistance, gbc_txtResistance);
-		txtResistance.setColumns(10);
-		
-		lblOhm = new JLabel("Ohm");
-		GridBagConstraints gbc_lblOhm = new GridBagConstraints();
-		gbc_lblOhm.anchor = GridBagConstraints.WEST;
-		gbc_lblOhm.insets = new Insets(0, 0, 5, 5);
-		gbc_lblOhm.gridx = 3;
-		gbc_lblOhm.gridy = 1;
-		pnlSelectType.add(lblOhm, gbc_lblOhm);
-		
 		rdbtnSmithChart = new JRadioButton("Smith Chart");
 		GridBagConstraints gbc_rdbtnSmithChart = new GridBagConstraints();
 		gbc_rdbtnSmithChart.insets = new Insets(0, 5, 0, 5);
@@ -246,18 +220,7 @@ public class GraphDialog implements ActionListener{
 		
 		if(e.getSource() == btnCancel) {
 			graphDialog.dispose();
-		}
-		if(e.getSource() == rdbtnRectangular) {
-			lblZ0.setForeground(Color.BLACK);
-			txtResistance.setEnabled(true);
-			lblOhm.setForeground(Color.BLACK);
-		}
-		if(e.getSource() == rdbtnSmithChart) {
-			lblZ0.setForeground(Color.LIGHT_GRAY);
-			txtResistance.setEnabled(false);
-			lblOhm.setForeground(Color.LIGHT_GRAY);
-		}
-			
+		}	
 		
 	}
 
