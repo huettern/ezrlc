@@ -23,8 +23,9 @@ public class WorkPanel extends JPanel implements Observer {
     // Local Variables
     //================================================================================
 	private Controller controller;
-	
-	private List<Figure> figures = new ArrayList<Figure>();
+	private enum WINDOW_ARR {NONE, FULL, SPLIT}
+	private WINDOW_ARR graphArr = WINDOW_ARR.NONE;
+	private Figure topFigure, bottomFigure, fullFigure;
 
 	//================================================================================
     // Constructors
@@ -36,9 +37,9 @@ public class WorkPanel extends JPanel implements Observer {
 		
 		GridBagLayout gbl_workPanel = new GridBagLayout();
 		gbl_workPanel.columnWidths = new int[] {0};
-		gbl_workPanel.rowHeights = new int[] {0};
+		gbl_workPanel.rowHeights = new int[] {0, 0};
 		gbl_workPanel.columnWeights = new double[]{1.0};
-		gbl_workPanel.rowWeights = new double[]{0.0};
+		gbl_workPanel.rowWeights = new double[]{1.0, 1.0};
 		this.setLayout(gbl_workPanel);
 	}
 	
@@ -66,19 +67,89 @@ public class WorkPanel extends JPanel implements Observer {
 			f.buildSmithChart();
 		}
 		
-		this.figures.add(f);
-		this.add(figures.get(figures.size()-1), new GridBagConstraints(0, 0, 1, 1, 1, 1, 
-				GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
-				new Insets(0, 0, 0, 0), 0, 0));
+		switch (graphArr) {
+		case NONE: 
+			fullFigure = f;
+			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, 
+					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
+					new Insets(0, 0, 0, 0), 0, 0));
+			graphArr = WINDOW_ARR.FULL;
+			break;
+		case FULL:
+			topFigure = fullFigure;
+			fullFigure = null;
+			this.add(topFigure, new GridBagConstraints(0, 0, 1, 1, 1, 1, 
+					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
+					new Insets(0, 0, 0, 0), 0, 0));
+			
+			bottomFigure = f;
+			this.add(bottomFigure, new GridBagConstraints(0, 1, 1, 1, 1, 1, 
+					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
+					new Insets(0, 0, 0, 0), 0, 0));
+			graphArr = WINDOW_ARR.SPLIT;
+			break;
+		case SPLIT:
+			System.err.println("Es können nicht mehr als zwei Plots geopfert werden!");
+			break;
+		}
+		
+
 		this.updateUI();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		for (Figure figure : figures) {
-			figure.update(o, arg);
+		try {
+			fullFigure.update(o, arg);
+			System.out.println("Update Full-Graph");
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		
+		try {
+			topFigure.update(o, arg);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		try {
+			bottomFigure.update(o, arg);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
+	}
+
+	public void deleteFigure(Figure figure) {
+		this.remove(figure);
+		if(figure == fullFigure) {
+			fullFigure = null;
+			graphArr = WINDOW_ARR.NONE;
+			System.out.println("delete Full-Graph");
+		}
+		else if (figure == topFigure) {
+			fullFigure = bottomFigure;
+			topFigure = null;
+			bottomFigure = null;
+			
+			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, 
+					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
+					new Insets(0, 0, 0, 0), 0, 0));
+			graphArr = WINDOW_ARR.FULL;
+			System.out.println("delete Top-Graph");
+		}
+		else if (figure == bottomFigure) {
+			fullFigure = topFigure;
+			topFigure = null;
+			bottomFigure = null;
+			
+			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, 
+					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
+					new Insets(0, 0, 0, 0), 0, 0));
+			graphArr = WINDOW_ARR.FULL;
+			System.out.println("delete Bottom-Graph");
+		}
+		
+		this.updateUI();
 	}
 
 

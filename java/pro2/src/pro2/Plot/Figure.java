@@ -46,6 +46,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	private List<Integer> dataIDList = new ArrayList<Integer>();
 	private JButton btnAutoscale;
 	private JPanel panel_1;
+	private JButton btnDeleteGraph;
 	
 	public Figure(Controller controller, String title) {
 		super.setBackground(new Color(238,238,238));
@@ -66,7 +67,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
 		gbc_lblTitle.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblTitle.gridwidth = 2;
-		gbc_lblTitle.insets = new Insets(10, 10, 10, 10);
+		gbc_lblTitle.insets = new Insets(5, 5, 0, 5);
 		gbc_lblTitle.weightx = 1.0;
 		gbc_lblTitle.gridx = 0;
 		gbc_lblTitle.gridy = 0;
@@ -82,15 +83,15 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{95, 0};
-		gbl_panel_1.rowHeights = new int[]{29, 29, 0, 0};
+		gbl_panel_1.rowHeights = new int[]{29, 29, 0, 0, 0};
 		gbl_panel_1.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
 		btnAddMeasurement = new JButton("Add Measurement");
 		GridBagConstraints gbc_btnAddMeasurement = new GridBagConstraints();
 		gbc_btnAddMeasurement.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnAddMeasurement.insets = new Insets(5, 5, 0, 5);
+		gbc_btnAddMeasurement.insets = new Insets(5, 5, 5, 5);
 		gbc_btnAddMeasurement.gridx = 0;
 		gbc_btnAddMeasurement.gridy = 0;
 		panel_1.add(btnAddMeasurement, gbc_btnAddMeasurement);
@@ -98,7 +99,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		btnSettings = new JButton("Settings");
 		GridBagConstraints gbc_btnSettings = new GridBagConstraints();
-		gbc_btnSettings.insets = new Insets(0, 5, 0, 5);
+		gbc_btnSettings.insets = new Insets(0, 5, 5, 5);
 		gbc_btnSettings.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSettings.gridx = 0;
 		gbc_btnSettings.gridy = 1;
@@ -107,11 +108,21 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		btnAutoscale = new JButton("Autoscale");
 		GridBagConstraints gbc_btnAutoscale = new GridBagConstraints();
-		gbc_btnAutoscale.insets = new Insets(0, 5, 0, 5);
+		gbc_btnAutoscale.insets = new Insets(0, 5, 5, 5);
 		gbc_btnAutoscale.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAutoscale.gridx = 0;
 		gbc_btnAutoscale.gridy = 2;
 		panel_1.add(btnAutoscale, gbc_btnAutoscale);
+		
+		btnDeleteGraph = new JButton("Delete Graph");
+		GridBagConstraints gbc_btnDeleteGraph = new GridBagConstraints();
+		gbc_btnDeleteGraph.anchor = GridBagConstraints.SOUTH;
+		gbc_btnDeleteGraph.insets = new Insets(0, 5, 5, 5);
+		gbc_btnDeleteGraph.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnDeleteGraph.gridx = 0;
+		gbc_btnDeleteGraph.gridy = 3;
+		panel_1.add(btnDeleteGraph, gbc_btnDeleteGraph);
+		btnDeleteGraph.addActionListener(this);
 		btnAutoscale.addActionListener(this);
 	}
 	
@@ -192,6 +203,10 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		if(e.getSource()==btnAutoscale) {
 			rectPlot.autoScale();
 		}
+		if(e.getSource()==btnDeleteGraph){
+			controller.deleteFigure(this);
+		}
+			
 	}
 
 	

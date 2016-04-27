@@ -1,6 +1,7 @@
 package pro2.MVC;
 
 import pro2.MVC.Model;
+import pro2.Plot.Figure;
 import pro2.Plot.PlotDataSet;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.RFData.RFData;
@@ -87,5 +88,10 @@ public class Controller {
 	public String getFilename() {
 		// TODO Auto-generated method stub
 		return model.getFilename();
+	}
+
+	public void deleteFigure(Figure figure) {
+		view.deleteFigure(figure);
+		
 	}
 }
