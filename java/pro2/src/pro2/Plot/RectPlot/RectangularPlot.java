@@ -237,7 +237,22 @@ public class RectangularPlot extends JPanel implements Observer {
 		this.updateDatasets(model);
 	}
 
-
+	
+	/**
+	 * Returns datasetsettings of the dataset given by the id
+	 * @param id data set id
+	 * @return
+	 */
+	public DataSetSettings getDataSetSettings(int id) {
+		// search id
+		for(int i = 0; i<dataSetIDs.size(); i++){
+			if(dataSetIDs.get(i) == id) {
+				return dataSetSettings.get(i);
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Scales Axis to show all Data
 	 */

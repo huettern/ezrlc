@@ -36,6 +36,9 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.GridLayout;
 import java.awt.Dimension;
+import java.awt.Component;
+import javax.swing.Box;
+import javax.swing.ScrollPaneConstants;
 
 public class Figure extends JPanel implements ActionListener, Observer {
 
@@ -69,6 +72,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	private DataSetLabelPanel dataSetLabelPanel;
 
 	private GridBagLayout gbl_pnlDataSets;
+	private Component verticalGlue;
 
 	//================================================================================
     // Constructors
@@ -140,6 +144,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		panel_1.add(btnAutoscale, gbc_btnAutoscale);
 		
 		pnlDataSetsBorder = new JPanel();
+		pnlDataSetsBorder.setMinimumSize(new Dimension(10, 280));
 		pnlDataSetsBorder.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Sets", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlDataSetsBorder = new GridBagConstraints();
 		gbc_pnlDataSetsBorder.insets = new Insets(0, 0, 5, 0);
@@ -155,6 +160,8 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		pnlDataSetsBorder.setLayout(gbl_pnlDataSetsBorder);
 		
 		spDataSets = new JScrollPane();
+		spDataSets.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		spDataSets.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GridBagConstraints gbc_spDataSets = new GridBagConstraints();
 		gbc_spDataSets.fill = GridBagConstraints.BOTH;
 		gbc_spDataSets.gridx = 0;
@@ -165,21 +172,21 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		spDataSets.setViewportView(pnlDataSets);
 		gbl_pnlDataSets = new GridBagLayout();
 		gbl_pnlDataSets.columnWidths = new int[]{0};
-		gbl_pnlDataSets.rowHeights = new int[] {0, 0, 0};
+		gbl_pnlDataSets.rowHeights = new int[] {0};
 		gbl_pnlDataSets.columnWeights = new double[]{1.0};
-		gbl_pnlDataSets.rowWeights = new double[]{1.0};
+		gbl_pnlDataSets.rowWeights = new double[]{0.0};
 		pnlDataSets.setLayout(gbl_pnlDataSets);
-//		
 		
-//		DataSetLabelPanel p = new DataSetLabelPanel();
-//		GridBagConstraints gbc_p = new GridBagConstraints();
-//		gbc_p.anchor = GridBagConstraints.NORTH;
-//		gbc_p.gridx = 0;
-//		gbc_p.gridy = 0;
-//		gbc_p.fill = GridBagConstraints.HORIZONTAL;
-//		gbc_p.weightx = 1.0;
-//		gbc_p.insets = new Insets(0, 0, 5, 0);
-//		pnlDataSets.add(p, gbc_p);
+		verticalGlue = Box.createVerticalGlue();
+		verticalGlue.setMaximumSize(new Dimension(0, 0));
+		GridBagConstraints gbc_verticalGlue = new GridBagConstraints();
+		gbc_verticalGlue.weighty = 1.0;
+		gbc_verticalGlue.weightx = 1.0;
+		gbc_verticalGlue.fill = GridBagConstraints.BOTH;
+		gbc_verticalGlue.gridx = 0;
+		gbc_verticalGlue.gridy = 99;
+		pnlDataSets.add(verticalGlue, gbc_verticalGlue);
+//		
 //		
 //		dataSetLabelPanel = new DataSetLabelPanel();
 //		GridBagLayout gridBagLayout_1 = (GridBagLayout) dataSetLabelPanel.getLayout();
@@ -293,6 +300,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	 */
 	public void addNewMeasurement () {
 		int id;
+		DataSetLabelPanel p = null;
 		if(plotType == ENPlotType.RECTANGULAR) {
 			// Create Dataset
 			id = controller.createDataset(this.newRectMeasurementWindow.getNewMeasurement());
@@ -300,7 +308,8 @@ public class Figure extends JPanel implements ActionListener, Observer {
 			this.dataIDList.add(id);
 			rectPlot.addDataSet(id, this.newRectMeasurementWindow.getNewMeasurement());
 			controller.manualNotify();
-			rectPlot.repaint();
+			rectPlot.repaint();		
+			p = new DataSetLabelPanel(rectPlot.getDataSetSettings(id).getLineColor(), id, rectPlot.getDataSetSettings(id).getLabel());
 		} else if (plotType == ENPlotType.SMITH) {
 			id = controller.createDataset(this.newSmithMeasurementWindow.getNewMeasurement());
 			// Save the data entry in the list
@@ -308,16 +317,17 @@ public class Figure extends JPanel implements ActionListener, Observer {
 			smithChart.addDataSet(id, this.newSmithMeasurementWindow.getNewMeasurement());
 			controller.manualNotify();
 			smithChart.repaint();
+			p = new DataSetLabelPanel(smithChart.getDataSetSettings(id).getLineColor(), id, smithChart.getDataSetSettings(id).getLabel());
 		}
 
 		// Dataset list entry
-		DataSetLabelPanel p = new DataSetLabelPanel();
 		pnlDataSets.add(p, new GridBagConstraints(0, dataSetPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,5,0), 0, 0));
 		// adjust pnlDataSets gridbaglayout so that row weights are zero except last one
 		double[] d = new double[dataSetPnlRowCnt+1];
-		for (double e : d) { e = 0.0; }
+		for (int i = 0; i<d.length; i++) { d[i] = 0.0; }
 		d[dataSetPnlRowCnt] = 1.0;
 		gbl_pnlDataSets.rowWeights = d;
+		pnlDataSets.setLayout(gbl_pnlDataSets);
 		super.updateUI();
 		
 

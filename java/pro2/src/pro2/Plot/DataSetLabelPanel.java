@@ -12,9 +12,14 @@ import java.awt.Dimension;
 
 public class DataSetLabelPanel extends JPanel {
 
-	public DataSetLabelPanel() {
+	private int id = 0;
+	private JLabel lblTraceName;
+	private JPanel pnlDrawing;
+	
+	public DataSetLabelPanel(Color c, int id, String s) {
+		this.id = id;
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(159, 100));
+		setPreferredSize(new Dimension(130, 92));
 		setMaximumSize(new Dimension(32767, 100));
 		setMinimumSize(new Dimension(10, 100));
 		setBorder(new LineBorder(Color.BLACK));
@@ -25,17 +30,18 @@ public class DataSetLabelPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JPanel pnlDrawing = new JPanel();
+		pnlDrawing = new JPanel();
+		pnlDrawing.setBackground(c);
 		GridBagConstraints gbc_pnlDrawing = new GridBagConstraints();
-		gbc_pnlDrawing.insets = new Insets(0, 0, 5, 0);
+		gbc_pnlDrawing.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlDrawing.fill = GridBagConstraints.HORIZONTAL;
 		gbc_pnlDrawing.gridx = 0;
 		gbc_pnlDrawing.gridy = 0;
 		add(pnlDrawing, gbc_pnlDrawing);
 		
-		JLabel lblTraceName = new JLabel("trace name");
+		lblTraceName = new JLabel(s);
 		GridBagConstraints gbc_lblTraceName = new GridBagConstraints();
-		gbc_lblTraceName.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTraceName.insets = new Insets(0, 5, 5, 5);
 		gbc_lblTraceName.gridx = 0;
 		gbc_lblTraceName.gridy = 1;
 		add(lblTraceName, gbc_lblTraceName);
@@ -49,4 +55,13 @@ public class DataSetLabelPanel extends JPanel {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void setColot (Color c) {
+		this.pnlDrawing.setBackground(c);
+	}
+	public void setID (int id) {
+		this.id = id;
+	}
+	public void setLabel (String s) {
+		this.lblTraceName.setText(s);
+	}
 }
