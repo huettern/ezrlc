@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
+import pro2.MVC.Model;
 import pro2.Plot.RectPlot.RectPlotAddMeasurementWindow;
 import pro2.Plot.RectPlot.RectPlotSettings;
 import pro2.Plot.RectPlot.RectPlotSettingsWindow;
@@ -69,7 +70,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	private JPanel pnlDataSets;
 	
 	private int dataSetPnlRowCnt = 0;
-	private DataSetLabelPanel dataSetLabelPanel;
+	private List<DataSetLabelPanel> dataSetLabelPanels = new ArrayList<DataSetLabelPanel>();
 
 	private GridBagLayout gbl_pnlDataSets;
 	private Component verticalGlue;
@@ -309,7 +310,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 			rectPlot.addDataSet(id, this.newRectMeasurementWindow.getNewMeasurement());
 			controller.manualNotify();
 			rectPlot.repaint();		
-			p = new DataSetLabelPanel(rectPlot.getDataSetSettings(id).getLineColor(), id, rectPlot.getDataSetSettings(id).getLabel());
+			p = new DataSetLabelPanel(this, rectPlot.getDataSetSettings(id).getLineColor(), id, rectPlot.getDataSetSettings(id).getLabel());
 		} else if (plotType == ENPlotType.SMITH) {
 			id = controller.createDataset(this.newSmithMeasurementWindow.getNewMeasurement());
 			// Save the data entry in the list
@@ -317,10 +318,11 @@ public class Figure extends JPanel implements ActionListener, Observer {
 			smithChart.addDataSet(id, this.newSmithMeasurementWindow.getNewMeasurement());
 			controller.manualNotify();
 			smithChart.repaint();
-			p = new DataSetLabelPanel(smithChart.getDataSetSettings(id).getLineColor(), id, smithChart.getDataSetSettings(id).getLabel());
+			p = new DataSetLabelPanel(this, smithChart.getDataSetSettings(id).getLineColor(), id, smithChart.getDataSetSettings(id).getLabel());
 		}
 
 		// Dataset list entry
+		dataSetLabelPanels.add(p);
 		pnlDataSets.add(p, new GridBagConstraints(0, dataSetPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,5,0), 0, 0));
 		// adjust pnlDataSets gridbaglayout so that row weights are zero except last one
 		double[] d = new double[dataSetPnlRowCnt+1];
@@ -332,6 +334,20 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 
 	}
+	
+	/**
+	 * Removes a dataset by id
+	 * @param id dataset id
+	 */
+	public void removeDataset(int id) {
+		if(this.plotType == ENPlotType.RECTANGULAR) rectPlot.removeDataset(id);
+		if(this.plotType == ENPlotType.SMITH) smithChart.removeDataset(id);
+		controller.removeDataset(this.plotType, id);
+	}
+
+	//================================================================================
+    // Interfaces
+    //================================================================================
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -368,8 +384,20 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	
 	@Override
 	public void update(Observable o, Object arg) {
+		Model model = (Model)o;
+		// update plots
 		if(plotType == ENPlotType.RECTANGULAR) rectPlot.update(o, arg);
 		else if(plotType == ENPlotType.SMITH) smithChart.update(o, arg);
+		// update data set labels
+		for (DataSetLabelPanel lbl : dataSetLabelPanels) {
+			// if data set doesnt exist remove panel
+			if(model.isDataset(this.plotType, lbl.getID()) == false) {
+				pnlDataSets.remove(lbl);
+				lbl = null;
+			}
+		}
+		pnlDataSets.revalidate();
+		pnlDataSets.repaint();
 	}
 
 }

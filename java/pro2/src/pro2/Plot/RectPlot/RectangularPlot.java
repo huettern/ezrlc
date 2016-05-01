@@ -11,6 +11,7 @@ import java.util.Observer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
@@ -228,6 +229,23 @@ public class RectangularPlot extends JPanel implements Observer {
 		this.settings = s;
 		this.updateSettings();
 		repaint();
+	}
+	
+	/**
+	 * Removes dataset from data set id list
+	 * @param id  data set id
+	 */
+	public void removeDataset(int id) {
+		int ctr = 0;
+		for (Iterator<Integer> iter = dataSetIDs.iterator(); iter.hasNext(); ctr++) {
+			Integer i = iter.next();
+			if(i == id) {
+				dataSets.remove(ctr);
+				dataSetSettings.remove(ctr);
+				iter.remove();
+			}
+		}
+		this.repaint();
 	}
 
 

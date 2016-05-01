@@ -89,7 +89,7 @@ public class WorkPanel extends JPanel implements Observer {
 			graphArr = WINDOW_ARR.SPLIT;
 			break;
 		case SPLIT:
-			System.err.println("Es können nicht mehr als zwei Plots geopfert werden!");
+			System.err.println("Es kï¿½nnen nicht mehr als zwei Plots geopfert werden!");
 			break;
 		}
 		
@@ -103,7 +103,7 @@ public class WorkPanel extends JPanel implements Observer {
 			fullFigure.update(o, arg);
 			System.out.println("Update Full-Graph");
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
 		try {

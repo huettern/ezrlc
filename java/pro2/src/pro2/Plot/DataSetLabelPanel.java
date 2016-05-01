@@ -5,19 +5,28 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
+import pro2.MVC.Controller;
+
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class DataSetLabelPanel extends JPanel {
+public class DataSetLabelPanel extends JPanel implements ActionListener {
 
 	private int id = 0;
 	private JLabel lblTraceName;
 	private JPanel pnlDrawing;
+	private JButton btnRemove;
+	private Figure figure;
 	
-	public DataSetLabelPanel(Color c, int id, String s) {
+	public DataSetLabelPanel(Figure fig, Color c, int id, String s) {
 		this.id = id;
+		this.figure = fig;
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(130, 92));
 		setMaximumSize(new Dimension(32767, 100));
@@ -46,7 +55,8 @@ public class DataSetLabelPanel extends JPanel {
 		gbc_lblTraceName.gridy = 1;
 		add(lblTraceName, gbc_lblTraceName);
 		
-		JButton btnRemove = new JButton("Remove");
+		btnRemove = new JButton("Remove");
+		btnRemove.addActionListener(this);
 		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
 		gbc_btnRemove.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnRemove.gridx = 0;
@@ -61,7 +71,17 @@ public class DataSetLabelPanel extends JPanel {
 	public void setID (int id) {
 		this.id = id;
 	}
+	public int getID () {
+		return this.id;
+	}
 	public void setLabel (String s) {
 		this.lblTraceName.setText(s);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == btnRemove) {
+			figure.removeDataset(id);
+		}
 	}
 }
