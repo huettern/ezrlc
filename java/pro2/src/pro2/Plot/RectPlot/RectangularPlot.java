@@ -17,7 +17,9 @@ import javax.swing.JPanel;
 
 import pro2.MVC.Model;
 import pro2.Plot.Grid.Orientation;
+import pro2.util.MathUtil;
 import pro2.Plot.Axis;
+import pro2.Plot.Axis.Scale;
 import pro2.Plot.Grid;
 import pro2.Plot.PlotDataSet;
 
@@ -191,6 +193,11 @@ public class RectangularPlot extends JPanel implements Observer {
         this.evalSize();
         Area plotArea = new Area(new Rectangle2D.Double(origin.x, this.topMargin, plotWidth, plotHeight));
         
+        // if only one dataset, do autoscale
+        if(this.dataSets.size() == 1) {
+        	this.autoScale();
+        }
+        
         // Paint axis and grid
         this.horAxis.paint(g);
         this.verAxis.paint(g);
@@ -286,13 +293,29 @@ public class RectangularPlot extends JPanel implements Observer {
 			if(dataset.getXMin() < xmin) { xmin = dataset.getXMin(); }
 			if(dataset.getYMax() > ymax) { ymax = dataset.getYMax(); }
 			if(dataset.getYMin() < ymin) { ymin = dataset.getYMin(); }
+			// if log axis, set minimum at first non-zero value
+			if(settings.xScale == Scale.LOG) {
+				xmin = dataset.getXData().get(1);
+			}
 		}
+		
+		
+		
+		// round the values
+		xmin = MathUtil.roundNice(xmin);
+		xmax = MathUtil.roundNice(xmax);
+		ymin = MathUtil.roundNice(ymin);
+		ymax = MathUtil.roundNice(ymax);
 		
 		settings.xAxisMaximum=xmax;
 		settings.xAxisMinimum=xmin;
 		settings.yAxisMaximum=ymax;
 		settings.yAxisMinimum=ymin;
 		
+//		// set step to 10
+//		if(settings.xScale == Scale.LINEAR) settings.xAxisSteps = 10;
+//		if(settings.yScale == Scale.LINEAR) settings.yAxisSteps = 10;
+//		
 		updateSettings();
 		
 		repaint();

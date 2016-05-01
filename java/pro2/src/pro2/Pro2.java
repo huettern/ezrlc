@@ -61,34 +61,34 @@ public class Pro2 {
 	    // Smith Test
 	    //================================================================================
                 
-         Model model = new Model();
-         MainView view = new MainView();
-         Controller controller = new Controller(model,view);
-                
-                
-		/* Create a little frame containing the testplot */
-		JFrame frame = new JFrame("Smith Test");
-        frame.setSize(500, 400);
-        frame.setLocationRelativeTo(null);
-        
-		/* Read a Datafile and extract the necessary infos */
-		// Read datafile
-		RFData rfData = new RFData("../../sample_files/bsp1.s1p");;
-		try {
-			// Parse datafile
-			rfData.parse();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-//        /* Create Plot */
-        Figure fig = new Figure(controller,"Graph 1");
-        fig.buildSmithChart();
-        
-        frame.getContentPane().add(fig);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+//         Model model = new Model();
+//         MainView view = new MainView();
+//         Controller controller = new Controller(model,view);
+//                
+//                
+//		/* Create a little frame containing the testplot */
+//		JFrame frame = new JFrame("Smith Test");
+//        frame.setSize(500, 400);
+//        frame.setLocationRelativeTo(null);
+//        
+//		/* Read a Datafile and extract the necessary infos */
+//		// Read datafile
+//		RFData rfData = new RFData("../../sample_files/bsp1.s1p");;
+//		try {
+//			// Parse datafile
+//			rfData.parse();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+////        /* Create Plot */
+//        Figure fig = new Figure(controller,"Graph 1");
+//        fig.buildSmithChart();
+//        
+//        frame.getContentPane().add(fig);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setVisible(true);
 //        
         /* Create Test Data set */
 		List<Complex> cpxtext = new ArrayList<Complex>();
@@ -112,13 +112,13 @@ public class Pro2 {
 //		cpxtext.add(new Complex(1.0, -10.0));
 //		cpxtext.add(new Complex(1.0, -20.0));
 //		cpxtext.add(new Complex(1.0, -9999999.0));
-		cpxtext=rfData.getzData();
+//		cpxtext=rfData.getzData();
 		//cpxtext=rfData.getsData();
 
-		MathUtil.dumpListComplex("tmp.txt", cpxtext);
-		
-		List<Double> freq = new ArrayList<Double>();
-		freq = rfData.getfData();
+//		MathUtil.dumpListComplex("tmp.txt", cpxtext);
+//		
+//		List<Double> freq = new ArrayList<Double>();
+//		freq = rfData.getfData();
 		//MathUtil.dumpListDouble("tmp.txt", freq);
 		//freq.add(100.0);
 //		freq.add(100.0);
@@ -141,12 +141,55 @@ public class Pro2 {
 //		freq.add(100.0);
 //		freq.add(100.0);
 		
-		fig.getSmithChart().addDataSet(cpxtext, freq);
-		fig.repaint();
+//		fig.getSmithChart().addDataSet(cpxtext, freq);
+//		fig.repaint();
 		
 		
 		
-
+		//================================================================================
+	    // Math Test
+	    //================================================================================
+//		Double n = 0.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 1.2;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 0.04;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 0.08;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 3.8;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -3.8;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 500.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 750.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 1990.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -1990.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -0.001;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 0.9;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 0.09;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -0.09;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 10.0*Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -10.0*Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -1.0*Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 100.0*Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+		
+		
+		
 		//================================================================================
 	    // Plot Test
 	    //================================================================================

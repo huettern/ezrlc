@@ -46,6 +46,52 @@ public class MathUtil {
 	public static double pythagoras(double a, double b) {
 		return Math.sqrt(Math.pow(a, 2)+Math.pow(b, 2));
 	}
+
+	/**
+	 * rounds a double to the next higher 'nice' value
+	 * @param d double
+	 * @return rounded double
+	 */
+	public static double roundNice (double d){
+		return (double)MathUtil.roundNice(new Double(d));
+	}
+	/**
+	 * rounds a double to the next higher 'nice' value
+	 * @param d double
+	 * @return rounded double
+	 */
+	public static Double roundNice (Double d) {
+		int exp = (int)(Math.floor(Math.log10(Math.abs(d))));	//exponent
+		Double ds = d / Math.pow(10, exp);			//scientific base
+		int decdig = (int)Math.ceil(((ds*10.0)%10.0)); // first digit after ,
+		// round decdig to next 2,5,10
+		int onedig;
+		if(d >= 0) {
+			onedig = (int)Math.floor(ds);	// first digit
+			//System.out.println("d="+d+"exp="+exp+"ds="+ds+"decdig="+decdig+"onedig="+onedig);
+			if(decdig == 0) decdig = 0;
+			else if(decdig <= 2) decdig = 2;
+			else if(decdig <= 5) decdig = 5;
+			else if(decdig <= 10) decdig = 10;
+			//System.out.println("decdig="+decdig);
+		} else {
+			onedig = (int)Math.ceil(ds);	// first digit
+			//System.out.println("d="+d+"exp="+exp+"ds="+ds+"decdig="+decdig+"onedig="+onedig);
+			if(decdig == 0) decdig = 0;
+			else if(decdig >= -2) decdig = -2;
+			else if(decdig >= -5) decdig = -5;
+			else if(decdig >= -10) decdig = -10;
+			//System.out.println("decdig="+decdig);
+		}
+		
+		// add them up
+		Double newnum =  onedig + 0.1*decdig;
+		newnum = newnum * Math.pow(10.0, exp); // re-apply exponent
+
+//		System.out.println("d="+d+"exp="+exp+"ds="+ds+"decdig="+decdig+"onedig="+onedig);
+//		System.out.println("decdig="+decdig);
+		return newnum;
+	}
 	
 	/**
 	 * Dumps a List of complex numbers into a file
