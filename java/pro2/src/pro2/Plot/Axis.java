@@ -124,11 +124,17 @@ public class Axis {
 	public void setMinimum(double min) {
 		if(this.scale == Scale.LOG && min == 0) min = Double.MIN_VALUE;
 		this.min=min;
-		logLowerBound = Math.log10(min);
+		// if scale is log, roun to next even number
+		logLowerBound = Math.floor(Math.log10(Math.abs(min)));
+		if(this.scale == Scale.LOG)
+			this.min = Math.signum(min)*Math.pow(10, logLowerBound);
 	}
 	public void setMaximum(double max) {
 		this.max=max;	
-		logUpperBound = Math.log10(max);
+		// if scale is log, roun to next even number
+		logUpperBound = Math.ceil(Math.log10(Math.abs(max)));
+		if(this.scale == Scale.LOG)
+			this.max = Math.signum(max)*Math.pow(10, logUpperBound);
 	}
 	public void setStep(int step) {
 		this.step=step;	

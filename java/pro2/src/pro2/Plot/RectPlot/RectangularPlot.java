@@ -141,6 +141,10 @@ public class RectangularPlot extends JPanel implements Observer {
 			this.dataSets.set(i, dataSet);
 			i++;
 		}
+		// if only one dataset, do autoscale
+		if(this.dataSets.size() == 1) {
+			this.autoScale();
+		}
 	}
 
 	/**
@@ -192,11 +196,6 @@ public class RectangularPlot extends JPanel implements Observer {
         
         this.evalSize();
         Area plotArea = new Area(new Rectangle2D.Double(origin.x, this.topMargin, plotWidth, plotHeight));
-        
-        // if only one dataset, do autoscale
-        if(this.dataSets.size() == 1) {
-        	this.autoScale();
-        }
         
         // Paint axis and grid
         this.horAxis.paint(g);
@@ -299,8 +298,6 @@ public class RectangularPlot extends JPanel implements Observer {
 			}
 		}
 		
-		
-		
 		// round the values
 		xmin = MathUtil.roundNice(xmin);
 		xmax = MathUtil.roundNice(xmax);
@@ -312,10 +309,10 @@ public class RectangularPlot extends JPanel implements Observer {
 		settings.yAxisMaximum=ymax;
 		settings.yAxisMinimum=ymin;
 		
-//		// set step to 10
-//		if(settings.xScale == Scale.LINEAR) settings.xAxisSteps = 10;
-//		if(settings.yScale == Scale.LINEAR) settings.yAxisSteps = 10;
-//		
+		// set step to 10
+		if(settings.xScale == Scale.LINEAR) settings.xAxisSteps = 10;
+		if(settings.yScale == Scale.LINEAR) settings.yAxisSteps = 10;
+		
 		updateSettings();
 		
 		repaint();
