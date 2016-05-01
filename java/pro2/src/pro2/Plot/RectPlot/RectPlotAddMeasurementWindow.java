@@ -330,6 +330,21 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		}
 		this.newMeas = nm;
 	}
+
+	/**
+	 * Sets all buttons and settings to their default
+	 */
+	private void resetButtons() {
+		rdbtnFile.setSelected(true);
+		rdbtnModel.setSelected(false);
+		rdbtnS.setSelected(false);
+		rdbtnY.setSelected(false);
+		rdbtnZ.setSelected(true);
+		rdbtnReal.setSelected(true);
+		rdbtnImag.setSelected(false);
+		rdbtnMag.setSelected(false);
+		rdbtnAngle.setSelected(false);
+	}
 	
 	//================================================================================
     // Public Functions
@@ -361,10 +376,12 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 			dialog.dispose();
 		}
 		if(e.getSource() == btnCancel) {
+			this.resetButtons();
 			dialog.dispose();
 		}
 		
 	}
+
 
 	public RectPlotNewMeasurement getNewMeasurement() {
 		return this.newMeas;

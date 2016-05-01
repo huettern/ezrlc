@@ -2,6 +2,7 @@ package pro2.MVC;
 
 import pro2.MVC.Model;
 import pro2.Plot.Figure;
+import pro2.Plot.Figure.ENPlotType;
 import pro2.Plot.PlotDataSet;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.Plot.SmithChart.SmithChartNewMeasurement;
@@ -103,6 +104,14 @@ public class Controller {
 	public void deleteFigure(Figure figure) {
 		view.deleteFigure(figure);
 		
+	}
+
+	/**
+	 * removes a dataset in the model
+	 * @param id
+	 */
+	public void removeDataset(ENPlotType plottype, int id) {
+		model.removeDataset(plottype, id);
 	}
 
 }

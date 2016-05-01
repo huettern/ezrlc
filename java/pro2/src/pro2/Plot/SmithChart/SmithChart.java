@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -152,7 +153,9 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
         grid.paint(g);
         // Paint datasets
         for (SmithChartDataSet set : dataSets) {
-			set.paint(g);
+        	if(set != null) {
+        		set.paint(g);
+        	}
 		}
         // Paint reference resistance
         g.setColor(Color.LIGHT_GRAY);
@@ -207,11 +210,44 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 		this.updateSettings();
 		repaint();
 	}
+	
+	/**
+	 * Returns datasetsettings of the dataset given by the id
+	 * @param id data set id
+	 * @return
+	 */
+	public DataSetSettings getDataSetSettings(int id) {
+		// search id
+		for(int i = 0; i<dataSetIDs.size(); i++){
+			if(dataSetIDs.get(i) == id) {
+				return dataSetSettings.get(i);
+			}
+		}
+		return null;
+	}
 
 
 	private void updateSettings() {
 		grid.setReferenceResistance(settings.referenceResistance);
 	}
+	
+	/**
+	 * Removes dataset from data set id list
+	 * @param id  data set id
+	 */
+	public void removeDataset(int id) {
+		int ctr = 0;
+		for (Iterator<Integer> iter = dataSetIDs.iterator(); iter.hasNext(); ctr++) {
+			Integer i = iter.next();
+			if(i == id) {
+				dataSets.remove(ctr);
+				dataSetSettings.remove(ctr);
+				iter.remove();
+			}
+		}
+		this.repaint();
+	}
+
 
 
 

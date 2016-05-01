@@ -11,12 +11,15 @@ import java.util.Observer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
 import pro2.MVC.Model;
 import pro2.Plot.Grid.Orientation;
+import pro2.util.MathUtil;
 import pro2.Plot.Axis;
+import pro2.Plot.Axis.Scale;
 import pro2.Plot.Grid;
 import pro2.Plot.PlotDataSet;
 
@@ -138,6 +141,10 @@ public class RectangularPlot extends JPanel implements Observer {
 			this.dataSets.set(i, dataSet);
 			i++;
 		}
+		// if only one dataset, do autoscale
+		if(this.dataSets.size() == 1) {
+			this.autoScale();
+		}
 	}
 
 	/**
@@ -229,6 +236,23 @@ public class RectangularPlot extends JPanel implements Observer {
 		this.updateSettings();
 		repaint();
 	}
+	
+	/**
+	 * Removes dataset from data set id list
+	 * @param id  data set id
+	 */
+	public void removeDataset(int id) {
+		int ctr = 0;
+		for (Iterator<Integer> iter = dataSetIDs.iterator(); iter.hasNext(); ctr++) {
+			Integer i = iter.next();
+			if(i == id) {
+				dataSets.remove(ctr);
+				dataSetSettings.remove(ctr);
+				iter.remove();
+			}
+		}
+		this.repaint();
+	}
 
 
 	@Override
@@ -237,7 +261,22 @@ public class RectangularPlot extends JPanel implements Observer {
 		this.updateDatasets(model);
 	}
 
-
+	
+	/**
+	 * Returns datasetsettings of the dataset given by the id
+	 * @param id data set id
+	 * @return
+	 */
+	public DataSetSettings getDataSetSettings(int id) {
+		// search id
+		for(int i = 0; i<dataSetIDs.size(); i++){
+			if(dataSetIDs.get(i) == id) {
+				return dataSetSettings.get(i);
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Scales Axis to show all Data
 	 */
@@ -253,12 +292,26 @@ public class RectangularPlot extends JPanel implements Observer {
 			if(dataset.getXMin() < xmin) { xmin = dataset.getXMin(); }
 			if(dataset.getYMax() > ymax) { ymax = dataset.getYMax(); }
 			if(dataset.getYMin() < ymin) { ymin = dataset.getYMin(); }
+			// if log axis, set minimum at first non-zero value
+			if(settings.xScale == Scale.LOG) {
+				xmin = dataset.getXData().get(1);
+			}
 		}
+		
+		// round the values
+		xmin = MathUtil.roundNice(xmin);
+		xmax = MathUtil.roundNice(xmax);
+		ymin = MathUtil.roundNice(ymin);
+		ymax = MathUtil.roundNice(ymax);
 		
 		settings.xAxisMaximum=xmax;
 		settings.xAxisMinimum=xmin;
 		settings.yAxisMaximum=ymax;
 		settings.yAxisMinimum=ymin;
+		
+		// set step to 10
+		if(settings.xScale == Scale.LINEAR) settings.xAxisSteps = 10;
+		if(settings.yScale == Scale.LINEAR) settings.yAxisSteps = 10;
 		
 		updateSettings();
 		

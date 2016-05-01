@@ -5,6 +5,7 @@ import java.util.*;
 
 import pro2.MVC.Controller.DataSource;
 import pro2.Plot.PlotDataSet;
+import pro2.Plot.Figure.ENPlotType;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.Plot.SmithChart.SmithChartDataSet;
 import pro2.Plot.SmithChart.SmithChartNewMeasurement;
@@ -209,6 +210,48 @@ public class Model extends Observable {
 			return this.rfDataFile.getFileName();
 		}
 		else return null;
+	}
+	
+	/**
+	 * Checks if the given id is a dataset
+	 * @param plottype ploy type
+	 * @param id plot data set id
+	 * @return true, if id exists, false if not
+	 */
+	public Boolean isDataset(ENPlotType plottype, int id) {
+		if(plottype == ENPlotType.RECTANGULAR) {
+			try {
+				if(this.plotDataSetList.get(id) != null) return true;
+				else return false;
+			} catch (Exception e) {
+				return false;
+			}
+		} else if(plottype == ENPlotType.SMITH) {
+			try {
+				if(this.smithPlotDataSetList.get(id) != null) return true;
+				else return false;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Removes a dataset by ID
+	 * @param id
+	 */
+	public void removeDataset(ENPlotType plottype, int id) {
+		if(plottype == ENPlotType.RECTANGULAR) {
+			// remove set from list
+			this.plotDataSetList.set(id, null);
+			System.out.println("removed dataset id="+id);
+		} else if(plottype == ENPlotType.SMITH) {
+			this.smithPlotDataSetList.set(id, null);
+			System.out.println("removed dataset id="+id);
+		}
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	

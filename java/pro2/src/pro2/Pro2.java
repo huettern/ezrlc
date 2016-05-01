@@ -112,7 +112,6 @@ public class Pro2 {
 //		cpxtext.add(new Complex(1.0, -10.0));
 //		cpxtext.add(new Complex(1.0, -20.0));
 //		cpxtext.add(new Complex(1.0, -9999999.0));
-		//cpxtext=rfData.getzData();
 		//cpxtext=rfData.getsData();
 
 //		MathUtil.dumpListComplex("tmp.txt", cpxtext);
@@ -143,10 +142,50 @@ public class Pro2 {
 		
 //		fig.getSmithChart().addDataSet(cpxtext, freq);
 //		fig.repaint();
-//		
 		
 		
-
+		//================================================================================
+	    // Math Test
+	    //================================================================================
+//		Double n = 0.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 1.2;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 0.04;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 0.08;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 3.8;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -3.8;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 500.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 750.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 1990.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -1990.0;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -0.001;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 0.9;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 0.09;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -0.09;
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 10.0*Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -10.0*Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = -1.0*Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+//		n = 100.0*Math.random();
+//		System.out.println("n="+n+" round="+MathUtil.roundNice(n));
+		
 		//================================================================================
 	    // Plot Test
 	    //================================================================================
