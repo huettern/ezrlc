@@ -111,7 +111,7 @@ public class SmithChartSettingsWindow implements ActionListener {
 		gbc_formattedTextField.gridy = 0;
 		pnlX.add(tfRefResistance, gbc_formattedTextField);
 		
-		JLabel lblNewLabel = new JLabel("Ω");
+		JLabel lblNewLabel = new JLabel("\u2126");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel.gridx = 2;

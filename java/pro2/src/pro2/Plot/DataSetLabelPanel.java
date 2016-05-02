@@ -58,6 +58,7 @@ public class DataSetLabelPanel extends JPanel implements ActionListener {
 		btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(this);
 		GridBagConstraints gbc_btnRemove = new GridBagConstraints();
+		gbc_btnRemove.insets = new Insets(0, 5, 5, 5);
 		gbc_btnRemove.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnRemove.gridx = 0;
 		gbc_btnRemove.gridy = 2;

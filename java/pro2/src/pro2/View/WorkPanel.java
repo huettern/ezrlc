@@ -70,7 +70,7 @@ public class WorkPanel extends JPanel implements Observer {
 		switch (graphArr) {
 		case NONE: 
 			fullFigure = f;
-			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, 
+			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, 
 					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
 					new Insets(0, 0, 0, 0), 0, 0));
 			graphArr = WINDOW_ARR.FULL;
@@ -78,12 +78,12 @@ public class WorkPanel extends JPanel implements Observer {
 		case FULL:
 			topFigure = fullFigure;
 			fullFigure = null;
-			this.add(topFigure, new GridBagConstraints(0, 0, 1, 1, 1, 1, 
+			this.add(topFigure, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, 
 					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
 					new Insets(0, 0, 0, 0), 0, 0));
 			
 			bottomFigure = f;
-			this.add(bottomFigure, new GridBagConstraints(0, 1, 1, 1, 1, 1, 
+			this.add(bottomFigure, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, 
 					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
 					new Insets(0, 0, 0, 0), 0, 0));
 			graphArr = WINDOW_ARR.SPLIT;
@@ -131,7 +131,7 @@ public class WorkPanel extends JPanel implements Observer {
 			topFigure = null;
 			bottomFigure = null;
 			
-			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, 
+			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, 
 					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
 					new Insets(0, 0, 0, 0), 0, 0));
 			graphArr = WINDOW_ARR.FULL;
@@ -142,7 +142,7 @@ public class WorkPanel extends JPanel implements Observer {
 			topFigure = null;
 			bottomFigure = null;
 			
-			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 1.0, 1.0, 
+			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, 
 					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
 					new Insets(0, 0, 0, 0), 0, 0));
 			graphArr = WINDOW_ARR.FULL;

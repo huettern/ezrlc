@@ -160,7 +160,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
         // Paint reference resistance
         g.setColor(Color.LIGHT_GRAY);
         g.setFont(new Font("Arial", 0, 18));
-        g.drawString(String.format("Z0: %.1f Ω", settings.referenceResistance), 10, this.getHeight()-10);
+        g.drawString(String.format("Z0: %.1f\u2126", settings.referenceResistance), 10, this.getHeight()-10);
     }
 
 

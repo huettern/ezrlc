@@ -121,7 +121,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		btnAddMeasurement = new JButton("Add Measurement");
 		GridBagConstraints gbc_btnAddMeasurement = new GridBagConstraints();
 		gbc_btnAddMeasurement.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnAddMeasurement.insets = new Insets(5, 5, 5, 0);
+		gbc_btnAddMeasurement.insets = new Insets(5, 5, 5, 5);
 		gbc_btnAddMeasurement.gridx = 0;
 		gbc_btnAddMeasurement.gridy = 0;
 		panel_1.add(btnAddMeasurement, gbc_btnAddMeasurement);
@@ -129,7 +129,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		btnSettings = new JButton("Settings");
 		GridBagConstraints gbc_btnSettings = new GridBagConstraints();
-		gbc_btnSettings.insets = new Insets(0, 5, 5, 0);
+		gbc_btnSettings.insets = new Insets(0, 5, 5, 5);
 		gbc_btnSettings.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSettings.gridx = 0;
 		gbc_btnSettings.gridy = 1;
@@ -138,14 +138,13 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		btnAutoscale = new JButton("Autoscale");
 		GridBagConstraints gbc_btnAutoscale = new GridBagConstraints();
-		gbc_btnAutoscale.insets = new Insets(0, 5, 5, 0);
+		gbc_btnAutoscale.insets = new Insets(0, 5, 5, 5);
 		gbc_btnAutoscale.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAutoscale.gridx = 0;
 		gbc_btnAutoscale.gridy = 2;
 		panel_1.add(btnAutoscale, gbc_btnAutoscale);
 		
 		pnlDataSetsBorder = new JPanel();
-		pnlDataSetsBorder.setMinimumSize(new Dimension(10, 280));
 		pnlDataSetsBorder.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Sets", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlDataSetsBorder = new GridBagConstraints();
 		gbc_pnlDataSetsBorder.insets = new Insets(0, 0, 5, 0);
@@ -164,12 +163,14 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		spDataSets.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spDataSets.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GridBagConstraints gbc_spDataSets = new GridBagConstraints();
+		gbc_spDataSets.insets = new Insets(0, 0, 0, 0);
 		gbc_spDataSets.fill = GridBagConstraints.BOTH;
 		gbc_spDataSets.gridx = 0;
 		gbc_spDataSets.gridy = 0;
 		pnlDataSetsBorder.add(spDataSets, gbc_spDataSets);
 		
 		pnlDataSets = new JPanel();
+		pnlDataSets.setMaximumSize(new Dimension(32767, 100));
 		spDataSets.setViewportView(pnlDataSets);
 		gbl_pnlDataSets = new GridBagLayout();
 		gbl_pnlDataSets.columnWidths = new int[]{0};
@@ -181,7 +182,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		verticalGlue = Box.createVerticalGlue();
 		verticalGlue.setMaximumSize(new Dimension(0, 0));
 		GridBagConstraints gbc_verticalGlue = new GridBagConstraints();
-		gbc_verticalGlue.weighty = 1.0;
+		gbc_verticalGlue.weighty = 0.0;
 		gbc_verticalGlue.weightx = 1.0;
 		gbc_verticalGlue.fill = GridBagConstraints.BOTH;
 		gbc_verticalGlue.gridx = 0;
@@ -220,7 +221,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		btnDeleteGraph = new JButton("Delete Graph");
 		GridBagConstraints gbc_btnDeleteGraph = new GridBagConstraints();
 		gbc_btnDeleteGraph.anchor = GridBagConstraints.SOUTH;
-		gbc_btnDeleteGraph.insets = new Insets(0, 5, 0, 0);
+		gbc_btnDeleteGraph.insets = new Insets(0, 5, 5, 5);
 		gbc_btnDeleteGraph.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnDeleteGraph.gridx = 0;
 		gbc_btnDeleteGraph.gridy = 4;
