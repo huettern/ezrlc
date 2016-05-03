@@ -69,7 +69,16 @@ public class SmithChartMath {
 	public static double normalizeValue (double val, double ref) {
 		return (val-ref)/(val+ref);
 	}
-	
+	/**
+	 * Normalizes a given complex value to a given referenve
+	 * @param val complex value to be normalized
+	 * @param ref reference value
+	 * @return normalized value
+	 */
+	public static Complex normalizeValue (Complex val, double ref) {
+		Complex c = new Complex(ref, 0.0);
+		return Complex.div(Complex.sub(val, c), Complex.add(val, c));
+	}	
 	//================================================================================
     // Public Functions
     //================================================================================
@@ -124,29 +133,41 @@ public class SmithChartMath {
 	public PointD getPixelLocation (Complex val) {
 		PointD p;
 		
-		
-		
-		// real axis radius
-		double rr = center.x + (diameter/2) - this.getRealGridCenterPoint(val.re()).x;
-		// imag axis radius
-		double ri = center.y - this.getImagGridCenterPoint(val.im()).y;
-		// hypotenuse of rr and ri
-		double s = MathUtil.pythagoras(rr, ri);
-		// angle s - rr
-		double alpha = Math.atan(ri/rr);
-		// angle ri - s
-		//double epsilon = Math.acos( (Math.pow(s, 2) - Math.pow(rr, 2) - Math.pow(ri, 2)) / (-2.0*rr*ri) );
-		double epsilon = alpha;
-		// y length 
-		double ys = rr* Math.sin(Math.PI - (alpha + epsilon));
-		// x length
-		double xs = rr* Math.cos(Math.PI - (alpha + epsilon));
-		
+		// V2 using polar coordinates
+		// faster and more accurate
 		p = new PointD(0,0);
-		p.x = ((center.x + (diameter/2)))-xs-rr;
-		p.y = center.y - ys;
-		
-		//System.out.println("rr="+rr+"ri="+ri+"s="+s+"alpha="+alpha+"epsilon="+epsilon+"ys="+ys+"xs"+xs);
+		double rad = this.diameter/2.0;
+		// normalze value
+		// r = (val-zo)/(val+zo)
+		Complex r = SmithChartMath.normalizeValue(val, zo);
+		// get real and imag part
+		double re = r.re();
+		double im = r.im();
+		// scale re and im from -1 to +1 on both axis
+		p.x = (this.center.x-rad)+(diameter*(re+1.0)/2.0);
+		p.y = (this.center.y-rad)+(diameter*(-im+1.0)/2.0);
+	
+//		// real axis radius
+//		double rr = center.x + (diameter/2) - this.getRealGridCenterPoint(val.re()).x;
+//		// imag axis radius
+//		double ri = center.y - this.getImagGridCenterPoint(val.im()).y;
+//		// hypotenuse of rr and ri
+//		double s = MathUtil.pythagoras(rr, ri);
+//		// angle s - rr
+//		double alpha = Math.atan(ri/rr);
+//		// angle ri - s
+//		//double epsilon = Math.acos( (Math.pow(s, 2) - Math.pow(rr, 2) - Math.pow(ri, 2)) / (-2.0*rr*ri) );
+//		double epsilon = alpha;
+//		// y length 
+//		double ys = rr* Math.sin(Math.PI - (alpha + epsilon));
+//		// x length
+//		double xs = rr* Math.cos(Math.PI - (alpha + epsilon));
+//		
+//		p = new PointD(0,0);
+//		p.x = ((center.x + (diameter/2)))-xs-rr;
+//		p.y = center.y - ys;
+//		
+//		//System.out.println("rr="+rr+"ri="+ri+"s="+s+"alpha="+alpha+"epsilon="+epsilon+"ys="+ys+"xs"+xs);
 		
 		return p;
 	}

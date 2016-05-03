@@ -101,21 +101,17 @@ public class WorkPanel extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		try {
 			fullFigure.update(o, arg);
-			System.out.println("Update Full-Graph");
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		
 		try {
 			topFigure.update(o, arg);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		try {
 			bottomFigure.update(o, arg);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}		
 	}
 
