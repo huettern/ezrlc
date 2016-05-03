@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import pro2.Plot.Axis.Orientation;
 import pro2.Plot.Axis.Scale;
 import pro2.Plot.RectPlot.RectangularPlot;
+import pro2.util.MathUtil;
 import pro2.util.UIUtil;
 
 public class Axis {
@@ -341,12 +342,13 @@ public class Axis {
 		String s;
 		
 		// check if number is bigger than 4 digits
-		if( (d >= 1000 || d <= 0.001) && d != 0.0) {
+		if( (Math.abs(d) >= 1000 || Math.abs(d) <= 0.001) && d != 0.0) {
 			// switch to scientific notation
 			s = UIUtil.num2Scientific(d);
 		}
 		else {
-			s = String.format("%.0f", d);
+			//s = String.format("%.3f", d);
+			s = MathUtil.formatDouble(d, 3);
 		}
 		
 		

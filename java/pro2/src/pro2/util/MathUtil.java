@@ -149,4 +149,28 @@ public class MathUtil {
 		writer.close();
 	}
 	
+	/**
+	 * Formats a double to a given number of digits past the decimal point
+	 * and cuts the tailing zeroes
+	 * @param d number to be formatted
+	 * @param n number of digits after decimal point
+	 * @return formatted string
+	 */
+	public static String formatDouble(double d, int n) {
+		String out;
+		String s = String.format("%."+n+"f", d);
+		
+		int cut_idx = s.length()-1;
+		
+		int ctr = s.length()-1; // points to last char
+		while(s.charAt(ctr) != '.' && ctr!=0) {
+			if(s.charAt(ctr) == '0') cut_idx = ctr-1;
+			ctr--;
+		}
+		// cut everything after the ctr
+		if(s.charAt(cut_idx)=='.') out = s.substring(0, cut_idx);
+		else out = s.substring(0, cut_idx+1);
+		return out;
+	}
+	
 }
