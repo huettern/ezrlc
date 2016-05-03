@@ -1,10 +1,12 @@
 package pro2.Plot;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Area;
+import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +32,12 @@ public class PlotDataSet {
 	private Axis y_axis;
 	
 	private List<Point> data_pts;
+	private GeneralPath data_path;
 	
 	private DataSetSettings settings = new DataSetSettings();
 
+	private BasicStroke data_stroke = new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+	
 	//================================================================================
     // Constructors
     //================================================================================
@@ -81,6 +86,14 @@ public class PlotDataSet {
 			point.y = this.y_axis.getPixelValue(this.y_data.get(i));
 			i++;
 		}
+		
+		// create path
+		int ctr = 0;
+		data_path = new GeneralPath(GeneralPath.WIND_EVEN_ODD, data_pts.size());
+		data_path.moveTo(data_pts.get(0).x, data_pts.get(0).y);
+		for(ctr = 1; ctr < data_pts.size(); ctr++) {
+			data_path.lineTo(data_pts.get(ctr).x, data_pts.get(ctr).y);
+		}
 	}
 	
 	/** 
@@ -119,15 +132,19 @@ public class PlotDataSet {
 //			this.drawPoint(g, point);
 //		}
 //		
-		Color oldCol = g2.getColor();
+//		Color oldCol = g2.getColor();
+//		g2.setColor(this.settings.getLineColor());
+//		for(int i = 0; i<(this.points-1); i++) {
+//			this.drawPoint(g2, this.data_pts.get(i));
+//			this.connectPoints(g2, this.data_pts.get(i), this.data_pts.get(i+1));
+//		}
+		
 		g2.setColor(this.settings.getLineColor());
-		for(int i = 0; i<(this.points-1); i++) {
-			this.drawPoint(g2, this.data_pts.get(i));
-			this.connectPoints(g2, this.data_pts.get(i), this.data_pts.get(i+1));
-		}
+		g2.setStroke(data_stroke);
+		g2.draw(data_path);
 
-		this.drawPoint(g2, this.data_pts.get(this.points-1));
-		g2.setColor(oldCol);
+//		this.drawPoint(g2, this.data_pts.get(this.points-1));
+//		g2.setColor(oldCol);
 	}
 	
 	/**
