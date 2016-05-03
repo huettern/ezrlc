@@ -158,6 +158,8 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_btnOk.gridx = 1;
 		gbc_btnOk.gridy = 0;
 		pnlButtons.add(btnOk, gbc_btnOk);
+		
+		dialog.getRootPane().setDefaultButton(btnOk);
 	}
 
 	//================================================================================

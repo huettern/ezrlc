@@ -329,6 +329,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_btnOk.gridy = 0;
 		pnlButton.add(btnOk, gbc_btnOk);
 		
+		dialog.getRootPane().setDefaultButton(btnOk);
 		
 		// ****Color****
 		JPanel tabColor = new JPanel();

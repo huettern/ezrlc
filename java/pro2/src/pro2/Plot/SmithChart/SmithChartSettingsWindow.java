@@ -22,6 +22,8 @@ import pro2.Plot.Figure;
 import pro2.util.UIUtil;
 
 import javax.swing.JFormattedTextField;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class SmithChartSettingsWindow implements ActionListener {
 
@@ -157,6 +159,9 @@ public class SmithChartSettingsWindow implements ActionListener {
 		gbc_btnOk.gridx = 1;
 		gbc_btnOk.gridy = 0;
 		pnlButton.add(btnOk, gbc_btnOk);
+		
+		dialog.getRootPane().setDefaultButton(btnOk);
+		dialog.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{dialog.getContentPane(), tfRefResistance, btnCancel, btnOk}));
 	}
 
 	//================================================================================

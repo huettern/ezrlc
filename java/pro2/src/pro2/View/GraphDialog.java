@@ -45,9 +45,6 @@ public class GraphDialog implements ActionListener{
 	private JRadioButton rdbtnRectangular;
 
 	private JRadioButton rdbtnSmithChart;
-	private JLabel lblZ0;
-	private JTextField txtResistance;
-	private JLabel lblOhm;
 	
 	
 	//================================================================================
@@ -197,7 +194,7 @@ public class GraphDialog implements ActionListener{
 		pnlButtons.add(btnCreate, gbc_btnCreate);
 		btnCreate.addActionListener(this);
 		
-		
+		graphDialog.getRootPane().setDefaultButton(btnCreate);
 		graphDialog.setVisible(true);
 	}
 
