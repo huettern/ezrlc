@@ -1,8 +1,11 @@
 package pro2.Plot.SmithChart;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Area;
+import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,10 @@ public class SmithChartDataSet {
 	private DataSetSettings settings = new DataSetSettings();
 		
 	private List<Point> data_pts = new ArrayList<Point>(); // Datapoints on the chart
+	
+	private GeneralPath data_path;
+
+	private BasicStroke data_stroke = new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 	
 	//================================================================================
     // Constructors
@@ -61,11 +68,14 @@ public class SmithChartDataSet {
     //================================================================================
 	public void paint(Graphics g) {
 		this.eval();
+		Graphics2D g2 = (Graphics2D) g;
 		// Draw Data point
-		g.setColor(settings.getLineColor());
-		for (Point p : data_pts) {
-			g.fillOval(p.x-2, p.y-2, 4, 4);
-		}
+		g2.setColor(settings.getLineColor());
+//		for (Point p : data_pts) {
+//			g2.fillOval(p.x-2, p.y-2, 4, 4);
+//		}
+		g2.setStroke(data_stroke);
+		g2.draw(data_path);
 	}
 	
 
@@ -85,6 +95,14 @@ public class SmithChartDataSet {
 		for (int i = 0; i < this.points; i++) {
 			p =  sm.getPixelLocation(this.data.get(i));
 			data_pts.add(p.point());
+		}
+
+		// create path
+		int ctr = 0;
+		data_path = new GeneralPath(GeneralPath.WIND_EVEN_ODD, data_pts.size());
+		data_path.moveTo(data_pts.get(0).x, data_pts.get(0).y);
+		for(ctr = 1; ctr < data_pts.size(); ctr++) {
+			data_path.lineTo(data_pts.get(ctr).x, data_pts.get(ctr).y);
 		}
 	}
 

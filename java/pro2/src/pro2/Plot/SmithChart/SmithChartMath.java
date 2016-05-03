@@ -15,7 +15,7 @@ public class SmithChartMath {
 	private Point center;
 	private int diameter;
 
-	private double zo = 1;	// reference to which the values are normalized to
+	private double zo;	// reference to which the values are normalized to
 	
 
 	//================================================================================

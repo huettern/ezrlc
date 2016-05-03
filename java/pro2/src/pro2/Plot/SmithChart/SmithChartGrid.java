@@ -70,7 +70,7 @@ public class SmithChartGrid {
 	// normalized to [-1 1] imag values
 	private List<Double> minorNormalizedGridImagValues = new ArrayList<Double>();
 	
-	private double zo = 1;	// reference to which the values are normalized to
+	private double zo;	// reference to which the values are normalized to
 	
 	private SmithChart parent;
 	

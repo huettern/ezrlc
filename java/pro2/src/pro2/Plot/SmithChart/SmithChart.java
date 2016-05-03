@@ -61,7 +61,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 		System.out.println("New SmithChart");
 		super.setBackground(Color.WHITE);
 		
-		settings.referenceResistance = 1.0;
+		settings.referenceResistance = 50.0;
 		
 		// Build SmithChartGrid
 		grid = new SmithChartGrid(this, settings.referenceResistance);
