@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +36,7 @@ public class WorkPanel extends JPanel implements Observer {
 
 		this.setBorder(null);
 		
-		GridBagLayout gbl_workPanel = new GridBagLayout();
-		gbl_workPanel.columnWidths = new int[] {0};
-		gbl_workPanel.rowHeights = new int[] {0, 0};
-		gbl_workPanel.columnWeights = new double[]{1.0};
-		gbl_workPanel.rowWeights = new double[]{1.0, 1.0};
-		this.setLayout(gbl_workPanel);
+		this.setLayout(new GridLayout(1, 1));
 	}
 	
 	/**
@@ -49,9 +45,6 @@ public class WorkPanel extends JPanel implements Observer {
 	public void build () {
 		this.setPreferredSize(new Dimension(800, 600));
 		this.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		
-		//Figure fig = new Figure("Graph 2");
-		//this.add(fig);
 	}
 	
 	//================================================================================
@@ -68,29 +61,27 @@ public class WorkPanel extends JPanel implements Observer {
 		}
 		
 		switch (graphArr) {
-		case NONE: 
-			fullFigure = f;
-			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, 
-					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
-					new Insets(0, 0, 0, 0), 0, 0));
-			graphArr = WINDOW_ARR.FULL;
-			break;
-		case FULL:
-			topFigure = fullFigure;
-			fullFigure = null;
-			this.add(topFigure, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, 
-					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
-					new Insets(0, 0, 0, 0), 0, 0));
-			
-			bottomFigure = f;
-			this.add(bottomFigure, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, 
-					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
-					new Insets(0, 0, 0, 0), 0, 0));
-			graphArr = WINDOW_ARR.SPLIT;
-			break;
-		case SPLIT:
-			System.err.println("Es k�nnen nicht mehr als zwei Plots geopfert werden!");
-			break;
+			case NONE:
+				this.setLayout(new GridLayout(1, 1));
+				fullFigure = f;
+				this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, 
+						GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
+						new Insets(0, 0, 0, 0), 0, 0));
+				graphArr = WINDOW_ARR.FULL;
+				break;
+			case FULL:
+				this.setLayout(new GridLayout(2, 1));
+				topFigure = fullFigure;
+				fullFigure = null;
+				this.add(topFigure, 0);
+				
+				bottomFigure = f;
+				this.add(bottomFigure, 1);
+				graphArr = WINDOW_ARR.SPLIT;
+				break;
+			case SPLIT:
+				System.err.println("Es k�nnen nicht mehr als zwei Plots geopfert werden!");
+				break;
 		}
 		
 
@@ -120,6 +111,7 @@ public class WorkPanel extends JPanel implements Observer {
 		if(figure == fullFigure) {
 			fullFigure = null;
 			graphArr = WINDOW_ARR.NONE;
+			this.setLayout(new GridLayout(1, 1));
 			System.out.println("delete Full-Graph");
 		}
 		else if (figure == topFigure) {
@@ -127,9 +119,8 @@ public class WorkPanel extends JPanel implements Observer {
 			topFigure = null;
 			bottomFigure = null;
 			
-			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, 
-					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
-					new Insets(0, 0, 0, 0), 0, 0));
+			this.setLayout(new GridLayout(1, 1));
+			this.add(fullFigure, 0);
 			graphArr = WINDOW_ARR.FULL;
 			System.out.println("delete Top-Graph");
 		}
@@ -138,9 +129,8 @@ public class WorkPanel extends JPanel implements Observer {
 			topFigure = null;
 			bottomFigure = null;
 			
-			this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, 
-					GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
-					new Insets(0, 0, 0, 0), 0, 0));
+			this.setLayout(new GridLayout(1, 1));
+			this.add(fullFigure, 0);
 			graphArr = WINDOW_ARR.FULL;
 			System.out.println("delete Bottom-Graph");
 		}
