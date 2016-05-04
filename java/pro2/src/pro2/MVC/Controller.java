@@ -103,7 +103,8 @@ public class Controller {
 
 	public void deleteFigure(Figure figure) {
 		view.deleteFigure(figure);
-		
+		// notify view to enable new graph button
+		view.setNewGraphButtonEnabled(true);
 	}
 
 	/**
@@ -112,6 +113,14 @@ public class Controller {
 	 */
 	public void removeDataset(ENPlotType plottype, int id) {
 		model.removeDataset(plottype, id);
+	}
+
+	/**
+	 * Sets the status of the new graph button
+	 * @param b enabled(true) or disabled(flase)
+	 */
+	public void setNewGraphButtonEnabled(boolean b) {
+		view.setNewGraphButtonEnabled(b);
 	}
 
 }

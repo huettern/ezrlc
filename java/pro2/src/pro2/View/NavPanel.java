@@ -241,5 +241,14 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	/**
+	 * Sets the status of the new graph button
+	 * @param b enabled(true) or disabled(flase)
+	 */
+	public void setNewGraphButtonEnabled(boolean b) {
+		btnNewGraph.setEnabled(b);
+	}
 	
 }

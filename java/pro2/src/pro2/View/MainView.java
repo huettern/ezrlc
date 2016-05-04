@@ -117,7 +117,7 @@ public class MainView extends JFrame implements Observer {
 		
 		pack();
 		setMinimumSize(getPreferredSize());
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+	//	setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 	}
 	
@@ -161,6 +161,14 @@ public class MainView extends JFrame implements Observer {
 	public void deleteFigure(Figure figure) {
 		workPanel.deleteFigure(figure);
 		
+	}
+
+	/**
+	 * Sets the status of the new graph button
+	 * @param b enabled(true) or disabled(flase)
+	 */
+	public void setNewGraphButtonEnabled(boolean b) {
+		navPanel.setNewGraphButtonEnabled(b);
 	}
 
 	
