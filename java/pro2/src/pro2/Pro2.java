@@ -58,6 +58,32 @@ public class Pro2 {
         });  
 
 		//================================================================================
+	    // Math number format Test
+	    //================================================================================
+//        double n;
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0;
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 1.0;
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 1000.0;
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 1.01;
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//		
+		
+		//================================================================================
 	    // Smith Test
 	    //================================================================================
                 
