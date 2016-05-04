@@ -22,8 +22,6 @@ import java.awt.Rectangle;
 
 public class ModelLabelPanel extends JPanel {
 
-	private int id = 0;
-	private Figure figure;
 	private JTextField txtC0;
 	private JTextField txtR0;
 	private JTextField txtAlpha;
