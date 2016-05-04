@@ -2,6 +2,7 @@ package pro2.Plot.SmithChart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -89,6 +90,8 @@ public class SmithChartGrid {
 	                        BasicStroke.CAP_BUTT,
 	                        BasicStroke.JOIN_MITER,
 	                        10.0f, dash1, 0.0f);
+	private final Font labelFont = new Font("Arial", Font.BOLD, 12);
+	
 	
 	//================================================================================
     // Constructor
@@ -163,9 +166,10 @@ public class SmithChartGrid {
 		int index = 0;
 		for (Point point : majorRealAxisPoints ) {
 			rad=(center.x+radius)-point.x;
+			g2.setColor(Color.LIGHT_GRAY);
 			UIUtil.drawCenterCircle(g2, point, rad);
+			g2.setColor(Color.BLACK);
 			g2.drawString(String.format("%2.1f", majorGridRealValues.get(index++)), point.x-rad, point.y);
-			
 		}
 		g2.setColor(Color.LIGHT_GRAY);
 		
@@ -197,6 +201,9 @@ public class SmithChartGrid {
 		// Draw imag axis labels
 		g2.setClip(whole);
 		g2.setStroke(origStroke);
+		Font a = g2.getFont();
+		//g2.setFont(labelFont);
+		g2.setColor(Color.BLACK);
 		int i = 0;
 		for (Point point : imagAxisLabelPointsPos) {
 			UIUtil.drawCenterString(g2, point, String.format("%.1f", this.majorImagGridValues[i++]));
