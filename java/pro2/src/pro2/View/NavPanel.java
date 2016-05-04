@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,6 +23,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import pro2.MVC.Controller;
+import pro2.Model.ModelLabelPanel;
+import pro2.Plot.DataSetLabelPanel;
+
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.FlowLayout;
 
 public class NavPanel extends JPanel implements ActionListener, Observer {
 	
@@ -35,6 +45,11 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	private JButton btnLoadFile, btnNewModel, btnNewGraph;
 	private JLabel lblInputFile;
 	private File file;
+	private JPanel pnlModel;
+	private GridBagLayout gbl_pnlModel;
+	private List<ModelLabelPanel> modelLabelPanels = new ArrayList<ModelLabelPanel>();
+	
+	private int modelPnlRowCnt = 0;
 	
 	
 	//================================================================================
@@ -156,34 +171,52 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 	/**
 	 * build the model panel
+	 * @wbp.parser.entryPoint
 	 */
 	private void buildModelPanel() {
-		JPanel pnlModel = new JPanel();
-		pnlModel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Models", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		JPanel pnlModelBorder = new JPanel();
+		pnlModelBorder.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Models", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlModel = new GridBagConstraints();
 		gbc_pnlModel.insets = new Insets(5, 0, 5, 0);
 		gbc_pnlModel.anchor = GridBagConstraints.NORTH;
 		gbc_pnlModel.fill = GridBagConstraints.BOTH;
 		gbc_pnlModel.gridx = 0;
 		gbc_pnlModel.gridy = 2;
-		this.add(pnlModel, gbc_pnlModel);
-		GridBagLayout gbl_pnlModel = new GridBagLayout();
-		gbl_pnlModel.columnWidths = new int[]{189};
-		gbl_pnlModel.rowHeights = new int[] {29};
-		gbl_pnlModel.columnWeights = new double[]{1.0};
-		gbl_pnlModel.rowWeights = new double[]{1.0};
+		this.add(pnlModelBorder, gbc_pnlModel);
+		GridBagLayout gbl_pnlModelBorder = new GridBagLayout();
+		gbl_pnlModelBorder.columnWidths = new int[]{189};
+		gbl_pnlModelBorder.rowHeights = new int[] {29};
+		gbl_pnlModelBorder.columnWeights = new double[]{1.0};
+		gbl_pnlModelBorder.rowWeights = new double[]{1.0};
+		pnlModelBorder.setLayout(gbl_pnlModelBorder);
+		
+		JScrollPane spModel = new JScrollPane();
+		spModel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		spModel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		GridBagConstraints gbc_spModel = new GridBagConstraints();
+		gbc_spModel.fill = GridBagConstraints.BOTH;
+		gbc_spModel.gridx = 0;
+		gbc_spModel.gridy = 0;
+		pnlModelBorder.add(spModel, gbc_spModel);
+		
+		pnlModel = new JPanel();
+		spModel.setColumnHeaderView(pnlModel);
+		gbl_pnlModel = new GridBagLayout();
+		gbl_pnlModel.columnWidths = new int[]{0};
+		gbl_pnlModel.rowHeights = new int[]{0};
+		gbl_pnlModel.columnWeights = new double[]{Double.MIN_VALUE};
+		gbl_pnlModel.rowWeights = new double[]{Double.MIN_VALUE};
 		pnlModel.setLayout(gbl_pnlModel);
 		
-		//Model list
-		JList lstModles = new JList();
-		lstModles.setPreferredSize(new Dimension(200, 300));
-		lstModles.setBorder(new LineBorder(new Color(0, 0, 0)));
-		GridBagConstraints gbc_lstModles = new GridBagConstraints();
-		gbc_lstModles.fill = GridBagConstraints.BOTH;
-		gbc_lstModles.insets = new Insets(4, 4, 4, 4);
-		gbc_lstModles.gridx = 0;
-		gbc_lstModles.gridy = 0;
-		pnlModel.add(lstModles, gbc_lstModles);
+		Component verticalGlue = Box.createVerticalGlue();
+		verticalGlue.setMaximumSize(new Dimension(0, 0));
+		GridBagConstraints gbc_verticalGlue = new GridBagConstraints();
+		gbc_verticalGlue.weighty = 0.0;
+		gbc_verticalGlue.weightx = 1.0;
+		gbc_verticalGlue.fill = GridBagConstraints.BOTH;
+		gbc_verticalGlue.gridx = 0;
+		gbc_verticalGlue.gridy = 99;
+		pnlModel.add(verticalGlue, gbc_verticalGlue);
 		
 		//New Model Button
 		btnNewModel = new JButton("New Model");
@@ -195,7 +228,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		gbc_btnNewModel.insets = new Insets(4, 4, 4, 4);
 		gbc_btnNewModel.gridx = 0;
 		gbc_btnNewModel.gridy = 1;
-		pnlModel.add(btnNewModel, gbc_btnNewModel);
+		pnlModelBorder.add(btnNewModel, gbc_btnNewModel);
 		btnNewModel.addActionListener(this);
 	}
 	
@@ -222,6 +255,17 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//handle new Model
 		if(e.getSource() == btnNewModel) {
+			// Dataset list entry
+			ModelLabelPanel p = new ModelLabelPanel();
+			modelLabelPanels.add(p);
+			pnlModel.add(p, new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,5,0), 0, 0));
+			// adjust pnlDataSets gridbaglayout so that row weights are zero except last one
+			double[] d = new double[modelPnlRowCnt+1];
+			for (int i = 0; i<d.length; i++) { d[i] = 0.0; }
+			d[modelPnlRowCnt] = 1.0;
+			gbl_pnlModel.rowWeights = d;
+			pnlModel.setLayout(gbl_pnlModel);
+			super.updateUI();
 		}
 		
 	}

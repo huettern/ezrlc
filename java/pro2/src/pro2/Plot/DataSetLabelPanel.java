@@ -66,7 +66,7 @@ public class DataSetLabelPanel extends JPanel implements ActionListener {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setColot (Color c) {
+	public void setColor (Color c) {
 		this.pnlDrawing.setBackground(c);
 	}
 	public void setID (int id) {
