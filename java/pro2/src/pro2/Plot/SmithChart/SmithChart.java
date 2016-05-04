@@ -226,6 +226,15 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 		return null;
 	}
 
+	/**
+	 * Returns a copy list of data set settings
+	 * @return
+	 */
+	public List<DataSetSettings> getDataSetSettings() {
+		return new ArrayList<DataSetSettings>(dataSetSettings);
+	}
+
+
 
 	private void updateSettings() {
 		grid.setReferenceResistance(settings.referenceResistance);

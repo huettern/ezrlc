@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -23,6 +24,7 @@ import javax.swing.border.TitledBorder;
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
 import pro2.Plot.Figure;
+import pro2.Plot.RectPlot.DataSetSettings;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.RFData.RFData.ComplexModifier;
 import pro2.RFData.RFData.MeasurementType;
@@ -236,5 +238,20 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 
 	public SmithChartNewMeasurement getNewMeasurement() {
 		return this.newMeas;
+	}
+
+	/**
+	 * Get list of dataset settings and check if a measurement is already present and
+	 * disable this option
+	 * @param dataSetSettings list of dataSetSettings
+	 */
+	public void setDatasets(List<DataSetSettings> dataSetSettings) {
+		for (DataSetSettings set : dataSetSettings) {
+			if(this.lblFileName.getText().compareTo(set.getLabel()) == 0) {
+				rdbtnFile.setSelected(false);
+				rdbtnFile.setEnabled(false);
+				rdbtnModel.setSelected(true);
+			}
+		}
 	}
 }
