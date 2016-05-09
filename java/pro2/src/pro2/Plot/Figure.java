@@ -190,35 +190,6 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_verticalGlue.gridx = 0;
 		gbc_verticalGlue.gridy = 99;
 		pnlDataSets.add(verticalGlue, gbc_verticalGlue);
-//		
-//		
-//		dataSetLabelPanel = new DataSetLabelPanel();
-//		GridBagLayout gridBagLayout_1 = (GridBagLayout) dataSetLabelPanel.getLayout();
-//		gridBagLayout_1.rowWeights = new double[]{0.0, 0.0, 0.0};
-//		gridBagLayout_1.rowHeights = new int[]{30, 30, 0};
-//		gridBagLayout_1.columnWeights = new double[]{1.0};
-//		gridBagLayout_1.columnWidths = new int[]{80};
-//		GridBagConstraints gbc_dataSetLabelPanel = new GridBagConstraints();
-//		gbc_dataSetLabelPanel.weightx = 1.0;
-//		gbc_dataSetLabelPanel.insets = new Insets(0, 0, 5, 0);
-//		gbc_dataSetLabelPanel.anchor = GridBagConstraints.NORTH;
-//		gbc_dataSetLabelPanel.fill = GridBagConstraints.HORIZONTAL;
-//		gbc_dataSetLabelPanel.gridx = 0;
-//		gbc_dataSetLabelPanel.gridy = 1;
-//		pnlDataSets.add(dataSetLabelPanel, gbc_dataSetLabelPanel);
-		
-		
-//		JPanel spaceHolder = new JPanel();
-//		GridBagConstraints gbc_spaceHolder = new GridBagConstraints();
-//		gbc_spaceHolder.anchor = GridBagConstraints.NORTH;
-//		gbc_spaceHolder.insets = new Insets(0, 0, 0, 0);
-//		gbc_spaceHolder.fill = GridBagConstraints.BOTH;
-//		gbc_spaceHolder.gridx = 0;
-//		gbc_spaceHolder.gridy = 999;
-//		gbc_spaceHolder.weightx = 1.0;
-//		gbc_spaceHolder.weighty = Double.MAX_VALUE;
-//		pnlDataSets.add(spaceHolder, gbc_spaceHolder);
-		
 		
 		btnDeleteGraph = new JButton("Delete Graph");
 		GridBagConstraints gbc_btnDeleteGraph = new GridBagConstraints();
@@ -279,6 +250,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_plot.fill = GridBagConstraints.BOTH;
 		gbc_plot.gridx = 0;
 		gbc_plot.gridy = 1;
+		panel_1.remove(btnAutoscale);
 		add(smithChart, gbc_plot);
 		
 		// Settings dialog
