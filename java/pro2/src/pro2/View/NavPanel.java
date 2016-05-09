@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -197,9 +198,11 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		gbc_spModel.gridx = 0;
 		gbc_spModel.gridy = 0;
 		pnlModelBorder.add(spModel, gbc_spModel);
+		spModel.getVerticalScrollBar().setUnitIncrement(25);
 		
 		pnlModel = new JPanel();
 		spModel.setColumnHeaderView(pnlModel);
+		spModel.setViewportView(pnlModel);
 		gbl_pnlModel = new GridBagLayout();
 		gbl_pnlModel.columnWidths = new int[]{0};
 		gbl_pnlModel.rowHeights = new int[]{0};
@@ -240,9 +243,10 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
-			lblInputFile.setText(fileChooser.showFileChooser());
+			String fName = fileChooser.showFileChooser();			
+			lblInputFile.setText(fName);
 			File f = fileChooser.getFile();
-			if (f != null) {
+			if (f != null || lblInputFile != null) {
 				controller.loadFile(f);
 			}	
 		}

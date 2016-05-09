@@ -31,17 +31,17 @@ public class FileChooser extends JComponent implements Accessible{
 		int returnVal = fileChooser.showDialog(this.controller.getMainView(), "Open File");
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
-            return file.getName();
+            return file.getName(); 
 		}
 		else {
 			return null;
-		}
-		
+		}	
  	}
 	
 	public void fileFilter() {
 		FileNameExtensionFilter fileFilter = new FileNameExtensionFilter(
 		        "Touchstone File Format (*.s1p, *.z1p, *.y1p)", "s1p", "z1p", "y1p");
+		fileChooser.removeChoosableFileFilter(fileChooser.getAcceptAllFileFilter());
 		fileChooser.setFileFilter(fileFilter);
 		
 	}

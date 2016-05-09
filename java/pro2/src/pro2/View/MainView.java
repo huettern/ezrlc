@@ -82,6 +82,7 @@ public class MainView extends JFrame implements Observer {
     //================================================================================
 	/**
 	 * Create the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	public void build () {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,6 +105,7 @@ public class MainView extends JFrame implements Observer {
 		
 		//Add navPanel & workPanel
 		navPanel = new NavPanel(this.controller);
+		navPanel.setPreferredSize(new Dimension(200, 10));
 		splitPane.setLeftComponent(navPanel);
 		navPanel.build();
 		workPanel = new WorkPanel(this.controller);
@@ -136,11 +138,6 @@ public class MainView extends JFrame implements Observer {
 		workPanel.addGraph(type, text);
 	}
 	
-	public void addNewFile(File f) {
-		// TODO Auto-generated method stub
-		this.controller.loadFile(f);
-		
-	}
 	public void setFileName(String name) {
 		navPanel.setFileName(name);
 		
