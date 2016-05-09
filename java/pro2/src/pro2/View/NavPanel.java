@@ -240,10 +240,25 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
-			lblInputFile.setText(fileChooser.showFileChooser());
-			File f = fileChooser.getFile();
-			if (f != null) {
-				controller.loadFile(f);
+			String fName = fileChooser.showFileChooser();			
+			if(fName.lastIndexOf('.')>0) {
+				// get last index for '.' char
+				int lastIndex = fName.lastIndexOf('.');
+		   
+				// get extension
+				String str = fName.substring(lastIndex);
+			   
+				// match path name extension
+				if(str.equals(".s1p")) {
+					lblInputFile.setText(fName);
+					File f = fileChooser.getFile();
+					if (f != null || lblInputFile != null) {
+						controller.loadFile(f);
+					}	
+				}
+				else {
+				   	System.err.println("Falsches File");
+				}
 			}	
 		}
 		
