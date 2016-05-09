@@ -28,8 +28,8 @@ public class DataSetLabelPanel extends JPanel implements ActionListener {
 		this.id = id;
 		this.figure = fig;
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(130, 92));
-		setMaximumSize(new Dimension(32767, 100));
+		setPreferredSize(new Dimension(80, 100));
+		setMaximumSize(new Dimension(32767, 32767));
 		setMinimumSize(new Dimension(10, 100));
 		setBorder(new LineBorder(Color.BLACK));
 		GridBagLayout gridBagLayout = new GridBagLayout();

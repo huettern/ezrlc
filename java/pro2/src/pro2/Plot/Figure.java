@@ -85,7 +85,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		setBackground(UIManager.getColor("ToggleButton.background"));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{309, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0};
@@ -148,15 +148,16 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		pnlDataSetsBorder.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Sets", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlDataSetsBorder = new GridBagConstraints();
 		gbc_pnlDataSetsBorder.insets = new Insets(0, 0, 5, 0);
+		gbc_pnlDataSetsBorder.anchor = GridBagConstraints.NORTH;
 		gbc_pnlDataSetsBorder.fill = GridBagConstraints.BOTH;
 		gbc_pnlDataSetsBorder.gridx = 0;
 		gbc_pnlDataSetsBorder.gridy = 3;
 		panel_1.add(pnlDataSetsBorder, gbc_pnlDataSetsBorder);
 		GridBagLayout gbl_pnlDataSetsBorder = new GridBagLayout();
 		gbl_pnlDataSetsBorder.columnWidths = new int[] {0};
-		gbl_pnlDataSetsBorder.rowHeights = new int[] {0, 0};
+		gbl_pnlDataSetsBorder.rowHeights = new int[] {0};
 		gbl_pnlDataSetsBorder.columnWeights = new double[]{1.0};
-		gbl_pnlDataSetsBorder.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_pnlDataSetsBorder.rowWeights = new double[]{1.0};
 		pnlDataSetsBorder.setLayout(gbl_pnlDataSetsBorder);
 		
 		spDataSets = new JScrollPane();
@@ -171,13 +172,13 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		spDataSets.getVerticalScrollBar().setUnitIncrement(25);
 		
 		pnlDataSets = new JPanel();
-		pnlDataSets.setMaximumSize(new Dimension(32767, 100));
+		spDataSets.setColumnHeaderView(pnlDataSets);
 		spDataSets.setViewportView(pnlDataSets);
 		gbl_pnlDataSets = new GridBagLayout();
 		gbl_pnlDataSets.columnWidths = new int[]{0};
 		gbl_pnlDataSets.rowHeights = new int[] {0};
-		gbl_pnlDataSets.columnWeights = new double[]{1.0};
-		gbl_pnlDataSets.rowWeights = new double[]{0.0};
+		gbl_pnlDataSets.columnWeights = new double[]{Double.MIN_VALUE};
+		gbl_pnlDataSets.rowWeights = new double[]{Double.MIN_VALUE};
 		pnlDataSets.setLayout(gbl_pnlDataSets);
 		
 		verticalGlue = Box.createVerticalGlue();
