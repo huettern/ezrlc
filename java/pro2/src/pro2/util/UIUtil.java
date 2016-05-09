@@ -1,21 +1,35 @@
 package pro2.util;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 
 public class UIUtil {
 
+	//================================================================================
+    // Private Data
+    //================================================================================
+	private static Container p = new Container();
+	
+	
 	public UIUtil() {
 		// TODO Auto-generated constructor stub
 	}
@@ -120,4 +134,86 @@ public class UIUtil {
 	    
 	    g2d.drawString(text, x, y);
 	}
+
+	//================================================================================
+    // Public static Functions: Images
+    //================================================================================
+	/**
+	 * Returns an image given from the path in the project img folder
+	 * @param strBild
+	 * @return Image
+	 */
+	public static Image loadResourceImage(String strBild) {
+		MediaTracker tracker = new MediaTracker(p);
+		Image img = null;
+		try {
+			InputStream input = UIUtil.class.getResourceAsStream("/img/" + strBild);
+			img = ImageIO.read(input);
+			tracker.addImage(img, 0);
+			tracker.waitForID(0);
+		} catch (Exception e) {
+			System.out.println("Can not load image: " + strBild);
+		}
+		return img;
+	}
+
+	/**
+	 * Returns an image given from the path in the project img folder, transformed to 
+	 * width and height
+	 * @param strBild
+	 * @param width
+	 * @param height
+	 * @return Image
+	 */
+	public static Image loadResourceImage(String strBild, int width, int height) {
+		MediaTracker tracker = new MediaTracker(p);
+		Image img = null;
+		try {
+			InputStream input = UIUtil.class.getResourceAsStream("/img/" + strBild);
+			img = ImageIO.read(input);
+			img = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			tracker.addImage(img, 0);
+			tracker.waitForID(0);
+		} catch (InterruptedException ex) {
+			System.out.println("Can not load image: " + strBild);
+		} catch (IOException ex) {
+			
+		}
+		return img;
+	}
+
+	/**
+	 * Returns an icon given from the path in the project img folder, transformed to
+	 * width and height
+	 * @param strBild
+	 * @param width
+	 * @param height
+	 * @return Icon
+	 */
+	public static ImageIcon loadResourceIcon(String strBild, int width, int height) {
+		InputStream input = UIUtil.class.getResourceAsStream("/img/" + strBild);
+		ImageIcon icon = null;
+		try {
+			icon = new ImageIcon(ImageIO.read(input).getScaledInstance(width, height, Image.SCALE_SMOOTH));
+		} catch (IOException e) {
+			System.out.println("Can not load image: " + strBild);
+		}
+		return icon;
+	}
+	/**
+	 * Returns an icon given from the path in the project img folder
+	 * @param strBild
+	 * @return Icon
+	 */
+	public static ImageIcon loadResourceIcon(String strBild) {
+		InputStream input = UIUtil.class.getResourceAsStream("/img/" + strBild);
+		ImageIcon icon = null;
+		try {
+			icon = new ImageIcon(ImageIO.read(input));
+		} catch (IOException e) {
+			System.out.println("Can not load image: " + strBild);
+		}
+		return icon;
+	}
+
 }
