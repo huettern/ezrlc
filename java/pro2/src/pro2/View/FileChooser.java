@@ -27,7 +27,7 @@ public class FileChooser extends JComponent implements Accessible{
 		this.controller = controller;
 	}
 	
-	public String windowFileChooser() {
+	public String showFileChooser() {
 		int returnVal = fileChooser.showDialog(this.controller.getMainView(), "Open File");
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();

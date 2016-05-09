@@ -1,4 +1,4 @@
-package pro2.Model;
+package pro2.View;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -19,10 +20,12 @@ import javax.swing.border.LineBorder;
 
 import pro2.MVC.Controller;
 import pro2.Plot.Figure;
+import pro2.util.UIUtil;
 
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -39,7 +42,7 @@ public class ModelLabelPanel extends JPanel {
 	private JTextField txtF;
 	private JTextField txtR1;
 	
-	private Image[] modelImage = new Image[21];
+	private ImageIcon[] modelImage = new ImageIcon[21];
 	
 	//================================================================================
     // Constructors
@@ -50,7 +53,7 @@ public class ModelLabelPanel extends JPanel {
 		setMaximumSize(new Dimension(32767, 100));
 		setMinimumSize(new Dimension(10, 100));
 		setBorder(new LineBorder(Color.BLACK));
-		setLayout(new GridLayout(0, 1, 0, 0));
+		setLayout(new GridLayout(2, 1, 0, 0));
 		
 		//Model-Image
 //		for (int i = 0; i < modelImage.length; i++) {
@@ -64,19 +67,17 @@ public class ModelLabelPanel extends JPanel {
 //			}
 //		}
 		
-		//ImageIcon imag = new ImageIcon("model_0.png");
+		// load image icon
+		modelImage[0] = UIUtil.loadResourceIcon("model_0.png", 200, 50);
+				
+		// create new label with the image and add it
+		JLabel label = new JLabel("", modelImage[0], JLabel.CENTER);
+		add( label, 0 );
 		
-		JPanel pnlModelImage = new JPanel(new GridLayout(0, 1, 0, 0));
-		JLabel label = new JLabel();
-		label.setIcon(new ImageIcon("model_0.png"));
-		
-		pnlModelImage.add(label);
-	
-		add(pnlModelImage);
 		
 		//Parameters of R, L, C, ...
 		JPanel pnlModelLabel = new JPanel();
-		add(pnlModelLabel);
+		add(pnlModelLabel,1);
 		pnlModelLabel.setLayout(new GridLayout(4, 4, 4, 1));
 		
 		JLabel lblL = new JLabel("L0");
@@ -129,25 +130,41 @@ public class ModelLabelPanel extends JPanel {
 		txtC1.setColumns(10);
 	}
 	
+	
+	//================================================================================
+    // Paint Functions
+    //================================================================================
+//	@Override
+//	public void paintComponent(Graphics g) {
+//		System.out.println("paint image");
+//		modelImage[0] = UIUtil.loadResourceImage("model_0.png", this.getWidth(), this.getHeight()/2);
+//		
+//		//g.drawImage(this.modelImage[0], 0, 0, null);
+//		g.fillOval(0, 0, 100, 100);
+//
+//		System.out.println("paint parent");
+//		super.paintComponent(g);
+//	}
+	
 	//================================================================================
     // Public Functions
     //================================================================================
-	/**
-	 * load model images
-	 */
-	public static Image loadResourceImage(String strBild) {
-		Container p = new Container();
-		
-		MediaTracker tracker = new MediaTracker(p);
-		Image img = (new ImageIcon(ModelLabelPanel.class.getClassLoader().getResource("../../images/RLC/" + strBild))).getImage();
-		tracker.addImage(img, 0);
-		try {
-			tracker.waitForID(0);
-		} catch (InterruptedException ex) {
-			System.out.println("Can not load image: " + strBild);
-		}
-		return img;
-	}
+//	/**
+//	 * load model images
+//	 */
+//	public static Image loadResourceImage(String strBild) {
+//		Container p = new Container();
+//		
+//		MediaTracker tracker = new MediaTracker(p);
+//		Image img = (new ImageIcon(ModelLabelPanel.class.getClassLoader().getResource("../../images/RLC/" + strBild))).getImage();
+//		tracker.addImage(img, 0);
+//		try {
+//			tracker.waitForID(0);
+//		} catch (InterruptedException ex) {
+//			System.out.println("Can not load image: " + strBild);
+//		}
+//		return img;
+//	}
 	
 	
 }

@@ -23,7 +23,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import pro2.MVC.Controller;
-import pro2.Model.ModelLabelPanel;
 import pro2.Plot.DataSetLabelPanel;
 
 import javax.swing.JScrollPane;
@@ -241,7 +240,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
-			lblInputFile.setText(fileChooser.windowFileChooser());
+			lblInputFile.setText(fileChooser.showFileChooser());
 			File f = fileChooser.getFile();
 			if (f != null) {
 				controller.loadFile(f);
