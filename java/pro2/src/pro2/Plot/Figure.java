@@ -168,6 +168,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_spDataSets.gridx = 0;
 		gbc_spDataSets.gridy = 0;
 		pnlDataSetsBorder.add(spDataSets, gbc_spDataSets);
+		spDataSets.getVerticalScrollBar().setUnitIncrement(25);
 		
 		pnlDataSets = new JPanel();
 		pnlDataSets.setMaximumSize(new Dimension(32767, 100));

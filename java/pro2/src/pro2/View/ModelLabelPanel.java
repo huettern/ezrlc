@@ -48,6 +48,8 @@ public class ModelLabelPanel extends JPanel {
     // Constructors
     //================================================================================
 	public ModelLabelPanel() {
+		int panelWidth = 220;
+		int panelLength = 150;
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(150, 220));
 		setMaximumSize(new Dimension(32767, 32767));
