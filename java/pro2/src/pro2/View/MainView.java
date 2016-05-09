@@ -160,6 +160,14 @@ public class MainView extends JFrame implements Observer {
 		
 	}
 
+	/**
+	 * Sets the status of the new graph button
+	 * @param b enabled(true) or disabled(flase)
+	 */
+	public void setNewGraphButtonEnabled(boolean b) {
+		navPanel.setNewGraphButtonEnabled(b);
+	}
+
 	
 }
 

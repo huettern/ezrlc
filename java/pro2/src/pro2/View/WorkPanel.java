@@ -64,9 +64,7 @@ public class WorkPanel extends JPanel implements Observer {
 			case NONE:
 				this.setLayout(new GridLayout(1, 1));
 				fullFigure = f;
-				this.add(fullFigure, new GridBagConstraints(0, 0, 1, 2, 0.0, 0.0, 
-						GridBagConstraints.NORTH, GridBagConstraints.BOTH, 
-						new Insets(0, 0, 0, 0), 0, 0));
+				this.add(fullFigure, 0);
 				graphArr = WINDOW_ARR.FULL;
 				break;
 			case FULL:
@@ -78,6 +76,9 @@ public class WorkPanel extends JPanel implements Observer {
 				bottomFigure = f;
 				this.add(bottomFigure, 1);
 				graphArr = WINDOW_ARR.SPLIT;
+				
+				// notify controller to disable new graph button
+				controller.setNewGraphButtonEnabled(false);
 				break;
 			case SPLIT:
 				System.err.println("Es k�nnen nicht mehr als zwei Plots geopfert werden!");
