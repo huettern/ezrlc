@@ -49,7 +49,7 @@ public class ModelLabelPanel extends JPanel {
     //================================================================================
 	public ModelLabelPanel() {
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(150, 292));
+		setPreferredSize(new Dimension(150, 220));
 		setMaximumSize(new Dimension(32767, 32767));
 		setMinimumSize(new Dimension(10, 100));
 		setBorder(new LineBorder(Color.BLACK));
@@ -68,7 +68,7 @@ public class ModelLabelPanel extends JPanel {
 //		}
 		
 		// load image icon
-		modelImage[0] = UIUtil.loadResourceIcon("model_19.png", 187, 146);
+		modelImage[0] = UIUtil.loadResourceIcon("model_5.png", 160, 100);
 				
 		// create new label with the image and add it
 		JLabel label = new JLabel("", modelImage[0], JLabel.CENTER);

@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -241,24 +242,10 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
 			String fName = fileChooser.showFileChooser();			
-			if(fName.lastIndexOf('.')>0) {
-				// get last index for '.' char
-				int lastIndex = fName.lastIndexOf('.');
-		   
-				// get extension
-				String str = fName.substring(lastIndex);
-			   
-				// match path name extension
-				if(str.equals(".s1p")) {
-					lblInputFile.setText(fName);
-					File f = fileChooser.getFile();
-					if (f != null || lblInputFile != null) {
-						controller.loadFile(f);
-					}	
-				}
-				else {
-				   	System.err.println("Falsches File");
-				}
+			lblInputFile.setText(fName);
+			File f = fileChooser.getFile();
+			if (f != null || lblInputFile != null) {
+				controller.loadFile(f);
 			}	
 		}
 		
