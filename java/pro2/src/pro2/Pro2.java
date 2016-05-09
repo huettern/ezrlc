@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -18,6 +19,8 @@ import javax.swing.JPanel;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Model;
+import pro2.ModelCalculation.MCUtil;
+import pro2.ModelCalculation.MCOptions;
 import pro2.Plot.Figure;
 import pro2.RFData.RFData;
 import pro2.View.MainView;
@@ -57,6 +60,48 @@ public class Pro2 {
             }
         });  
 
+		//================================================================================
+	    // MC Test
+	    //================================================================================
+		
+		/**
+		 * Apply options first
+		 */
+		MCOptions opt = new MCOptions();
+		
+		opt.fMin = 25;
+		opt.fMax = 55;
+		opt.nElementsMin = 2;
+		opt.nElementsMax = 3;
+		opt.skinEffectEnabled = true;
+		
+		double[] f = {10,20,30,40,50,60,70,80,90,100};
+		double[] ys = {1,2,3,4,5,6,7,8,9,10};
+		double[] yz = {1,2,3,4,5,6,7,8,9,10};
+		
+
+		double[] w = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.OMEGA);
+		ys = MCUtil.applyMCOpsToData(opt, f, ys);
+		yz = MCUtil.applyMCOpsToData(opt, f, yz);
+		double[] fn = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.HZ);
+		
+		int[] ES = MCUtil.createModelList(opt);
+		
+		System.out.println("ES="+Arrays.toString(ES));
+		System.out.println("w="+Arrays.toString(w));
+		System.out.println("fn="+Arrays.toString(fn));
+		System.out.println("yz="+Arrays.toString(yz));
+		System.out.println("ys="+Arrays.toString(ys));
+		
+		/**
+		 * Do analytic initial guess generation
+		 */
+		double[][] paramArray = new double[ES.length][7];
+		//paramArray[0] = {}
+		
+		
+		
+		
 		//================================================================================
 	    // Math number format Test
 	    //================================================================================
