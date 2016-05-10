@@ -247,9 +247,18 @@ public class Axis {
 			}
 		}
 		else if (this.or==Orientation.VERTICAL) {
-			double dy = this.end_y - this.start_y;
-			double dx = this.max - this.min;
-			return (int)((dy/dx)*(d-this.min)+this.start_y);
+			if(this.scale == Scale.LINEAR) {
+				double dy = this.end_y - this.start_y;
+				double dx = this.max - this.min;
+				return (int)((dy/dx)*(d-this.min)+this.start_y);
+			}
+			else if(this.scale == Scale.LOG) {
+				if (d == 0) return this.start_y;
+				double delta = this.logUpperBound - this.logLowerBound;
+				double deltaV = Math.log10(d) - this.logLowerBound;
+				double width = this.end_y - this.start_y;
+				return (int)(((deltaV/delta) * width ) + this.start_y);
+			}
 		}
 		return 0;
 	}
@@ -273,10 +282,10 @@ public class Axis {
 				double data_spacing = ((this.max-this.min)/this.step);
 				for(int i = 0; i <= label_count; i++)
 				{
-					label_posx[i] = this.origin_x + (int)(i*spacing);
+					label_posx[i] = this.start_x + (int)(i*spacing);
 					label_posy[i] = this.start_y + this.label_offset;
 					label_val[i] = this.min + (i*data_spacing);
-					tic_pos[i].x = this.origin_x + (int)(i*spacing);
+					tic_pos[i].x = this.start_x + (int)(i*spacing);
 					tic_pos[i].y = this.start_y;
 				}
 			}
@@ -318,17 +327,49 @@ public class Axis {
 			this.end_x = this.start_x;
 			this.end_y = this.size;
 			
-			// Calculate String positions
-			label_count = this.step;
-			double spacing = ((this.start_y-this.end_y)/this.step);
-			double data_spacing = ((this.max-this.min)/this.step);
-			for(int i = 0; i <= label_count; i++)
-			{
-				label_posy[i] = this.start_y - (int)(i*spacing);
-				label_posx[i] = this.start_x + this.label_offset;
-				label_val[i] = this.min + (i*data_spacing);
-				tic_pos[i].x = this.start_x;
-				tic_pos[i].y = this.start_y - (int)(i*spacing);
+			// Calculate String and tic positions
+			if(this.scale == Scale.LINEAR) {
+				label_count = this.step;
+				double spacing = ((this.start_y-this.end_y)/this.step);
+				double data_spacing = ((this.max-this.min)/this.step);
+				for(int i = 0; i <= label_count; i++)
+				{
+					label_posy[i] = this.start_y - (int)(i*spacing);
+					label_posx[i] = this.start_x + this.label_offset;
+					label_val[i] = this.min + (i*data_spacing);
+					tic_pos[i].x = this.start_x;
+					tic_pos[i].y = this.start_y - (int)(i*spacing);
+				}
+			}
+			else if(this.scale == Scale.LOG) {
+				// calculate min and max exponent
+				double min_exp = Math.log10(this.min);
+				double max_exp = Math.log10(this.max);
+				label_count = (int) (Math.ceil(max_exp) - Math.ceil(min_exp)) + 1;
+				
+				int startExp = (int) Math.ceil(min_exp);
+				// Calculate string and major tic positions
+				for(int i = 0; i <= label_count; i++) {
+					label_val[i] = Math.pow(10, startExp);
+					label_posy[i] = this.getPixelValueWithoutEval(label_val[i]);
+					label_posx[i] = this.start_x + this.label_offset;
+					tic_pos[i].y = label_posy[i];
+					tic_pos[i].x = this.start_x;
+					startExp++;
+				}
+				// calculate minor tic positions
+				sub_tic_pos = new ArrayList<Point>();
+				Point p = new Point();
+				for (double i = this.logLowerBound; i <= this.logUpperBound; i++) {
+					for (double j = 0.1; j < 1; j += 0.1) {
+						double value = j * Math.pow(10, i);
+						if( (value >= this.min) && (value <= this.max) ) {
+							p.y = this.getPixelValueWithoutEval(value);
+							p.x = this.start_x;
+							sub_tic_pos.add(new Point(p.x,p.y));
+						}
+					}
+				}
 			}
 		}
 	}

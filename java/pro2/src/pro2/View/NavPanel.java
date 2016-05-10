@@ -40,7 +40,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	private Controller controller;
 	
 	private FileChooser fileChooser;
-	private GraphDialog GraphDialog;
+	private GraphWindow GraphDialog;
 	
 	private JButton btnLoadFile, btnNewModel, btnNewGraph;
 	private JLabel lblInputFile;
@@ -58,7 +58,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	public NavPanel(Controller controller) {
 		this.controller = controller;	
 		this.fileChooser = new FileChooser(controller);
-		this.GraphDialog = new GraphDialog(controller);
+		this.GraphDialog = new GraphWindow(controller);
 	}
 		
 	

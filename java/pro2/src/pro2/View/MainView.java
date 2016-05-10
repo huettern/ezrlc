@@ -133,9 +133,9 @@ public class MainView extends JFrame implements Observer {
 	}
 
 	
-	public void addGraph(ENPlotType type, String text) {
+	public void addGraph(ENPlotType type) {
 		// TODO Auto-generated method stub
-		workPanel.addGraph(type, text);
+		workPanel.addGraph(type);
 	}
 	
 	public void setFileName(String name) {

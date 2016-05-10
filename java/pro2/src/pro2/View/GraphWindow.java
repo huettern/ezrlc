@@ -30,7 +30,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-public class GraphDialog implements ActionListener{
+public class GraphWindow implements ActionListener{
 
 	//================================================================================
     // Local Variables
@@ -40,7 +40,6 @@ public class GraphDialog implements ActionListener{
 	private JDialog graphDialog;
 	private ButtonGroup btngrpGraphSelect;
 	private JButton btnCreate, btnCancel;
-	private JTextField txtGraph;
 
 	private JRadioButton rdbtnRectangular;
 
@@ -49,7 +48,7 @@ public class GraphDialog implements ActionListener{
 	
 	//================================================================================
     // Constructors
-	public GraphDialog(Controller controller) {
+	public GraphWindow(Controller controller) {
 		this.controller = controller;
 	}
 
@@ -67,40 +66,25 @@ public class GraphDialog implements ActionListener{
 		graphDialog.setTitle("New Graph");		
 		graphDialog.setModal(true);
 		graphDialog.setLocation(250, 150);
-		graphDialog.setSize(300, 350);
+		graphDialog.setSize(300, 182);
 		
 		//Main Panel
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		graphDialog.getContentPane().setLayout(gridBagLayout);
-		
-		JPanel pnlGraphName = new JPanel();
-		pnlGraphName.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Graph Name", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		GridBagConstraints gbc_pnlGraphName = new GridBagConstraints();
-		gbc_pnlGraphName.insets = new Insets(5, 5, 0, 5);
-		gbc_pnlGraphName.fill = GridBagConstraints.BOTH;
-		gbc_pnlGraphName.gridx = 0;
-		gbc_pnlGraphName.gridy = 0;
-		graphDialog.getContentPane().add(pnlGraphName, gbc_pnlGraphName);
-		GridBagLayout gbl_pnlGraphName = new GridBagLayout();
-		gbl_pnlGraphName.columnWidths = new int[]{0, 0};
-		gbl_pnlGraphName.rowHeights = new int[]{0, 0, 0};
-		gbl_pnlGraphName.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_pnlGraphName.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		pnlGraphName.setLayout(gbl_pnlGraphName);
 		
 		
 		//Graph type
 		JPanel pnlSelectType = new JPanel();
 		pnlSelectType.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Graph Type", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlSelectType = new GridBagConstraints();
-		gbc_pnlSelectType.insets = new Insets(5, 5, 0, 5);
+		gbc_pnlSelectType.insets = new Insets(5, 5, 5, 5);
 		gbc_pnlSelectType.fill = GridBagConstraints.BOTH;
 		gbc_pnlSelectType.gridx = 0;
-		gbc_pnlSelectType.gridy = 1;
+		gbc_pnlSelectType.gridy = 0;
 		graphDialog.getContentPane().add(pnlSelectType, gbc_pnlSelectType);
 		GridBagLayout gbl_pnlSelectType = new GridBagLayout();
 		gbl_pnlSelectType.columnWidths = new int[]{0, 0, 0, 0, 0};
@@ -108,24 +92,6 @@ public class GraphDialog implements ActionListener{
 		gbl_pnlSelectType.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlSelectType.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlSelectType.setLayout(gbl_pnlSelectType);
-		
-		JLabel lblEnterAName = new JLabel("Enter a name for the Graph:");
-		GridBagConstraints gbc_lblEnterAName = new GridBagConstraints();
-		gbc_lblEnterAName.anchor = GridBagConstraints.WEST;
-		gbc_lblEnterAName.insets = new Insets(5, 5, 5, 5);
-		gbc_lblEnterAName.gridx = 0;
-		gbc_lblEnterAName.gridy = 0;
-		pnlGraphName.add(lblEnterAName, gbc_lblEnterAName);
-		
-		txtGraph = new JTextField();
-		txtGraph.setText("Graph 1");
-		GridBagConstraints gbc_txtGraph = new GridBagConstraints();
-		gbc_txtGraph.insets = new Insets(0, 5, 5, 5);
-		gbc_txtGraph.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtGraph.gridx = 0;
-		gbc_txtGraph.gridy = 1;
-		pnlGraphName.add(txtGraph, gbc_txtGraph);
-		txtGraph.setColumns(10);
 		
 				
 		//Graph Select
@@ -164,10 +130,10 @@ public class GraphDialog implements ActionListener{
 		//Buttons
 		JPanel pnlButtons = new JPanel();
 		GridBagConstraints gbc_pnlButtons = new GridBagConstraints();
-		gbc_pnlButtons.insets = new Insets(5, 5, 5, 5);
+		gbc_pnlButtons.insets = new Insets(5, 5, 0, 0);
 		gbc_pnlButtons.fill = GridBagConstraints.BOTH;
 		gbc_pnlButtons.gridx = 0;
-		gbc_pnlButtons.gridy = 2;
+		gbc_pnlButtons.gridy = 1;
 		graphDialog.getContentPane().add(pnlButtons, gbc_pnlButtons);
 		GridBagLayout gbl_pnlButtons = new GridBagLayout();
 		gbl_pnlButtons.columnWidths = new int[]{0, 0, 0};
@@ -179,7 +145,7 @@ public class GraphDialog implements ActionListener{
 		btnCancel = new JButton("Cancel");
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.fill = GridBagConstraints.BOTH;
-		gbc_btnCancel.insets = new Insets(0, 2, 0, 5);
+		gbc_btnCancel.insets = new Insets(0, 2, 5, 5);
 		gbc_btnCancel.gridx = 0;
 		gbc_btnCancel.gridy = 0;
 		pnlButtons.add(btnCancel, gbc_btnCancel);
@@ -187,7 +153,7 @@ public class GraphDialog implements ActionListener{
 		
 		btnCreate = new JButton("Create");
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
-		gbc_btnCreate.insets = new Insets(0, 5, 0, 2);
+		gbc_btnCreate.insets = new Insets(0, 5, 5, 6);
 		gbc_btnCreate.fill = GridBagConstraints.BOTH;
 		gbc_btnCreate.gridx = 1;
 		gbc_btnCreate.gridy = 0;
@@ -207,10 +173,10 @@ public class GraphDialog implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == btnCreate) {
 			if(rdbtnRectangular.isSelected() == true) {
-				this.controller.getMainView().addGraph(ENPlotType.RECTANGULAR, txtGraph.getText());
+				this.controller.getMainView().addGraph(ENPlotType.RECTANGULAR);
 			}
 			else if(rdbtnSmithChart.isSelected() == true) {
-				this.controller.getMainView().addGraph(ENPlotType.SMITH, txtGraph.getText());
+				this.controller.getMainView().addGraph(ENPlotType.SMITH);
 			}
 			graphDialog.dispose();
 		}

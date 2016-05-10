@@ -50,8 +50,8 @@ public class WorkPanel extends JPanel implements Observer {
 	//================================================================================
     // Public Functions
     //================================================================================
-	public void addGraph(ENPlotType type, String text) {
-		Figure f = new Figure(this.controller, text);
+	public void addGraph(ENPlotType type) {
+		Figure f = new Figure(this.controller);
 		
 		if(type == ENPlotType.RECTANGULAR) {
 			f.buildRectPlot();

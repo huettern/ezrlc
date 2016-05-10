@@ -380,6 +380,10 @@ public class RectPlotSettingsWindow implements ActionListener {
 		//Step Spinners
 		if(e.getSource() == rdbtnLogX) {
 			spinXstep.setEnabled(false);
+			if (UIUtil.getSpinnerDoubleValue(spinXmin) == 0) {
+				spinXmin.setValue(1);
+				spinXmax.setValue(1000);
+			}	
 		}
 		
 		if(e.getSource() == rdbtnLinX) {
@@ -388,6 +392,10 @@ public class RectPlotSettingsWindow implements ActionListener {
 		
 		if(e.getSource() == rdbtnLogY) {
 			spinYstep.setEnabled(false);
+			if (UIUtil.getSpinnerDoubleValue(spinYmin) == 0) {
+				spinYmin.setValue(1);
+				spinYmax.setValue(1000);
+			}	
 		}
 		
 		if(e.getSource() == rdbtnLinY) {

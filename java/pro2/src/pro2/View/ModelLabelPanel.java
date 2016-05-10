@@ -32,7 +32,7 @@ import java.awt.Image;
 import javax.swing.JTextField;
 import java.awt.Rectangle;
 
-public class ModelLabelPanel extends JPanel {
+public class ModelLabelPanel extends JPanel implements ActionListener {
 
 	private JTextField txtC0;
 	private JTextField txtR0;
@@ -42,7 +42,8 @@ public class ModelLabelPanel extends JPanel {
 	private JTextField txtF;
 	private JTextField txtR1;
 	
-	private ImageIcon[] modelImage = new ImageIcon[21];
+	private ImageIcon[] modelImage = new ImageIcon[10];
+	int j = 0;
 	
 	//================================================================================
     // Constructors
@@ -70,12 +71,14 @@ public class ModelLabelPanel extends JPanel {
 //		}
 		
 		// load image icon
-		modelImage[0] = UIUtil.loadResourceIcon("model_5.png", 160, 100);
+		for (int i = 1; i <= modelImage.length; i++) {
+			modelImage[0] = UIUtil.loadResourceIcon("model_" + i + ".png", 160, 100);
+		}
 				
 		// create new label with the image and add it
 		JLabel label = new JLabel("", modelImage[0], JLabel.CENTER);
-		add( label, 0 );
-		
+		add( label, 0 );	
+
 		
 		//Parameters of R, L, C, ...
 		JPanel pnlModelLabel = new JPanel();
@@ -89,14 +92,14 @@ public class ModelLabelPanel extends JPanel {
 		pnlModelLabel.add(txtL0);
 		txtL0.setColumns(10);
 		
-		JLabel lblR0 = new JLabel("R0");
+		JLabel lblR0 = new JLabel("<html> R<sub>0</sub> </html>");
 		pnlModelLabel.add(lblR0);
 		
 		txtR0 = new JTextField();
 		pnlModelLabel.add(txtR0);
 		txtR0.setColumns(10);
 		
-		JLabel lblC = new JLabel("C0");
+		JLabel lblC = new JLabel("<html> C<sub>0</sub> </html>");
 		pnlModelLabel.add(lblC);
 		
 		txtC0 = new JTextField();
@@ -110,7 +113,7 @@ public class ModelLabelPanel extends JPanel {
 		pnlModelLabel.add(txtAlpha);
 		txtAlpha.setColumns(10);
 		
-		JLabel lblR1 = new JLabel("R1");
+		JLabel lblR1 = new JLabel("<html> R<sub>1</sub> </html>");
 		pnlModelLabel.add(lblR1);
 		
 		txtR1 = new JTextField();
@@ -124,12 +127,18 @@ public class ModelLabelPanel extends JPanel {
 		pnlModelLabel.add(txtF);
 		txtF.setColumns(10);
 		
-		JLabel lblC1 = new JLabel("C1");
+		JLabel lblC1 = new JLabel("<html> C<sub>1</sub> </html>");
 		pnlModelLabel.add(lblC1);
 		
 		txtC1 = new JTextField();
 		pnlModelLabel.add(txtC1);
 		txtC1.setColumns(10);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

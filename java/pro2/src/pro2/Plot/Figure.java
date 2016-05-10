@@ -78,7 +78,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	//================================================================================
     // Constructors
     //================================================================================
-	public Figure(Controller controller, String title) {
+	public Figure(Controller controller) {
 		super.setBackground(new Color(238,238,238));
 		
 		this.controller = controller;
@@ -90,18 +90,6 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0};
 		setLayout(gridBagLayout);
-
-		JLabel lblTitle = new JLabel(title);
-		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setFont(new Font("Lucida Grande", Font.BOLD, 18));
-		GridBagConstraints gbc_lblTitle = new GridBagConstraints();
-		gbc_lblTitle.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblTitle.gridwidth = 2;
-		gbc_lblTitle.insets = new Insets(5, 5, 0, 5);
-		gbc_lblTitle.weightx = 1.0;
-		gbc_lblTitle.gridx = 0;
-		gbc_lblTitle.gridy = 0;
-		add(lblTitle, gbc_lblTitle);
 		
 		panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
