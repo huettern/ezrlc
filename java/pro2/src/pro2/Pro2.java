@@ -18,12 +18,18 @@ import javax.swing.JPanel;
 
 
 import pro2.MVC.Controller;
+import pro2.MVC.Controller.DataSource;
 import pro2.MVC.Model;
 import pro2.ModelCalculation.MCUtil;
 import pro2.ModelCalculation.Polynomial;
+import pro2.ModelCalculation.MCEqCircuit;
+import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
 import pro2.ModelCalculation.MCOptions;
 import pro2.Plot.Figure;
+import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.RFData.RFData;
+import pro2.RFData.RFData.ComplexModifier;
+import pro2.RFData.RFData.MeasurementType;
 import pro2.View.MainView;
 import pro2.util.Complex;
 import pro2.util.MathUtil;
@@ -106,7 +112,32 @@ public class Pro2 {
 //
 //		System.out.println("div1=" +n.polydiv(d, w).get(0).sprintRI());
 //		System.out.println("div2=" +n.polydiv(d, w).get(1).sprintRI());
-			
+
+		//================================================================================
+	    // Model Test
+	    //================================================================================
+		
+		// Plot test
+		double[] params = {20,0,0,0,10e-9,10e-9,0}; 
+		double[] w = MathUtil.linspace(2.0*Math.PI*(1e6), 2.0*Math.PI*(100e6), 100);
+//		for (double d : w) {
+//			System.out.println(d);
+//		}
+		
+		MCEqCircuit ec = new MCEqCircuit(CIRCUIT_TYPE.MODEL4, params);
+		ec.setWVector(w);
+//		
+//		RectPlotNewMeasurement nm = new RectPlotNewMeasurement();
+//		nm.type = MeasurementType.Z;
+//		nm.cpxMod = ComplexModifier.REAL;
+//		nm.eqCircuit = ec;
+//		nm.src = DataSource.MODEL;
+//		nm.src_name = "Model 0";
+//		
+//		int id = controller.createDataset(nm);
+		MathUtil.dumpListComplex("tmp.txt", ec.getZ());
+		System.out.println("done");
+		
 		
 		
 		
@@ -114,40 +145,40 @@ public class Pro2 {
 	    // MC Test
 	    //================================================================================
 		
-		/**
-		 * Apply options first
-		 */
-		MCOptions opt = new MCOptions();
-		
-		opt.fMin = 25;
-		opt.fMax = 55;
-		opt.nElementsMin = 2;
-		opt.nElementsMax = 3;
-		opt.skinEffectEnabled = true;
-		
-		double[] f = {10,20,30,40,50,60,70,80,90,100};
-		double[] ys = {1,2,3,4,5,6,7,8,9,10};
-		double[] yz = {1,2,3,4,5,6,7,8,9,10};
-		
-
-		double[] w = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.OMEGA);
-		ys = MCUtil.applyMCOpsToData(opt, f, ys);
-		yz = MCUtil.applyMCOpsToData(opt, f, yz);
-		double[] fn = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.HZ);
-		
-		int[] ES = MCUtil.createModelList(opt);
-		
-		System.out.println("ES="+Arrays.toString(ES));
-		System.out.println("w="+Arrays.toString(w));
-		System.out.println("fn="+Arrays.toString(fn));
-		System.out.println("yz="+Arrays.toString(yz));
-		System.out.println("ys="+Arrays.toString(ys));
-		
-		/**
-		 * Do analytic initial guess generation
-		 */
-		double[][] paramArray = new double[ES.length][7];
-		//paramArray[0] = {}
+//		/**
+//		 * Apply options first
+//		 */
+//		MCOptions opt = new MCOptions();
+//		
+//		opt.fMin = 25;
+//		opt.fMax = 55;
+//		opt.nElementsMin = 2;
+//		opt.nElementsMax = 3;
+//		opt.skinEffectEnabled = true;
+//		
+//		double[] f = {10,20,30,40,50,60,70,80,90,100};
+//		double[] ys = {1,2,3,4,5,6,7,8,9,10};
+//		double[] yz = {1,2,3,4,5,6,7,8,9,10};
+//		
+//
+//		double[] w = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.OMEGA);
+//		ys = MCUtil.applyMCOpsToData(opt, f, ys);
+//		yz = MCUtil.applyMCOpsToData(opt, f, yz);
+//		double[] fn = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.HZ);
+//		
+//		int[] ES = MCUtil.createModelList(opt);
+//		
+//		System.out.println("ES="+Arrays.toString(ES));
+//		System.out.println("w="+Arrays.toString(w));
+//		System.out.println("fn="+Arrays.toString(fn));
+//		System.out.println("yz="+Arrays.toString(yz));
+//		System.out.println("ys="+Arrays.toString(ys));
+//		
+//		/**
+//		 * Do analytic initial guess generation
+//		 */
+//		double[][] paramArray = new double[ES.length][7];
+//		//paramArray[0] = {}
 		
 		
 		
@@ -212,7 +243,7 @@ public class Pro2 {
 //		frame.setVisible(true);
 //        
         /* Create Test Data set */
-		List<Complex> cpxtext = new ArrayList<Complex>();
+//		List<Complex> cpxtext = new ArrayList<Complex>();
 //		cpxtext.add(new Complex(10.0, 20.0));
 //		cpxtext.add(new Complex(1.0, 0.2));
 //		cpxtext.add(new Complex(1.0, 0.4));

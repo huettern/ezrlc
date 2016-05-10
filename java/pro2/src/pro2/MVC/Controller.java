@@ -1,6 +1,7 @@
 package pro2.MVC;
 
 import pro2.MVC.Model;
+import pro2.ModelCalculation.MCEqCircuit;
 import pro2.Plot.Figure;
 import pro2.Plot.Figure.ENPlotType;
 import pro2.Plot.PlotDataSet;
@@ -75,8 +76,8 @@ public class Controller {
 	 * @param cpxMod RFData.ComplexModifier
 	 * @return	unique data identifier of the plotdataset
 	 */
-	public int createDataset(DataSource src, int id, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
-		return model.createDataset(src,id,measType,cpxMod);
+	public int createDataset(DataSource src, MCEqCircuit ec, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
+		return model.createDataset(src,ec,measType,cpxMod);
 	}
 	/**
 	 * Adds a new Dataset in the model

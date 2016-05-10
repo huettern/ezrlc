@@ -37,7 +37,7 @@ public class MCEqCircuit {
 	
 	private double[] parameters = new double[7];
 	
-	
+	private double[] wvector;
 
 	//================================================================================
     // Constructor
@@ -50,52 +50,90 @@ public class MCEqCircuit {
 		this.circuitType = circuitType;
 		System.arraycopy(params, 0, parameters, 0, params.length);
 	}
-	
 
+	//================================================================================
+    // Setter Functions
+    //================================================================================
+	/**
+	 * Set the frequency vector in omega
+	 * @param w f vecotr
+	 */
+	public final void setWVector(double[] w) {
+		this.wvector = new double[w.length];
+		System.arraycopy(w, 0, this.wvector, 0, w.length);
+	}
+	
+	
 	//================================================================================
     // Public Functions
     //================================================================================
-	
+
 	/**
-	 * Returns the scattering parameters of a given model, freq and params
-	 * @param idx model index
+	 * Returns the scattering parameters to the given freq parameters
 	 * @param w frequency vecotr in omega
-	 * @param a parameter list
 	 * @return Complex array with scattering parameters
 	 */
-	public final List<Complex> getS (double[] w) {
-		List<Complex> yz = null;
-		
-		switch(this.circuitType) {
-			case MODEL0: yz = model0(w); break;
-			case MODEL1: yz = model1(w); break;
-			case MODEL2: yz = model2(w); break;
-			case MODEL3: yz = model3(w); break;
-			case MODEL4: yz = model4(w); break;
-			case MODEL5: yz = model5(w); break;
-			case MODEL6: yz = model6(w); break;
-			case MODEL7: yz = model7(w); break;
-			case MODEL8: yz = model8(w); break;
-			case MODEL9: yz = model9(w); break;
-			case MODEL10: yz = model10(w); break;
-			case MODEL11: yz = model11(w); break;
-			case MODEL12: yz = model12(w); break;
-			case MODEL13: yz = model13(w); break;
-			case MODEL14: yz = model14(w); break;
-			case MODEL15: yz = model15(w); break;
-			case MODEL16: yz = model16(w); break;
-			case MODEL17: yz = model17(w); break;
-			case MODEL18: yz = model18(w); break;
-			case MODEL19: yz = model19(w); break;
-			case MODEL20: yz = model20(w); break;
-			default: System.err.println("FATAL: Model idx not found");;
-		}
+	public final ArrayList<Complex> getS () {
 		// convert to s parameter
-		List<Complex> ys = RFData.z2s(50, yz);
+		ArrayList<Complex> ys = RFData.z2s(50, this.getZ());
 		
 		return ys;
 	}
+	
+	/**
+	 * Returns the admittance parameters to the given freq parameters
+	 * @param w frequency vecotr in omega
+	 * @return Complex array with admittance parameters
+	 */
+	public final ArrayList<Complex> getY () {
+		// convert to s parameter
+		ArrayList<Complex> yy = RFData.z2y(this.getZ());
+		
+		return yy;
+	}
 
+	/**
+	 * Returns the impedance parameters to the given freq parameters
+	 * @param w frequency vecotr in omega
+	 * @return Complex array with impedance parameters
+	 */
+	public final ArrayList<Complex> getZ () {
+		ArrayList<Complex> yz = null;
+		
+		switch(this.circuitType) {
+			case MODEL0: yz = model0(); break;
+			case MODEL1: yz = model1(); break;
+			case MODEL2: yz = model2(); break;
+			case MODEL3: yz = model3(); break;
+			case MODEL4: yz = model4(); break;
+			case MODEL5: yz = model5(); break;
+			case MODEL6: yz = model6(); break;
+			case MODEL7: yz = model7(); break;
+			case MODEL8: yz = model8(); break;
+			case MODEL9: yz = model9(); break;
+			case MODEL10: yz = model10(); break;
+			case MODEL11: yz = model11(); break;
+			case MODEL12: yz = model12(); break;
+			case MODEL13: yz = model13(); break;
+			case MODEL14: yz = model14(); break;
+			case MODEL15: yz = model15(); break;
+			case MODEL16: yz = model16(); break;
+			case MODEL17: yz = model17(); break;
+			case MODEL18: yz = model18(); break;
+			case MODEL19: yz = model19(); break;
+			case MODEL20: yz = model20(); break;
+			default: System.err.println("FATAL: Model idx not found");;
+		}
+		return yz;
+	}
+	
+	/**
+	 * Returns the size of the w vector
+	 * @return size of w vector
+	 */
+	public int getWSize (){
+		return this.wvector.length;
+	}
 	
 	//================================================================================
     // Private Functions
@@ -105,155 +143,239 @@ public class MCEqCircuit {
 	//================================================================================
     // Private Functions 
     //================================================================================
-	private List<Complex> model0 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 0
+	 * @return
+	 */
+	private ArrayList<Complex> model0 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4],p[0]);
 	    Polynomial pd =new Polynomial(0,0,0,1);
-	    List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+	    ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model1 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model1 
+	 * @return
+	 */
+	private ArrayList<Complex> model1 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4]*p[0],0);
 	    Polynomial pd =new Polynomial(0,0,p[4],p[0]);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model2 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 2
+	 * @return
+	 */
+	private ArrayList<Complex> model2 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[5]*p[0],1);
 	    Polynomial pd =new Polynomial(0,0,p[5],0);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model3 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 3
+	 * @return
+	 */
+	private ArrayList<Complex> model3 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,0,p[0]);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model4 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 4
+	 * @return
+	 */
+	private ArrayList<Complex> model4 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[4]*p[5],p[0]*p[5],1);
 	    Polynomial pd =new Polynomial(0,0,p[5],0);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model5 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 5
+	 * @return
+	 */
+	private ArrayList<Complex> model5 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[0]*p[4],0);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4]*p[0],p[4],p[0]);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model6 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 6
+	 * @return
+	 */
+	private ArrayList<Complex> model6 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4],p[0]);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4],p[5]*p[0],1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model7 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 7
+	 * @return
+	 */
+	private ArrayList<Complex> model7 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[5]*p[4]*p[0],p[4],p[0]);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model8 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 8
+	 * @return
+	 */
+	private ArrayList<Complex> model8 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[5]*p[0]*p[3],p[0]+p[3]);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model9 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 9
+	 * @return
+	 */
+	private ArrayList<Complex> model9 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[4]*p[5]*p[0],p[4]+p[5]*p[0]*p[3],p[0]+p[3]);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model10 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 10
+	 * @return
+	 */
+	private ArrayList<Complex> model10 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[5]*p[4]*p[0]*p[3],p[4]*p[0]+p[4]*p[3],p[3]*p[0]);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4]*p[0],p[4],p[0]);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model11 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 11
+	 * @return
+	 */
+	private ArrayList<Complex> model11 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4],p[3]);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4],p[5]*p[3]+p[4]*p[0],p[3]*p[0]+1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model12 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 12
+	 * @return
+	 */
+	private ArrayList<Complex> model12 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[4]*p[5],p[0]*p[5],1);
 	    Polynomial pd =new Polynomial(p[5]*p[6]*p[4],p[5]*p[6]*p[0],p[5]+p[6],0);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model13 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 13
+	 * @return
+	 */
+	private ArrayList<Complex> model13 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[4]*p[5],p[5],1);
 	    Polynomial pd =new Polynomial(0,0,p[5],0);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model14 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 14
+	 * @return
+	 */
+	private ArrayList<Complex> model14 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4],1);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4],p[5],1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model15 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 15
+	 * @return
+	 */
+	private ArrayList<Complex> model15 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[5]*p[4],p[4],1);
 	    Polynomial pd =new Polynomial(0,0,p[5],1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model16 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 16
+	 * @return
+	 */
+	private ArrayList<Complex> model16 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[5]*p[4],p[4],1);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		List<Complex> res = new ArrayList<Complex>();
-	    res = pn.polydiv(pd, w);
+		ArrayList<Complex> res = new ArrayList<Complex>();
+	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
-	private List<Complex> model17 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 17
+	 * @return
+	 */
+	private ArrayList<Complex> model17 () {
 		double[] p = this.parameters;
 		return null;
 	}
-	private List<Complex> model18 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 18
+	 * @return
+	 */
+	private ArrayList<Complex> model18 () {
 		double[] p = this.parameters;
 		return null;
 	}
-	private List<Complex> model19 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 19
+	 * @return
+	 */
+	private ArrayList<Complex> model19 () {
 		double[] p = this.parameters;
 		return null;
 	}
-	private List<Complex> model20 (double[] w) {
+	/**
+	 * Calculates the impedance parameters of the model 20
+	 * @return
+	 */
+	private ArrayList<Complex> model20 () {
 		double[] p = this.parameters;
 		return null;
 	}
