@@ -106,6 +106,10 @@ public class Complex {
     public double angle() {
     	return Math.atan2(im, re);
     }  
+    
+	public static double angle(Complex c) {
+		return Math.atan2(c.im, c.re);
+	}
 
     /**
      * return a new Complex object whose value is (this + b)
@@ -188,6 +192,16 @@ public class Complex {
     public Complex exp() {
         return new Complex(Math.exp(re) * Math.cos(im), Math.exp(re) * Math.sin(im));
     }
+    
+    /**
+     * Raises the complex number to the given exponent
+     * @param x exponent
+     * @return c^x
+     */
+	public Complex pow(double x) {
+		return new Complex(Math.pow(this.abs(), x) * Math.cos(x * angle(this)),
+				Math.pow(this.abs(), x) * Math.sin(x * angle(this)));
+	}
 
     /**
      * return a new Complex object whose value is the complex sine of this

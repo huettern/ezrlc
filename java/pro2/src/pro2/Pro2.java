@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import pro2.MVC.Controller;
 import pro2.MVC.Model;
 import pro2.ModelCalculation.MCUtil;
+import pro2.ModelCalculation.Polynomial;
 import pro2.ModelCalculation.MCOptions;
 import pro2.Plot.Figure;
 import pro2.RFData.RFData;
@@ -40,26 +41,75 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-		EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {                                           
-                Model model = new Model();
-                MainView view = new MainView();
-                Controller controller = new Controller(model,view);
-                
-                view.setController(controller);
-                model.setController(controller);
-                
-                view.build();
-                view.setVisible(true);
-                
-                // Add observers
-                model.addObserver(view);
-                
-                controller.contol();
-            }
-        });  
+//		EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {                                           
+//                Model model = new Model();
+//                MainView view = new MainView();
+//                Controller controller = new Controller(model,view);
+//                
+//                view.setController(controller);
+//                model.setController(controller);
+//                
+//                view.build();
+//                view.setVisible(true);
+//                
+//                // Add observers
+//                model.addObserver(view);
+//                
+//                controller.contol();
+//            }
+//        });  
 
+		//================================================================================
+	    // Polyval test
+	    //================================================================================
+//		Polynomial p = new Polynomial(0,0,0,0,0);
+//		
+//		System.out.println("equ=" +p.polyval(new Complex(0,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(1,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(10,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(-1,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(-10,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(0.5,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(0,1)).sprintRI() );
+		
+
+//		Polynomial n = new Polynomial(3,2,15,8,23);
+//		Polynomial d = new Polynomial(42,-3.5,1,0,Math.PI, 69.8);
+//		
+//		Complex x = new Complex(5,5);
+//		
+//		System.out.println("equ=" +n.polydiv(d, x).sprintRI() );
+		
+
+		
+		// Skin
+//		double l=1e-6; double c0=1e-9;
+//		double r0=100.0; double f0=1000.0; double alpha=0.8;
+//
+//		// model no 15matlab(14)
+//		Polynomial n=new Polynomial(0,0,l,1);
+//		Polynomial d=new Polynomial(0,c0*l,c0,1);
+//		int[] i = {3};
+//		n.setVarRes(r0, f0, alpha, i);
+//		i[0] = 2;
+//		d.setVarRes(r0, f0, alpha, i);
+//
+//		
+//		
+//		double[] w = {2.0*Math.PI*2000, 2.0*Math.PI*3000};
+//		System.out.println("nequ1=" +n.polyval(w).get(0).sprintRI() );
+//		System.out.println("nequ2=" +n.polyval(w).get(1).sprintRI() );
+//		System.out.println("pequ1=" +d.polyval(w).get(0).sprintRI() );
+//		System.out.println("pequ2=" +d.polyval(w).get(1).sprintRI() );
+//
+//		System.out.println("div1=" +n.polydiv(d, w).get(0).sprintRI());
+//		System.out.println("div2=" +n.polydiv(d, w).get(1).sprintRI());
+			
+		
+		
+		
 		//================================================================================
 	    // MC Test
 	    //================================================================================
