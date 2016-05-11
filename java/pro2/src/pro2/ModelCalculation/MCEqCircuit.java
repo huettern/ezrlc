@@ -63,6 +63,14 @@ public class MCEqCircuit {
 		System.arraycopy(w, 0, this.wvector, 0, w.length);
 	}
 	
+	/**
+	 * Sets the parameter array of the circuit
+	 * @param params Parameter array [7]
+	 */
+	public final void setParameters (double[] params) {
+		System.arraycopy(params, 0, parameters, 0, params.length);
+	}
+	
 	
 	//================================================================================
     // Public Functions

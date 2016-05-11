@@ -16,11 +16,19 @@ public class MCErrorSum {
 	//================================================================================
     // Private Functions
     //================================================================================
-	private static double leastSquare (int idx, double[] w, Complex[] ys, double[] param) {
+	/**
+	 * Builds the square of the delta between measured and simulated and sums them up
+	 * @param measured
+	 * @param simulated
+	 * @return error sum
+	 */
+	private static double leastSquare (double[] measured, double[] simulated) {
 		double error = 0;
+		double delta = 0;
 		
-		for(int ctr = 0; ctr < w.length; ctr++) {
-			
+		for(int ctr = 0; ctr < measured.length; ctr++) {
+			delta = simulated[ctr] - measured[ctr];
+			error = error + Math.pow(delta, 2);
 		}
 		
 		return error;
@@ -31,14 +39,12 @@ public class MCErrorSum {
     //================================================================================
 	/**
 	 * Returns the Error sum
-	 * @param idx model index
-	 * @param w frequency vector
-	 * @param ys scattering data
-	 * @param param parameter array
-	 * @return double value of the error
+	 * @param measured measured data
+	 * @param simulated simulated data
+	 * @return
 	 */
-	public static final double getError (int idx, double[] w, Complex[] ys, double[] param) {
-		return leastSquare(idx,w,ys,param);
+	public static final double getError (double[] measured, double[] simulated) {
+		return leastSquare(measured, simulated);
 	}
 
 	

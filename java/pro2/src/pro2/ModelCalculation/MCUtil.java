@@ -1,6 +1,8 @@
 package pro2.ModelCalculation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
 import pro2.ModelCalculation.MCUtil.DATA_FORMAT;
@@ -146,7 +148,7 @@ public class MCUtil {
 	 * @param opt MCOptions given by user
 	 * @return integer array, holding the possible equivalent model indexes
 	 */
-	public static final int[] createModelList (MCOptions opt) {
+	public static final CIRCUIT_TYPE[] createModelList (MCOptions opt) {
 		// create list of equivalent models
 		int num_models = 0;
 		// count how many there are without skin effect
@@ -177,7 +179,11 @@ public class MCUtil {
 			}
 		}
 		
-		return modelIdx;
+		CIRCUIT_TYPE[] circuitList = new CIRCUIT_TYPE[modelIdx.length];
+		for (int i = 0; i < modelIdx.length; i++) {
+			circuitList[i]=modelIdxToCircuitType(modelIdx[i]);
+		}
+		return circuitList;
 	}
 	
 	/**
