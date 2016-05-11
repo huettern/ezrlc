@@ -57,6 +57,7 @@ public class RectangularPlot extends JPanel implements Observer {
 				new Color(161, 19, 46)
 			));
 	private int PlotSetColorsCtr = 0;	//Holds the index of the next color to be used
+	private boolean enableAutoAutoscale = true;
 	
 	//================================================================================
     // Constructors
@@ -142,7 +143,7 @@ public class RectangularPlot extends JPanel implements Observer {
 			i++;
 		}
 		// if only one dataset, do autoscale
-		if(this.dataSets.size() == 1) {
+		if(this.dataSets.size() == 1 && this.enableAutoAutoscale) {
 			this.autoScale();
 		}
 	}
@@ -233,6 +234,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	
 	public void setSettings(RectPlotSettings s) {
 		this.settings = s;
+		this.enableAutoAutoscale = false;
 		this.updateSettings();
 		repaint();
 	}
@@ -250,6 +252,9 @@ public class RectangularPlot extends JPanel implements Observer {
 				dataSetSettings.remove(ctr);
 				iter.remove();
 			}
+		}
+		if(dataSetIDs.isEmpty()) {
+			this.enableAutoAutoscale = true;
 		}
 		this.repaint();
 	}
