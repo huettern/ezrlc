@@ -253,7 +253,7 @@ public class Axis {
 				return (int)((dy/dx)*(d-this.min)+this.start_y);
 			}
 			else if(this.scale == Scale.LOG) {
-				if (d == 0) return this.start_y;
+				if (d <= 0) return this.start_y;
 				double delta = this.logUpperBound - this.logLowerBound;
 				double deltaV = Math.log10(d) - this.logLowerBound;
 				double width = this.end_y - this.start_y;

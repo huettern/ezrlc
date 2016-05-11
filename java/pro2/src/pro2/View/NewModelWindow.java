@@ -48,6 +48,19 @@ public class NewModelWindow implements ActionListener{
 	private JTextField txtR1;
 	private JTextField txtC1;
 	
+	private JCheckBox chBoxFmin;
+	private JCheckBox chBoxFmax;
+	private JCheckBox chBoxModelList;
+	private JCheckBox chBoxCompMin;
+	private JCheckBox chBoxCompMax;
+	private JCheckBox chBoxL;
+	private JCheckBox chBoxC0;
+	private JCheckBox chBoxC1;
+	private JCheckBox chBoxR0;
+	private JCheckBox chBoxR1;
+	private JCheckBox chBoxF;
+	private JCheckBox chBoxAlpha;
+	
 	private JButton btnCancel;
 	private JButton btnAllAuto;
 	private JButton btnGenerate;
@@ -133,13 +146,13 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblHz.gridy = 1;
 		pnlFrequency.add(lblHz, gbc_lblHz);
 		
-		JCheckBox chboxFmin = new JCheckBox("");
-		chboxFmin.setSelected(true);
-		GridBagConstraints gbc_chboxFmin = new GridBagConstraints();
-		gbc_chboxFmin.insets = new Insets(0, 0, 5, 0);
-		gbc_chboxFmin.gridx = 3;
-		gbc_chboxFmin.gridy = 1;
-		pnlFrequency.add(chboxFmin, gbc_chboxFmin);
+		chBoxFmin = new JCheckBox("");
+		chBoxFmin.setSelected(true);
+		GridBagConstraints gbc_chBoxFmin = new GridBagConstraints();
+		gbc_chBoxFmin.insets = new Insets(0, 0, 5, 0);
+		gbc_chBoxFmin.gridx = 3;
+		gbc_chBoxFmin.gridy = 1;
+		pnlFrequency.add(chBoxFmin, gbc_chBoxFmin);
 		
 		JLabel lblFmax = new JLabel("<html> f<sub>max</sub> </html>");
 		GridBagConstraints gbc_lblFmax = new GridBagConstraints();
@@ -166,7 +179,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblHz_1.gridy = 2;
 		pnlFrequency.add(lblHz_1, gbc_lblHz_1);
 		
-		JCheckBox chBoxFmax = new JCheckBox("");
+		chBoxFmax = new JCheckBox("");
 		chBoxFmax.setSelected(true);
 		GridBagConstraints gbc_chBoxFmax = new GridBagConstraints();
 		gbc_chBoxFmax.gridx = 3;
@@ -190,13 +203,13 @@ public class NewModelWindow implements ActionListener{
 		gbl_pnlModelSelection.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		pnlModelSelection.setLayout(gbl_pnlModelSelection);
 		
-		JCheckBox checkBox = new JCheckBox("");
-		checkBox.setSelected(true);
-		GridBagConstraints gbc_checkBox = new GridBagConstraints();
-		gbc_checkBox.insets = new Insets(0, 5, 5, 5);
-		gbc_checkBox.gridx = 0;
-		gbc_checkBox.gridy = 0;
-		pnlModelSelection.add(checkBox, gbc_checkBox);
+		chBoxModelList = new JCheckBox("");
+		chBoxModelList.setSelected(true);
+		GridBagConstraints gbc_chBoxModelList = new GridBagConstraints();
+		gbc_chBoxModelList.insets = new Insets(0, 5, 5, 5);
+		gbc_chBoxModelList.gridx = 0;
+		gbc_chBoxModelList.gridy = 0;
+		pnlModelSelection.add(chBoxModelList, gbc_chBoxModelList);
 		
 		JLabel lblAuto_4 = new JLabel("Auto");
 		GridBagConstraints gbc_lblAuto_4 = new GridBagConstraints();
@@ -264,7 +277,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_label_1.gridy = 1;
 		pnlComponents.add(label_1, gbc_label_1);
 		
-		JCheckBox chBoxCompMin = new JCheckBox("");
+		chBoxCompMin = new JCheckBox("");
 		chBoxCompMin.setSelected(true);
 		GridBagConstraints gbc_chBoxCompMin = new GridBagConstraints();
 		gbc_chBoxCompMin.insets = new Insets(0, 0, 5, 0);
@@ -290,7 +303,7 @@ public class NewModelWindow implements ActionListener{
 		pnlComponents.add(txtCompMax, gbc_txtCompMax);
 		txtCompMax.setColumns(10);
 		
-		JCheckBox chBoxCompMax = new JCheckBox("");
+		chBoxCompMax = new JCheckBox("");
 		chBoxCompMax.setSelected(true);
 		GridBagConstraints gbc_chBoxCompMax = new GridBagConstraints();
 		gbc_chBoxCompMax.gridx = 3;
@@ -345,7 +358,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtL, gbc_txtL);
 		txtL.setColumns(10);
 		
-		JCheckBox chBoxL = new JCheckBox("");
+		chBoxL = new JCheckBox("");
 		chBoxL.setSelected(true);
 		GridBagConstraints gbc_chBoxL = new GridBagConstraints();
 		gbc_chBoxL.insets = new Insets(0, 0, 5, 5);
@@ -371,7 +384,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtR0, gbc_txtR0);
 		txtR0.setColumns(10);
 		
-		JCheckBox chBoxR0 = new JCheckBox("");
+		chBoxR0 = new JCheckBox("");
 		chBoxR0.setSelected(true);
 		GridBagConstraints gbc_chBoxR0 = new GridBagConstraints();
 		gbc_chBoxR0.insets = new Insets(0, 0, 5, 0);
@@ -397,7 +410,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtC0, gbc_txtC0);
 		txtC0.setColumns(10);
 		
-		JCheckBox chBoxC0 = new JCheckBox("");
+		chBoxC0 = new JCheckBox("");
 		chBoxC0.setSelected(true);
 		GridBagConstraints gbc_chBoxC0 = new GridBagConstraints();
 		gbc_chBoxC0.insets = new Insets(0, 0, 5, 5);
@@ -423,7 +436,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtAlpha, gbc_txtAlpha);
 		txtAlpha.setColumns(10);
 		
-		JCheckBox chBoxAlpha = new JCheckBox("");
+		chBoxAlpha = new JCheckBox("");
 		chBoxAlpha.setSelected(true);
 		GridBagConstraints gbc_chBoxAlpha = new GridBagConstraints();
 		gbc_chBoxAlpha.insets = new Insets(0, 0, 5, 0);
@@ -449,7 +462,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtR1, gbc_txtR1);
 		txtR1.setColumns(10);
 		
-		JCheckBox chBoxR1 = new JCheckBox("");
+		chBoxR1 = new JCheckBox("");
 		chBoxR1.setSelected(true);
 		GridBagConstraints gbc_chBoxR1 = new GridBagConstraints();
 		gbc_chBoxR1.insets = new Insets(0, 0, 5, 5);
@@ -475,7 +488,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtF, gbc_txtF);
 		txtF.setColumns(10);
 		
-		JCheckBox chBoxF = new JCheckBox("");
+		chBoxF = new JCheckBox("");
 		chBoxF.setSelected(true);
 		GridBagConstraints gbc_chBoxF = new GridBagConstraints();
 		gbc_chBoxF.insets = new Insets(0, 0, 5, 0);
@@ -501,7 +514,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtC1, gbc_txtC1);
 		txtC1.setColumns(10);
 		
-		JCheckBox chBoxC1 = new JCheckBox("");
+		chBoxC1 = new JCheckBox("");
 		chBoxC1.setSelected(true);
 		GridBagConstraints gbc_chBoxC1 = new GridBagConstraints();
 		gbc_chBoxC1.insets = new Insets(0, 0, 0, 5);
@@ -562,7 +575,18 @@ public class NewModelWindow implements ActionListener{
 		}
 		
 		if(e.getSource() == btnAllAuto) {
-			
+			chBoxAlpha.setSelected(true);
+			chBoxC0.setSelected(true);
+			chBoxC1.setSelected(true);
+			chBoxCompMax.setSelected(true);
+			chBoxCompMin.setSelected(true);
+			chBoxF.setSelected(true);
+			chBoxFmax.setSelected(true);
+			chBoxFmin.setSelected(true);
+			chBoxL.setSelected(true);
+			chBoxModelList.setSelected(true);
+			chBoxR0.setSelected(true);
+			chBoxR1.setSelected(true);
 		}
 		
 		if(e.getSource() == btnGenerate) {

@@ -292,11 +292,23 @@ public class RectangularPlot extends JPanel implements Observer {
 			if(dataset.getXMin() < xmin) { xmin = dataset.getXMin(); }
 			if(dataset.getYMax() > ymax) { ymax = dataset.getYMax(); }
 			if(dataset.getYMin() < ymin) { ymin = dataset.getYMin(); }
-			// if log axis, set minimum at first non-zero value
+			// if log X-axis, set minimum at first non-zero value
 			if(settings.xScale == Scale.LOG) {
 				xmin = dataset.getXData().get(1);
 			}
 		}
+		
+		// if log Y-axis, set minimum at first non-zero or negative value
+		if(settings.yScale == Scale.LOG) {
+			ymin = Double.MAX_VALUE;
+			for (PlotDataSet dataset : this.dataSets) {
+				for (Double d : dataset.getYData()) {
+					if((d > 0) && (d < ymin)) {ymin = d;}
+				}
+//				if(dataset.getYMin() <= 0) {ymin = dataset.}
+			}
+		}
+
 		
 		// round the values
 		xmin = MathUtil.roundNice(xmin);
