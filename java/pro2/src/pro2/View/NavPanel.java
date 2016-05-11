@@ -40,7 +40,8 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	private Controller controller;
 	
 	private FileChooser fileChooser;
-	private GraphWindow GraphDialog;
+	private GraphWindow graphWindow;
+	private NewModelWindow newModelWindow;
 	
 	private JButton btnLoadFile, btnNewModel, btnNewGraph;
 	private JLabel lblInputFile;
@@ -58,7 +59,8 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	public NavPanel(Controller controller) {
 		this.controller = controller;	
 		this.fileChooser = new FileChooser(controller);
-		this.GraphDialog = new GraphWindow(controller);
+		this.graphWindow = new GraphWindow(controller);
+		this.newModelWindow = new NewModelWindow(controller);
 	}
 		
 	
@@ -253,22 +255,25 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//handle new Graphs
 		if(e.getSource() == btnNewGraph) {	
-			GraphDialog.buildDialog();
+			graphWindow.buildDialog();
 		}
 		
 		//handle new Model
 		if(e.getSource() == btnNewModel) {
+			newModelWindow.buildNewModelWindow();
+			
+			
 			// Dataset list entry
-			ModelLabelPanel p = new ModelLabelPanel();
-			modelLabelPanels.add(p);
-			pnlModel.add(p, new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,5,0), 0, 0));
-			// adjust pnlDataSets gridbaglayout so that row weights are zero except last one
-			double[] d = new double[modelPnlRowCnt+1];
-			for (int i = 0; i<d.length; i++) { d[i] = 0.0; }
-			d[modelPnlRowCnt] = 1.0;
-			gbl_pnlModel.rowWeights = d;
-			pnlModel.setLayout(gbl_pnlModel);
-			super.updateUI();
+//			ModelLabelPanel p = new ModelLabelPanel();
+//			modelLabelPanels.add(p);
+//			pnlModel.add(p, new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,5,0), 0, 0));
+//			// adjust pnlDataSets gridbaglayout so that row weights are zero except last one
+//			double[] d = new double[modelPnlRowCnt+1];
+//			for (int i = 0; i<d.length; i++) { d[i] = 0.0; }
+//			d[modelPnlRowCnt] = 1.0;
+//			gbl_pnlModel.rowWeights = d;
+//			pnlModel.setLayout(gbl_pnlModel);
+//			super.updateUI();
 		}
 		
 	}

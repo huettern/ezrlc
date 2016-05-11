@@ -48,6 +48,7 @@ public class GraphWindow implements ActionListener{
 	
 	//================================================================================
     // Constructors
+	//================================================================================
 	public GraphWindow(Controller controller) {
 		this.controller = controller;
 	}
@@ -66,7 +67,7 @@ public class GraphWindow implements ActionListener{
 		graphDialog.setTitle("New Graph");		
 		graphDialog.setModal(true);
 		graphDialog.setLocation(250, 150);
-		graphDialog.setSize(300, 182);
+		graphDialog.setSize(300, 200);
 		
 		//Main Panel
 		GridBagLayout gridBagLayout = new GridBagLayout();
