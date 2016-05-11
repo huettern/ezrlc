@@ -1,9 +1,12 @@
 package pro2.ModelCalculation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
 import pro2.ModelCalculation.MCUtil.DATA_FORMAT;
+import pro2.util.Complex;
 
 /**
  * Helper Functions and definitions for Model calculation
@@ -102,7 +105,7 @@ public class MCUtil {
 	 * Applies MCOptions to data
 	 * @param opt MCOptions given by user
 	 * @param f frequency data in Hertz
-	 * @param data data int
+	 * @param data 
 	 * @return data array out, cut to the f-range
 	 */
 	public static final double[] applyMCOpsToData (MCOptions opt, double[] f, double[] data) {
@@ -138,6 +141,34 @@ public class MCUtil {
 		System.arraycopy(data, idxLow, data_out, 0, idxHigh-idxLow+1);
 		return data_out;
 	}
+	/**
+	 * Applies MCOptions to data
+	 * @param opt MCOptions given by user
+	 * @param f frequency data in Hertz
+	 * @param data data int
+	 * @return data array out, cut to the f-range
+	 */
+	public static final Complex[] applyMCOpsToData (MCOptions opt, double[] f, Complex[] data) {
+		// extract real and imag data
+		double[] real = new double[data.length];
+		double[] imag = new double[data.length];
+		for(int i = 0; i < data.length; i++) {
+			real[i] = data[i].re();
+			imag[i] = data[i].im();
+		}
+		
+		// apply ops
+		real = applyMCOpsToData(opt, f, real);
+		imag = applyMCOpsToData(opt, f, imag);
+		
+		// rebuild array
+		Complex[] res = new Complex[real.length];
+		for(int i = 0; i < data.length; i++) {
+			res[i]=(new Complex(real[i], imag[i]));
+		}
+		
+		return res;
+	}
 	
 	
 	
@@ -146,7 +177,7 @@ public class MCUtil {
 	 * @param opt MCOptions given by user
 	 * @return integer array, holding the possible equivalent model indexes
 	 */
-	public static final int[] createModelList (MCOptions opt) {
+	public static final CIRCUIT_TYPE[] createModelList (MCOptions opt) {
 		// create list of equivalent models
 		int num_models = 0;
 		// count how many there are without skin effect
@@ -177,7 +208,11 @@ public class MCUtil {
 			}
 		}
 		
-		return modelIdx;
+		CIRCUIT_TYPE[] circuitList = new CIRCUIT_TYPE[modelIdx.length];
+		for (int i = 0; i < modelIdx.length; i++) {
+			circuitList[i]=modelIdxToCircuitType(modelIdx[i]);
+		}
+		return circuitList;
 	}
 	
 	/**

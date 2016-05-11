@@ -294,7 +294,7 @@ public class RectangularPlot extends JPanel implements Observer {
 			if(dataset.getYMin() < ymin) { ymin = dataset.getYMin(); }
 			// if log X-axis, set minimum at first non-zero value
 			if(settings.xScale == Scale.LOG) {
-				xmin = dataset.getXData().get(1);
+				xmin = dataset.getXData()[1];
 			}
 		}
 		

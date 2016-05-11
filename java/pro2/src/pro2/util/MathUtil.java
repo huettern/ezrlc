@@ -23,6 +23,18 @@ public class MathUtil {
 		}
 		return res;
 	}
+	/**
+	 * Returns the maximum value of an Arraylist with doubles
+	 * @param d
+	 * @return
+	 */
+	public static double getMax(double[] d) {
+		double res = Double.MIN_VALUE;
+		for (Double db : d) {
+			if(db > res) res = db;
+		}
+		return res;
+	}
 
 	/**
 	 * Returns the maximum value of an Arraylist with doubles
@@ -30,6 +42,19 @@ public class MathUtil {
 	 * @return
 	 */
 	public static double getMin(List<Double> d) {
+		double res = Double.MAX_VALUE;
+		for (Double db : d) {
+			if(db < res) res = db;
+		}
+		return res;
+	}
+
+	/**
+	 * Returns the maximum value of an Arraylist with doubles
+	 * @param d
+	 * @return
+	 */
+	public static double getMin(double[] d) {
 		double res = Double.MAX_VALUE;
 		for (Double db : d) {
 			if(db < res) res = db;

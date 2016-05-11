@@ -1,5 +1,11 @@
 package pro2.ModelCalculation;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.apache.commons.math3.analysis.MultivariateFunction;
+
 import pro2.util.Complex;
 
 /**
@@ -7,20 +13,44 @@ import pro2.util.Complex;
  * @author noah
  *
  */
-public class MCErrorSum {
+public class MCErrorSum implements MultivariateFunction {
 
-	public MCErrorSum() {
-		// TODO Auto-generated constructor stub
+	//================================================================================
+    // Private Data
+    //================================================================================
+	private MCEqCircuit circuit;
+	private Complex[] measured;
+
+	//================================================================================
+    // Constructors
+    //================================================================================
+	/**
+	 * Create new error sum object
+	 * @param measured measured data
+	 * @param circuit equivalent circuit object
+	 */
+	public MCErrorSum(Complex[] measured, MCEqCircuit circuit) {
+		this.circuit = circuit;
+		this.measured = new Complex[measured.length];
+		System.arraycopy(measured, 0, this.measured, 0, measured.length);
 	}
 
 	//================================================================================
     // Private Functions
     //================================================================================
-	private static double leastSquare (int idx, double[] w, Complex[] ys, double[] param) {
+	/**
+	 * Builds the square of the delta between measured and simulated and sums them up
+	 * @param measured
+	 * @param simulated
+	 * @return error sum
+	 */
+	private static double leastSquare (double[] measured, double[] simulated) {
 		double error = 0;
+		double delta = 0;
 		
-		for(int ctr = 0; ctr < w.length; ctr++) {
-			
+		for(int ctr = 0; ctr < measured.length; ctr++) {
+			delta = simulated[ctr] - measured[ctr];
+			error = error + Math.pow(delta, 2);
 		}
 		
 		return error;
@@ -31,14 +61,40 @@ public class MCErrorSum {
     //================================================================================
 	/**
 	 * Returns the Error sum
-	 * @param idx model index
-	 * @param w frequency vector
-	 * @param ys scattering data
-	 * @param param parameter array
-	 * @return double value of the error
+	 * @param measured measured data
+	 * @param simulated simulated data
+	 * @return
 	 */
-	public static final double getError (int idx, double[] w, Complex[] ys, double[] param) {
-		return leastSquare(idx,w,ys,param);
+	public static final double getError (double[] measured, double[] simulated) {
+		return leastSquare(measured, simulated);
+	}
+
+	
+
+	//================================================================================
+    // Interface methods
+    //================================================================================
+	/**
+	 * Gets called by optimizer to calculate error
+	 * @param x: parameter array from optimizer
+	 * @return error
+	 */
+	@Override
+	public double value(double[] params) {
+		System.out.println("Interface value, params=" +Arrays.toString(params));
+		// set new parameter
+		circuit.setParameters(params);
+		// get s parameters
+		Complex[] s = circuit.getS();
+		// build magnitude
+		double[] magS = new double[s.length];
+		double[] magmeas = new double[s.length];
+		for(int i = 0; i < s.length; i++) {
+			magS[i] = s[i].abs();
+			magmeas[i] = this.measured[i].abs();
+		}
+		// calc error
+		return MCErrorSum.getError(magmeas, magS);
 	}
 
 	

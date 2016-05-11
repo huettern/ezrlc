@@ -10,15 +10,31 @@ import java.awt.GridBagLayout;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.apache.commons.math3.analysis.MultivariateFunction;
+import org.apache.commons.math3.optim.InitialGuess;
+import org.apache.commons.math3.optim.MaxEval;
+import org.apache.commons.math3.optim.PointValuePair;
+import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
+import org.apache.commons.math3.optim.nonlinear.scalar.ObjectiveFunction;
+import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.NelderMeadSimplex;
+import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.SimplexOptimizer;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
 import pro2.MVC.Model;
+import pro2.ModelCalculation.MCUtil;
+import pro2.ModelCalculation.Polynomial;
+import pro2.ModelCalculation.MCEqCircuit;
+import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
+import pro2.ModelCalculation.MCErrorSum;
+import pro2.ModelCalculation.MCOptions;
+import pro2.ModelCalculation.MCRank;
 import pro2.Plot.Figure;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.RFData.RFData;
@@ -61,6 +77,232 @@ public class Pro2 {
             }
         });  
 
+		
+
+		//================================================================================
+	    // MC Test
+	    //================================================================================
+		
+		/**
+		 * Apply options first
+		 */
+		MCOptions opt = new MCOptions();
+		
+		opt.fMin = 0;
+		opt.fMax = Double.MAX_VALUE;
+		opt.nElementsMin = 2;
+		opt.nElementsMax = 3;
+		opt.skinEffectEnabled = true;
+		
+//		// fake measurement
+//		double[] f = {10,20,30,40,50,60,70,80,90,100};
+//		double[] ys = {1,2,3,4,5,6,7,8,9,10};
+//		double[] yz = {1,2,3,4,5,6,7,8,9,10};
+		
+		// real measurement
+		RFData rfData = new RFData("../../sample_files/RLC_S_Sven.s1p");;
+		try {
+			rfData.parse();
+		} catch (IOException e) {}
+
+		double[] fdata = rfData.getfData();
+		double[] f = new double[fdata.length];
+		for(int i = 0; i < fdata.length; i++){
+			f[i] = fdata[i];
+		}
+		
+		// apply ops
+		double[] w = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.OMEGA);
+		Complex[] ys = MCUtil.applyMCOpsToData(opt, f, rfData.getsData());
+
+		CIRCUIT_TYPE[] circuitList;
+		circuitList = MCUtil.createModelList(opt);
+
+		
+		/**
+		 * Create list of models
+		 */
+		List<MCEqCircuit> circuits = new ArrayList<MCEqCircuit>(circuitList.length);
+		for (CIRCUIT_TYPE type : circuitList) {
+			circuits.add(new MCEqCircuit(type));
+			circuits.get(circuits.size()-1).setWVector(w);
+		}
+		
+		/**
+		 * Do analytic initial guess generation
+		 */
+		//double[][] paramArray = new double[ES.length][7];
+		//paramArray[0] = {}
+		double[] params = {80,0,0,0,10e-9,10e-9,0};
+		circuits.get(4).setParameters(params);
+		
+		/**
+		 * Generate rank of equivalent circuits
+		 */
+		ArrayList<MCEqCircuit> sortedList = MCRank.sortByError(ys, circuits);
+		
+		System.out.println("rank: "+sortedList.toString());
+		/**
+		 * Run optimizer
+		 */
+		// Create error
+		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
+		SimplexOptimizer optimizer = new SimplexOptimizer(1e-12, 1e-30);
+//		PointValuePair optimum = optimizer.optimize(
+//				new MaxEval(100000), 
+//				new ObjectiveFunction(e),
+//				GoalType.MINIMIZE, 
+//				new InitialGuess(params), 
+//				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
+
+//		System.out.println("Bauteilwerte: " + Arrays.toString(optimum.getPoint()) + " Fehler: " + optimum.getValue());
+
+		//================================================================================
+	    // sort test
+	    //================================================================================
+//		double[][] errortest = {
+//				{2,0},
+//				{5,1},
+//				{9.0,2},
+//				{-1,3},
+//				{-99,4},
+//				{0,5},
+//				{2,6},
+//				{42,7},
+//				{3,8},
+//				{0.1,9},
+//				};
+//		System.out.println(Arrays.toString(errortest[0]));
+//		System.out.println(Arrays.toString(errortest[1]));
+//		System.out.println(Arrays.toString(errortest[2]));
+//		System.out.println(Arrays.toString(errortest[3]));
+//		System.out.println(Arrays.toString(errortest[4]));
+//		System.out.println(Arrays.toString(errortest[5]));
+//		System.out.println(Arrays.toString(errortest[6]));
+//		System.out.println(Arrays.toString(errortest[7]));
+//		System.out.println(Arrays.toString(errortest[8]));
+//		System.out.println(Arrays.toString(errortest[9]));
+//		// Sort error array by first col[0], so second col is listed indexes
+//		java.util.Arrays.sort(errortest, new java.util.Comparator<double[]>() {
+//		    public int compare(double[] a, double[] b) {
+//		        return Double.compare(a[0], b[0]);
+//		    }
+//		});
+//		System.out.println(Arrays.toString(errortest[0]));
+//		System.out.println(Arrays.toString(errortest[1]));
+//		System.out.println(Arrays.toString(errortest[2]));
+//		System.out.println(Arrays.toString(errortest[3]));
+//		System.out.println(Arrays.toString(errortest[4]));
+//		System.out.println(Arrays.toString(errortest[5]));
+//		System.out.println(Arrays.toString(errortest[6]));
+//		System.out.println(Arrays.toString(errortest[7]));
+//		System.out.println(Arrays.toString(errortest[8]));
+//		System.out.println(Arrays.toString(errortest[9]));
+//		while(true);
+		
+		//================================================================================
+	    // Polyval test
+	    //================================================================================
+//		Polynomial p = new Polynomial(0,0,0,0,0);
+//		
+//		System.out.println("equ=" +p.polyval(new Complex(0,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(1,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(10,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(-1,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(-10,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(0.5,0)).sprintRI() );
+//		System.out.println("equ=" +p.polyval(new Complex(0,1)).sprintRI() );
+		
+
+//		Polynomial n = new Polynomial(3,2,15,8,23);
+//		Polynomial d = new Polynomial(42,-3.5,1,0,Math.PI, 69.8);
+//		
+//		Complex x = new Complex(5,5);
+//		
+//		System.out.println("equ=" +n.polydiv(d, x).sprintRI() );
+		
+
+		
+		// Skin
+//		double l=1e-6; double c0=1e-9;
+//		double r0=100.0; double f0=1000.0; double alpha=0.8;
+//
+//		// model no 15matlab(14)
+//		Polynomial n=new Polynomial(0,0,l,1);
+//		Polynomial d=new Polynomial(0,c0*l,c0,1);
+//		int[] i = {3};
+//		n.setVarRes(r0, f0, alpha, i);
+//		i[0] = 2;
+//		d.setVarRes(r0, f0, alpha, i);
+//
+//		
+//		
+//		double[] w = {2.0*Math.PI*2000, 2.0*Math.PI*3000};
+//		System.out.println("nequ1=" +n.polyval(w).get(0).sprintRI() );
+//		System.out.println("nequ2=" +n.polyval(w).get(1).sprintRI() );
+//		System.out.println("pequ1=" +d.polyval(w).get(0).sprintRI() );
+//		System.out.println("pequ2=" +d.polyval(w).get(1).sprintRI() );
+//
+//		System.out.println("div1=" +n.polydiv(d, w).get(0).sprintRI());
+//		System.out.println("div2=" +n.polydiv(d, w).get(1).sprintRI());
+
+		//================================================================================
+	    // Model Test
+	    //================================================================================
+		
+		// Plot test
+//		double[] params = {20,0,0,0,10e-9,10e-9,0}; 
+//		double[] w = MathUtil.linspace(2.0*Math.PI*(1e6), 2.0*Math.PI*(100e6), 100);
+//		for (double d : w) {
+//			System.out.println(d);
+//		}
+		
+//		MCEqCircuit ec = new MCEqCircuit(CIRCUIT_TYPE.MODEL4, params);
+//		ec.setWVector(w);
+//		
+//		RectPlotNewMeasurement nm = new RectPlotNewMeasurement();
+//		nm.type = MeasurementType.Z;
+//		nm.cpxMod = ComplexModifier.REAL;
+//		nm.eqCircuit = ec;
+//		nm.src = DataSource.MODEL;
+//		nm.src_name = "Model 0";
+//		
+//		int id = controller.createDataset(nm);
+//		MathUtil.dumpListComplex("tmp.txt", ec.getZ());
+//		System.out.println("done");
+		
+		
+		
+		
+		
+		
+		
+		//================================================================================
+	    // Math number format Test
+	    //================================================================================
+//        double n;
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0*Math.random();
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 10.0;
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 1.0;
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 1000.0;
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//        n = 1.01;
+//		System.out.println("n="+n+" format="+MathUtil.formatDouble(n, 2));
+//		
+		
 		//================================================================================
 	    // Smith Test
 	    //================================================================================
