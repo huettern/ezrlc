@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 public class NewModelWindow implements ActionListener{
 	
@@ -64,6 +65,7 @@ public class NewModelWindow implements ActionListener{
 	private JButton btnCancel;
 	private JButton btnAllAuto;
 	private JButton btnGenerate;
+	private JComboBox comBoxModelList;
 	
 	
 	//================================================================================
@@ -86,26 +88,67 @@ public class NewModelWindow implements ActionListener{
 		dialog.setResizable(false);
 		dialog.setModal(true);
 		dialog.setLocation(300, 300);
-		dialog.setSize(1000, 600);
+		dialog.setSize(703, 1048);
 		System.out.println("build NewModelWindow");
 		
 		
 		//Main Panel
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		dialog.getContentPane().setLayout(gridBagLayout);
+		
+		//Model list
+		JPanel pnlModelSelection = new JPanel();
+		pnlModelSelection.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Model List", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_pnlModelSelection = new GridBagConstraints();
+		gbc_pnlModelSelection.insets = new Insets(5, 5, 5, 5);
+		gbc_pnlModelSelection.fill = GridBagConstraints.BOTH;
+		gbc_pnlModelSelection.gridx = 0;
+		gbc_pnlModelSelection.gridy = 0;
+		dialog.getContentPane().add(pnlModelSelection, gbc_pnlModelSelection);
+		GridBagLayout gbl_pnlModelSelection = new GridBagLayout();
+		gbl_pnlModelSelection.columnWidths = new int[]{0, 0, 0};
+		gbl_pnlModelSelection.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_pnlModelSelection.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlModelSelection.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		pnlModelSelection.setLayout(gbl_pnlModelSelection);
+		
+		JLabel lblAuto_4 = new JLabel("Auto");
+		GridBagConstraints gbc_lblAuto_4 = new GridBagConstraints();
+		gbc_lblAuto_4.anchor = GridBagConstraints.WEST;
+		gbc_lblAuto_4.insets = new Insets(0, 0, 5, 0);
+		gbc_lblAuto_4.gridx = 1;
+		gbc_lblAuto_4.gridy = 0;
+		pnlModelSelection.add(lblAuto_4, gbc_lblAuto_4);
+		
+		comBoxModelList = new JComboBox();
+		
+		GridBagConstraints gbc_comBoxModelList = new GridBagConstraints();
+		gbc_comBoxModelList.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comBoxModelList.insets = new Insets(0, 0, 5, 5);
+		gbc_comBoxModelList.gridx = 0;
+		gbc_comBoxModelList.gridy = 1;
+		pnlModelSelection.add(comBoxModelList, gbc_comBoxModelList);
+		
+		chBoxModelList = new JCheckBox("");
+		chBoxModelList.setSelected(true);
+		GridBagConstraints gbc_chBoxModelList = new GridBagConstraints();
+		gbc_chBoxModelList.insets = new Insets(0, 5, 5, 0);
+		gbc_chBoxModelList.gridx = 1;
+		gbc_chBoxModelList.gridy = 1;
+		pnlModelSelection.add(chBoxModelList, gbc_chBoxModelList);
 		
 		//Frequency
 		JPanel pnlFrequency = new JPanel();
 		pnlFrequency.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Frequency", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlFrequency = new GridBagConstraints();
-		gbc_pnlFrequency.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlFrequency.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlFrequency.fill = GridBagConstraints.BOTH;
 		gbc_pnlFrequency.gridx = 0;
-		gbc_pnlFrequency.gridy = 0;
+		gbc_pnlFrequency.gridy = 1;
 		dialog.getContentPane().add(pnlFrequency, gbc_pnlFrequency);
 		GridBagLayout gbl_pnlFrequency = new GridBagLayout();
 		gbl_pnlFrequency.columnWidths = new int[]{60, 100, 17, 0, 0};
@@ -186,57 +229,14 @@ public class NewModelWindow implements ActionListener{
 		gbc_chBoxFmax.gridy = 2;
 		pnlFrequency.add(chBoxFmax, gbc_chBoxFmax);
 		
-		//Model list
-		JPanel pnlModelSelection = new JPanel();
-		pnlModelSelection.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Model List", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_pnlModelSelection = new GridBagConstraints();
-		gbc_pnlModelSelection.gridheight = 3;
-		gbc_pnlModelSelection.insets = new Insets(0, 0, 5, 0);
-		gbc_pnlModelSelection.fill = GridBagConstraints.BOTH;
-		gbc_pnlModelSelection.gridx = 1;
-		gbc_pnlModelSelection.gridy = 0;
-		dialog.getContentPane().add(pnlModelSelection, gbc_pnlModelSelection);
-		GridBagLayout gbl_pnlModelSelection = new GridBagLayout();
-		gbl_pnlModelSelection.columnWidths = new int[]{0, 0, 0};
-		gbl_pnlModelSelection.rowHeights = new int[]{0, 0, 0};
-		gbl_pnlModelSelection.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlModelSelection.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		pnlModelSelection.setLayout(gbl_pnlModelSelection);
-		
-		chBoxModelList = new JCheckBox("");
-		chBoxModelList.setSelected(true);
-		GridBagConstraints gbc_chBoxModelList = new GridBagConstraints();
-		gbc_chBoxModelList.insets = new Insets(0, 5, 5, 5);
-		gbc_chBoxModelList.gridx = 0;
-		gbc_chBoxModelList.gridy = 0;
-		pnlModelSelection.add(chBoxModelList, gbc_chBoxModelList);
-		
-		JLabel lblAuto_4 = new JLabel("Auto");
-		GridBagConstraints gbc_lblAuto_4 = new GridBagConstraints();
-		gbc_lblAuto_4.anchor = GridBagConstraints.WEST;
-		gbc_lblAuto_4.insets = new Insets(0, 0, 5, 0);
-		gbc_lblAuto_4.gridx = 1;
-		gbc_lblAuto_4.gridy = 0;
-		pnlModelSelection.add(lblAuto_4, gbc_lblAuto_4);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 2;
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 1;
-		pnlModelSelection.add(scrollPane, gbc_scrollPane);
-		
 		//Components
 		JPanel pnlComponents = new JPanel();
 		pnlComponents.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Components", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlComponents = new GridBagConstraints();
-		gbc_pnlComponents.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlComponents.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlComponents.fill = GridBagConstraints.BOTH;
 		gbc_pnlComponents.gridx = 0;
-		gbc_pnlComponents.gridy = 1;
+		gbc_pnlComponents.gridy = 2;
 		dialog.getContentPane().add(pnlComponents, gbc_pnlComponents);
 		GridBagLayout gbl_pnlComponents = new GridBagLayout();
 		gbl_pnlComponents.columnWidths = new int[]{60, 100, 17, 0, 0};
@@ -314,10 +314,10 @@ public class NewModelWindow implements ActionListener{
 		JPanel pnlParameter = new JPanel();
 		pnlParameter.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Parameters", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlParameter = new GridBagConstraints();
-		gbc_pnlParameter.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlParameter.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlParameter.fill = GridBagConstraints.BOTH;
 		gbc_pnlParameter.gridx = 0;
-		gbc_pnlParameter.gridy = 2;
+		gbc_pnlParameter.gridy = 3;
 		dialog.getContentPane().add(pnlParameter, gbc_pnlParameter);
 		GridBagLayout gbl_pnlParameter = new GridBagLayout();
 		gbl_pnlParameter.columnWidths = new int[]{0, 0, 0, 23, 0, 0, 0, 0};
@@ -525,13 +525,12 @@ public class NewModelWindow implements ActionListener{
 		//Buttons
 		JPanel pnlButtons = new JPanel();
 		GridBagConstraints gbc_pnlButtons = new GridBagConstraints();
-		gbc_pnlButtons.gridwidth = 2;
 		gbc_pnlButtons.fill = GridBagConstraints.BOTH;
 		gbc_pnlButtons.gridx = 0;
-		gbc_pnlButtons.gridy = 3;
+		gbc_pnlButtons.gridy = 4;
 		dialog.getContentPane().add(pnlButtons, gbc_pnlButtons);
 		GridBagLayout gbl_pnlButtons = new GridBagLayout();
-		gbl_pnlButtons.columnWidths = new int[]{180, 0, 150, 180, 0};
+		gbl_pnlButtons.columnWidths = new int[]{155, 0, 150, 155, 0};
 		gbl_pnlButtons.rowHeights = new int[]{0, 0};
 		gbl_pnlButtons.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlButtons.rowWeights = new double[]{0.0, Double.MIN_VALUE};
@@ -540,7 +539,7 @@ public class NewModelWindow implements ActionListener{
 		btnAllAuto = new JButton("All Auto");
 		GridBagConstraints gbc_btnAllAuto = new GridBagConstraints();
 		gbc_btnAllAuto.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnAllAuto.insets = new Insets(0, 30, 5, 5);
+		gbc_btnAllAuto.insets = new Insets(0, 5, 5, 5);
 		gbc_btnAllAuto.gridx = 0;
 		gbc_btnAllAuto.gridy = 0;
 		pnlButtons.add(btnAllAuto, gbc_btnAllAuto);
@@ -558,7 +557,7 @@ public class NewModelWindow implements ActionListener{
 		btnGenerate = new JButton("Generate");
 		GridBagConstraints gbc_btnGenerate = new GridBagConstraints();
 		gbc_btnGenerate.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnGenerate.insets = new Insets(0, 0, 5, 30);
+		gbc_btnGenerate.insets = new Insets(0, 0, 5, 5);
 		gbc_btnGenerate.gridx = 3;
 		gbc_btnGenerate.gridy = 0;
 		pnlButtons.add(btnGenerate, gbc_btnGenerate);
