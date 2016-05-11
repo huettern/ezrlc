@@ -29,10 +29,11 @@ public class MCRank {
 	 * @param in list of circuit models
 	 * @return sorted models, best first
 	 */
-	public static final ArrayList<MCEqCircuit> sortByError (double[] ys, List<MCEqCircuit> in) {
+	public static final ArrayList<MCEqCircuit> sortByError (Complex[] ys, List<MCEqCircuit> in) {
 		ArrayList<MCEqCircuit> res = new ArrayList<MCEqCircuit>(in.size());
 		ArrayList<Complex> data;
-		double[] mag = new double[in.get(0).getWSize()];
+		double[] magmod = new double[in.get(0).getWSize()];
+		double[] magmeas = new double[in.get(0).getWSize()];
 		double[][] error = new double[in.size()][2];
 		
 		// Fill error with indexes
@@ -45,10 +46,11 @@ public class MCRank {
 			data = in.get(j).getS();
 			// get magnitude of S
 			for (int i = 0; i < data.size(); i++) {
-				mag[i] = data.get(i).abs();
+				magmod[i] = data.get(i).abs();
+				magmeas[i] = ys[i].abs();
 			}
 			// calculate error
-			error[j][0] = MCErrorSum.getError(ys, mag);
+			error[j][0] = MCErrorSum.getError(magmeas, magmod);
 		}
 		
 		// Sort error array by first col[0], so second col is listed indexes

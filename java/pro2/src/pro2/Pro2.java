@@ -16,6 +16,14 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.apache.commons.math3.analysis.MultivariateFunction;
+import org.apache.commons.math3.optim.InitialGuess;
+import org.apache.commons.math3.optim.MaxEval;
+import org.apache.commons.math3.optim.PointValuePair;
+import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
+import org.apache.commons.math3.optim.nonlinear.scalar.ObjectiveFunction;
+import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.NelderMeadSimplex;
+import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.SimplexOptimizer;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
@@ -24,6 +32,7 @@ import pro2.ModelCalculation.MCUtil;
 import pro2.ModelCalculation.Polynomial;
 import pro2.ModelCalculation.MCEqCircuit;
 import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
+import pro2.ModelCalculation.MCErrorSum;
 import pro2.ModelCalculation.MCOptions;
 import pro2.ModelCalculation.MCRank;
 import pro2.Plot.Figure;
@@ -79,31 +88,36 @@ public class Pro2 {
 		 */
 		MCOptions opt = new MCOptions();
 		
-		opt.fMin = 25;
-		opt.fMax = 55;
+		opt.fMin = 0;
+		opt.fMax = Double.MAX_VALUE;
 		opt.nElementsMin = 2;
 		opt.nElementsMax = 3;
 		opt.skinEffectEnabled = true;
 		
-		// fake measurement
-		double[] f = {10,20,30,40,50,60,70,80,90,100};
-		double[] ys = {1,2,3,4,5,6,7,8,9,10};
-		double[] yz = {1,2,3,4,5,6,7,8,9,10};
+//		// fake measurement
+//		double[] f = {10,20,30,40,50,60,70,80,90,100};
+//		double[] ys = {1,2,3,4,5,6,7,8,9,10};
+//		double[] yz = {1,2,3,4,5,6,7,8,9,10};
 		
+		// real measurement
+		RFData rfData = new RFData("../../sample_files/RLC_S_Sven.s1p");;
+		try {
+			rfData.parse();
+		} catch (IOException e) {}
 
+		ArrayList<Double> fdata = rfData.getfData();
+		double[] f = new double[fdata.size()];
+		for(int i = 0; i < fdata.size(); i++){
+			f[i] = fdata.get(i);
+		}
+		
+		// apply ops
 		double[] w = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.OMEGA);
-		ys = MCUtil.applyMCOpsToData(opt, f, ys);
-		yz = MCUtil.applyMCOpsToData(opt, f, yz);
-		double[] fn = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.HZ);
+		Complex[] ys = MCUtil.applyMCOpsToData(opt, f, rfData.getsData());
 
 		CIRCUIT_TYPE[] circuitList;
 		circuitList = MCUtil.createModelList(opt);
-		
-		System.out.println("ES=" +Arrays.toString(circuitList));
-		System.out.println("w="+Arrays.toString(w));
-		System.out.println("fn="+Arrays.toString(fn));
-		System.out.println("yz="+Arrays.toString(yz));
-		System.out.println("ys="+Arrays.toString(ys));
+
 		
 		/**
 		 * Create list of models
@@ -119,13 +133,29 @@ public class Pro2 {
 		 */
 		//double[][] paramArray = new double[ES.length][7];
 		//paramArray[0] = {}
-		double[] params = {100,0,0,0,10e-9,0,0};
-		circuits.get(0).setParameters(params);
+		double[] params = {80,0,0,0,10e-9,10e-9,0};
+		circuits.get(4).setParameters(params);
 		
 		/**
 		 * Generate rank of equivalent circuits
 		 */
 		ArrayList<MCEqCircuit> sortedList = MCRank.sortByError(ys, circuits);
+		
+		System.out.println("rank: "+sortedList.toString());
+		/**
+		 * Run optimizer
+		 */
+		// Create error
+		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
+		SimplexOptimizer optimizer = new SimplexOptimizer(1e-12, 1e-30);
+		PointValuePair optimum = optimizer.optimize(
+				new MaxEval(100000), 
+				new ObjectiveFunction(e),
+				GoalType.MINIMIZE, 
+				new InitialGuess(params), 
+				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
+
+		System.out.println("Bauteilwerte: " + Arrays.toString(optimum.getPoint()) + " Fehler: " + optimum.getValue());
 
 		//================================================================================
 	    // sort test

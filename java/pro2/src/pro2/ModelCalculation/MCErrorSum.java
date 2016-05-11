@@ -1,5 +1,11 @@
 package pro2.ModelCalculation;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.apache.commons.math3.analysis.MultivariateFunction;
+
 import pro2.util.Complex;
 
 /**
@@ -7,10 +13,26 @@ import pro2.util.Complex;
  * @author noah
  *
  */
-public class MCErrorSum {
+public class MCErrorSum implements MultivariateFunction {
 
-	public MCErrorSum() {
-		// TODO Auto-generated constructor stub
+	//================================================================================
+    // Private Data
+    //================================================================================
+	private MCEqCircuit circuit;
+	private Complex[] measured;
+
+	//================================================================================
+    // Constructors
+    //================================================================================
+	/**
+	 * Create new error sum object
+	 * @param measured measured data
+	 * @param circuit equivalent circuit object
+	 */
+	public MCErrorSum(Complex[] measured, MCEqCircuit circuit) {
+		this.circuit = circuit;
+		this.measured = new Complex[measured.length];
+		System.arraycopy(measured, 0, this.measured, 0, measured.length);
 	}
 
 	//================================================================================
@@ -45,6 +67,34 @@ public class MCErrorSum {
 	 */
 	public static final double getError (double[] measured, double[] simulated) {
 		return leastSquare(measured, simulated);
+	}
+
+	
+
+	//================================================================================
+    // Interface methods
+    //================================================================================
+	/**
+	 * Gets called by optimizer to calculate error
+	 * @param x: parameter array from optimizer
+	 * @return error
+	 */
+	@Override
+	public double value(double[] params) {
+		System.out.println("Interface value, params=" +Arrays.toString(params));
+		// set new parameter
+		circuit.setParameters(params);
+		// get s parameters
+		ArrayList<Complex> s = circuit.getS();
+		// build magnitude
+		double[] magS = new double[s.size()];
+		double[] magmeas = new double[s.size()];
+		for(int i = 0; i < s.size(); i++) {
+			magS[i] = s.get(i).abs();
+			magmeas[i] = this.measured[i].abs();
+		}
+		// calc error
+		return MCErrorSum.getError(magmeas, magS);
 	}
 
 	

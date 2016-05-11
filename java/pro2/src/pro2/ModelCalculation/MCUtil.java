@@ -6,6 +6,7 @@ import java.util.List;
 
 import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
 import pro2.ModelCalculation.MCUtil.DATA_FORMAT;
+import pro2.util.Complex;
 
 /**
  * Helper Functions and definitions for Model calculation
@@ -139,6 +140,28 @@ public class MCUtil {
 		double[] data_out = new double[idxHigh-idxLow+1];
 		System.arraycopy(data, idxLow, data_out, 0, idxHigh-idxLow+1);
 		return data_out;
+	}
+
+	public static final Complex[] applyMCOpsToData (MCOptions opt, double[] f, ArrayList<Complex> data) {
+		// extract real and imag data
+		double[] real = new double[data.size()];
+		double[] imag = new double[data.size()];
+		for(int i = 0; i < data.size(); i++) {
+			real[i] = data.get(i).re();
+			imag[i] = data.get(i).im();
+		}
+		
+		// apply ops
+		real = applyMCOpsToData(opt, f, real);
+		imag = applyMCOpsToData(opt, f, imag);
+		
+		// rebuild array
+		Complex[] res = new Complex[real.length];
+		for(int i = 0; i < data.size(); i++) {
+			res[i]=(new Complex(real[i], imag[i]));
+		}
+		
+		return res;
 	}
 	
 	
