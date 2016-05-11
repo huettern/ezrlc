@@ -2,6 +2,7 @@ package pro2.ModelCalculation;
 
 import java.util.Arrays;
 
+import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
 import pro2.ModelCalculation.MCUtil.DATA_FORMAT;
 
 /**
@@ -177,6 +178,15 @@ public class MCUtil {
 		}
 		
 		return modelIdx;
+	}
+	
+	/**
+	 * Converts an integer index to the coresponding model enumeration entry
+	 * @param idx index of equivalent circuit
+	 * @return CIRCUIT_TYPE
+	 */
+	public static final CIRCUIT_TYPE modelIdxToCircuitType (int idx){
+		return MCEqCircuit.CIRCUIT_TYPE.values()[idx];
 	}
 	
 	
