@@ -17,6 +17,14 @@ public class MCOptions {
 	public int nElementsMax;
 	public int nElementsMin;
 	
+	public double inductor;
+	public double capacitor0;
+	public double resistor1;
+	public double capacitor1;
+	public double resistor0;
+	public double alpha;
+	public double fSkin;
+	
 	public boolean skinEffectEnabled;
 	
 
