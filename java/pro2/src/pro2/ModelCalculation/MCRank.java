@@ -31,7 +31,7 @@ public class MCRank {
 	 */
 	public static final ArrayList<MCEqCircuit> sortByError (Complex[] ys, List<MCEqCircuit> in) {
 		ArrayList<MCEqCircuit> res = new ArrayList<MCEqCircuit>(in.size());
-		ArrayList<Complex> data;
+		Complex[] data;
 		double[] magmod = new double[in.get(0).getWSize()];
 		double[] magmeas = new double[in.get(0).getWSize()];
 		double[][] error = new double[in.size()][2];
@@ -45,8 +45,8 @@ public class MCRank {
 		for (int j = 0; j < in.size(); j++) {
 			data = in.get(j).getS();
 			// get magnitude of S
-			for (int i = 0; i < data.size(); i++) {
-				magmod[i] = data.get(i).abs();
+			for (int i = 0; i < data.length; i++) {
+				magmod[i] = data[i].abs();
 				magmeas[i] = ys[i].abs();
 			}
 			// calculate error

@@ -113,7 +113,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 	 * @param data Complex List of data
 	 * @param freq Double List of freq data
 	 */
-	public void addDataSet (List<Complex> data, List<Double> freq) {
+	public void addDataSet (Complex[] data, double[] freq) {
 		SmithChartDataSet set = new SmithChartDataSet(grid, data, freq);
 		dataSets.add(set);	
 	}

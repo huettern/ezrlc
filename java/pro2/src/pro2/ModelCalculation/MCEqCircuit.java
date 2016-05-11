@@ -81,9 +81,9 @@ public class MCEqCircuit {
 	 * @param w frequency vecotr in omega
 	 * @return Complex array with scattering parameters
 	 */
-	public final ArrayList<Complex> getS () {
+	public final Complex[] getS () {
 		// convert to s parameter
-		ArrayList<Complex> ys = RFData.z2s(50, this.getZ());
+		Complex[] ys = RFData.z2s(50, this.getZ());
 		
 		return ys;
 	}
@@ -93,9 +93,9 @@ public class MCEqCircuit {
 	 * @param w frequency vecotr in omega
 	 * @return Complex array with admittance parameters
 	 */
-	public final ArrayList<Complex> getY () {
+	public final Complex[] getY () {
 		// convert to s parameter
-		ArrayList<Complex> yy = RFData.z2y(this.getZ());
+		Complex[] yy = RFData.z2y(this.getZ());
 		
 		return yy;
 	}
@@ -105,8 +105,8 @@ public class MCEqCircuit {
 	 * @param w frequency vecotr in omega
 	 * @return Complex array with impedance parameters
 	 */
-	public final ArrayList<Complex> getZ () {
-		ArrayList<Complex> yz = null;
+	public final Complex[] getZ () {
+		Complex[] yz = null;
 		
 		switch(this.circuitType) {
 			case MODEL0: yz = model0(); break;
@@ -155,11 +155,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 0
 	 * @return
 	 */
-	private ArrayList<Complex> model0 () {
+	private Complex[] model0 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4],p[0]);
 	    Polynomial pd =new Polynomial(0,0,0,1);
-	    ArrayList<Complex> res = new ArrayList<Complex>();
+	    Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -167,11 +167,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model1 
 	 * @return
 	 */
-	private ArrayList<Complex> model1 () {
+	private Complex[] model1 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4]*p[0],0);
 	    Polynomial pd =new Polynomial(0,0,p[4],p[0]);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -179,11 +179,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 2
 	 * @return
 	 */
-	private ArrayList<Complex> model2 () {
+	private Complex[] model2 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[5]*p[0],1);
 	    Polynomial pd =new Polynomial(0,0,p[5],0);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -191,11 +191,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 3
 	 * @return
 	 */
-	private ArrayList<Complex> model3 () {
+	private Complex[] model3 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,0,p[0]);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -203,11 +203,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 4
 	 * @return
 	 */
-	private ArrayList<Complex> model4 () {
+	private Complex[] model4 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[4]*p[5],p[0]*p[5],1);
 	    Polynomial pd =new Polynomial(0,0,p[5],0);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -215,11 +215,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 5
 	 * @return
 	 */
-	private ArrayList<Complex> model5 () {
+	private Complex[] model5 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[0]*p[4],0);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4]*p[0],p[4],p[0]);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -227,11 +227,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 6
 	 * @return
 	 */
-	private ArrayList<Complex> model6 () {
+	private Complex[] model6 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4],p[0]);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4],p[5]*p[0],1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -239,11 +239,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 7
 	 * @return
 	 */
-	private ArrayList<Complex> model7 () {
+	private Complex[] model7 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[5]*p[4]*p[0],p[4],p[0]);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -251,11 +251,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 8
 	 * @return
 	 */
-	private ArrayList<Complex> model8 () {
+	private Complex[] model8 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[5]*p[0]*p[3],p[0]+p[3]);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -263,11 +263,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 9
 	 * @return
 	 */
-	private ArrayList<Complex> model9 () {
+	private Complex[] model9 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[4]*p[5]*p[0],p[4]+p[5]*p[0]*p[3],p[0]+p[3]);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -275,11 +275,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 10
 	 * @return
 	 */
-	private ArrayList<Complex> model10 () {
+	private Complex[] model10 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[5]*p[4]*p[0]*p[3],p[4]*p[0]+p[4]*p[3],p[3]*p[0]);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4]*p[0],p[4],p[0]);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -287,11 +287,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 11
 	 * @return
 	 */
-	private ArrayList<Complex> model11 () {
+	private Complex[] model11 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4],p[3]);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4],p[5]*p[3]+p[4]*p[0],p[3]*p[0]+1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -299,11 +299,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 12
 	 * @return
 	 */
-	private ArrayList<Complex> model12 () {
+	private Complex[] model12 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[4]*p[5],p[0]*p[5],1);
 	    Polynomial pd =new Polynomial(p[5]*p[6]*p[4],p[5]*p[6]*p[0],p[5]+p[6],0);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -311,11 +311,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 13
 	 * @return
 	 */
-	private ArrayList<Complex> model13 () {
+	private Complex[] model13 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[4]*p[5],p[5],1);
 	    Polynomial pd =new Polynomial(0,0,p[5],0);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -323,11 +323,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 14
 	 * @return
 	 */
-	private ArrayList<Complex> model14 () {
+	private Complex[] model14 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,0,p[4],1);
 	    Polynomial pd =new Polynomial(0,p[5]*p[4],p[5],1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -335,11 +335,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 15
 	 * @return
 	 */
-	private ArrayList<Complex> model15 () {
+	private Complex[] model15 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[5]*p[4],p[4],1);
 	    Polynomial pd =new Polynomial(0,0,p[5],1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -347,11 +347,11 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 16
 	 * @return
 	 */
-	private ArrayList<Complex> model16 () {
+	private Complex[] model16 () {
 		double[] p = this.parameters;
 	    Polynomial pn =new Polynomial(0,p[5]*p[4],p[4],1);
 	    Polynomial pd =new Polynomial(0,0,p[5]*p[0],1);
-		ArrayList<Complex> res = new ArrayList<Complex>();
+		Complex[] res;
 	    res = pn.polydiv(pd, wvector);
 		return res;
 	}
@@ -359,7 +359,7 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 17
 	 * @return
 	 */
-	private ArrayList<Complex> model17 () {
+	private Complex[] model17 () {
 		double[] p = this.parameters;
 		return null;
 	}
@@ -367,7 +367,7 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 18
 	 * @return
 	 */
-	private ArrayList<Complex> model18 () {
+	private Complex[] model18 () {
 		double[] p = this.parameters;
 		return null;
 	}
@@ -375,7 +375,7 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 19
 	 * @return
 	 */
-	private ArrayList<Complex> model19 () {
+	private Complex[] model19 () {
 		double[] p = this.parameters;
 		return null;
 	}
@@ -383,7 +383,7 @@ public class MCEqCircuit {
 	 * Calculates the impedance parameters of the model 20
 	 * @return
 	 */
-	private ArrayList<Complex> model20 () {
+	private Complex[] model20 () {
 		double[] p = this.parameters;
 		return null;
 	}

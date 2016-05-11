@@ -105,7 +105,7 @@ public class MCUtil {
 	 * Applies MCOptions to data
 	 * @param opt MCOptions given by user
 	 * @param f frequency data in Hertz
-	 * @param data data int
+	 * @param data 
 	 * @return data array out, cut to the f-range
 	 */
 	public static final double[] applyMCOpsToData (MCOptions opt, double[] f, double[] data) {
@@ -141,14 +141,20 @@ public class MCUtil {
 		System.arraycopy(data, idxLow, data_out, 0, idxHigh-idxLow+1);
 		return data_out;
 	}
-
-	public static final Complex[] applyMCOpsToData (MCOptions opt, double[] f, ArrayList<Complex> data) {
+	/**
+	 * Applies MCOptions to data
+	 * @param opt MCOptions given by user
+	 * @param f frequency data in Hertz
+	 * @param data data int
+	 * @return data array out, cut to the f-range
+	 */
+	public static final Complex[] applyMCOpsToData (MCOptions opt, double[] f, Complex[] data) {
 		// extract real and imag data
-		double[] real = new double[data.size()];
-		double[] imag = new double[data.size()];
-		for(int i = 0; i < data.size(); i++) {
-			real[i] = data.get(i).re();
-			imag[i] = data.get(i).im();
+		double[] real = new double[data.length];
+		double[] imag = new double[data.length];
+		for(int i = 0; i < data.length; i++) {
+			real[i] = data[i].re();
+			imag[i] = data[i].im();
 		}
 		
 		// apply ops
@@ -157,7 +163,7 @@ public class MCUtil {
 		
 		// rebuild array
 		Complex[] res = new Complex[real.length];
-		for(int i = 0; i < data.size(); i++) {
+		for(int i = 0; i < data.length; i++) {
 			res[i]=(new Complex(real[i], imag[i]));
 		}
 		

@@ -137,10 +137,10 @@ public class Polynomial {
 	 * @param w frequencz in omega = 2*pi*f
 	 * @return
 	 */
-	public final ArrayList<Complex> polyval (double[] w) {
+	public final Complex[] polyval (double[] w) {
 		double d = 1;
 		Complex x, val;
-		ArrayList<Complex> vals = new ArrayList<Complex>(w.length);
+		Complex[] vals = new Complex[w.length];
 		
 		// for every frequency
 		for (int j = 0; j < w.length; j++) {
@@ -157,7 +157,7 @@ public class Polynomial {
 				}
 				val = x.pow(i).times((coeffs[coeffs.length - 1 - i])*d).plus(val);
 			}
-			vals.add(j, new Complex(val));
+			vals[j] = new Complex(val);
 		}
 		return vals;
 	}
@@ -184,14 +184,14 @@ public class Polynomial {
 	 * @param w frequency vector in omega
 	 * @return complex result this/p at x
 	 */
-	public final ArrayList<Complex> polydiv (Polynomial d, double[] w) {
-		ArrayList<Complex> res = new ArrayList<Complex>(w.length);
+	public final Complex[] polydiv (Polynomial d, double[] w) {
+		Complex[] res = new Complex[w.length];
 		// get list of both polynomials
-		ArrayList<Complex> yn = this.polyval(w);
-		ArrayList<Complex> yd = d.polyval(w);
+		Complex[] yn = this.polyval(w);
+		Complex[] yd = d.polyval(w);
 		// divide the results and add them to the list
 		for(int i = 0; i<w.length; i++) {
-			res.add(yn.get(i).divides(yd.get(i)));
+			res[i] = yn[i].divides(yd[i]);
 		}
 		return res;
 	}

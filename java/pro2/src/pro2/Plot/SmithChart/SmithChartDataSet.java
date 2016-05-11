@@ -21,8 +21,8 @@ public class SmithChartDataSet {
     //================================================================================
 	private SmithChartGrid grid;
 	
-	private List<Complex> data;
-	private List<Double> freq;
+	private Complex[] data;
+	private double[] freq;
 	private int points;
 	
 	private DataSetSettings settings = new DataSetSettings();
@@ -41,21 +41,17 @@ public class SmithChartDataSet {
 	 * @param data List of complex data
 	 * @param freq frequency points
 	 */
-	public SmithChartDataSet(SmithChartGrid grid, List<Complex> data, List<Double> freq) {
-		if(data.size() != freq.size()) {
+	public SmithChartDataSet(SmithChartGrid grid, Complex[] data, double[] freq) {
+		if(data.length != freq.length) {
 			System.out.println("FATAL(SmithChartDataSet): data size not equal freq size");
 			return;
 		}
 		// Copy Data
-		this.data = new ArrayList<Complex>(data.size());
-		for (Complex c : data) {
-			this.data.add(c);
-		}
-		this.freq = new ArrayList<Double>(freq.size());
-		for (Double d : freq) {
-			this.freq.add(d);
-		}
-		this.points = data.size();
+		this.data = new Complex[data.length];
+		System.arraycopy(data, 0, this.data, 0, data.length);
+		this.freq = new double[freq.length];
+		System.arraycopy(freq, 0, this.freq, 0, freq.length);
+		this.points = data.length;
 		
 		// Save grid
 		this.grid = grid;
@@ -93,7 +89,7 @@ public class SmithChartDataSet {
 		data_pts = new ArrayList<Point>(this.points);
 		
 		for (int i = 0; i < this.points; i++) {
-			p =  sm.getPixelLocation(this.data.get(i));
+			p =  sm.getPixelLocation(this.data[i]);
 			data_pts.add(p.point());
 		}
 

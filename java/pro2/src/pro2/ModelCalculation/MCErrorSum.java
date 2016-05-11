@@ -85,12 +85,12 @@ public class MCErrorSum implements MultivariateFunction {
 		// set new parameter
 		circuit.setParameters(params);
 		// get s parameters
-		ArrayList<Complex> s = circuit.getS();
+		Complex[] s = circuit.getS();
 		// build magnitude
-		double[] magS = new double[s.size()];
-		double[] magmeas = new double[s.size()];
-		for(int i = 0; i < s.size(); i++) {
-			magS[i] = s.get(i).abs();
+		double[] magS = new double[s.length];
+		double[] magmeas = new double[s.length];
+		for(int i = 0; i < s.length; i++) {
+			magS[i] = s[i].abs();
 			magmeas[i] = this.measured[i].abs();
 		}
 		// calc error

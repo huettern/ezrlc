@@ -18,8 +18,8 @@ public class PlotDataSet {
 	//================================================================================
     // Private Data
     //================================================================================
-	private List<Double> x_data;
-	private List<Double> y_data;
+	private double[] x_data;
+	private double[] y_data;
 	private int points = 0;
 	private double x_max;
 	private double x_min;
@@ -31,7 +31,7 @@ public class PlotDataSet {
 	private Axis x_axis;
 	private Axis y_axis;
 	
-	private List<Point> data_pts;
+	private Point[] data_pts;
 	private GeneralPath data_path;
 	
 	private DataSetSettings settings = new DataSetSettings();
@@ -46,17 +46,19 @@ public class PlotDataSet {
 	 * @param x: X Data
 	 * @param y: Y Data
 	 */
-	public PlotDataSet(List<Double> x,List<Double> y) {
-		if(x.size() != y.size()) {
+	public PlotDataSet(double[] x,double[] y) {
+		if(x.length != y.length) {
 			System.out.println("PlotDataSet: Error! Data not the same size");
 			return;
 		}
-		this.x_data = x;
-		this.y_data = y;
-		this.points = x.size();
-		this.data_pts = new ArrayList<Point>(this.points);
+		x_data = new double[x.length];
+		y_data = new double[x.length];
+		System.arraycopy(x, 0, x_data, 0, x.length);
+		System.arraycopy(y, 0, y_data, 0, x.length);
+		this.points = x.length;
+		this.data_pts = new Point[this.points];
 		for(int i =0; i < this.points; i++) {
-			this.data_pts.add(new Point(0,0));
+			data_pts[i] = new Point(0,0);
 		}
 		
 		// Get the datas max and min
@@ -82,17 +84,17 @@ public class PlotDataSet {
 	private void eval() {
 		int i = 0;
 		for (Point point : this.data_pts) {
-			point.x = this.x_axis.getPixelValue(this.x_data.get(i));
-			point.y = this.y_axis.getPixelValue(this.y_data.get(i));
+			point.x = this.x_axis.getPixelValue(x_data[i]);
+			point.y = this.y_axis.getPixelValue(y_data[i]);
 			i++;
 		}
 		
 		// create path
 		int ctr = 0;
-		data_path = new GeneralPath(GeneralPath.WIND_EVEN_ODD, data_pts.size());
-		data_path.moveTo(data_pts.get(0).x, data_pts.get(0).y);
-		for(ctr = 1; ctr < data_pts.size(); ctr++) {
-			data_path.lineTo(data_pts.get(ctr).x, data_pts.get(ctr).y);
+		data_path = new GeneralPath(GeneralPath.WIND_EVEN_ODD, data_pts.length);
+		data_path.moveTo(data_pts[0].x, data_pts[0].y);
+		for(ctr = 1; ctr < data_pts.length; ctr++) {
+			data_path.lineTo(data_pts[ctr].x, data_pts[ctr].y);
 		}
 	}
 	
@@ -157,11 +159,15 @@ public class PlotDataSet {
 		this.y_axis=y;
 	}
 	
-	public List<Double> getXData () {
-		return this.x_data;
+	public double[] getXData () {
+		double[] res = new double[x_data.length];
+		System.arraycopy(x_data, 0, res, 0, x_data.length);
+		return res;
 	}
-	public List<Double> getYData () {
-		return this.y_data;
+	public double[] getYData () {
+		double[] res = new double[y_data.length];
+		System.arraycopy(y_data, 0, res, 0, y_data.length);
+		return res;
 	}
 	
 	/**

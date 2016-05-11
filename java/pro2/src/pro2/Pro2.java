@@ -57,25 +57,25 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-//		EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {                                           
-//                Model model = new Model();
-//                MainView view = new MainView();
-//                Controller controller = new Controller(model,view);
-//                
-//                view.setController(controller);
-//                model.setController(controller);
-//                
-//                view.build();
-//                view.setVisible(true);
-//                
-//                // Add observers
-//                model.addObserver(view);
-//                
-//                controller.contol();
-//            }
-//        });  
+		EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {                                           
+                Model model = new Model();
+                MainView view = new MainView();
+                Controller controller = new Controller(model,view);
+                
+                view.setController(controller);
+                model.setController(controller);
+                
+                view.build();
+                view.setVisible(true);
+                
+                // Add observers
+                model.addObserver(view);
+                
+                controller.contol();
+            }
+        });  
 
 		
 
@@ -105,10 +105,10 @@ public class Pro2 {
 			rfData.parse();
 		} catch (IOException e) {}
 
-		ArrayList<Double> fdata = rfData.getfData();
-		double[] f = new double[fdata.size()];
-		for(int i = 0; i < fdata.size(); i++){
-			f[i] = fdata.get(i);
+		double[] fdata = rfData.getfData();
+		double[] f = new double[fdata.length];
+		for(int i = 0; i < fdata.length; i++){
+			f[i] = fdata[i];
 		}
 		
 		// apply ops
@@ -148,14 +148,14 @@ public class Pro2 {
 		// Create error
 		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
 		SimplexOptimizer optimizer = new SimplexOptimizer(1e-12, 1e-30);
-		PointValuePair optimum = optimizer.optimize(
-				new MaxEval(100000), 
-				new ObjectiveFunction(e),
-				GoalType.MINIMIZE, 
-				new InitialGuess(params), 
-				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
+//		PointValuePair optimum = optimizer.optimize(
+//				new MaxEval(100000), 
+//				new ObjectiveFunction(e),
+//				GoalType.MINIMIZE, 
+//				new InitialGuess(params), 
+//				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
 
-		System.out.println("Bauteilwerte: " + Arrays.toString(optimum.getPoint()) + " Fehler: " + optimum.getValue());
+//		System.out.println("Bauteilwerte: " + Arrays.toString(optimum.getPoint()) + " Fehler: " + optimum.getValue());
 
 		//================================================================================
 	    // sort test

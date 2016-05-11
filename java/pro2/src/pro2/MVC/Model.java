@@ -33,12 +33,11 @@ public class Model extends Observable {
     // Private Functions
     //================================================================================
 	private int buildDataSet(RectPlotNewMeasurement nm) {
-
-		ArrayList<Complex> data = null;
-		List<Double> outdata = null;
+		Complex[] data = null;
+		double[] outdata = null;
 		// Get Data
 		if(nm.src == DataSource.FILE) {
-			outdata = new ArrayList<Double>(rfDataFile.getzData().size());
+			outdata = new double[rfDataFile.size()];
 			switch (nm.type) {
 			case S:
 				data = this.rfDataFile.getsData();
@@ -53,7 +52,7 @@ public class Model extends Observable {
 				break;
 			}
 		} else if (nm.src == DataSource.MODEL) {
-			outdata = new ArrayList<Double>(nm.eqCircuit.getWSize());
+			outdata = new double[nm.eqCircuit.getWSize()];
 			switch (nm.type) {
 			case S:
 				data = nm.eqCircuit.getS();
@@ -70,29 +69,30 @@ public class Model extends Observable {
 		}
 		
 		// Convert to Complex Modifier
+		outdata = new double[data.length];
 		switch(nm.cpxMod) {
 		case REAL:
 	        // Extract real part
-	        for (Complex in : data) {
-	        	outdata.add(in.re());
+			for(int i = 0; i < data.length; i++){
+				outdata[i] = data[i].re();
 			}
 			break;
 		case IMAG:
 	        // Extract imaginary part
-	        for (Complex in : data) {
-	        	outdata.add(in.im());
+			for(int i = 0; i < data.length; i++){
+				outdata[i] = data[i].im();
 			}
 			break;
 		case MAG:
 	        // Extract magnitude
-	        for (Complex in : data) {
-	        	outdata.add(in.abs());
+			for(int i = 0; i < data.length; i++){
+				outdata[i] = data[i].abs();
 			}
 			break;
 		case ANGLE:
 	        // Extract angle
-	        for (Complex in : data) {
-	        	outdata.add(in.angle());
+			for(int i = 0; i < data.length; i++){
+				outdata[i] = data[i].angle();
 			}
 			break;
 		}
@@ -127,7 +127,7 @@ public class Model extends Observable {
 	 * @return ID in the list of smith chart datasets
 	 */
 	private int buildSmithChartDataSet(SmithChartNewMeasurement nm) {
-		ArrayList<Complex> data = null;
+		Complex[] data = null;
 
 		// Get Data
 		if(nm.src == DataSource.FILE) {

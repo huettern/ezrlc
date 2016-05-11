@@ -58,7 +58,7 @@ public class RFData {
 	private String fname = "";
 	private File file;
 	
-	private long dataEntries = 0;
+	private int dataEntries = 0;
 	private long commentEntrys = 0;
 	private long instructionEntrys = 0;
 	private int freqMultiplier = 1;
@@ -68,19 +68,19 @@ public class RFData {
 	private List<DataEntry> rawData = new ArrayList<DataEntry>();
 
 	// Normalized data, independant of input MeasurementUnit 
-	private List<Complex> normalizedData = new ArrayList<Complex>();
+	private Complex[] normalizedData;
 	
 	// Scattering data
-	private List<Complex> sData = new ArrayList<Complex>();
+	private Complex[] sData;
 	
 	// Impedance data
-	private List<Complex> zData = new ArrayList<Complex>();
+	private Complex[] zData;
 	
 	// Admittance data
-	private List<Complex> yData = new ArrayList<Complex>();
+	private Complex[] yData;
 	
 	// Frequency points
-	private List<Double> fData = new ArrayList<Double>();
+	private double[] fData;
 	
 	
 	
@@ -205,8 +205,9 @@ public class RFData {
 	    this.adjustNormalizedData();
 	    
 	    // Copy f-Information
-	    for (DataEntry entry : rawData) {
-			fData.add(entry.getFreq());
+	    fData = new double[rawData.size()];
+	    for (int i = 0; i < rawData.size(); i++) {
+			fData[i] = rawData.get(i).getFreq();
 		}
 		
 	    System.out.println("comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntries);
@@ -228,20 +229,25 @@ public class RFData {
 		{
 		case RI:
 			// convert raw data to complex number
-			for (DataEntry rawEntry : this.rawData) {
-				normalizedData.add(new Complex(rawEntry.getData1(), rawEntry.getData2()));
+			
+			normalizedData = new Complex[this.rawData.size()];
+			for(int i = 0; i<this.rawData.size(); i++){
+				normalizedData[i] = new Complex(this.rawData.get(i).getData1(), 
+												this.rawData.get(i).getData2());
 			}
+			
 			break;
 		case MA:
 			// convert raw data from absolute and angle to complex
 			// angle = (d2*pi)/180
 			// real = d1*cos(angle)
 			// imag = d1*sin(angle)
-			for (DataEntry rawEntry : this.rawData) {
-				angle = (rawEntry.getData2()*Math.PI)/180.0;
-				mag = rawEntry.getData1();
-				normalizedData.add(new Complex(mag*Math.cos(angle), mag*Math.sin(angle)));
+			for(int i = 0; i<this.rawData.size(); i++){
+				angle = (rawData.get(i).getData2()*Math.PI)/180.0;
+				mag = rawData.get(i).getData1();
+				normalizedData[i] = new Complex(mag*Math.cos(angle), mag*Math.sin(angle));
 			}
+			
 			break;
 		case DB:
 			// Convert raw data from DB absolute and angle to complex
@@ -249,17 +255,17 @@ public class RFData {
 			// mag = 10^(d1/20)
 			// real = mag*cos(angle)
 			// imag = mag*sin(angle)
-			for (DataEntry rawEntry : this.rawData) {
-				angle = (rawEntry.getData2()*Math.PI)/180.0;
-				mag = Math.pow(10, rawEntry.getData1()/20.0 );
-				normalizedData.add(new Complex(mag*Math.cos(angle), mag*Math.sin(angle)));
+			for(int i = 0; i<this.rawData.size(); i++){
+				angle = (rawData.get(i).getData2()*Math.PI)/180.0;
+				mag = Math.pow(10, rawData.get(i).getData1()/20.0 );
+				normalizedData[i] = new Complex(mag*Math.cos(angle), mag*Math.sin(angle));
 			}
 			break;
 			default:
 				break;
 		}
 		// Check if output size is equal to input size
-		if(this.rawData.size() != this.normalizedData.size()) {
+		if(rawData.size() != normalizedData.length) {
 			System.out.println("FATAL: normalized entries not equal raw entries");
 		}
 	}
@@ -290,10 +296,8 @@ public class RFData {
 		}
 		
 		// Change every item in the list
-		for (final ListIterator<Complex> c = normalizedData.listIterator(); c.hasNext();) {
-		  Complex element = c.next();
-		  element = element.times(factor);
-		  c.set(element);
+		for(int i = 0; i <  normalizedData.length; i++) {
+			normalizedData[i] = normalizedData[i].times(factor);
 		}
 	}
 	
@@ -308,8 +312,9 @@ public class RFData {
 			//
 			// S=S
 			//
-			for (Complex entry : normalizedData) {
-				sData.add(new Complex(entry));
+			sData = new Complex[normalizedData.length];
+			for(int i = 0; i < normalizedData.length; i++){
+				sData[i] = new Complex(normalizedData[i]);
 			}
 			// ...And calculate z data
 			//
@@ -317,17 +322,19 @@ public class RFData {
 			//
 			complextmp2 = new Complex(1.0,0);			// constant 1 as complex number
 			complextmp3 = new Complex(this.r,0);	// resistance as complex number
-			for (Complex complex : normalizedData) {
-				// TODO: Calculations in the next line aren't correct!
-				complextmp1 = new Complex(Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, complex), Complex.sub(complextmp2, complex))));
-				zData.add(complextmp1);
+			
+			zData = new Complex[normalizedData.length];
+			for(int i = 0; i < normalizedData.length; i++){
+				complextmp1 = new Complex(Complex.mul(complextmp3, Complex.div(Complex.add(complextmp2, normalizedData[i]), Complex.sub(complextmp2, normalizedData[i]))));
+				zData[i]=(complextmp1);
 			}
 			//
 			// Y=1/Z
 			//
 			complextmp1 = new Complex(1,0);
-			for (Complex entry : zData) {
-				yData.add(Complex.div(complextmp1, entry));
+			yData = new Complex[normalizedData.length];
+			for (int i = 0; i < normalizedData.length; i++) {
+				yData[i] = Complex.div(complextmp1, normalizedData[i]);
 			}
 			break;
 		case Y:
@@ -335,23 +342,26 @@ public class RFData {
 			//
 			// Y=Y
 			//
-			for (Complex entry : normalizedData) {
-				yData.add(new Complex(entry));
+			yData = new Complex[normalizedData.length];
+			for(int i = 0; i < normalizedData.length; i++){
+				yData[i] = new Complex(normalizedData[i]);
 			}
 			//
 			// Z=1/Y
 			//
 			complextmp1 = new Complex(1,0);
-			for (Complex entry : normalizedData) {
-				zData.add(Complex.div(complextmp1, entry));
+			zData = new Complex[normalizedData.length];
+			for (int i = 0; i < normalizedData.length; i++) {
+				zData[i] = Complex.div(complextmp1, normalizedData[i]);
 			}
 			//
 			// S=(Z-R0)/(Z+Ro)
 			//
 			complextmp3 = new Complex(this.r,0);	// resistance as complex number
-			for (Complex entry : zData) {
-				complextmp1 = new Complex(Complex.div(Complex.sub(entry, complextmp3), Complex.add(entry, complextmp3)));
-				sData.add(complextmp1);
+			sData = new Complex[normalizedData.length];
+			for (int i = 0; i < normalizedData.length; i++) {
+				complextmp1 = new Complex(Complex.div(Complex.sub(normalizedData[i], complextmp3), Complex.add(normalizedData[i], complextmp3)));
+				sData[i] = complextmp1;
 			}
 			break;
 		case Z:
@@ -359,33 +369,31 @@ public class RFData {
 			//
 			// Z=Z
 			//
-			for (Complex entry : normalizedData) {
-				zData.add(new Complex(entry));
+			zData = new Complex[normalizedData.length];
+			for(int i = 0; i < normalizedData.length; i++){
+				zData[i] = new Complex(normalizedData[i]);
 			}
 			// ..And calculate S data
 			//
 			// S=(Z-R0)/(Z+Ro)
 			//
 			complextmp3 = new Complex(this.r,0);	// resistance as complex number
-			for (Complex entry : normalizedData) {
-				complextmp1 = new Complex(Complex.div(Complex.sub(entry, complextmp3), Complex.add(entry, complextmp3)));
-				sData.add(complextmp1);
+			sData = new Complex[normalizedData.length];
+			for (int i = 0; i < normalizedData.length; i++) {
+				complextmp1 = new Complex(Complex.div(Complex.sub(normalizedData[i], complextmp3), Complex.add(normalizedData[i], complextmp3)));
+				sData[i] = complextmp1;
 			}
 			//
 			// Y=1/Z
 			//
 			complextmp1 = new Complex(1,0);
-			for (Complex entry : zData) {
-				yData.add(Complex.div(complextmp1, entry));
+			yData = new Complex[normalizedData.length];
+			for (int i = 0; i < normalizedData.length; i++) {
+				yData[i] = Complex.div(complextmp1, normalizedData[i]);
 			}
 			break;
 		default:
 			break;
-		}
-		// Check if output size is equal to input size
-		if(this.normalizedData.size() != this.zData.size() ||
-				this.normalizedData.size() != this.sData.size()) {
-			System.out.println("FATAL: sData or zData entries not equal normalized entries");
 		}
 	}
 	
@@ -405,7 +413,7 @@ public class RFData {
 	 * Returns the number of datapoints in the RFData set
 	 * @return
 	 */
-	public long size() {
+	public int size() {
 		return this.dataEntries;
 	}
 	
@@ -413,24 +421,30 @@ public class RFData {
 	 * Returns the Frequency list of the datapoints
 	 * @return
 	 */
-	public ArrayList<Double> getfData() {
-		return new ArrayList<Double>(fData);
+	public double[] getfData() {
+		double[] res = new double[fData.length];
+		System.arraycopy(fData, 0, res, 0, fData.length);
+		return res;
 	}
 	
 	/**
 	 * Returns a list of Z Data
 	 * @return
 	 */
-	public ArrayList<Complex> getzData() {
-		return new ArrayList<Complex>(zData);
+	public Complex[] getzData() {
+		Complex[] res = new Complex[zData.length];
+		System.arraycopy(zData, 0, res, 0, zData.length);
+		return res;
 	}
 	
 	/** 
 	 * Returns a list of S Data
 	 * @return
 	 */
-	public ArrayList<Complex> getsData() {
-		return new ArrayList<Complex>(sData);
+	public Complex[] getsData() {
+		Complex[] res = new Complex[sData.length];
+		System.arraycopy(sData, 0, res, 0, sData.length);
+		return res;
 	}
 	
 	/**
@@ -438,16 +452,18 @@ public class RFData {
 	 * @param zo reference resistance
 	 * @return
 	 */
-	public ArrayList<Complex> getSData(double zo) {
-		return new ArrayList<Complex>(RFData.z2s(zo, zData));
+	public Complex[] getSData(double zo) {
+		return RFData.z2s(zo, zData);
 	}
 
 	/** 
 	 * Returns a list of Y Data
 	 * @return
 	 */
-	public ArrayList<Complex> getyData() {
-		return new ArrayList<Complex>(yData);
+	public Complex[] getyData() {
+		Complex[] res = new Complex[yData.length];
+		System.arraycopy(yData, 0, res, 0, yData.length);
+		return res;
 	}
 
 	//================================================================================
@@ -460,11 +476,11 @@ public class RFData {
 	 * @param z z Data
 	 * @return SData
 	 */
-	public static ArrayList<Complex> z2s(double zo, List<Complex> z) {
-		ArrayList<Complex> s = new ArrayList<Complex>(z.size());
+	public static Complex[] z2s(double zo, Complex[] z) {
+		Complex[] s = new Complex[z.length];
 		Complex c = new Complex(zo,0);
-		for (Complex complex : z) {
-			s.add(Complex.div(Complex.sub(complex, c), Complex.add(complex, c)));
+		for(int i = 0; i < z.length; i++) {
+			s[i] = Complex.div(Complex.sub(z[i], c), Complex.add(z[i], c));
 		}
 		return s;
 	}	
@@ -474,11 +490,12 @@ public class RFData {
 	 * @param z z Data
 	 * @return YData
 	 */
-	public static ArrayList<Complex> z2y(List<Complex> z) {
-		ArrayList<Complex> y = new ArrayList<Complex>(z.size());
+	public static Complex[] z2y(Complex[] z) {
+		Complex[] y = new Complex[z.length];
 		Complex tmp = new Complex(1,0);
-		for (Complex c : z) {
-			y.add(Complex.div(tmp, c));
+		
+		for(int i = 0; i < z.length; i++) {
+			y[i] = Complex.div(tmp, z[i]);
 		}
 		return y;
 	}
