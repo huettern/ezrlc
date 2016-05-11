@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.*;
 
 import pro2.MVC.Controller.DataSource;
+import pro2.ModelCalculation.MCEqCircuit;
 import pro2.Plot.PlotDataSet;
 import pro2.Plot.Figure.ENPlotType;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
@@ -47,6 +48,21 @@ public class Model extends Observable {
 				break;
 			case Y:
 				data = this.rfDataFile.getyData();
+				break;
+			default:
+				break;
+			}
+		} else if (nm.src == DataSource.MODEL) {
+			outdata = new ArrayList<Double>(nm.eqCircuit.getWSize());
+			switch (nm.type) {
+			case S:
+				data = nm.eqCircuit.getS();
+				break;
+			case Y:
+				data = nm.eqCircuit.getY();
+				break;
+			case Z:
+				data = nm.eqCircuit.getS();
 				break;
 			default:
 				break;
@@ -178,10 +194,10 @@ public class Model extends Observable {
 	 * @param cpxMod RFData.ComplexModifier
 	 * @return	unique data identifier of the plotdataset
 	 */
-	public int createDataset(Controller.DataSource src, int id, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
+	public int createDataset(Controller.DataSource src, MCEqCircuit ec, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
 		RectPlotNewMeasurement nm = new RectPlotNewMeasurement();
 		nm.src = src;
-		nm.modelID = id;
+		nm.eqCircuit = ec;
 		nm.type=measType;
 		nm.cpxMod=cpxMod;
 		return this.buildDataSet(nm);

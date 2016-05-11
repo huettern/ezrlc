@@ -17,9 +17,13 @@ import javax.swing.JPanel;
 
 
 import pro2.MVC.Controller;
+import pro2.MVC.Controller.DataSource;
 import pro2.MVC.Model;
 import pro2.Plot.Figure;
+import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.RFData.RFData;
+import pro2.RFData.RFData.ComplexModifier;
+import pro2.RFData.RFData.MeasurementType;
 import pro2.View.MainView;
 import pro2.util.Complex;
 import pro2.util.MathUtil;
@@ -37,25 +41,25 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-		EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {                                           
-                Model model = new Model();
-                MainView view = new MainView();
-                Controller controller = new Controller(model,view);
-                
-                view.setController(controller);
-                model.setController(controller);
-                
-                view.build();
-                view.setVisible(true);
-                
-                // Add observers
-                model.addObserver(view);
-                
-                controller.contol();
-            }
-        });  
+//		EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {                                           
+//                Model model = new Model();
+//                MainView view = new MainView();
+//                Controller controller = new Controller(model,view);
+//                
+//                view.setController(controller);
+//                model.setController(controller);
+//                
+//                view.build();
+//                view.setVisible(true);
+//                
+//                // Add observers
+//                model.addObserver(view);
+//                
+//                controller.contol();
+//            }
+//        });  
 
 		//================================================================================
 	    // Smith Test
@@ -91,7 +95,7 @@ public class Pro2 {
 //		frame.setVisible(true);
 //        
         /* Create Test Data set */
-		List<Complex> cpxtext = new ArrayList<Complex>();
+//		List<Complex> cpxtext = new ArrayList<Complex>();
 //		cpxtext.add(new Complex(10.0, 20.0));
 //		cpxtext.add(new Complex(1.0, 0.2));
 //		cpxtext.add(new Complex(1.0, 0.4));

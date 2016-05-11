@@ -173,4 +173,38 @@ public class MathUtil {
 		return out;
 	}
 	
+	/**
+	 * Checks if array contains number
+	 * @param a int array to be searched
+	 * @param x number to check
+	 * @return true if contains, false if not
+	 */
+	public static boolean contains(int[] a, int x) {
+		for(int i = 0; i<a.length; i++){
+			if(a[i] == x) return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * creates a linear vector form start to end with given number of points
+	 * @param start start value
+	 * @param end end value
+	 * @param num number of steps
+	 * @return linear vector
+	 */
+	public static double[] linspace(double start, double end, int num) {
+		double[] res = new double[num];
+		res[0] = start;
+		res[num-1] = end;
+		
+		double step = (end-start)/(num-1);
+		for(int i = 1; i<(num-1); i++){
+			res[i] = res[i-1] + step;
+		}
+		
+		return res;
+	}
+	
+
 }

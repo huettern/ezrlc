@@ -460,12 +460,26 @@ public class RFData {
 	 * @param z z Data
 	 * @return SData
 	 */
-	public static List<Complex> z2s(double zo, List<Complex> z) {
-		List<Complex> s = new ArrayList<Complex>(z.size());
+	public static ArrayList<Complex> z2s(double zo, List<Complex> z) {
+		ArrayList<Complex> s = new ArrayList<Complex>(z.size());
 		Complex c = new Complex(zo,0);
 		for (Complex complex : z) {
 			s.add(Complex.div(Complex.sub(complex, c), Complex.add(complex, c)));
 		}
 		return s;
+	}	
+	/**
+	 * Converts given z Data to y data
+	 *  y = 1 / z
+	 * @param z z Data
+	 * @return YData
+	 */
+	public static ArrayList<Complex> z2y(List<Complex> z) {
+		ArrayList<Complex> y = new ArrayList<Complex>(z.size());
+		Complex tmp = new Complex(1,0);
+		for (Complex c : z) {
+			y.add(Complex.div(tmp, c));
+		}
+		return y;
 	}
 }
