@@ -248,7 +248,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 			String fName = fileChooser.showFileChooser();			
 			lblInputFile.setText(fName);
 			File f = fileChooser.getFile();
-			if (f != null || lblInputFile != null) {
+			if (f != null) {
 				controller.loadFile(f);
 			}	
 		}
