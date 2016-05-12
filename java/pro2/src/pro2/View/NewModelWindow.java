@@ -559,13 +559,13 @@ public class NewModelWindow implements ActionListener{
 //		ops.paramsAuto[6] = chBoxC1.isSelected();
 		
 		// element values
-		if(ops.paramsAuto[0] == false && txtR0.getSelectedText() != null) ops.params[0] = Double.parseDouble(txtR0.getText());
-		if(ops.paramsAuto[1] == false && txtF.getSelectedText() != null) ops.params[1] = Double.parseDouble(txtF.getText());
-		if(ops.paramsAuto[2] == false && txtAlpha.getSelectedText() != null) ops.params[2] = Double.parseDouble(txtAlpha.getText());
-		if(ops.paramsAuto[3] == false && txtR1.getSelectedText() != null) ops.params[3] = Double.parseDouble(txtR1.getText());
-		if(ops.paramsAuto[4] == false && txtL.getSelectedText() != null) ops.params[4] = Double.parseDouble(txtL.getText())/(1e3);
-		if(ops.paramsAuto[5] == false && txtC0.getSelectedText() != null) ops.params[5] = Double.parseDouble(txtC0.getText())/(1e6);
-		if(ops.paramsAuto[6] == false && txtC1.getSelectedText() != null) ops.params[6] = Double.parseDouble(txtC1.getText())/(1e6);
+		if(txtR0.getText().isEmpty() == false) { ops.params[0] = Double.parseDouble(txtR0.getText()); ops.paramsAuto[0] = false; }
+		if(txtF.getText().isEmpty() == false) { ops.params[1] = Double.parseDouble(txtF.getText()); ops.paramsAuto[1] = false; }
+		if(txtAlpha.getText().isEmpty() == false) { ops.params[2] = Double.parseDouble(txtAlpha.getText()); ops.paramsAuto[2] = false; }
+		if(txtR1.getText().isEmpty() == false) { ops.params[3] = Double.parseDouble(txtR1.getText()); ops.paramsAuto[3] = false; }
+		if(txtL.getText().isEmpty() == false) { ops.params[4] = Double.parseDouble(txtL.getText())/(1); ops.paramsAuto[4] = false; }
+		if(txtC0.getText().isEmpty() == false) { ops.params[5] = Double.parseDouble(txtC0.getText())/(1); ops.paramsAuto[5] = false; }
+		if(txtC1.getText().isEmpty() == false) { ops.params[6] = Double.parseDouble(txtC1.getText())/(1); ops.paramsAuto[6] = false; }
 
 		return ops;
 	}
