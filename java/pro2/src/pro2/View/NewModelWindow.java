@@ -713,6 +713,7 @@ public class NewModelWindow implements ActionListener{
 		if(e.getSource() == btnGenerate) {
 			MCOptions ops = this.parseInput();
 			controller.createEqCircuit(ops);
+			dialog.dispose();
 		}	
 
 	}
