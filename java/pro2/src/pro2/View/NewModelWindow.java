@@ -14,6 +14,8 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import pro2.MVC.Controller;
 import pro2.ModelCalculation.MCOptions;
@@ -54,18 +56,6 @@ public class NewModelWindow implements ActionListener{
 	private JTextField txtC0;
 	private JTextField txtR1;
 	private JTextField txtC1;
-	
-	private JCheckBox chBoxFmin;
-	private JCheckBox chBoxFmax;
-	private JCheckBox chBoxCompMin;
-	private JCheckBox chBoxCompMax;
-	private JCheckBox chBoxL;
-	private JCheckBox chBoxC0;
-	private JCheckBox chBoxC1;
-	private JCheckBox chBoxR0;
-	private JCheckBox chBoxR1;
-	private JCheckBox chBoxF;
-	private JCheckBox chBoxAlpha;
 	
 	private JButton btnCancel;
 	private JButton btnAllAuto;
@@ -172,25 +162,18 @@ public class NewModelWindow implements ActionListener{
 		gbc_pnlComponents.gridy = 1;
 		dialog.getContentPane().add(pnlComponents, gbc_pnlComponents);
 		GridBagLayout gbl_pnlComponents = new GridBagLayout();
-		gbl_pnlComponents.columnWidths = new int[]{80, 100, 23, 0, 0};
-		gbl_pnlComponents.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_pnlComponents.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_pnlComponents.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlComponents.columnWidths = new int[]{80, 100, 23, 0};
+		gbl_pnlComponents.rowHeights = new int[]{0, 0, 0};
+		gbl_pnlComponents.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlComponents.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		pnlComponents.setLayout(gbl_pnlComponents);
-		
-		JLabel lblAuto_1 = new JLabel("Auto");
-		GridBagConstraints gbc_lblAuto_1 = new GridBagConstraints();
-		gbc_lblAuto_1.insets = new Insets(0, 0, 5, 0);
-		gbc_lblAuto_1.gridx = 3;
-		gbc_lblAuto_1.gridy = 0;
-		pnlComponents.add(lblAuto_1, gbc_lblAuto_1);
 		
 		lblCompMin = new JLabel("<html> Comp<sub>min</sub> </html>");
 		GridBagConstraints gbc_lblCompMin = new GridBagConstraints();
 		gbc_lblCompMin.anchor = GridBagConstraints.WEST;
 		gbc_lblCompMin.insets = new Insets(0, 5, 5, 5);
 		gbc_lblCompMin.gridx = 0;
-		gbc_lblCompMin.gridy = 1;
+		gbc_lblCompMin.gridy = 0;
 		pnlComponents.add(lblCompMin, gbc_lblCompMin);
 		
 		txtCompMin = new JTextField();
@@ -199,31 +182,23 @@ public class NewModelWindow implements ActionListener{
 		gbc_txtCompMin.insets = new Insets(0, 0, 5, 5);
 		gbc_txtCompMin.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtCompMin.gridx = 1;
-		gbc_txtCompMin.gridy = 1;
+		gbc_txtCompMin.gridy = 0;
 		pnlComponents.add(txtCompMin, gbc_txtCompMin);
 		txtCompMin.setColumns(10);
 		
 		JLabel label_1 = new JLabel("");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
-		gbc_label_1.insets = new Insets(0, 0, 5, 5);
+		gbc_label_1.insets = new Insets(0, 0, 5, 0);
 		gbc_label_1.gridx = 2;
-		gbc_label_1.gridy = 1;
+		gbc_label_1.gridy = 0;
 		pnlComponents.add(label_1, gbc_label_1);
-		
-		chBoxCompMin = new JCheckBox("");
-		chBoxCompMin.setSelected(true);
-		GridBagConstraints gbc_chBoxCompMin = new GridBagConstraints();
-		gbc_chBoxCompMin.insets = new Insets(0, 0, 5, 0);
-		gbc_chBoxCompMin.gridx = 3;
-		gbc_chBoxCompMin.gridy = 1;
-		pnlComponents.add(chBoxCompMin, gbc_chBoxCompMin);
 		
 		lblCompMax = new JLabel("<html> Comp<sub>max</sub> </html>");
 		GridBagConstraints gbc_lblCompMax = new GridBagConstraints();
 		gbc_lblCompMax.anchor = GridBagConstraints.WEST;
 		gbc_lblCompMax.insets = new Insets(0, 5, 0, 5);
 		gbc_lblCompMax.gridx = 0;
-		gbc_lblCompMax.gridy = 2;
+		gbc_lblCompMax.gridy = 1;
 		pnlComponents.add(lblCompMax, gbc_lblCompMax);
 		
 		txtCompMax = new JTextField();
@@ -232,16 +207,9 @@ public class NewModelWindow implements ActionListener{
 		gbc_txtCompMax.insets = new Insets(0, 0, 0, 5);
 		gbc_txtCompMax.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtCompMax.gridx = 1;
-		gbc_txtCompMax.gridy = 2;
+		gbc_txtCompMax.gridy = 1;
 		pnlComponents.add(txtCompMax, gbc_txtCompMax);
 		txtCompMax.setColumns(10);
-		
-		chBoxCompMax = new JCheckBox("");
-		chBoxCompMax.setSelected(true);
-		GridBagConstraints gbc_chBoxCompMax = new GridBagConstraints();
-		gbc_chBoxCompMax.gridx = 3;
-		gbc_chBoxCompMax.gridy = 2;
-		pnlComponents.add(chBoxCompMax, gbc_chBoxCompMax);
 		
 		//Frequency
 		JPanel pnlFrequency = new JPanel();
@@ -253,18 +221,11 @@ public class NewModelWindow implements ActionListener{
 		gbc_pnlFrequency.gridy = 2;
 		dialog.getContentPane().add(pnlFrequency, gbc_pnlFrequency);
 		GridBagLayout gbl_pnlFrequency = new GridBagLayout();
-		gbl_pnlFrequency.columnWidths = new int[]{80, 100, 23, 0, 0};
+		gbl_pnlFrequency.columnWidths = new int[]{80, 100, 23, 0};
 		gbl_pnlFrequency.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_pnlFrequency.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlFrequency.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlFrequency.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlFrequency.setLayout(gbl_pnlFrequency);
-		
-		JLabel lblAuto = new JLabel("Auto");
-		GridBagConstraints gbc_lblAuto = new GridBagConstraints();
-		gbc_lblAuto.insets = new Insets(0, 0, 5, 0);
-		gbc_lblAuto.gridx = 3;
-		gbc_lblAuto.gridy = 0;
-		pnlFrequency.add(lblAuto, gbc_lblAuto);
 		
 		JLabel lblFmin = new JLabel("<html> f<sub>min</sub> </html>");
 		GridBagConstraints gbc_lblFmin = new GridBagConstraints();
@@ -287,23 +248,15 @@ public class NewModelWindow implements ActionListener{
 		
 		JLabel lblHz = new JLabel("Hz");
 		GridBagConstraints gbc_lblHz = new GridBagConstraints();
-		gbc_lblHz.insets = new Insets(0, 0, 5, 5);
+		gbc_lblHz.insets = new Insets(0, 0, 5, 0);
 		gbc_lblHz.gridx = 2;
 		gbc_lblHz.gridy = 1;
 		pnlFrequency.add(lblHz, gbc_lblHz);
 		
-		chBoxFmin = new JCheckBox("");
-		chBoxFmin.setSelected(true);
-		GridBagConstraints gbc_chBoxFmin = new GridBagConstraints();
-		gbc_chBoxFmin.insets = new Insets(0, 0, 5, 0);
-		gbc_chBoxFmin.gridx = 3;
-		gbc_chBoxFmin.gridy = 1;
-		pnlFrequency.add(chBoxFmin, gbc_chBoxFmin);
-		
 		JLabel lblFmax = new JLabel("<html> f<sub>max</sub> </html>");
 		GridBagConstraints gbc_lblFmax = new GridBagConstraints();
 		gbc_lblFmax.anchor = GridBagConstraints.WEST;
-		gbc_lblFmax.insets = new Insets(0, 5, 5, 5);
+		gbc_lblFmax.insets = new Insets(0, 5, 0, 5);
 		gbc_lblFmax.gridx = 0;
 		gbc_lblFmax.gridy = 2;
 		pnlFrequency.add(lblFmax, gbc_lblFmax);
@@ -320,21 +273,13 @@ public class NewModelWindow implements ActionListener{
 		
 		JLabel lblHz_1 = new JLabel("Hz");
 		GridBagConstraints gbc_lblHz_1 = new GridBagConstraints();
-		gbc_lblHz_1.insets = new Insets(0, 0, 0, 5);
 		gbc_lblHz_1.gridx = 2;
 		gbc_lblHz_1.gridy = 2;
 		pnlFrequency.add(lblHz_1, gbc_lblHz_1);
 		
-		chBoxFmax = new JCheckBox("");
-		chBoxFmax.setSelected(true);
-		GridBagConstraints gbc_chBoxFmax = new GridBagConstraints();
-		gbc_chBoxFmax.gridx = 3;
-		gbc_chBoxFmax.gridy = 2;
-		pnlFrequency.add(chBoxFmax, gbc_chBoxFmax);
-		
 		//Parameter 
 		pnlParameter = new JPanel();
-		pnlParameter.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Parameters", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		pnlParameter.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Start Value Parameters", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlParameter = new GridBagConstraints();
 		gbc_pnlParameter.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlParameter.fill = GridBagConstraints.BOTH;
@@ -342,32 +287,18 @@ public class NewModelWindow implements ActionListener{
 		gbc_pnlParameter.gridy = 3;
 		dialog.getContentPane().add(pnlParameter, gbc_pnlParameter);
 		GridBagLayout gbl_pnlParameter = new GridBagLayout();
-		gbl_pnlParameter.columnWidths = new int[]{0, 0, 0, 0, 23, 0, 0, 0, 0, 0};
-		gbl_pnlParameter.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_pnlParameter.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_pnlParameter.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlParameter.columnWidths = new int[]{0, 0, 0, 23, 0, 0, 0, 0};
+		gbl_pnlParameter.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_pnlParameter.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlParameter.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlParameter.setLayout(gbl_pnlParameter);
-		
-		JLabel lblAuto_2 = new JLabel("Auto");
-		GridBagConstraints gbc_lblAuto_2 = new GridBagConstraints();
-		gbc_lblAuto_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAuto_2.gridx = 3;
-		gbc_lblAuto_2.gridy = 0;
-		pnlParameter.add(lblAuto_2, gbc_lblAuto_2);
-		
-		JLabel lblAuto_3 = new JLabel("Auto");
-		GridBagConstraints gbc_lblAuto_3 = new GridBagConstraints();
-		gbc_lblAuto_3.insets = new Insets(0, 0, 5, 0);
-		gbc_lblAuto_3.gridx = 8;
-		gbc_lblAuto_3.gridy = 0;
-		pnlParameter.add(lblAuto_3, gbc_lblAuto_3);
 		
 		lblL = new JLabel("L");
 		GridBagConstraints gbc_lblL = new GridBagConstraints();
 		gbc_lblL.anchor = GridBagConstraints.WEST;
 		gbc_lblL.insets = new Insets(0, 5, 5, 5);
 		gbc_lblL.gridx = 0;
-		gbc_lblL.gridy = 1;
+		gbc_lblL.gridy = 0;
 		pnlParameter.add(lblL, gbc_lblL);
 		
 		txtL = new JTextField();
@@ -376,7 +307,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_txtL.insets = new Insets(0, 0, 5, 5);
 		gbc_txtL.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtL.gridx = 1;
-		gbc_txtL.gridy = 1;
+		gbc_txtL.gridy = 0;
 		pnlParameter.add(txtL, gbc_txtL);
 		txtL.setColumns(10);
 		
@@ -384,23 +315,15 @@ public class NewModelWindow implements ActionListener{
 		GridBagConstraints gbc_lblMh = new GridBagConstraints();
 		gbc_lblMh.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMh.gridx = 2;
-		gbc_lblMh.gridy = 1;
+		gbc_lblMh.gridy = 0;
 		pnlParameter.add(lblMh, gbc_lblMh);
-		
-		chBoxL = new JCheckBox("");
-		chBoxL.setSelected(true);
-		GridBagConstraints gbc_chBoxL = new GridBagConstraints();
-		gbc_chBoxL.insets = new Insets(0, 0, 5, 5);
-		gbc_chBoxL.gridx = 3;
-		gbc_chBoxL.gridy = 1;
-		pnlParameter.add(chBoxL, gbc_chBoxL);
 		
 		lblR0 = new JLabel("<html> R<sub>0</sub> </html>");
 		GridBagConstraints gbc_lblR0 = new GridBagConstraints();
 		gbc_lblR0.insets = new Insets(0, 5, 5, 5);
 		gbc_lblR0.anchor = GridBagConstraints.WEST;
-		gbc_lblR0.gridx = 5;
-		gbc_lblR0.gridy = 1;
+		gbc_lblR0.gridx = 4;
+		gbc_lblR0.gridy = 0;
 		pnlParameter.add(lblR0, gbc_lblR0);
 		
 		txtR0 = new JTextField();
@@ -408,32 +331,24 @@ public class NewModelWindow implements ActionListener{
 		GridBagConstraints gbc_txtR0 = new GridBagConstraints();
 		gbc_txtR0.insets = new Insets(0, 0, 5, 5);
 		gbc_txtR0.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtR0.gridx = 6;
-		gbc_txtR0.gridy = 1;
+		gbc_txtR0.gridx = 5;
+		gbc_txtR0.gridy = 0;
 		pnlParameter.add(txtR0, gbc_txtR0);
 		txtR0.setColumns(10);
 		
 		lblOhm0 = new JLabel("\u2126");
 		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 7;
-		gbc_label.gridy = 1;
+		gbc_label.insets = new Insets(0, 0, 5, 0);
+		gbc_label.gridx = 6;
+		gbc_label.gridy = 0;
 		pnlParameter.add(lblOhm0, gbc_label);
-		
-		chBoxR0 = new JCheckBox("");
-		chBoxR0.setSelected(true);
-		GridBagConstraints gbc_chBoxR0 = new GridBagConstraints();
-		gbc_chBoxR0.insets = new Insets(0, 0, 5, 0);
-		gbc_chBoxR0.gridx = 8;
-		gbc_chBoxR0.gridy = 1;
-		pnlParameter.add(chBoxR0, gbc_chBoxR0);
 		
 		lblC0 = new JLabel("<html> C<sub>0</sub> </html>");
 		GridBagConstraints gbc_lblC0 = new GridBagConstraints();
 		gbc_lblC0.anchor = GridBagConstraints.WEST;
 		gbc_lblC0.insets = new Insets(0, 5, 5, 5);
 		gbc_lblC0.gridx = 0;
-		gbc_lblC0.gridy = 2;
+		gbc_lblC0.gridy = 1;
 		pnlParameter.add(lblC0, gbc_lblC0);
 		
 		txtC0 = new JTextField();
@@ -442,7 +357,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_txtC0.insets = new Insets(0, 0, 5, 5);
 		gbc_txtC0.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtC0.gridx = 1;
-		gbc_txtC0.gridy = 2;
+		gbc_txtC0.gridy = 1;
 		pnlParameter.add(txtC0, gbc_txtC0);
 		txtC0.setColumns(10);
 		
@@ -450,23 +365,15 @@ public class NewModelWindow implements ActionListener{
 		GridBagConstraints gbc_lblUf = new GridBagConstraints();
 		gbc_lblUf.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUf.gridx = 2;
-		gbc_lblUf.gridy = 2;
+		gbc_lblUf.gridy = 1;
 		pnlParameter.add(lblUf, gbc_lblUf);
-		
-		chBoxC0 = new JCheckBox("");
-		chBoxC0.setSelected(true);
-		GridBagConstraints gbc_chBoxC0 = new GridBagConstraints();
-		gbc_chBoxC0.insets = new Insets(0, 0, 5, 5);
-		gbc_chBoxC0.gridx = 3;
-		gbc_chBoxC0.gridy = 2;
-		pnlParameter.add(chBoxC0, gbc_chBoxC0);
 		
 		lblAlpha = new JLabel("\u03B1");
 		GridBagConstraints gbc_lblAlpha = new GridBagConstraints();
 		gbc_lblAlpha.anchor = GridBagConstraints.WEST;
 		gbc_lblAlpha.insets = new Insets(0, 5, 5, 5);
-		gbc_lblAlpha.gridx = 5;
-		gbc_lblAlpha.gridy = 2;
+		gbc_lblAlpha.gridx = 4;
+		gbc_lblAlpha.gridy = 1;
 		pnlParameter.add(lblAlpha, gbc_lblAlpha);
 		
 		txtAlpha = new JTextField();
@@ -474,25 +381,17 @@ public class NewModelWindow implements ActionListener{
 		GridBagConstraints gbc_txtAlpha = new GridBagConstraints();
 		gbc_txtAlpha.insets = new Insets(0, 0, 5, 5);
 		gbc_txtAlpha.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtAlpha.gridx = 6;
-		gbc_txtAlpha.gridy = 2;
+		gbc_txtAlpha.gridx = 5;
+		gbc_txtAlpha.gridy = 1;
 		pnlParameter.add(txtAlpha, gbc_txtAlpha);
 		txtAlpha.setColumns(10);
-		
-		chBoxAlpha = new JCheckBox("");
-		chBoxAlpha.setSelected(true);
-		GridBagConstraints gbc_chBoxAlpha = new GridBagConstraints();
-		gbc_chBoxAlpha.insets = new Insets(0, 0, 5, 0);
-		gbc_chBoxAlpha.gridx = 8;
-		gbc_chBoxAlpha.gridy = 2;
-		pnlParameter.add(chBoxAlpha, gbc_chBoxAlpha);
 		
 		lblR1 = new JLabel("<html> R<sub>1</sub> </html>");
 		GridBagConstraints gbc_lblR1 = new GridBagConstraints();
 		gbc_lblR1.anchor = GridBagConstraints.WEST;
 		gbc_lblR1.insets = new Insets(0, 5, 5, 5);
 		gbc_lblR1.gridx = 0;
-		gbc_lblR1.gridy = 3;
+		gbc_lblR1.gridy = 2;
 		pnlParameter.add(lblR1, gbc_lblR1);
 		
 		txtR1 = new JTextField();
@@ -501,7 +400,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_txtR1.insets = new Insets(0, 0, 5, 5);
 		gbc_txtR1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtR1.gridx = 1;
-		gbc_txtR1.gridy = 3;
+		gbc_txtR1.gridy = 2;
 		pnlParameter.add(txtR1, gbc_txtR1);
 		txtR1.setColumns(10);
 		
@@ -509,23 +408,15 @@ public class NewModelWindow implements ActionListener{
 		GridBagConstraints gbc_lblu = new GridBagConstraints();
 		gbc_lblu.insets = new Insets(0, 0, 5, 5);
 		gbc_lblu.gridx = 2;
-		gbc_lblu.gridy = 3;
+		gbc_lblu.gridy = 2;
 		pnlParameter.add(lblOhm1, gbc_lblu);
-		
-		chBoxR1 = new JCheckBox("");
-		chBoxR1.setSelected(true);
-		GridBagConstraints gbc_chBoxR1 = new GridBagConstraints();
-		gbc_chBoxR1.insets = new Insets(0, 0, 5, 5);
-		gbc_chBoxR1.gridx = 3;
-		gbc_chBoxR1.gridy = 3;
-		pnlParameter.add(chBoxR1, gbc_chBoxR1);
 		
 		lblF = new JLabel("f");
 		GridBagConstraints gbc_lblF = new GridBagConstraints();
 		gbc_lblF.anchor = GridBagConstraints.WEST;
 		gbc_lblF.insets = new Insets(0, 5, 5, 5);
-		gbc_lblF.gridx = 5;
-		gbc_lblF.gridy = 3;
+		gbc_lblF.gridx = 4;
+		gbc_lblF.gridy = 2;
 		pnlParameter.add(lblF, gbc_lblF);
 		
 		txtF = new JTextField();
@@ -533,32 +424,24 @@ public class NewModelWindow implements ActionListener{
 		GridBagConstraints gbc_txtF = new GridBagConstraints();
 		gbc_txtF.insets = new Insets(0, 0, 5, 5);
 		gbc_txtF.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtF.gridx = 6;
-		gbc_txtF.gridy = 3;
+		gbc_txtF.gridx = 5;
+		gbc_txtF.gridy = 2;
 		pnlParameter.add(txtF, gbc_txtF);
 		txtF.setColumns(10);
 		
 		lblHz_2 = new JLabel("Hz");
 		GridBagConstraints gbc_lblHz_2 = new GridBagConstraints();
-		gbc_lblHz_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblHz_2.gridx = 7;
-		gbc_lblHz_2.gridy = 3;
+		gbc_lblHz_2.insets = new Insets(0, 0, 5, 0);
+		gbc_lblHz_2.gridx = 6;
+		gbc_lblHz_2.gridy = 2;
 		pnlParameter.add(lblHz_2, gbc_lblHz_2);
-		
-		chBoxF = new JCheckBox("");
-		chBoxF.setSelected(true);
-		GridBagConstraints gbc_chBoxF = new GridBagConstraints();
-		gbc_chBoxF.insets = new Insets(0, 0, 5, 0);
-		gbc_chBoxF.gridx = 8;
-		gbc_chBoxF.gridy = 3;
-		pnlParameter.add(chBoxF, gbc_chBoxF);
 		
 		lblC1 = new JLabel("<html> C<sub>1</sub> </html>");
 		GridBagConstraints gbc_lblC1 = new GridBagConstraints();
 		gbc_lblC1.anchor = GridBagConstraints.WEST;
 		gbc_lblC1.insets = new Insets(0, 5, 0, 5);
 		gbc_lblC1.gridx = 0;
-		gbc_lblC1.gridy = 4;
+		gbc_lblC1.gridy = 3;
 		pnlParameter.add(lblC1, gbc_lblC1);
 		
 		txtC1 = new JTextField();
@@ -567,7 +450,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_txtC1.insets = new Insets(0, 0, 0, 5);
 		gbc_txtC1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtC1.gridx = 1;
-		gbc_txtC1.gridy = 4;
+		gbc_txtC1.gridy = 3;
 		pnlParameter.add(txtC1, gbc_txtC1);
 		txtC1.setColumns(10);
 		
@@ -575,16 +458,8 @@ public class NewModelWindow implements ActionListener{
 		GridBagConstraints gbc_lblUf_1 = new GridBagConstraints();
 		gbc_lblUf_1.insets = new Insets(0, 0, 0, 5);
 		gbc_lblUf_1.gridx = 2;
-		gbc_lblUf_1.gridy = 4;
+		gbc_lblUf_1.gridy = 3;
 		pnlParameter.add(lblUf_1, gbc_lblUf_1);
-		
-		chBoxC1 = new JCheckBox("");
-		chBoxC1.setSelected(true);
-		GridBagConstraints gbc_chBoxC1 = new GridBagConstraints();
-		gbc_chBoxC1.insets = new Insets(0, 0, 0, 5);
-		gbc_chBoxC1.gridx = 3;
-		gbc_chBoxC1.gridy = 4;
-		pnlParameter.add(chBoxC1, gbc_chBoxC1);
 		
 		//Buttons
 		JPanel pnlButtons = new JPanel();
@@ -625,7 +500,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_btnGenerate.gridx = 3;
 		gbc_btnGenerate.gridy = 0;
 		pnlButtons.add(btnGenerate, gbc_btnGenerate);
-		btnGenerate.addActionListener(this);
+		btnGenerate.addActionListener(this);		
 		
 		dialog.setVisible(true);
 	}
@@ -653,34 +528,34 @@ public class NewModelWindow implements ActionListener{
 		}
 		
 		// f range
-		ops.fMinAuto = chBoxFmin.isSelected();
-		ops.fMaxAuto = chBoxFmax.isSelected();
+//		ops.fMinAuto = chBoxFmin.isSelected();
+//		ops.fMaxAuto = chBoxFmax.isSelected();
 		if(ops.fMinAuto == false) ops.fMin = Double.parseDouble(txtFmin.getText());
 		if(ops.fMaxAuto == false) ops.fMax = Double.parseDouble(txtFmax.getText());
 		
 		// elements range
-		ops.nElementsMinAuto = chBoxCompMin.isSelected();
-		ops.nElementsMaxAuto = chBoxCompMax.isSelected();
-		if(ops.nElementsMinAuto == false) ops.nElementsMin = (int)Double.parseDouble(txtCompMin.getText());
-		if(ops.nElementsMaxAuto == false) ops.nElementsMax = (int)Double.parseDouble(txtCompMax.getText());
+//		ops.nElementsMinAuto = chBoxCompMin.isSelected();
+//		ops.nElementsMaxAuto = chBoxCompMax.isSelected();
+		if(ops.nElementsMinAuto == false && txtCompMin.getSelectedText() != null) ops.nElementsMin = (int)Double.parseDouble(txtCompMin.getText());
+		if(ops.nElementsMaxAuto == false && txtCompMax.getSelectedText() != null) ops.nElementsMax = (int)Double.parseDouble(txtCompMax.getText());
 		
 		// element auto
-		ops.paramsAuto[0] = chBoxR0.isSelected();
-		ops.paramsAuto[1] = chBoxF.isSelected();
-		ops.paramsAuto[2] = chBoxAlpha.isSelected();
-		ops.paramsAuto[3] = chBoxR1.isSelected();
-		ops.paramsAuto[4] = chBoxL.isSelected();
-		ops.paramsAuto[5] = chBoxC0.isSelected();
-		ops.paramsAuto[6] = chBoxC1.isSelected();
+//		ops.paramsAuto[0] = chBoxR0.isSelected();
+//		ops.paramsAuto[1] = chBoxF.isSelected();
+//		ops.paramsAuto[2] = chBoxAlpha.isSelected();
+//		ops.paramsAuto[3] = chBoxR1.isSelected();
+//		ops.paramsAuto[4] = chBoxL.isSelected();
+//		ops.paramsAuto[5] = chBoxC0.isSelected();
+//		ops.paramsAuto[6] = chBoxC1.isSelected();
 		
 		// element values
-		if(ops.paramsAuto[0] == false) ops.params[0] = Double.parseDouble(txtR0.getText());
-		if(ops.paramsAuto[1] == false) ops.params[1] = Double.parseDouble(txtF.getText());
-		if(ops.paramsAuto[2] == false) ops.params[2] = Double.parseDouble(txtAlpha.getText());
-		if(ops.paramsAuto[3] == false) ops.params[3] = Double.parseDouble(txtR1.getText());
-		if(ops.paramsAuto[4] == false) ops.params[4] = Double.parseDouble(txtL.getText())/(1e3);
-		if(ops.paramsAuto[5] == false) ops.params[5] = Double.parseDouble(txtC0.getText())/(1e6);
-		if(ops.paramsAuto[6] == false) ops.params[6] = Double.parseDouble(txtC1.getText())/(1e6);
+		if(ops.paramsAuto[0] == false && txtR0.getSelectedText() != null) ops.params[0] = Double.parseDouble(txtR0.getText());
+		if(ops.paramsAuto[1] == false && txtF.getSelectedText() != null) ops.params[1] = Double.parseDouble(txtF.getText());
+		if(ops.paramsAuto[2] == false && txtAlpha.getSelectedText() != null) ops.params[2] = Double.parseDouble(txtAlpha.getText());
+		if(ops.paramsAuto[3] == false && txtR1.getSelectedText() != null) ops.params[3] = Double.parseDouble(txtR1.getText());
+		if(ops.paramsAuto[4] == false && txtL.getSelectedText() != null) ops.params[4] = Double.parseDouble(txtL.getText())/(1e3);
+		if(ops.paramsAuto[5] == false && txtC0.getSelectedText() != null) ops.params[5] = Double.parseDouble(txtC0.getText())/(1e6);
+		if(ops.paramsAuto[6] == false && txtC1.getSelectedText() != null) ops.params[6] = Double.parseDouble(txtC1.getText())/(1e6);
 
 		return ops;
 	}
@@ -696,17 +571,17 @@ public class NewModelWindow implements ActionListener{
 		}
 		
 		if(e.getSource() == btnAllAuto) {
-			chBoxAlpha.setSelected(true);
-			chBoxC0.setSelected(true);
-			chBoxC1.setSelected(true);
-			chBoxCompMax.setSelected(true);
-			chBoxCompMin.setSelected(true);
-			chBoxF.setSelected(true);
-			chBoxFmax.setSelected(true);
-			chBoxFmin.setSelected(true);
-			chBoxL.setSelected(true);
-			chBoxR0.setSelected(true);
-			chBoxR1.setSelected(true);
+			txtAlpha.setText("");
+			txtR0.setText("");
+			txtC0.setText("");
+			txtC1.setText("");
+			txtCompMax.setText("");
+			txtCompMin.setText("");
+			txtF.setText("");
+			txtFmax.setText("");
+			txtFmin.setText("");
+			txtR1.setText("");
+			txtL.setText("");
 			list.setSelectedIndex(0);
 		}
 		
@@ -717,19 +592,17 @@ public class NewModelWindow implements ActionListener{
 		}	
 
 	}
+	
+	
 	/**
 	 * Parameter match by change the model
 	 */
 	public void comboBoxSelected(ActionEvent e) {
 		lblCompMin.setForeground(Color.LIGHT_GRAY);
 		txtCompMin.setEditable(false);
-		chBoxCompMin.setSelected(false);
-		chBoxCompMin.setEnabled(false);
 		
 		lblCompMax.setForeground(Color.LIGHT_GRAY);
 		txtCompMax.setEditable(false);
-		chBoxCompMax.setSelected(false);
-		chBoxCompMax.setEnabled(false);
 		
 		list = (JComboBox)e.getSource();
 		switch (list.getSelectedIndex()) {
@@ -737,96 +610,64 @@ public class NewModelWindow implements ActionListener{
 			lblL.setForeground(Color.BLACK);
 			txtL.setEditable(true);
 			lblMh.setForeground(Color.BLACK);
-			chBoxL.setSelected(true);
-			chBoxL.setEnabled(true);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.BLACK);
 			txtC1.setEditable(true);
 			lblUf_1.setForeground(Color.BLACK);
-			chBoxC1.setSelected(true);
-			chBoxC1.setEnabled(true);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.BLACK);
 			txtR1.setEditable(true);
 			lblOhm1.setForeground(Color.BLACK);
-			chBoxR1.setSelected(true);
-			chBoxR1.setEnabled(true);
 			
 			lblAlpha.setForeground(Color.BLACK);
 			txtAlpha.setEditable(true);
-			chBoxAlpha.setSelected(true);
-			chBoxAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
 			txtF.setEditable(true);
 			lblHz_2.setForeground(Color.BLACK);
-			chBoxF.setSelected(true);
-			chBoxF.setEnabled(true);
 			
 			lblCompMin.setForeground(Color.BLACK);
 			txtCompMin.setEditable(true);
-			chBoxCompMin.setSelected(true);
-			chBoxCompMin.setEnabled(true);
 			
 			lblCompMax.setForeground(Color.BLACK);
 			txtCompMax.setEditable(true);
-			chBoxCompMax.setSelected(true);
-			chBoxCompMax.setEnabled(true);
 			break;
 		case 1:
 		case 2:
 			lblL.setForeground(Color.BLACK);
 			txtL.setEditable(true);
 			lblMh.setForeground(Color.BLACK);
-			chBoxL.setSelected(true);
-			chBoxL.setEnabled(true);
 			
 			lblC0.setForeground(Color.LIGHT_GRAY);
 			txtC0.setEditable(false);
 			lblUf.setForeground(Color.LIGHT_GRAY);
-			chBoxC0.setSelected(false);
-			chBoxC0.setEnabled(false);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
 			txtC1.setEditable(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
-			chBoxC1.setSelected(false);
-			chBoxC1.setEnabled(false);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
 			txtR1.setEditable(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
-			chBoxR1.setSelected(false);
-			chBoxR1.setEnabled(false);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
 			txtAlpha.setEditable(false);
-			chBoxAlpha.setSelected(false);
-			chBoxAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
 			txtF.setEditable(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
-			chBoxF.setSelected(false);
-			chBoxF.setEnabled(false);
 			break;
 			
 		case 3:
@@ -834,43 +675,29 @@ public class NewModelWindow implements ActionListener{
 			lblL.setForeground(Color.LIGHT_GRAY);
 			txtL.setEditable(false);
 			lblMh.setForeground(Color.LIGHT_GRAY);
-			chBoxL.setSelected(false);
-			chBoxL.setEnabled(false);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
 			txtC1.setEditable(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
-			chBoxC1.setSelected(false);
-			chBoxC1.setEnabled(false);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
 			txtR1.setEditable(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
-			chBoxR1.setSelected(false);
-			chBoxR1.setEnabled(false);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
 			txtAlpha.setEditable(false);
-			chBoxAlpha.setSelected(false);
-			chBoxAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
 			txtF.setEditable(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
-			chBoxF.setSelected(false);
-			chBoxF.setEnabled(false);
 			break;
 			
 		case 5:
@@ -880,86 +707,58 @@ public class NewModelWindow implements ActionListener{
 			lblL.setForeground(Color.BLACK);
 			txtL.setEditable(true);
 			lblMh.setForeground(Color.BLACK);
-			chBoxL.setSelected(true);
-			chBoxL.setEnabled(true);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
 			txtC1.setEditable(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
-			chBoxC1.setSelected(false);
-			chBoxC1.setEnabled(false);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
 			txtR1.setEditable(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
-			chBoxR1.setSelected(false);
-			chBoxR1.setEnabled(false);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
 			txtAlpha.setEditable(false);
-			chBoxAlpha.setSelected(false);
-			chBoxAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
 			txtF.setEditable(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
-			chBoxF.setSelected(false);
-			chBoxF.setEnabled(false);
 			break;
 			
 		case 9:
 			lblL.setForeground(Color.LIGHT_GRAY);
 			txtL.setEditable(false);
 			lblMh.setForeground(Color.LIGHT_GRAY);
-			chBoxL.setSelected(false);
-			chBoxL.setEnabled(false);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
 			txtC1.setEditable(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
-			chBoxC1.setSelected(false);
-			chBoxC1.setEnabled(false);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.BLACK);
 			txtR1.setEditable(true);
 			lblOhm1.setForeground(Color.BLACK);
-			chBoxR1.setSelected(true);
-			chBoxR1.setEnabled(true);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
 			txtAlpha.setEditable(false);
-			chBoxAlpha.setSelected(false);
-			chBoxAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
 			txtF.setEditable(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
-			chBoxF.setSelected(false);
-			chBoxF.setEnabled(false);
 			break;
 			
 		case 10:
@@ -968,86 +767,58 @@ public class NewModelWindow implements ActionListener{
 			lblL.setForeground(Color.BLACK);
 			txtL.setEditable(true);
 			lblMh.setForeground(Color.BLACK);
-			chBoxL.setSelected(true);
-			chBoxL.setEnabled(true);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
 			txtC1.setEditable(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
-			chBoxC1.setSelected(false);
-			chBoxC1.setEnabled(false);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.BLACK);
 			txtR1.setEditable(true);
 			lblOhm1.setForeground(Color.BLACK);
-			chBoxR1.setSelected(true);
-			chBoxR1.setEnabled(true);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
 			txtAlpha.setEditable(false);
-			chBoxAlpha.setSelected(false);
-			chBoxAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
 			txtF.setEditable(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
-			chBoxF.setSelected(false);
-			chBoxF.setEnabled(false);
 			break;
 			
 		case 13:
 			lblL.setForeground(Color.BLACK);
 			txtL.setEditable(true);
 			lblMh.setForeground(Color.BLACK);
-			chBoxL.setSelected(true);
-			chBoxL.setEnabled(true);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.BLACK);
 			txtC1.setEditable(true);
 			lblUf_1.setForeground(Color.BLACK);
-			chBoxC1.setSelected(true);
-			chBoxC1.setEnabled(true);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
 			txtR1.setEditable(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
-			chBoxR1.setSelected(false);
-			chBoxR1.setEnabled(false);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
 			txtAlpha.setEditable(false);
-			chBoxAlpha.setSelected(false);
-			chBoxAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
 			txtF.setEditable(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
-			chBoxF.setSelected(false);
-			chBoxF.setEnabled(false);
 			break;
 			
 		case 14:
@@ -1056,86 +827,58 @@ public class NewModelWindow implements ActionListener{
 			lblL.setForeground(Color.BLACK);
 			txtL.setEditable(true);
 			lblMh.setForeground(Color.BLACK);
-			chBoxL.setSelected(true);
-			chBoxL.setEnabled(true);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
 			txtC1.setEditable(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
-			chBoxC1.setSelected(false);
-			chBoxC1.setEnabled(false);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
 			txtR1.setEditable(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
-			chBoxR1.setSelected(false);
-			chBoxR1.setEnabled(false);
 			
 			lblAlpha.setForeground(Color.BLACK);
 			txtAlpha.setEditable(true);
-			chBoxAlpha.setSelected(true);
-			chBoxAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
 			txtF.setEditable(true);
 			lblHz_2.setForeground(Color.BLACK);
-			chBoxF.setSelected(true);
-			chBoxF.setEnabled(true);
 			break;
 			
 		case 17:
 			lblL.setForeground(Color.LIGHT_GRAY);
 			txtL.setEditable(false);
 			lblMh.setForeground(Color.LIGHT_GRAY);
-			chBoxL.setSelected(false);
-			chBoxL.setEnabled(false);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
 			txtC1.setEditable(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
-			chBoxC1.setSelected(false);
-			chBoxC1.setEnabled(false);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.BLACK);
 			txtR1.setEditable(true);
 			lblOhm1.setForeground(Color.BLACK);
-			chBoxR1.setSelected(true);
-			chBoxR1.setEnabled(true);
 			
 			lblAlpha.setForeground(Color.BLACK);
 			txtAlpha.setEditable(true);
-			chBoxAlpha.setSelected(true);
-			chBoxAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
 			txtF.setEditable(true);
 			lblHz_2.setForeground(Color.BLACK);
-			chBoxF.setSelected(true);
-			chBoxF.setEnabled(true);
 			break;
 			
 		case 18:
@@ -1144,89 +887,60 @@ public class NewModelWindow implements ActionListener{
 			lblL.setForeground(Color.BLACK);
 			txtL.setEditable(true);
 			lblMh.setForeground(Color.BLACK);
-			chBoxL.setSelected(true);
-			chBoxL.setEnabled(true);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
 			txtC1.setEditable(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
-			chBoxC1.setSelected(false);
-			chBoxC1.setEnabled(false);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.BLACK);
 			txtR1.setEditable(true);
 			lblOhm1.setForeground(Color.BLACK);
-			chBoxR1.setSelected(true);
-			chBoxR1.setEnabled(true);
 			
 			lblAlpha.setForeground(Color.BLACK);
 			txtAlpha.setEditable(true);
-			chBoxAlpha.setSelected(true);
-			chBoxAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
 			txtF.setEditable(true);
 			lblHz_2.setForeground(Color.BLACK);
-			chBoxF.setSelected(true);
-			chBoxF.setEnabled(true);
 			break;
 			
 		case 21:
 			lblL.setForeground(Color.BLACK);
 			txtL.setEditable(true);
 			lblMh.setForeground(Color.BLACK);
-			chBoxL.setSelected(true);
-			chBoxL.setEnabled(true);
 			
 			lblC0.setForeground(Color.BLACK);
 			txtC0.setEditable(true);
 			lblUf.setForeground(Color.BLACK);
-			chBoxC0.setSelected(true);
-			chBoxC0.setEnabled(true);
 			
 			lblC1.setForeground(Color.BLACK);
 			txtC1.setEditable(true);
 			lblUf_1.setForeground(Color.BLACK);
-			chBoxC1.setSelected(true);
-			chBoxC1.setEnabled(true);
 			
 			lblR0.setForeground(Color.BLACK);
 			txtR0.setEditable(true);
 			lblOhm0.setForeground(Color.BLACK);
-			chBoxR0.setSelected(true);
-			chBoxR0.setEnabled(true);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
 			txtR1.setEditable(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
-			chBoxR1.setSelected(false);
-			chBoxR1.setEnabled(false);
-			
+	
 			lblAlpha.setForeground(Color.BLACK);
 			txtAlpha.setEditable(true);
-			chBoxAlpha.setSelected(true);
-			chBoxAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
 			txtF.setEditable(true);
 			lblHz_2.setForeground(Color.BLACK);
-			chBoxF.setSelected(true);
-			chBoxF.setEnabled(true);
 			break;			
 		}
-		
 		
 	}
 }
