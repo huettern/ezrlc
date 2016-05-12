@@ -39,6 +39,15 @@ public class MCOptions {
     // Constructor
     //================================================================================
 	public MCOptions() {
+		// Set all to auto
+		fMaxAuto = true;
+		fMinAuto = true;
+		nElementsMaxAuto = true;
+		nElementsMinAuto = true;
+		for(int i = 0; i < 7; i++){
+			paramsAuto[i] = true;
+		}
+		modelAutoSelect = true;
 	}
 
 }

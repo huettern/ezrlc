@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
+import pro2.ModelCalculation.MCEqCircuit.CircuitType;
 import pro2.ModelCalculation.MCUtil.DATA_FORMAT;
 import pro2.util.Complex;
 
@@ -51,25 +51,28 @@ public class MCUtil {
 	
 	/**
 	 * Applies the MCOptions to the frequency vector
-	 * @param opt MCOptions given by user
+	 * @param ops MCOptions given by user
 	 * @param f frequency data in Hertz
 	 * @patam format Data output format omega or hertz
 	 * @return w data
 	 */
-	public static final double[] applyMCOpsToF (MCOptions opt, double[] f, DATA_FORMAT format) {
+	public static final double[] applyMCOpsToF (MCOptions ops, double[] f, DATA_FORMAT format) {
 		// conver f to w
 		double mul = 1;
 		if(format == DATA_FORMAT.OMEGA) mul = 2.0*Math.PI; 
+
+		double wMin = mul*ops.fMin;
+		double wMax = mul*ops.fMax; 
+		if(ops.fMaxAuto) wMax = Double.MAX_VALUE;
+		if(ops.fMinAuto) wMin = -Double.MAX_VALUE;
 		
-		double wMin = mul*opt.fMin;
-		double wMax = mul*opt.fMax; 
 		double[] w = new double[f.length];
 		for(int ctr = 0; ctr < w.length; ctr++) {
 			w[ctr] = mul*f[ctr];
 		}
 		
 		// Limit f-range
-		if (opt.fMax < opt.fMin) { System.err.println("Max smaller min"); return null; }
+		if (ops.fMax < ops.fMin) { System.err.println("Max smaller min"); return null; }
 		int idxLow = 0;
 		int idxHigh = w.length;
 		// search low limit
@@ -103,22 +106,24 @@ public class MCUtil {
 
 	/**
 	 * Applies MCOptions to data
-	 * @param opt MCOptions given by user
+	 * @param ops MCOptions given by user
 	 * @param f frequency data in Hertz
 	 * @param data 
 	 * @return data array out, cut to the f-range
 	 */
-	public static final double[] applyMCOpsToData (MCOptions opt, double[] f, double[] data) {
+	public static final double[] applyMCOpsToData (MCOptions ops, double[] f, double[] data) {
 		// conver f to w
-		double wMin = 2.0*Math.PI*opt.fMin;
-		double wMax = 2.0*Math.PI*opt.fMax; 
+		double wMin = 2.0*Math.PI*ops.fMin;
+		double wMax = 2.0*Math.PI*ops.fMax; 
+		if(ops.fMaxAuto) wMax = Double.MAX_VALUE;
+		if(ops.fMinAuto) wMin = -Double.MAX_VALUE;
 		double[] w = new double[f.length];
 		for(int ctr = 0; ctr < w.length; ctr++) {
 			w[ctr] = 2.0*Math.PI*f[ctr];
 		}
 		
 		// Limit f-range
-		if (opt.fMax < opt.fMin) { System.err.println("Max smaller min"); return null; }
+		if (ops.fMax < ops.fMin) { System.err.println("Max smaller min"); return null; }
 		int idxLow = 0;
 		int idxHigh = w.length;
 		// search low limit
@@ -163,7 +168,7 @@ public class MCUtil {
 		
 		// rebuild array
 		Complex[] res = new Complex[real.length];
-		for(int i = 0; i < data.length; i++) {
+		for(int i = 0; i < real.length; i++) {
 			res[i]=(new Complex(real[i], imag[i]));
 		}
 		
@@ -174,15 +179,25 @@ public class MCUtil {
 	
 	/**
 	 * Creates a list of possible equivalent model indexes
-	 * @param opt MCOptions given by user
+	 * @param ops MCOptions given by user
 	 * @return integer array, holding the possible equivalent model indexes
 	 */
-	public static final CIRCUIT_TYPE[] createModelList (MCOptions opt) {
+	public static final CircuitType[] createModelList (MCOptions ops) {
+		CircuitType[] circuitList;
+		
 		// create list of equivalent models
 		int num_models = 0;
+		
+		// if manual model selection
+		if(ops.modelAutoSelect == false){
+			circuitList = new CircuitType[1];
+			circuitList[0] = CircuitType.values()[ops.modelID];
+			return circuitList;
+		}
+		
 		// count how many there are without skin effect
 		for(int ctr = 0; ctr < MCUtil.nModelSkinStart; ctr++) {
-			if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <= opt.nElementsMax) 
+			if(modelNElements[ctr] >= ops.nElementsMin && modelNElements[ctr] <= ops.nElementsMax) 
 				num_models++;
 		}
 		// count how many there are without skin effect
@@ -198,7 +213,7 @@ public class MCUtil {
 		int[] modelIdx = new int[num_models + num_models_skin];
 		int modelIdxCtr = 0;
 		for(int ctr = 0; ctr < MCUtil.nModelSkinStart; ctr++) {
-			if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <= opt.nElementsMax) 
+			if(modelNElements[ctr] >= ops.nElementsMin && modelNElements[ctr] <= ops.nElementsMax) 
 				modelIdx[modelIdxCtr++]=ctr;
 		}
 //		if(opt.skinEffectEnabled == true) {
@@ -208,7 +223,7 @@ public class MCUtil {
 //			}
 //		}
 		
-		CIRCUIT_TYPE[] circuitList = new CIRCUIT_TYPE[modelIdx.length];
+		circuitList = new CircuitType[modelIdx.length];
 		for (int i = 0; i < modelIdx.length; i++) {
 			circuitList[i]=modelIdxToCircuitType(modelIdx[i]);
 		}
@@ -220,8 +235,8 @@ public class MCUtil {
 	 * @param idx index of equivalent circuit
 	 * @return CIRCUIT_TYPE
 	 */
-	public static final CIRCUIT_TYPE modelIdxToCircuitType (int idx){
-		return MCEqCircuit.CIRCUIT_TYPE.values()[idx];
+	public static final CircuitType modelIdxToCircuitType (int idx){
+		return MCEqCircuit.CircuitType.values()[idx];
 	}
 	
 	

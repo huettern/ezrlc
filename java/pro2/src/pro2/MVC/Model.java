@@ -5,6 +5,8 @@ import java.util.*;
 
 import pro2.MVC.Controller.DataSource;
 import pro2.ModelCalculation.MCEqCircuit;
+import pro2.ModelCalculation.MCOptions;
+import pro2.ModelCalculation.MCWorker;
 import pro2.Plot.PlotDataSet;
 import pro2.Plot.Figure.ENPlotType;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
@@ -270,6 +272,19 @@ public class Model extends Observable {
 		this.notifyObservers();
 	}
 
+	/**
+	 * Creates a new equivalent circuit based on the given options
+	 * @param ops
+	 */
+	public void createEqCircuit(MCOptions ops) {
+		// Create worker, set data and start it
+		MCWorker worker = new MCWorker(this, "MCWorker-1");
+		worker.setRFDataSet(rfDataFile);
+		worker.setMCOptions(ops);
+		worker.start();
+	}
+
+	
 	
 
 	

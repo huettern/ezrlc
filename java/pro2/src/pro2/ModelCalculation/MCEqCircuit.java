@@ -24,7 +24,7 @@ public class MCEqCircuit {
 	//================================================================================
     // Public Data
     //================================================================================
-	public enum CIRCUIT_TYPE {
+	public enum CircuitType {
 		MODEL0, MODEL1, MODEL2, MODEL3, MODEL4, MODEL5, MODEL6, MODEL7, MODEL8, MODEL9,
 		MODEL10, MODEL11, MODEL12, MODEL13, MODEL14, MODEL15, MODEL16, MODEL17, 
 		MODEL18, MODEL19, MODEL20
@@ -33,7 +33,7 @@ public class MCEqCircuit {
 	//================================================================================
     // Private Data
     //================================================================================
-	private CIRCUIT_TYPE circuitType;
+	private CircuitType circuitType;
 	
 	private double[] parameters = new double[7];
 	
@@ -42,17 +42,17 @@ public class MCEqCircuit {
 	//================================================================================
     // Constructor
     //================================================================================
-	public MCEqCircuit(CIRCUIT_TYPE circuitType) {
+	public MCEqCircuit(CircuitType circuitType) {
 		this.circuitType = circuitType;
 	}
 
-	public MCEqCircuit(CIRCUIT_TYPE circuitType, double[] params) {
+	public MCEqCircuit(CircuitType circuitType, double[] params) {
 		this.circuitType = circuitType;
 		System.arraycopy(params, 0, parameters, 0, params.length);
 	}
 
 	//================================================================================
-    // Setter Functions
+    // Getter and Setter Functions
     //================================================================================
 	/**
 	 * Set the frequency vector in omega
@@ -71,6 +71,25 @@ public class MCEqCircuit {
 		System.arraycopy(params, 0, parameters, 0, params.length);
 	}
 	
+
+	/**
+	 * Sets a single parameter in the parameter list
+	 * @param i index of parameter
+	 * @param d parameter value
+	 */
+	public void setParameter(int i, double d) {
+		this.parameters[i] = d;
+	}
+	
+	/**
+	 * Returns a copy of the circuit parameters
+	 * @return
+	 */
+	public double[] getParameters() {
+		double[] res = new double[parameters.length];
+		System.arraycopy(parameters, 0, res, 0, parameters.length);
+		return res;
+	}
 	
 	//================================================================================
     // Public Functions
@@ -141,6 +160,86 @@ public class MCEqCircuit {
 	 */
 	public int getWSize (){
 		return this.wvector.length;
+	}
+
+	/**
+	 * Sets all unused parameters to zero
+	 */
+	public void clean() {
+		switch(this.circuitType) {
+		case MODEL0:
+		case MODEL1:
+			parameters[1] = 0.0;
+			parameters[2] = 0.0;
+			parameters[3] = 0.0;
+			parameters[5] = 0.0;
+			parameters[6] = 0.0;
+			break;
+		case MODEL2:
+		case MODEL3:
+			parameters[1] = 0.0;
+			parameters[2] = 0.0;
+			parameters[3] = 0.0;
+			parameters[4] = 0.0;
+			parameters[6] = 0.0;
+			break;
+		case MODEL4:
+		case MODEL5:
+		case MODEL6:
+		case MODEL7:
+		case MODEL8:
+			parameters[1] = 0.0;
+			parameters[2] = 0.0;
+			parameters[3] = 0.0;
+			parameters[6] = 0.0;
+			break;
+		case MODEL9:
+		case MODEL10:
+		case MODEL11:
+			parameters[1] = 0.0;
+			parameters[2] = 0.0;
+			parameters[6] = 0.0;
+			break;
+		case MODEL12:
+			parameters[1] = 0.0;
+			parameters[2] = 0.0;
+			parameters[3] = 0.0;
+			break;
+		case MODEL13:
+		case MODEL14:
+		case MODEL15:
+			parameters[3] = 0.0;
+			parameters[6] = 0.0;
+			break;
+		case MODEL16:
+			parameters[4] = 0.0;
+			parameters[6] = 0.0;
+			break;
+		case MODEL17:
+		case MODEL18:
+		case MODEL19:
+			parameters[6] = 0.0;
+			break;
+		case MODEL20:
+			parameters[3] = 0.0;
+			break;
+		}
+	}
+
+	/**
+	 * Prints the stored parameters to syso
+	 */
+	public void printParameters() {
+		double[] res = parameters;
+		System.out.println("-------------------------");
+		System.out.println("R0= " +res[0]);
+		System.out.println("f0= " +res[1]);
+		System.out.println("a = " +res[2]);
+		System.out.println("R1= " +res[3]);
+		System.out.println("L = " +res[4]);
+		System.out.println("C0= " +res[5]);
+		System.out.println("C1= " +res[6]);
+		System.out.println("-------------------------");
 	}
 	
 	//================================================================================
@@ -387,7 +486,7 @@ public class MCEqCircuit {
 		double[] p = this.parameters;
 		return null;
 	}
-	
+
 	
 	
 
