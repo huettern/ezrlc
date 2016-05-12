@@ -125,7 +125,12 @@ public class Controller {
 		view.setNewGraphButtonEnabled(b);
 	}
 
+	/**
+	 * Creates a new equivalent circuit based on the given options
+	 * @param ops
+	 */
 	public void createEqCircuit(MCOptions ops) {
+		model.createEqCircuit(ops);
 	}
 
 }

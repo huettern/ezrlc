@@ -7,8 +7,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +33,7 @@ import pro2.MVC.Model;
 import pro2.ModelCalculation.MCUtil;
 import pro2.ModelCalculation.Polynomial;
 import pro2.ModelCalculation.MCEqCircuit;
-import pro2.ModelCalculation.MCEqCircuit.CIRCUIT_TYPE;
+import pro2.ModelCalculation.MCEqCircuit.CircuitType;
 import pro2.ModelCalculation.MCErrorSum;
 import pro2.ModelCalculation.MCOptions;
 import pro2.ModelCalculation.MCRank;
@@ -57,104 +59,128 @@ public class Pro2 {
 		/* MVC stuff
 		 * 
 		 */
-		EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {                                           
-                Model model = new Model();
-                MainView view = new MainView();
-                Controller controller = new Controller(model,view);
-                
-                view.setController(controller);
-                model.setController(controller);
-                
-                view.build();
-                view.setVisible(true);
-                
-                // Add observers
-                model.addObserver(view);
-                
-                controller.contol();
-            }
-        });  
+//		EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {                                           
+//                Model model = new Model();
+//                MainView view = new MainView();
+//                Controller controller = new Controller(model,view);
+//                
+//                view.setController(controller);
+//                model.setController(controller);
+//                
+//                view.build();
+//                view.setVisible(true);
+//                
+//                // Add observers
+//                model.addObserver(view);
+//                
+//                controller.contol();
+//            }
+//        });  
 
-		
-
+		//================================================================================
+	    // MC Worker Test
+	    //================================================================================
+//		 * R0	f0		alpha	R1		L		C0		C1
+//		 * [0]	[1]		[2]		[3]		[4]		[5]		[6]
+		Model model = new Model();
+        MainView view = new MainView();
+        Controller controller = new Controller(model,view);
+        
+        view.setController(controller);
+        model.setController(controller);
+        view.build();
+      
+        controller.loadFile(new File("/Users/noah/git/pro2/sample_files/bsp1.s1p"));
+        
+        MCOptions ops = new MCOptions();
+        ops.modelAutoSelect = false;
+        ops.modelID = 0;
+        ops.paramsAuto[0] = false;
+        ops.params[0] = 90.0; //r
+        ops.paramsAuto[4] = false;
+        ops.params[4] = 10.0e-6; //l
+        ops.paramsAuto[5] = false;
+        ops.params[5] = 1.0e-6; //c
+        model.createEqCircuit(ops);
+        										
 		//================================================================================
 	    // MC Test
 	    //================================================================================
-		
-		/**
-		 * Apply options first
-		 */
-		MCOptions opt = new MCOptions();
-		
-		opt.fMin = 0;
-		opt.fMax = Double.MAX_VALUE;
-		opt.nElementsMin = 2;
-		opt.nElementsMax = 3;
-		
-//		// fake measurement
-//		double[] f = {10,20,30,40,50,60,70,80,90,100};
-//		double[] ys = {1,2,3,4,5,6,7,8,9,10};
-//		double[] yz = {1,2,3,4,5,6,7,8,9,10};
-		
-		// real measurement
-		RFData rfData = new RFData("../../sample_files/RLC_S_Sven.s1p");;
-		try {
-			rfData.parse();
-		} catch (IOException e) {}
-
-		double[] fdata = rfData.getfData();
-		double[] f = new double[fdata.length];
-		for(int i = 0; i < fdata.length; i++){
-			f[i] = fdata[i];
-		}
-		
-		// apply ops
-		double[] w = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.OMEGA);
-		Complex[] ys = MCUtil.applyMCOpsToData(opt, f, rfData.getsData());
-
-		CIRCUIT_TYPE[] circuitList;
-		circuitList = MCUtil.createModelList(opt);
-
-		
-		/**
-		 * Create list of models
-		 */
-		List<MCEqCircuit> circuits = new ArrayList<MCEqCircuit>(circuitList.length);
-		for (CIRCUIT_TYPE type : circuitList) {
-			circuits.add(new MCEqCircuit(type));
-			circuits.get(circuits.size()-1).setWVector(w);
-		}
-		
-		/**
-		 * Do analytic initial guess generation
-		 */
-		//double[][] paramArray = new double[ES.length][7];
-		//paramArray[0] = {}
-		double[] params = {80,0,0,0,10e-9,10e-9,0};
-		circuits.get(4).setParameters(params);
-		
-		/**
-		 * Generate rank of equivalent circuits
-		 */
-		ArrayList<MCEqCircuit> sortedList = MCRank.sortByError(ys, circuits);
-		
-		System.out.println("rank: "+sortedList.toString());
-		/**
-		 * Run optimizer
-		 */
-		// Create error
-		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
-		SimplexOptimizer optimizer = new SimplexOptimizer(1e-12, 1e-30);
-//		PointValuePair optimum = optimizer.optimize(
-//				new MaxEval(100000), 
-//				new ObjectiveFunction(e),
-//				GoalType.MINIMIZE, 
-//				new InitialGuess(params), 
-//				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
-
-//		System.out.println("Bauteilwerte: " + Arrays.toString(optimum.getPoint()) + " Fehler: " + optimum.getValue());
+//		
+//		/**
+//		 * Apply options first
+//		 */
+//		MCOptions opt = new MCOptions();
+//		
+//		opt.fMin = 0;
+//		opt.fMax = Double.MAX_VALUE;
+//		opt.nElementsMin = 2;
+//		opt.nElementsMax = 3;
+//		
+////		// fake measurement
+////		double[] f = {10,20,30,40,50,60,70,80,90,100};
+////		double[] ys = {1,2,3,4,5,6,7,8,9,10};
+////		double[] yz = {1,2,3,4,5,6,7,8,9,10};
+//		
+//		// real measurement
+//		RFData rfData = new RFData("../../sample_files/RLC_S_Sven.s1p");;
+//		try {
+//			rfData.parse();
+//		} catch (IOException e) {}
+//
+//		double[] f = rfData.getfData();
+////		double[] f = new double[fdata.length];
+////		for(int i = 0; i < fdata.length; i++){
+////			f[i] = fdata[i];
+////		}
+//		
+//		// apply ops
+//		double[] w = MCUtil.applyMCOpsToF(opt, f, MCUtil.DATA_FORMAT.OMEGA);
+//		Complex[] ys = MCUtil.applyMCOpsToData(opt, f, rfData.getsData());
+//
+//		CircuitType[] circuitList;
+//		circuitList = MCUtil.createModelList(opt);
+//
+//		
+//		/**
+//		 * Create list of models
+//		 */
+//		List<MCEqCircuit> circuits = new ArrayList<MCEqCircuit>(circuitList.length);
+//		for (CircuitType type : circuitList) {
+//			circuits.add(new MCEqCircuit(type));
+//			circuits.get(circuits.size()-1).setWVector(w);
+//		}
+//		
+//		/**
+//		 * Do analytic initial guess generation
+//		 */
+//		//double[][] paramArray = new double[ES.length][7];
+//		//paramArray[0] = {}
+//		double[] params = {80,0,0,0,10e-9,10e-9,0};
+//		circuits.get(4).setParameters(params);
+//		
+//		/**
+//		 * Generate rank of equivalent circuits
+//		 */
+//		ArrayList<MCEqCircuit> sortedList = MCRank.sortByError(ys, circuits);
+//		
+//		System.out.println("rank: "+sortedList.toString());
+//		/**
+//		 * Run optimizer
+//		 */
+//		// Create error
+//		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
+//		SimplexOptimizer optimizer = new SimplexOptimizer(1e-12, 1e-30);
+////		PointValuePair optimum = optimizer.optimize(
+////				new MaxEval(100000), 
+////				new ObjectiveFunction(e),
+////				GoalType.MINIMIZE, 
+////				new InitialGuess(params), 
+////				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
+//
+////		System.out.println("Bauteilwerte: " + Arrays.toString(optimum.getPoint()) + " Fehler: " + optimum.getValue());
 
 		//================================================================================
 	    // sort test
