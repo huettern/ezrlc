@@ -263,7 +263,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 			newModelWindow.buildNewModelWindow();
 			
 			
-			// Dataset list entry
+//			// Dataset list entry
 //			ModelLabelPanel p = new ModelLabelPanel();
 //			modelLabelPanels.add(p);
 //			pnlModel.add(p, new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,5,0), 0, 0));

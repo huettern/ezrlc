@@ -72,12 +72,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		
 		// load image icon
 		for (int i = 0; i <= modelImage.length; i++) {
-			modelImage[0] = UIUtil.loadResourceIcon("model_" + 19 + ".png", 160, 100);
+			modelImage[0] = UIUtil.loadResourceIcon("model_" + 18 + ".png", 160, 100);
 		}
 				
 		// create new label with the image and add it
 		JLabel label = new JLabel("", modelImage[0], JLabel.CENTER);
-		label.setBackground(Color.BLACK);
+		label.setOpaque(false);
 		add( label, 0 );	
 
 		

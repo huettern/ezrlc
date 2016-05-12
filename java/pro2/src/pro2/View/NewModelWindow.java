@@ -73,6 +73,7 @@ public class NewModelWindow implements ActionListener{
 	
 	private JPanel pnlParameter;
 	
+	private JComboBox list;
 	private ImageComboBox comBoxModelList;
 	
 	String[] imagesName = {"auto.png", "model_0.png", "model_1.png", "model_2.png", "model_3.png",
@@ -90,10 +91,10 @@ public class NewModelWindow implements ActionListener{
 	
 	private JLabel lblMh;
 	private JLabel lblUf;
-	private JLabel lblu;
+	private JLabel lblOhm0;
 	private JLabel lblUf_1;
 	private JLabel lblHz_2;
-	private JLabel label;
+	private JLabel lblOhm1;
 	private JLabel lblL;
 	private JLabel lblR0;
 	private JLabel lblC0;
@@ -101,6 +102,8 @@ public class NewModelWindow implements ActionListener{
 	private JLabel lblR1;
 	private JLabel lblF;
 	private JLabel lblC1;
+	private JLabel lblCompMin;
+	private JLabel lblCompMax;
 	
 	//================================================================================
     // Constructors
@@ -182,7 +185,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblAuto_1.gridy = 0;
 		pnlComponents.add(lblAuto_1, gbc_lblAuto_1);
 		
-		JLabel lblCompMin = new JLabel("<html> Comp<sub>min</sub> </html>");
+		lblCompMin = new JLabel("<html> Comp<sub>min</sub> </html>");
 		GridBagConstraints gbc_lblCompMin = new GridBagConstraints();
 		gbc_lblCompMin.anchor = GridBagConstraints.WEST;
 		gbc_lblCompMin.insets = new Insets(0, 5, 5, 5);
@@ -215,7 +218,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_chBoxCompMin.gridy = 1;
 		pnlComponents.add(chBoxCompMin, gbc_chBoxCompMin);
 		
-		JLabel lblCompMax = new JLabel("<html> Comp<sub>max</sub> </html>");
+		lblCompMax = new JLabel("<html> Comp<sub>max</sub> </html>");
 		GridBagConstraints gbc_lblCompMax = new GridBagConstraints();
 		gbc_lblCompMax.anchor = GridBagConstraints.WEST;
 		gbc_lblCompMax.insets = new Insets(0, 5, 0, 5);
@@ -410,12 +413,12 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtR0, gbc_txtR0);
 		txtR0.setColumns(10);
 		
-		label = new JLabel("\u2126");
+		lblOhm0 = new JLabel("\u2126");
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.insets = new Insets(0, 0, 5, 5);
 		gbc_label.gridx = 7;
 		gbc_label.gridy = 1;
-		pnlParameter.add(label, gbc_label);
+		pnlParameter.add(lblOhm0, gbc_label);
 		
 		chBoxR0 = new JCheckBox("");
 		chBoxR0.setSelected(true);
@@ -502,12 +505,12 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtR1, gbc_txtR1);
 		txtR1.setColumns(10);
 		
-		lblu = new JLabel("\u2126");
+		lblOhm1 = new JLabel("\u2126");
 		GridBagConstraints gbc_lblu = new GridBagConstraints();
 		gbc_lblu.insets = new Insets(0, 0, 5, 5);
 		gbc_lblu.gridx = 2;
 		gbc_lblu.gridy = 3;
-		pnlParameter.add(lblu, gbc_lblu);
+		pnlParameter.add(lblOhm1, gbc_lblu);
 		
 		chBoxR1 = new JCheckBox("");
 		chBoxR1.setSelected(true);
@@ -688,7 +691,6 @@ public class NewModelWindow implements ActionListener{
     //================================================================================
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("�ppis");
 		if(e.getSource() == btnCancel) {
 			dialog.dispose();
 		}
@@ -705,6 +707,7 @@ public class NewModelWindow implements ActionListener{
 			chBoxL.setSelected(true);
 			chBoxR0.setSelected(true);
 			chBoxR1.setSelected(true);
+			list.setSelectedIndex(0);
 		}
 		
 		if(e.getSource() == btnGenerate) {
@@ -717,218 +720,510 @@ public class NewModelWindow implements ActionListener{
 	 * Parameter match by change the model
 	 */
 	public void comboBoxSelected(ActionEvent e) {
-		JComboBox list = (JComboBox)e.getSource();
+		lblCompMin.setForeground(Color.LIGHT_GRAY);
+		txtCompMin.setEditable(false);
+		chBoxCompMin.setSelected(false);
+		chBoxCompMin.setEnabled(false);
+		
+		lblCompMax.setForeground(Color.LIGHT_GRAY);
+		txtCompMax.setEditable(false);
+		chBoxCompMax.setSelected(false);
+		chBoxCompMax.setEnabled(false);
+		
+		list = (JComboBox)e.getSource();
 		switch (list.getSelectedIndex()) {
 		case 0:
+			lblL.setForeground(Color.BLACK);
+			txtL.setEditable(true);
+			lblMh.setForeground(Color.BLACK);
+			chBoxL.setSelected(true);
+			chBoxL.setEnabled(true);
 			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.BLACK);
+			txtC1.setEditable(true);
+			lblUf_1.setForeground(Color.BLACK);
+			chBoxC1.setSelected(true);
+			chBoxC1.setEnabled(true);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.BLACK);
+			txtR1.setEditable(true);
+			lblOhm1.setForeground(Color.BLACK);
+			chBoxR1.setSelected(true);
+			chBoxR1.setEnabled(true);
+			
+			lblAlpha.setForeground(Color.BLACK);
+			txtAlpha.setEditable(true);
+			chBoxAlpha.setSelected(true);
+			chBoxAlpha.setEnabled(true);
+			
+			lblF.setForeground(Color.BLACK);
+			txtF.setEditable(true);
+			lblHz_2.setForeground(Color.BLACK);
+			chBoxF.setSelected(true);
+			chBoxF.setEnabled(true);
+			
+			lblCompMin.setForeground(Color.BLACK);
+			txtCompMin.setEditable(true);
+			chBoxCompMin.setSelected(true);
+			chBoxCompMin.setEnabled(true);
+			
+			lblCompMax.setForeground(Color.BLACK);
+			txtCompMax.setEditable(true);
+			chBoxCompMax.setSelected(true);
+			chBoxCompMax.setEnabled(true);
 			break;
 		case 1:
-			lblL.setBackground(Color.lightGray);
+		case 2:
+			lblL.setForeground(Color.BLACK);
+			txtL.setEditable(true);
+			lblMh.setForeground(Color.BLACK);
+			chBoxL.setSelected(true);
+			chBoxL.setEnabled(true);
+			
+			lblC0.setForeground(Color.LIGHT_GRAY);
+			txtC0.setEditable(false);
+			lblUf.setForeground(Color.LIGHT_GRAY);
+			chBoxC0.setSelected(false);
+			chBoxC0.setEnabled(false);
+			
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEditable(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
+			chBoxC1.setSelected(false);
+			chBoxC1.setEnabled(false);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.LIGHT_GRAY);
+			txtR1.setEditable(false);
+			lblOhm1.setForeground(Color.LIGHT_GRAY);
+			chBoxR1.setSelected(false);
+			chBoxR1.setEnabled(false);
+			
+			lblAlpha.setForeground(Color.LIGHT_GRAY);
+			txtAlpha.setEditable(false);
+			chBoxAlpha.setSelected(false);
+			chBoxAlpha.setEnabled(false);
+			
+			lblF.setForeground(Color.LIGHT_GRAY);
+			txtF.setEditable(false);
+			lblHz_2.setForeground(Color.LIGHT_GRAY);
+			chBoxF.setSelected(false);
+			chBoxF.setEnabled(false);
+			break;
+			
+		case 3:
+		case 4:
+			lblL.setForeground(Color.LIGHT_GRAY);
 			txtL.setEditable(false);
 			lblMh.setForeground(Color.LIGHT_GRAY);
+			chBoxL.setSelected(false);
+			chBoxL.setEnabled(false);
 			
-			lblR0 = new JLabel("<html> R<sub>0</sub> </html>");
-			GridBagConstraints gbc_lblR0 = new GridBagConstraints();
-			gbc_lblR0.insets = new Insets(0, 5, 5, 5);
-			gbc_lblR0.anchor = GridBagConstraints.WEST;
-			gbc_lblR0.gridx = 5;
-			gbc_lblR0.gridy = 1;
-			pnlParameter.add(lblR0, gbc_lblR0);
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
 			
-			txtR0 = new JTextField();
-			txtR0.setHorizontalAlignment(SwingConstants.RIGHT);
-			GridBagConstraints gbc_txtR0 = new GridBagConstraints();
-			gbc_txtR0.insets = new Insets(0, 0, 5, 5);
-			gbc_txtR0.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtR0.gridx = 6;
-			gbc_txtR0.gridy = 1;
-			pnlParameter.add(txtR0, gbc_txtR0);
-			txtR0.setColumns(10);
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEditable(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
+			chBoxC1.setSelected(false);
+			chBoxC1.setEnabled(false);
 			
-			label = new JLabel("\u2126");
-			GridBagConstraints gbc_label = new GridBagConstraints();
-			gbc_label.insets = new Insets(0, 0, 5, 5);
-			gbc_label.gridx = 7;
-			gbc_label.gridy = 1;
-			pnlParameter.add(label, gbc_label);
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
 			
-			lblC0 = new JLabel("<html> C<sub>0</sub> </html>");
-			GridBagConstraints gbc_lblC0 = new GridBagConstraints();
-			gbc_lblC0.anchor = GridBagConstraints.WEST;
-			gbc_lblC0.insets = new Insets(0, 5, 5, 5);
-			gbc_lblC0.gridx = 0;
-			gbc_lblC0.gridy = 2;
-			pnlParameter.add(lblC0, gbc_lblC0);
+			lblR1.setForeground(Color.LIGHT_GRAY);
+			txtR1.setEditable(false);
+			lblOhm1.setForeground(Color.LIGHT_GRAY);
+			chBoxR1.setSelected(false);
+			chBoxR1.setEnabled(false);
 			
-			txtC0 = new JTextField();
-			txtC0.setHorizontalAlignment(SwingConstants.RIGHT);
-			GridBagConstraints gbc_txtC0 = new GridBagConstraints();
-			gbc_txtC0.insets = new Insets(0, 0, 5, 5);
-			gbc_txtC0.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtC0.gridx = 1;
-			gbc_txtC0.gridy = 2;
-			pnlParameter.add(txtC0, gbc_txtC0);
-			txtC0.setColumns(10);
+			lblAlpha.setForeground(Color.LIGHT_GRAY);
+			txtAlpha.setEditable(false);
+			chBoxAlpha.setSelected(false);
+			chBoxAlpha.setEnabled(false);
 			
-			lblUf = new JLabel("\u00B5"+"F");
-			GridBagConstraints gbc_lblUf = new GridBagConstraints();
-			gbc_lblUf.insets = new Insets(0, 0, 5, 5);
-			gbc_lblUf.gridx = 2;
-			gbc_lblUf.gridy = 2;
-			pnlParameter.add(lblUf, gbc_lblUf);
-			
-			lblAlpha = new JLabel("\u03B1");
-			GridBagConstraints gbc_lblAlpha = new GridBagConstraints();
-			gbc_lblAlpha.anchor = GridBagConstraints.WEST;
-			gbc_lblAlpha.insets = new Insets(0, 5, 5, 5);
-			gbc_lblAlpha.gridx = 5;
-			gbc_lblAlpha.gridy = 2;
-			pnlParameter.add(lblAlpha, gbc_lblAlpha);
-			
-			txtAlpha = new JTextField();
-			txtAlpha.setHorizontalAlignment(SwingConstants.RIGHT);
-			GridBagConstraints gbc_txtAlpha = new GridBagConstraints();
-			gbc_txtAlpha.insets = new Insets(0, 0, 5, 5);
-			gbc_txtAlpha.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtAlpha.gridx = 6;
-			gbc_txtAlpha.gridy = 2;
-			pnlParameter.add(txtAlpha, gbc_txtAlpha);
-			txtAlpha.setColumns(10);
-			
-			lblR1 = new JLabel("<html> R<sub>1</sub> </html>");
-			GridBagConstraints gbc_lblR1 = new GridBagConstraints();
-			gbc_lblR1.anchor = GridBagConstraints.WEST;
-			gbc_lblR1.insets = new Insets(0, 5, 5, 5);
-			gbc_lblR1.gridx = 0;
-			gbc_lblR1.gridy = 3;
-			pnlParameter.add(lblR1, gbc_lblR1);
-			
-			txtR1 = new JTextField();
-			txtR1.setHorizontalAlignment(SwingConstants.RIGHT);
-			GridBagConstraints gbc_txtR1 = new GridBagConstraints();
-			gbc_txtR1.insets = new Insets(0, 0, 5, 5);
-			gbc_txtR1.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtR1.gridx = 1;
-			gbc_txtR1.gridy = 3;
-			pnlParameter.add(txtR1, gbc_txtR1);
-			txtR1.setColumns(10);
-			
-			lblu = new JLabel("\u2126");
-			GridBagConstraints gbc_lblu = new GridBagConstraints();
-			gbc_lblu.insets = new Insets(0, 0, 5, 5);
-			gbc_lblu.gridx = 2;
-			gbc_lblu.gridy = 3;
-			pnlParameter.add(lblu, gbc_lblu);
-			
-			lblF = new JLabel("f");
-			GridBagConstraints gbc_lblF = new GridBagConstraints();
-			gbc_lblF.anchor = GridBagConstraints.WEST;
-			gbc_lblF.insets = new Insets(0, 5, 5, 5);
-			gbc_lblF.gridx = 5;
-			gbc_lblF.gridy = 3;
-			pnlParameter.add(lblF, gbc_lblF);
-			
-			txtF = new JTextField();
-			txtF.setHorizontalAlignment(SwingConstants.RIGHT);
-			GridBagConstraints gbc_txtF = new GridBagConstraints();
-			gbc_txtF.insets = new Insets(0, 0, 5, 5);
-			gbc_txtF.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtF.gridx = 6;
-			gbc_txtF.gridy = 3;
-			pnlParameter.add(txtF, gbc_txtF);
-			txtF.setColumns(10);
-			
-			lblHz_2 = new JLabel("Hz");
-			GridBagConstraints gbc_lblHz_2 = new GridBagConstraints();
-			gbc_lblHz_2.insets = new Insets(0, 0, 5, 5);
-			gbc_lblHz_2.gridx = 7;
-			gbc_lblHz_2.gridy = 3;
-			pnlParameter.add(lblHz_2, gbc_lblHz_2);
-			
-			lblC1 = new JLabel("<html> C<sub>1</sub> </html>");
-			GridBagConstraints gbc_lblC1 = new GridBagConstraints();
-			gbc_lblC1.anchor = GridBagConstraints.WEST;
-			gbc_lblC1.insets = new Insets(0, 5, 0, 5);
-			gbc_lblC1.gridx = 0;
-			gbc_lblC1.gridy = 4;
-			pnlParameter.add(lblC1, gbc_lblC1);
-			
-			txtC1 = new JTextField();
-			txtC1.setHorizontalAlignment(SwingConstants.RIGHT);
-			GridBagConstraints gbc_txtC1 = new GridBagConstraints();
-			gbc_txtC1.insets = new Insets(0, 0, 0, 5);
-			gbc_txtC1.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtC1.gridx = 1;
-			gbc_txtC1.gridy = 4;
-			pnlParameter.add(txtC1, gbc_txtC1);
-			txtC1.setColumns(10);
-			
-			lblUf_1 = new JLabel("\u00B5"+"F");
-			GridBagConstraints gbc_lblUf_1 = new GridBagConstraints();
-			gbc_lblUf_1.insets = new Insets(0, 0, 0, 5);
-			gbc_lblUf_1.gridx = 2;
-			gbc_lblUf_1.gridy = 4;
-			pnlParameter.add(lblUf_1, gbc_lblUf_1);
-			
+			lblF.setForeground(Color.LIGHT_GRAY);
+			txtF.setEditable(false);
+			lblHz_2.setForeground(Color.LIGHT_GRAY);
+			chBoxF.setSelected(false);
+			chBoxF.setEnabled(false);
 			break;
-		case 2:
 			
-			break;
-		case 3:
-			
-			break;
-		case 4:
-			
-			break;
 		case 5:
-			
-			break;
 		case 6:
-			
-			break;
 		case 7:
-			
-			break;
 		case 8:
+			lblL.setForeground(Color.BLACK);
+			txtL.setEditable(true);
+			lblMh.setForeground(Color.BLACK);
+			chBoxL.setSelected(true);
+			chBoxL.setEnabled(true);
 			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEditable(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
+			chBoxC1.setSelected(false);
+			chBoxC1.setEnabled(false);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.LIGHT_GRAY);
+			txtR1.setEditable(false);
+			lblOhm1.setForeground(Color.LIGHT_GRAY);
+			chBoxR1.setSelected(false);
+			chBoxR1.setEnabled(false);
+			
+			lblAlpha.setForeground(Color.LIGHT_GRAY);
+			txtAlpha.setEditable(false);
+			chBoxAlpha.setSelected(false);
+			chBoxAlpha.setEnabled(false);
+			
+			lblF.setForeground(Color.LIGHT_GRAY);
+			txtF.setEditable(false);
+			lblHz_2.setForeground(Color.LIGHT_GRAY);
+			chBoxF.setSelected(false);
+			chBoxF.setEnabled(false);
 			break;
+			
 		case 9:
+			lblL.setForeground(Color.LIGHT_GRAY);
+			txtL.setEditable(false);
+			lblMh.setForeground(Color.LIGHT_GRAY);
+			chBoxL.setSelected(false);
+			chBoxL.setEnabled(false);
 			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEditable(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
+			chBoxC1.setSelected(false);
+			chBoxC1.setEnabled(false);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.BLACK);
+			txtR1.setEditable(true);
+			lblOhm1.setForeground(Color.BLACK);
+			chBoxR1.setSelected(true);
+			chBoxR1.setEnabled(true);
+			
+			lblAlpha.setForeground(Color.LIGHT_GRAY);
+			txtAlpha.setEditable(false);
+			chBoxAlpha.setSelected(false);
+			chBoxAlpha.setEnabled(false);
+			
+			lblF.setForeground(Color.LIGHT_GRAY);
+			txtF.setEditable(false);
+			lblHz_2.setForeground(Color.LIGHT_GRAY);
+			chBoxF.setSelected(false);
+			chBoxF.setEnabled(false);
 			break;
+			
 		case 10:
-			
-			break;
 		case 11:
-			
-			break;
 		case 12:
+			lblL.setForeground(Color.BLACK);
+			txtL.setEditable(true);
+			lblMh.setForeground(Color.BLACK);
+			chBoxL.setSelected(true);
+			chBoxL.setEnabled(true);
 			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEditable(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
+			chBoxC1.setSelected(false);
+			chBoxC1.setEnabled(false);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.BLACK);
+			txtR1.setEditable(true);
+			lblOhm1.setForeground(Color.BLACK);
+			chBoxR1.setSelected(true);
+			chBoxR1.setEnabled(true);
+			
+			lblAlpha.setForeground(Color.LIGHT_GRAY);
+			txtAlpha.setEditable(false);
+			chBoxAlpha.setSelected(false);
+			chBoxAlpha.setEnabled(false);
+			
+			lblF.setForeground(Color.LIGHT_GRAY);
+			txtF.setEditable(false);
+			lblHz_2.setForeground(Color.LIGHT_GRAY);
+			chBoxF.setSelected(false);
+			chBoxF.setEnabled(false);
 			break;
+			
 		case 13:
+			lblL.setForeground(Color.BLACK);
+			txtL.setEditable(true);
+			lblMh.setForeground(Color.BLACK);
+			chBoxL.setSelected(true);
+			chBoxL.setEnabled(true);
 			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.BLACK);
+			txtC1.setEditable(true);
+			lblUf_1.setForeground(Color.BLACK);
+			chBoxC1.setSelected(true);
+			chBoxC1.setEnabled(true);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.LIGHT_GRAY);
+			txtR1.setEditable(false);
+			lblOhm1.setForeground(Color.LIGHT_GRAY);
+			chBoxR1.setSelected(false);
+			chBoxR1.setEnabled(false);
+			
+			lblAlpha.setForeground(Color.LIGHT_GRAY);
+			txtAlpha.setEditable(false);
+			chBoxAlpha.setSelected(false);
+			chBoxAlpha.setEnabled(false);
+			
+			lblF.setForeground(Color.LIGHT_GRAY);
+			txtF.setEditable(false);
+			lblHz_2.setForeground(Color.LIGHT_GRAY);
+			chBoxF.setSelected(false);
+			chBoxF.setEnabled(false);
 			break;
+			
 		case 14:
-			
-			break;
 		case 15:
-			
-			break;		
 		case 16:
+			lblL.setForeground(Color.BLACK);
+			txtL.setEditable(true);
+			lblMh.setForeground(Color.BLACK);
+			chBoxL.setSelected(true);
+			chBoxL.setEnabled(true);
 			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEditable(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
+			chBoxC1.setSelected(false);
+			chBoxC1.setEnabled(false);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.LIGHT_GRAY);
+			txtR1.setEditable(false);
+			lblOhm1.setForeground(Color.LIGHT_GRAY);
+			chBoxR1.setSelected(false);
+			chBoxR1.setEnabled(false);
+			
+			lblAlpha.setForeground(Color.BLACK);
+			txtAlpha.setEditable(true);
+			chBoxAlpha.setSelected(true);
+			chBoxAlpha.setEnabled(true);
+			
+			lblF.setForeground(Color.BLACK);
+			txtF.setEditable(true);
+			lblHz_2.setForeground(Color.BLACK);
+			chBoxF.setSelected(true);
+			chBoxF.setEnabled(true);
 			break;
+			
 		case 17:
+			lblL.setForeground(Color.LIGHT_GRAY);
+			txtL.setEditable(false);
+			lblMh.setForeground(Color.LIGHT_GRAY);
+			chBoxL.setSelected(false);
+			chBoxL.setEnabled(false);
 			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEditable(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
+			chBoxC1.setSelected(false);
+			chBoxC1.setEnabled(false);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.BLACK);
+			txtR1.setEditable(true);
+			lblOhm1.setForeground(Color.BLACK);
+			chBoxR1.setSelected(true);
+			chBoxR1.setEnabled(true);
+			
+			lblAlpha.setForeground(Color.BLACK);
+			txtAlpha.setEditable(true);
+			chBoxAlpha.setSelected(true);
+			chBoxAlpha.setEnabled(true);
+			
+			lblF.setForeground(Color.BLACK);
+			txtF.setEditable(true);
+			lblHz_2.setForeground(Color.BLACK);
+			chBoxF.setSelected(true);
+			chBoxF.setEnabled(true);
 			break;
+			
 		case 18:
-			
-			break;
 		case 19:
-			
-			break;
 		case 20:
+			lblL.setForeground(Color.BLACK);
+			txtL.setEditable(true);
+			lblMh.setForeground(Color.BLACK);
+			chBoxL.setSelected(true);
+			chBoxL.setEnabled(true);
 			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEditable(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
+			chBoxC1.setSelected(false);
+			chBoxC1.setEnabled(false);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.BLACK);
+			txtR1.setEditable(true);
+			lblOhm1.setForeground(Color.BLACK);
+			chBoxR1.setSelected(true);
+			chBoxR1.setEnabled(true);
+			
+			lblAlpha.setForeground(Color.BLACK);
+			txtAlpha.setEditable(true);
+			chBoxAlpha.setSelected(true);
+			chBoxAlpha.setEnabled(true);
+			
+			lblF.setForeground(Color.BLACK);
+			txtF.setEditable(true);
+			lblHz_2.setForeground(Color.BLACK);
+			chBoxF.setSelected(true);
+			chBoxF.setEnabled(true);
 			break;
+			
 		case 21:
+			lblL.setForeground(Color.BLACK);
+			txtL.setEditable(true);
+			lblMh.setForeground(Color.BLACK);
+			chBoxL.setSelected(true);
+			chBoxL.setEnabled(true);
+			
+			lblC0.setForeground(Color.BLACK);
+			txtC0.setEditable(true);
+			lblUf.setForeground(Color.BLACK);
+			chBoxC0.setSelected(true);
+			chBoxC0.setEnabled(true);
+			
+			lblC1.setForeground(Color.BLACK);
+			txtC1.setEditable(true);
+			lblUf_1.setForeground(Color.BLACK);
+			chBoxC1.setSelected(true);
+			chBoxC1.setEnabled(true);
+			
+			lblR0.setForeground(Color.BLACK);
+			txtR0.setEditable(true);
+			lblOhm0.setForeground(Color.BLACK);
+			chBoxR0.setSelected(true);
+			chBoxR0.setEnabled(true);
+			
+			lblR1.setForeground(Color.LIGHT_GRAY);
+			txtR1.setEditable(false);
+			lblOhm1.setForeground(Color.LIGHT_GRAY);
+			chBoxR1.setSelected(false);
+			chBoxR1.setEnabled(false);
+			
+			lblAlpha.setForeground(Color.BLACK);
+			txtAlpha.setEditable(true);
+			chBoxAlpha.setSelected(true);
+			chBoxAlpha.setEnabled(true);
+			
+			lblF.setForeground(Color.BLACK);
+			txtF.setEditable(true);
+			lblHz_2.setForeground(Color.BLACK);
+			chBoxF.setSelected(true);
+			chBoxF.setEnabled(true);
+			break;			
 		}
 		
 		
