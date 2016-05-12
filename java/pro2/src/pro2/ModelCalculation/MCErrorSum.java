@@ -81,7 +81,7 @@ public class MCErrorSum implements MultivariateFunction {
 	 */
 	@Override
 	public double value(double[] params) {
-		System.out.println("Interface value, params=" +Arrays.toString(params));
+//		System.out.println("Interface value, params=" +Arrays.toString(params));
 		// set new parameter
 		circuit.setParameters(params);
 		// get s parameters

@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,9 +102,13 @@ public class Pro2 {
         ops.params[0] = 90.0; //r
         ops.paramsAuto[4] = false;
         ops.params[4] = 10.0e-6; //l
-        ops.paramsAuto[5] = false;
-        ops.params[5] = 1.0e-6; //c
+//        ops.paramsAuto[5] = false;
+//        ops.params[5] = 1.0e-6; //c
         model.createEqCircuit(ops);
+        
+        while(model.getWorker().isAlive());
+        System.out.println("done");
+        return;
         										
 		//================================================================================
 	    // MC Test

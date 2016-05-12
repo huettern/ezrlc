@@ -1,6 +1,7 @@
 package pro2.MVC;
 
 import java.io.File;
+import java.lang.Thread.State;
 import java.util.*;
 
 import pro2.MVC.Controller.DataSource;
@@ -26,6 +27,8 @@ public class Model extends Observable {
 	private List<PlotDataSet> plotDataSetList = new ArrayList<PlotDataSet>();
 	private List<SmithChartDataSet> smithPlotDataSetList = new ArrayList<SmithChartDataSet>();
 
+	MCWorker worker;
+	
 	public Model() {
 		// TODO Auto-generated constructor stub
 		
@@ -278,14 +281,27 @@ public class Model extends Observable {
 	 */
 	public void createEqCircuit(MCOptions ops) {
 		// Create worker, set data and start it
-		MCWorker worker = new MCWorker(this, "MCWorker-1");
+		worker = new MCWorker(this, "MCWorker-1");
 		worker.setRFDataSet(rfDataFile);
 		worker.setMCOptions(ops);
 		worker.start();
 	}
 
+	/**
+	 * Returns the current state of the worker
+	 * @return
+	 */
+	public State getWorkerStatus() {
+		return worker.getState();
+	}
 	
-	
+	/**
+	 * Returns the calculation worker
+	 * @return
+	 */
+	public MCWorker getWorker() {
+		return worker;
+	}
 
 	
 	

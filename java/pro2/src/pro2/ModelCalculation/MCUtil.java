@@ -238,6 +238,4 @@ public class MCUtil {
 	public static final CircuitType modelIdxToCircuitType (int idx){
 		return MCEqCircuit.CircuitType.values()[idx];
 	}
-	
-	
 }

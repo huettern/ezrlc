@@ -132,7 +132,7 @@ public class MCWorker extends Thread {
 		
 		// Run optimizer
 		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
-		SimplexOptimizer optimizer = new SimplexOptimizer(1e-12, 1e-30);
+		SimplexOptimizer optimizer = new SimplexOptimizer(1e-11, 1e-14);
 		PointValuePair optimum = null;
 		try {
 			optimum = optimizer.optimize(

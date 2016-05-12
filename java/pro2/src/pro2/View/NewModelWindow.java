@@ -647,6 +647,12 @@ public class NewModelWindow implements ActionListener{
 		if(index == 0) {
 			ops.modelAutoSelect = true;
 			ops.modelID = 0;
+
+			// elements range
+			ops.nElementsMinAuto = chBoxCompMin.isSelected();
+			ops.nElementsMaxAuto = chBoxCompMax.isSelected();
+			if(ops.nElementsMinAuto == false) ops.nElementsMin = (int)Double.parseDouble(txtCompMin.getText());
+			if(ops.nElementsMaxAuto == false) ops.nElementsMax = (int)Double.parseDouble(txtCompMax.getText());
 		} else {
 			ops.modelID = index - 1;
 			ops.modelAutoSelect = false;
@@ -657,12 +663,6 @@ public class NewModelWindow implements ActionListener{
 		ops.fMaxAuto = chBoxFmax.isSelected();
 		if(ops.fMinAuto == false) ops.fMin = Double.parseDouble(txtFmin.getText());
 		if(ops.fMaxAuto == false) ops.fMax = Double.parseDouble(txtFmax.getText());
-		
-		// elements range
-		ops.nElementsMinAuto = chBoxCompMin.isSelected();
-		ops.nElementsMaxAuto = chBoxCompMax.isSelected();
-		if(ops.nElementsMinAuto == false) ops.nElementsMin = (int)Double.parseDouble(txtCompMin.getText());
-		if(ops.nElementsMaxAuto == false) ops.nElementsMax = (int)Double.parseDouble(txtCompMax.getText());
 		
 		// element auto
 		ops.paramsAuto[0] = chBoxR0.isSelected();
