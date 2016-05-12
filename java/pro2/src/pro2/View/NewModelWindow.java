@@ -45,17 +45,17 @@ public class NewModelWindow implements ActionListener{
 	private Controller controller;
 	private JDialog dialog; 
 	
-	private JTextField txtFmin;
-	private JTextField txtFmax;
-	private JTextField txtCompMin;
-	private JTextField txtCompMax;
-	private JTextField txtR0;
-	private JTextField txtAlpha;
-	private JTextField txtF;
-	private JTextField txtL;
-	private JTextField txtC0;
-	private JTextField txtR1;
-	private JTextField txtC1;
+	private JEngineerField txtFmin;
+	private JEngineerField txtFmax;
+	private JEngineerField txtCompMin;
+	private JEngineerField txtCompMax;
+	private JEngineerField txtR0;
+	private JEngineerField txtAlpha;
+	private JEngineerField txtF;
+	private JEngineerField txtL;
+	private JEngineerField txtC0;
+	private JEngineerField txtR1;
+	private JEngineerField txtC1;
 	
 	private JButton btnCancel;
 	private JButton btnAllAuto;
@@ -115,7 +115,7 @@ public class NewModelWindow implements ActionListener{
 		dialog.setResizable(false);
 		dialog.setModal(true);
 		dialog.setLocation(300, 300);
-		dialog.setSize(433, 665);
+		dialog.setSize(430, 590);
 		
 		
 		//Main Panel
@@ -176,7 +176,9 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblCompMin.gridy = 0;
 		pnlComponents.add(lblCompMin, gbc_lblCompMin);
 		
-		txtCompMin = new JTextField();
+		txtCompMin = new JEngineerField(3, 20, "E3");
+		txtCompMin.setMinValue(2);
+		txtCompMin.setMaxValue(4);
 		txtCompMin.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtCompMin = new GridBagConstraints();
 		gbc_txtCompMin.insets = new Insets(0, 0, 5, 5);
@@ -201,7 +203,9 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblCompMax.gridy = 1;
 		pnlComponents.add(lblCompMax, gbc_lblCompMax);
 		
-		txtCompMax = new JTextField();
+		txtCompMax = new JEngineerField(3, 20, "E3");
+		txtCompMax.setMinValue(2);
+		txtCompMax.setMaxValue(4);
 		txtCompMax.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtCompMax = new GridBagConstraints();
 		gbc_txtCompMax.insets = new Insets(0, 0, 0, 5);
@@ -236,7 +240,7 @@ public class NewModelWindow implements ActionListener{
 		pnlFrequency.add(lblFmin, gbc_lblFmin);
 		
 		
-		txtFmin = new JTextField();
+		txtFmin = new JEngineerField(3, 20, "E3");
 		txtFmin.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtFmin = new GridBagConstraints();
 		gbc_txtFmin.insets = new Insets(0, 0, 5, 5);
@@ -261,7 +265,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblFmax.gridy = 2;
 		pnlFrequency.add(lblFmax, gbc_lblFmax);
 		
-		txtFmax = new JTextField();
+		txtFmax = new JEngineerField(3, 20, "E3");
 		txtFmax.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtFmax = new GridBagConstraints();
 		gbc_txtFmax.insets = new Insets(0, 0, 0, 5);
@@ -301,7 +305,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblL.gridy = 0;
 		pnlParameter.add(lblL, gbc_lblL);
 		
-		txtL = new JTextField();
+		txtL = new JEngineerField(3, 20, "E3");
 		txtL.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtL = new GridBagConstraints();
 		gbc_txtL.insets = new Insets(0, 0, 5, 5);
@@ -311,7 +315,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtL, gbc_txtL);
 		txtL.setColumns(10);
 		
-		lblMh = new JLabel("mH");
+		lblMh = new JLabel("H");
 		GridBagConstraints gbc_lblMh = new GridBagConstraints();
 		gbc_lblMh.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMh.gridx = 2;
@@ -326,7 +330,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblR0.gridy = 0;
 		pnlParameter.add(lblR0, gbc_lblR0);
 		
-		txtR0 = new JTextField();
+		txtR0 = new JEngineerField(3, 20, "E3");
 		txtR0.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtR0 = new GridBagConstraints();
 		gbc_txtR0.insets = new Insets(0, 0, 5, 5);
@@ -351,7 +355,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblC0.gridy = 1;
 		pnlParameter.add(lblC0, gbc_lblC0);
 		
-		txtC0 = new JTextField();
+		txtC0 = new JEngineerField(3, 20, "E3");
 		txtC0.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtC0 = new GridBagConstraints();
 		gbc_txtC0.insets = new Insets(0, 0, 5, 5);
@@ -361,7 +365,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtC0, gbc_txtC0);
 		txtC0.setColumns(10);
 		
-		lblUf = new JLabel("\u00B5"+"F");
+		lblUf = new JLabel("F");
 		GridBagConstraints gbc_lblUf = new GridBagConstraints();
 		gbc_lblUf.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUf.gridx = 2;
@@ -376,7 +380,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblAlpha.gridy = 1;
 		pnlParameter.add(lblAlpha, gbc_lblAlpha);
 		
-		txtAlpha = new JTextField();
+		txtAlpha = new JEngineerField(3, 20, "E3");
 		txtAlpha.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtAlpha = new GridBagConstraints();
 		gbc_txtAlpha.insets = new Insets(0, 0, 5, 5);
@@ -394,7 +398,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblR1.gridy = 2;
 		pnlParameter.add(lblR1, gbc_lblR1);
 		
-		txtR1 = new JTextField();
+		txtR1 = new JEngineerField(3, 20, "E3");
 		txtR1.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtR1 = new GridBagConstraints();
 		gbc_txtR1.insets = new Insets(0, 0, 5, 5);
@@ -419,7 +423,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblF.gridy = 2;
 		pnlParameter.add(lblF, gbc_lblF);
 		
-		txtF = new JTextField();
+		txtF = new JEngineerField();
 		txtF.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtF = new GridBagConstraints();
 		gbc_txtF.insets = new Insets(0, 0, 5, 5);
@@ -444,7 +448,7 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblC1.gridy = 3;
 		pnlParameter.add(lblC1, gbc_lblC1);
 		
-		txtC1 = new JTextField();
+		txtC1 = new JEngineerField(3, 20, "E3");
 		txtC1.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_txtC1 = new GridBagConstraints();
 		gbc_txtC1.insets = new Insets(0, 0, 0, 5);
@@ -454,7 +458,7 @@ public class NewModelWindow implements ActionListener{
 		pnlParameter.add(txtC1, gbc_txtC1);
 		txtC1.setColumns(10);
 		
-		lblUf_1 = new JLabel("\u00B5"+"F");
+		lblUf_1 = new JLabel("F");
 		GridBagConstraints gbc_lblUf_1 = new GridBagConstraints();
 		gbc_lblUf_1.insets = new Insets(0, 0, 0, 5);
 		gbc_lblUf_1.gridx = 2;
@@ -588,6 +592,9 @@ public class NewModelWindow implements ActionListener{
 		if(e.getSource() == btnGenerate) {
 			MCOptions ops = this.parseInput();
 			controller.createEqCircuit(ops);
+			
+			System.out.println(txtL.getText());
+			
 			dialog.dispose();
 		}	
 
