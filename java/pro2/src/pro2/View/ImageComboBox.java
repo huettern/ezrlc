@@ -11,6 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.plaf.metal.MetalComboBoxUI;
 
 import pro2.util.UIUtil;
 
@@ -41,6 +43,11 @@ public class ImageComboBox extends JPanel implements ActionListener{
         }
         
         list = new JComboBox(intArray);
+        Color bg = (Color) UIManager.get("ComboBox.background");
+        Color fg = (Color) UIManager.get("ComboBox.foreground");
+        UIManager.put("ComboBox.selectionBackground", bg);
+        UIManager.put("ComboBox.selectionForeground", fg);
+        list.setUI(new MetalComboBoxUI());
         list.setBackground(Color.WHITE);
         ComboBoxRenderer renderer= new ComboBoxRenderer(images, imagesText);
         renderer.setPreferredSize(new Dimension(200, 150));
