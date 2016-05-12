@@ -229,7 +229,6 @@ public class Complex {
     
     /**
      * Prints the complex number to syso
-     * @param cpx
      */
     public void printRI () {
     	if(this.im < 0) System.out.printf("%f %fi", this.re, this.im);
@@ -238,7 +237,6 @@ public class Complex {
     
     /**
      * Prints the complex number to a string
-     * @param cpx
      */
     public String sprintRI () {
     	if(this.im < 0) return String.format("%f %fi", this.re, this.im);

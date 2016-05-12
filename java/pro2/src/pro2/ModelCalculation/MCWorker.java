@@ -130,30 +130,33 @@ public class MCWorker extends Thread {
 		// Generate rank of equivalent circuits
 		ArrayList<MCEqCircuit> sortedList = MCRank.sortByError(ys, circuits);
 		
-		// Run optimizer
-		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
-		SimplexOptimizer optimizer = new SimplexOptimizer(1e-11, 1e-14);
-		PointValuePair optimum = null;
-		try {
-			optimum = optimizer.optimize(
-				new MaxEval(100000), 
-				new ObjectiveFunction(e),
-				GoalType.MINIMIZE, 
-				new InitialGuess(sortedList.get(0).getParameters()), 
-				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
-		} catch(TooManyEvaluationsException ex) {
-			System.out.println("Optimizer reached MaxEval");
-		}
-
-		double[] res = optimum.getPoint();
+//		// Run optimizer
+//		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
+//		SimplexOptimizer optimizer = new SimplexOptimizer(1e-11, 1e-14);
+//		PointValuePair optimum = null;
+//		try {
+//			optimum = optimizer.optimize(
+//				new MaxEval(100000), 
+//				new ObjectiveFunction(e),
+//				GoalType.MINIMIZE, 
+//				new InitialGuess(sortedList.get(0).getParameters()), 
+//				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
+//		} catch(TooManyEvaluationsException ex) {
+//			System.out.println("Optimizer reached MaxEval");
+//		}
+//
+//		double[] res = optimum.getPoint();
 		
-		success(sortedList.get(0), res);
+		// Run optimizer
+		sortedList.get(0).optimize(ys);
+		sortedList.get(0).printParameters();
+		success(sortedList.get(0));
 	}
 
 	//================================================================================
     // Private methods
     //================================================================================
-	private void success (MCEqCircuit eqc, double[] res) {		
+	private void success (MCEqCircuit eqc) {		
 //		System.out.println("-------------------------");
 //		System.out.println("Results:");
 //		System.out.println("R0= " +res[0]);
@@ -164,10 +167,6 @@ public class MCWorker extends Thread {
 //		System.out.println("C0= " +res[5]);
 //		System.out.println("C1= " +res[6]);
 //		System.out.println("-------------------------");
-		
-		eqc.setParameters(res);
-		eqc.clean();
-		eqc.printParameters();
 		
 		System.out.println("MCWorker " +workerName +" has successfully completed");
 	}

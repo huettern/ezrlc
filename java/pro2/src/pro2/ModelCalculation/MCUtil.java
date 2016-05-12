@@ -35,7 +35,29 @@ public class MCUtil {
 	
 	public static enum DATA_FORMAT {HZ, OMEGA}
 
-	
+	public final static int[][] parameter2TopoIdx = {
+			{0,99,99,99,1,99,99},
+			{0,99,99,99,1,99,99},
+			{0,99,99,99,99,1,99},
+			{0,99,99,99,99,1,99},
+			{0,99,99,99,1,2,99},
+			{0,99,99,99,1,2,99},
+			{0,99,99,99,1,2,99},
+			{0,99,99,99,1,2,99},
+			{0,99,99,1,99,2,99},
+			{0,99,99,1,2,3,99},
+			{0,99,99,1,2,3,99},
+			{0,99,99,1,2,3,99},
+			{0,99,99,99,1,2,3},
+			{0,1,2,99,3,4,99},
+			{0,1,2,99,3,4,99},
+			{0,1,2,99,3,4,99},
+			{0,1,2,3,99,4,99},
+			{0,1,2,3,4,5,99},
+			{0,1,2,3,4,5,99},
+			{0,1,2,3,4,5,99},
+			{0,1,2,99,3,4,5}
+	};
 
 
 	//================================================================================
@@ -53,7 +75,7 @@ public class MCUtil {
 	 * Applies the MCOptions to the frequency vector
 	 * @param ops MCOptions given by user
 	 * @param f frequency data in Hertz
-	 * @patam format Data output format omega or hertz
+	 * @param format Data output format omega or hertz
 	 * @return w data
 	 */
 	public static final double[] applyMCOpsToF (MCOptions ops, double[] f, DATA_FORMAT format) {
@@ -194,6 +216,9 @@ public class MCUtil {
 			circuitList[0] = CircuitType.values()[ops.modelID];
 			return circuitList;
 		}
+
+		if(ops.nElementsMaxAuto) ops.nElementsMax = Integer.MAX_VALUE;
+		if(ops.nElementsMinAuto) ops.nElementsMin = 0;
 		
 		// count how many there are without skin effect
 		for(int ctr = 0; ctr < MCUtil.nModelSkinStart; ctr++) {
@@ -237,5 +262,90 @@ public class MCUtil {
 	 */
 	public static final CircuitType modelIdxToCircuitType (int idx){
 		return MCEqCircuit.CircuitType.values()[idx];
+	}
+	
+	/**
+	 * Converts a shortenned, CircuitType specific parameterlist p to the universal parameter list
+	 * @param t topology
+	 * @param p short form parameters
+	 * @return
+	 */
+	public static final double[] topo2Param (CircuitType t, double[] p) {
+		double[] res = {0,0,0,0,0,0,0};
+		
+		switch(t){
+		case MODEL0: res[0] = p[0]; res[4] = p[1];
+			break;
+		case MODEL1: res[0] = p[0]; res[4] = p[1];
+			break;
+		case MODEL2: res[0] = p[0]; res[5] = p[2];
+			break;
+		case MODEL3: res[0] = p[0]; res[4] = p[1];
+			break;
+		case MODEL4: res[0] = p[0]; res[4] = p[1]; res[5] = p[2];
+			break;
+		case MODEL5: res[0] = p[0]; res[4] = p[1]; res[5] = p[2];
+			break;
+		case MODEL6: res[0] = p[0]; res[4] = p[1]; res[5] = p[2];
+			break;
+		case MODEL7: res[0] = p[0]; res[4] = p[1]; res[5] = p[2];
+			break;
+		case MODEL8: res[0] = p[0]; res[3] = p[1]; res[5] = p[2];
+			break;
+		case MODEL9: res[0] = p[0]; res[3] = p[1]; res[5] = p[2]; res[5] = p[3];
+			break;
+		case MODEL10: res[0] = p[0]; res[3] = p[1]; res[4] = p[2]; res[5] = p[3];
+			break;
+		case MODEL11: res[0] = p[0]; res[3] = p[1]; res[4] = p[2]; res[5] = p[3];
+			break;
+		case MODEL12: res[0] = p[0]; res[4] = p[1]; res[5] = p[2]; res[6] = p[3];
+			break;
+		case MODEL13: res[0] = p[0]; res[1] = p[1]; res[2] = p[2]; res[4] = p[3]; res[5] = p[4];
+			break;
+		case MODEL14: res[0] = p[0]; res[1] = p[1]; res[2] = p[2]; res[4] = p[3]; res[5] = p[4];
+			break;
+		case MODEL15: res[0] = p[0]; res[1] = p[1]; res[2] = p[2]; res[4] = p[3]; res[5] = p[4];
+			break;
+		case MODEL16: res[0] = p[0]; res[1] = p[1]; res[2] = p[2]; res[3] = p[3]; res[5] = p[4];
+			break;
+		case MODEL17: res[0] = p[0]; res[1] = p[1]; res[2] = p[2]; res[3] = p[3]; res[4] = p[4]; res[5] = p[5];
+			break;
+		case MODEL18: res[0] = p[0]; res[1] = p[1]; res[2] = p[2]; res[3] = p[3]; res[4] = p[4]; res[5] = p[5];
+			break;
+		case MODEL19: res[0] = p[0]; res[1] = p[1]; res[2] = p[2]; res[3] = p[3]; res[4] = p[4]; res[5] = p[5];
+			break;
+		case MODEL20: res[0] = p[0]; res[1] = p[1]; res[2] = p[2]; res[4] = p[3]; res[5] = p[4]; res[6] = p[5];
+			break;
+		}
+		
+		return res;
+	}
+	
+	/**
+	 * Shortens the input array by deleting all zero valeus
+	 * @param p parameter array
+	 * @param type Circuit type
+	 * @return shortenned parameter array
+	 */
+	public static final double[] shortenParam (CircuitType type, double[] p) {
+//		int ctr = 0;
+//		int ctr2 = 0;
+//		for (int i = 0; i < p.length; i++){
+//			if(p[i] != 0.0) ctr++;
+//		}
+		// copy
+		int n = modelNElements[type.ordinal()];
+		double[] res = new double[n];
+//		for (int i = 0; i < p.length; i++){
+//			if(p[i] != 0.0) res[ctr2++] = p[i];
+//		}
+//		
+		for(int i = 0; i < 7; i++) {
+			if(parameter2TopoIdx[type.ordinal()][i] <= n){
+				res[parameter2TopoIdx[type.ordinal()][i]] = p[i];
+			}
+		}
+		
+		return res;
 	}
 }

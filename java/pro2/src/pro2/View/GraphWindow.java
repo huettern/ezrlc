@@ -59,7 +59,7 @@ public class GraphWindow implements ActionListener{
     //================================================================================
 	/**
 	 * Builds the Graph Panel
-	 * @wbp.parser.entryPoint
+	 *
 	 */
 	public void buildDialog() {
 		graphDialog = new JDialog(controller.getMainView());
@@ -167,7 +167,7 @@ public class GraphWindow implements ActionListener{
 
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * 
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {

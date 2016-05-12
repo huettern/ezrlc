@@ -60,7 +60,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
     //================================================================================
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * 
 	 */	
 	public RectPlotAddMeasurementWindow(Controller controller, Figure fig)  {
 		this.controller = controller;

@@ -76,14 +76,15 @@ public class MCErrorSum implements MultivariateFunction {
     //================================================================================
 	/**
 	 * Gets called by optimizer to calculate error
-	 * @param x: parameter array from optimizer
+	 * @param params: parameter array from optimizer
 	 * @return error
 	 */
 	@Override
 	public double value(double[] params) {
-//		System.out.println("Interface value, params=" +Arrays.toString(params));
+		System.out.println("Interface value, params=" +Arrays.toString(params));
 		// set new parameter
-		circuit.setParameters(params);
+		double[] p = MCUtil.topo2Param(this.circuit.getCircuitType(),params);
+		circuit.setParameters(p);
 		// get s parameters
 		Complex[] s = circuit.getS();
 		// build magnitude

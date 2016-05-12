@@ -3,6 +3,16 @@ package pro2.ModelCalculation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.math3.analysis.MultivariateFunction;
+import org.apache.commons.math3.exception.TooManyEvaluationsException;
+import org.apache.commons.math3.optim.InitialGuess;
+import org.apache.commons.math3.optim.MaxEval;
+import org.apache.commons.math3.optim.PointValuePair;
+import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
+import org.apache.commons.math3.optim.nonlinear.scalar.ObjectiveFunction;
+import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.NelderMeadSimplex;
+import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.SimplexOptimizer;
+
 import pro2.RFData.RFData;
 import pro2.util.Complex;
 
@@ -34,20 +44,40 @@ public class MCEqCircuit {
     // Private Data
     //================================================================================
 	private CircuitType circuitType;
-	
-	private double[] parameters = new double[7];
+
+	private double[] parameters;
+	private double[] shortParameters;
 	
 	private double[] wvector;
+	
+	private double z0 = 50.0;
+	
+	private double optStepDefault = 0.001;
+//	private double optRelThDefault = 1e-11;
+//	private double optAbsThDefault = 1e-14;
+	private double optRelThDefault = 1e-12;
+	private double optAbsThDefault = 1e-15;
+	
+	private SimplexOptimizer optimizer;
+	private PointValuePair optimum;
+	private MultivariateFunction errorFunction;
+	private double[] optStep;
 
 	//================================================================================
     // Constructor
     //================================================================================
 	public MCEqCircuit(CircuitType circuitType) {
 		this.circuitType = circuitType;
+		initOptimizer();
+		parameters = new double[7];
+		for(int i = 0; i < 7; i++){
+			parameters[i] = 0.0;
+		}
 	}
 
 	public MCEqCircuit(CircuitType circuitType, double[] params) {
 		this.circuitType = circuitType;
+		initOptimizer();
 		System.arraycopy(params, 0, parameters, 0, params.length);
 	}
 
@@ -78,7 +108,8 @@ public class MCEqCircuit {
 	 * @param d parameter value
 	 */
 	public void setParameter(int i, double d) {
-		this.parameters[i] = d;
+//		this.parameters[MCUtil.parameter2TopoIdx[this.circuitType.ordinal()][i]] = d;
+		parameters[i] = d;
 	}
 	
 	/**
@@ -86,30 +117,31 @@ public class MCEqCircuit {
 	 * @return
 	 */
 	public double[] getParameters() {
-		double[] res = new double[parameters.length];
-		System.arraycopy(parameters, 0, res, 0, parameters.length);
+		double[] res = new double[7];
+		System.arraycopy(parameters, 0, res, 0, 7);
 		return res;
 	}
-	
+
+	public CircuitType getCircuitType() {
+		return this.circuitType;
+	}
 	//================================================================================
     // Public Functions
     //================================================================================
 
 	/**
 	 * Returns the scattering parameters to the given freq parameters
-	 * @param w frequency vecotr in omega
 	 * @return Complex array with scattering parameters
 	 */
 	public final Complex[] getS () {
 		// convert to s parameter
-		Complex[] ys = RFData.z2s(50, this.getZ());
+		Complex[] ys = RFData.z2s(z0, this.getZ());
 		
 		return ys;
 	}
 	
 	/**
 	 * Returns the admittance parameters to the given freq parameters
-	 * @param w frequency vecotr in omega
 	 * @return Complex array with admittance parameters
 	 */
 	public final Complex[] getY () {
@@ -121,7 +153,6 @@ public class MCEqCircuit {
 
 	/**
 	 * Returns the impedance parameters to the given freq parameters
-	 * @param w frequency vecotr in omega
 	 * @return Complex array with impedance parameters
 	 */
 	public final Complex[] getZ () {
@@ -232,6 +263,8 @@ public class MCEqCircuit {
 	public void printParameters() {
 		double[] res = parameters;
 		System.out.println("-------------------------");
+		System.out.println(this.circuitType.toString()+" Results");
+		System.out.println("-------------------------");
 		System.out.println("R0= " +res[0]);
 		System.out.println("f0= " +res[1]);
 		System.out.println("a = " +res[2]);
@@ -242,14 +275,44 @@ public class MCEqCircuit {
 		System.out.println("-------------------------");
 	}
 	
-	//================================================================================
-    // Private Functions
-    //================================================================================
-	
+	/**
+	 * Optimizes the circuit to the given ys vector
+	 * @param ys complex scattering parameters to which the model is optimized
+	 */
+	public void optimize(Complex[] ys) {
+		// shorten parameters to optimize
+		shortParameters = MCUtil.shortenParam(circuitType, parameters);
+		errorFunction = new MCErrorSum(ys, this);
+		optimum = null;
+		try {
+			optimum = optimizer.optimize(
+				new MaxEval(100000), 
+				new ObjectiveFunction(errorFunction),
+				GoalType.MINIMIZE, 
+				new InitialGuess(shortParameters), 
+				new NelderMeadSimplex(optStep) );
+		} catch(TooManyEvaluationsException ex) {
+			System.out.println("Optimizer reached MaxEval");
+		}
+		// save new parameters
+		parameters = MCUtil.topo2Param(circuitType, optimum.getPoint());
+	}
 	
 	//================================================================================
     // Private Functions 
     //================================================================================
+	/**
+	 * Inits the optimizer
+	 */
+	private void initOptimizer() {
+		int nelements = MCUtil.modelNElements[this.circuitType.ordinal()];
+		optStep = new double[nelements];
+		for(int i = 0; i < nelements; i++){
+			optStep[i] = optStepDefault;
+		}
+		optimizer = new SimplexOptimizer(optRelThDefault, optAbsThDefault);
+	}
+	
 	/**
 	 * Calculates the impedance parameters of the model 0
 	 * @return

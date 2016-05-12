@@ -50,7 +50,7 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
     //================================================================================
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * 
 	 */	
 	public SmithChartAddMeasurementWindow(Controller controller, Figure fig)  {
 		this.controller = controller;

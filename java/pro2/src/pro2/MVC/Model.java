@@ -194,7 +194,7 @@ public class Model extends Observable {
 	/**
 	 * Adds a new Dataset in the model
 	 * @param src Datasource (File or Model)
-	 * @param id Model ID, if File then not used
+	 * @param ec MCEqCircuit
 	 * @param measType RFData.MeasurementType
 	 * @param cpxMod RFData.ComplexModifier
 	 * @return	unique data identifier of the plotdataset

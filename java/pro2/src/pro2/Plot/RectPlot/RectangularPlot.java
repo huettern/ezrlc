@@ -215,7 +215,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	/**
 	 * Add a new Dataset to the plot by ID
 	 * @param rectPlotNewMeasurement 
-	 * @param dataSet
+	 * @param id
 	 */
 	public void addDataSet(int id, RectPlotNewMeasurement rectPlotNewMeasurement) {
 		DataSetSettings set = new DataSetSettings();
