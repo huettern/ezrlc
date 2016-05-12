@@ -16,6 +16,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorListener;
 
 import pro2.MVC.Controller;
+import pro2.ModelCalculation.MCOptions;
 import pro2.Plot.Axis;
 import pro2.util.UIUtil;
 
@@ -625,10 +626,69 @@ public class NewModelWindow implements ActionListener{
 		
 		dialog.setVisible(true);
 	}
+	
 
+
+	//================================================================================
+    // Private Methods
+    //================================================================================
+	/**
+	 * Parses input fileds an creates a MCOptions object
+	 * @return
+	 */
+	private MCOptions parseInput() {
+		MCOptions ops = new MCOptions();
+		
+		// Selected model
+		int index = comBoxModelList.getList().getSelectedIndex();
+		if(index == 0) {
+			ops.modelAutoSelect = true;
+			ops.modelID = 0;
+		} else {
+			ops.modelID = index - 1;
+			ops.modelAutoSelect = false;
+		}
+		
+		// f range
+		ops.fMinAuto = chBoxFmin.isSelected();
+		ops.fMaxAuto = chBoxFmax.isSelected();
+		if(ops.fMinAuto == false) ops.fMin = Double.parseDouble(txtFmin.getText());
+		if(ops.fMaxAuto == false) ops.fMax = Double.parseDouble(txtFmax.getText());
+		
+		// elements range
+		ops.nElementsMinAuto = chBoxCompMin.isSelected();
+		ops.nElementsMaxAuto = chBoxCompMax.isSelected();
+		if(ops.nElementsMinAuto == false) ops.nElementsMin = (int)Double.parseDouble(txtCompMin.getText());
+		if(ops.nElementsMaxAuto == false) ops.nElementsMax = (int)Double.parseDouble(txtCompMax.getText());
+		
+		// element auto
+		ops.paramsAuto[0] = chBoxR0.isSelected();
+		ops.paramsAuto[1] = chBoxF.isSelected();
+		ops.paramsAuto[2] = chBoxAlpha.isSelected();
+		ops.paramsAuto[3] = chBoxR1.isSelected();
+		ops.paramsAuto[4] = chBoxL.isSelected();
+		ops.paramsAuto[5] = chBoxC0.isSelected();
+		ops.paramsAuto[6] = chBoxC1.isSelected();
+		
+		// element values
+		if(ops.paramsAuto[0] == false) ops.params[0] = Double.parseDouble(txtR0.getText());
+		if(ops.paramsAuto[1] == false) ops.params[1] = Double.parseDouble(txtF.getText());
+		if(ops.paramsAuto[2] == false) ops.params[2] = Double.parseDouble(txtAlpha.getText());
+		if(ops.paramsAuto[3] == false) ops.params[3] = Double.parseDouble(txtR1.getText());
+		if(ops.paramsAuto[4] == false) ops.params[4] = Double.parseDouble(txtL.getText())/(1e3);
+		if(ops.paramsAuto[5] == false) ops.params[5] = Double.parseDouble(txtC0.getText())/(1e6);
+		if(ops.paramsAuto[6] == false) ops.params[6] = Double.parseDouble(txtC1.getText())/(1e6);
+
+		return ops;
+	}
+
+
+	//================================================================================
+    // Listener
+    //================================================================================
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("öppis");
+		System.out.println("ï¿½ppis");
 		if(e.getSource() == btnCancel) {
 			dialog.dispose();
 		}
@@ -648,11 +708,11 @@ public class NewModelWindow implements ActionListener{
 		}
 		
 		if(e.getSource() == btnGenerate) {
-			
+			MCOptions ops = this.parseInput();
+			controller.createEqCircuit(ops);
 		}	
 
 	}
-
 	/**
 	 * Parameter match by change the model
 	 */

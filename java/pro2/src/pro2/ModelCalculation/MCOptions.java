@@ -13,30 +13,32 @@ public class MCOptions {
     //================================================================================
 	public double fMax;
 	public double fMin;
+	public boolean fMaxAuto;
+	public boolean fMinAuto;
 
 	public int nElementsMax;
 	public int nElementsMin;
+	public boolean nElementsMaxAuto;
+	public boolean nElementsMinAuto;
 	
-	public double inductor;
-	public double capacitor0;
-	public double resistor1;
-	public double capacitor1;
-	public double resistor0;
-	public double alpha;
-	public double fSkin;
+//	public double inductor;
+//	public double capacitor0;
+//	public double resistor1;
+//	public double capacitor1;
+//	public double resistor0;
+//	public double alpha;
+//	public double fSkin;
+
+	public double[] params = new double[7];
+	public boolean[] paramsAuto = new boolean[7];
 	
-	public boolean skinEffectEnabled;
-	
+	public boolean modelAutoSelect;
+	public int modelID;
 
 	//================================================================================
     // Constructor
     //================================================================================
 	public MCOptions() {
-		fMax = Double.MAX_VALUE;
-		fMin = 0;
-		nElementsMax = Integer.MAX_VALUE;
-		nElementsMin = 0;
-		skinEffectEnabled = false;
 	}
 
 }

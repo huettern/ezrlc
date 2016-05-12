@@ -15,10 +15,17 @@ import javax.swing.JPanel;
 import pro2.util.UIUtil;
 
 public class ImageComboBox extends JPanel implements ActionListener{
+
+	//================================================================================
+    // Private Data
+    //================================================================================
 	private ImageIcon[] images;
 	private JComboBox list;
 	private NewModelWindow parent;
-	
+
+	//================================================================================
+    // Constructor
+    //================================================================================
 	public ImageComboBox(NewModelWindow parent, String[] imagesName, String[] imagesText) {
 		super(new BorderLayout());
 		this.parent = parent;
@@ -46,6 +53,21 @@ public class ImageComboBox extends JPanel implements ActionListener{
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 	}
 
+
+	//================================================================================
+    // Public methods
+    //================================================================================
+	/**
+	 * Returns the combobox
+	 * @return
+	 */
+	public JComboBox getList () {
+		return this.list;
+	}
+	
+	//================================================================================
+    // Listener
+    //================================================================================
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		parent.comboBoxSelected(e);

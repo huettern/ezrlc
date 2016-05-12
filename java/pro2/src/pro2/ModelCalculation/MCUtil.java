@@ -187,12 +187,12 @@ public class MCUtil {
 		}
 		// count how many there are without skin effect
 		int num_models_skin = 0;
-		if(opt.skinEffectEnabled == true) {
-			for(int ctr = MCUtil.nModelSkinStart; ctr < MCUtil.nModels; ctr++) {
-				if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <= opt.nElementsMax) 
-					num_models_skin++;
-			}
-		}
+//		if(opt.skinEffectEnabled == true) {
+//			for(int ctr = MCUtil.nModelSkinStart; ctr < MCUtil.nModels; ctr++) {
+//				if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <= opt.nElementsMax) 
+//					num_models_skin++;
+//			}
+//		}
 		
 		// save the indexes in a array
 		int[] modelIdx = new int[num_models + num_models_skin];
@@ -201,12 +201,12 @@ public class MCUtil {
 			if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <= opt.nElementsMax) 
 				modelIdx[modelIdxCtr++]=ctr;
 		}
-		if(opt.skinEffectEnabled == true) {
-			for(int ctr = MCUtil.nModelSkinStart; ctr < MCUtil.nModels; ctr++) {
-				if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <= opt.nElementsMax) 
-					modelIdx[modelIdxCtr++]=ctr;
-			}
-		}
+//		if(opt.skinEffectEnabled == true) {
+//			for(int ctr = MCUtil.nModelSkinStart; ctr < MCUtil.nModels; ctr++) {
+//				if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <= opt.nElementsMax) 
+//					modelIdx[modelIdxCtr++]=ctr;
+//			}
+//		}
 		
 		CIRCUIT_TYPE[] circuitList = new CIRCUIT_TYPE[modelIdx.length];
 		for (int i = 0; i < modelIdx.length; i++) {

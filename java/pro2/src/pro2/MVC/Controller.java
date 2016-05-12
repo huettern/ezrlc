@@ -2,6 +2,7 @@ package pro2.MVC;
 
 import pro2.MVC.Model;
 import pro2.ModelCalculation.MCEqCircuit;
+import pro2.ModelCalculation.MCOptions;
 import pro2.Plot.Figure;
 import pro2.Plot.Figure.ENPlotType;
 import pro2.Plot.PlotDataSet;
@@ -122,6 +123,9 @@ public class Controller {
 	 */
 	public void setNewGraphButtonEnabled(boolean b) {
 		view.setNewGraphButtonEnabled(b);
+	}
+
+	public void createEqCircuit(MCOptions ops) {
 	}
 
 }

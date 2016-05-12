@@ -92,7 +92,6 @@ public class Pro2 {
 		opt.fMax = Double.MAX_VALUE;
 		opt.nElementsMin = 2;
 		opt.nElementsMax = 3;
-		opt.skinEffectEnabled = true;
 		
 //		// fake measurement
 //		double[] f = {10,20,30,40,50,60,70,80,90,100};
