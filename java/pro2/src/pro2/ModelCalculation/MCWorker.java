@@ -248,8 +248,11 @@ public class MCWorker extends Thread {
 		
 		//EqCircuit 6
 		L=Math.sqrt(-(Math.pow(w21,2)*realy21-Math.pow(w22,2)*realy22)*(realy21-realy22))/((Math.pow(w21,2)-Math.pow(w22,2))*realy21*realy22);
+		L=Math.abs(L);
 		R=(Math.sqrt(1-4*Math.pow(L, 2)*Math.pow(w21, 2)*Math.pow(realy21, 2))+1)/(2*realy21);
+		R=Math.abs(R);
 		C=(imagy21+(w21*L/(Math.pow(w21*L, 2)+Math.pow(R, 2))))/w21;
+		C=Math.abs(C);
 		circuits.get(6).setParameter(0, R); 				//R
 		circuits.get(6).setParameter(5, C); 				//C
 		circuits.get(6).setParameter(4, L); 				//L
@@ -259,9 +262,12 @@ public class MCWorker extends Thread {
 		
 		//EqCircuit 7
 		C=Math.sqrt(-(Math.pow(w21,2)*realz21-Math.pow(w22,2)*realz22)*(realz21-realz22))/((Math.pow(w21,2)-Math.pow(w22,2))*realz21*realz22);
+		C=Math.abs(C);
 		Y=(Math.sqrt(1-4*Math.pow(C, 2)*Math.pow(w21, 2)*Math.pow(realz21, 2))+1)/(2*realz21);
+		Y=Math.abs(Y);
 		R=1/Y;
 		L=(imagz21+(w21*C/(Math.pow(w21*C, 2)+Math.pow(Y, 2))))/w21;
+		L=Math.abs(L);
 		circuits.get(7).setParameter(0, R); 				//R
 		circuits.get(7).setParameter(5, C); 				//C
 		circuits.get(7).setParameter(4, L); 				//L
