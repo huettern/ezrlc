@@ -57,7 +57,7 @@ public class WorkPanel extends JPanel implements Observer {
 		
 		pnlFigure = new JPanel();
 		pnlFigure.setLayout(new GridLayout(1, 1));
-		pnlIGAssist = new IGAssistPanel();
+		pnlIGAssist = new IGAssistPanel(controller);
 		pnlIGAssist.setBorder(new LineBorder(Color.WHITE, 10));
 		pnlIGAssist.build();
 		this.setView(ViewType.IGASSIST);
@@ -117,18 +117,16 @@ public class WorkPanel extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		try {
 			fullFigure.update(o, arg);
-		} catch (Exception e) {
-		}
+		} catch (Exception e) { }
 		
 		try {
 			topFigure.update(o, arg);
-		} catch (Exception e) {
-		}
+		} catch (Exception e) { }
 		
 		try {
 			bottomFigure.update(o, arg);
-		} catch (Exception e) {
-		}		
+		} catch (Exception e) { }		
+		pnlIGAssist.update(o, arg);
 	}
 
 	/**
@@ -179,6 +177,10 @@ public class WorkPanel extends JPanel implements Observer {
 			this.add(pnlIGAssist,0);
 		}
 		this.updateUI();
+	}
+
+	public void buildIGAssistDataSet() {
+		pnlIGAssist.createDatasets();
 	}
 
 

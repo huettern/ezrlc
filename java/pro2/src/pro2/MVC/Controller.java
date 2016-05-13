@@ -57,7 +57,7 @@ public class Controller {
 	public void loadFile (File file) {
         System.out.println("Opening: " + file.getName());
         // Read the file
-        UUID uid = this.model.newInputFile(file);
+        this.model.newInputFile(file);
         view.setFileName(file.getName());
 	}
 
@@ -140,6 +140,10 @@ public class Controller {
 	 */
 	public void setWorkPanelView(ViewType t) {
 		view.setWorkPanelView(t);
+	}
+
+	public void buildIGAssistDataSet() {
+		view.buildIGAssistDataSet();
 	}
 
 }

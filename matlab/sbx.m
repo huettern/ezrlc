@@ -1,0 +1,1 @@
+w = dlmread('../java/pro2/tmp.txt');

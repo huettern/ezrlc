@@ -141,6 +141,11 @@ public class RectangularPlot extends JPanel implements Observer {
 	private void updateDatasets(Model model) {
 		int i = 0;
 		PlotDataSet dataSet;
+//		// Expand data set list to size
+//		for(; dataSets.size() < dataSetIDs.size(); ){
+//			dataSets.add(null);
+//		}
+		// fill datasets
 		for (Integer integer : dataSetIDs) {
 			dataSet = model.getDataSet(integer.intValue());
 			dataSet.setAxis(this.horAxis, this.verAxis);
@@ -271,6 +276,22 @@ public class RectangularPlot extends JPanel implements Observer {
 		}
 		this.repaint();
 	}
+	
+	/**
+	 * Removes all stored datasets
+	 */
+	public void removeAllDatasets () {
+		int ctr = 0;
+		for (Iterator<Integer> iter = dataSetIDs.iterator(); iter.hasNext(); ctr++) {
+			Integer i = iter.next();
+			dataSets.remove(ctr);
+			dataSetSettings.remove(ctr);
+			iter.remove();
+		}
+		this.enableAutoAutoscale = true;
+		this.PlotSetColorsCtr = 0;
+		this.repaint();
+	}
 
 
 	@Override
@@ -299,22 +320,41 @@ public class RectangularPlot extends JPanel implements Observer {
 	 * Scales Axis to show all Data
 	 */
 	public void autoScale() {
-		double xmin = 0;
-		double xmax = 1;
-		double ymin = 0;
-		double ymax = 1;
+		autoScale(Scale.LINEAR, Scale.LINEAR);
+	}
+	/**
+	 * Scales Axis to show all Data, with x ang y scale
+	 */
+	public void autoScale(Scale sx, Scale sy) {
+//		double xmin = 0;
+//		double xmax = 1;
+//		double ymin = 0;
+//		double ymax = 1;
+		double xmin = Double.MAX_VALUE;
+		double xmax = -Double.MAX_VALUE;
+		double ymin = Double.MAX_VALUE;
+		double ymax = -Double.MAX_VALUE;
 		
 		// Crawl all datasets for max / min values
-		for (PlotDataSet dataset : this.dataSets) {
-			if(dataset.getXMax() > xmax) { xmax = dataset.getXMax(); }
-			if(dataset.getXMin() < xmin) { xmin = dataset.getXMin(); }
-			if(dataset.getYMax() > ymax) { ymax = dataset.getYMax(); }
-			if(dataset.getYMin() < ymin) { ymin = dataset.getYMin(); }
+		int i = 0;
+		for (Integer ctr : this.dataSetIDs) {
+			if(dataSets.get(i).getXMax() > xmax) { xmax = dataSets.get(i).getXMax(); }
+			if(dataSets.get(i).getXMin() < xmin) { xmin = dataSets.get(i).getXMin(); }
+			if(dataSets.get(i).getYMax() > ymax) { ymax = dataSets.get(i).getYMax(); }
+			if(dataSets.get(i).getYMin() < ymin) { ymin = dataSets.get(i).getYMin(); }
 			// if log X-axis, set minimum at first non-zero value
-			if(settings.xScale == Scale.LOG) {
-				xmin = dataset.getXData()[1];
+			if(sx == Scale.LOG) {
+				if(dataSets.get(i).getXData()[0] == 0) { xmin = dataSets.get(i).getXData()[1]; }
+				else { xmin = dataSets.get(i).getXData()[0]; }
 			}
 		}
+
+		System.out.println("ORIG: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
+//		xmax *= 1.1;
+		ymax *= 1.1;
+		ymin *= 0.9;
+//		xmin *= 0.9;
+//		System.out.println("LIM: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
 		
 		// if log Y-axis, set minimum at first non-zero or negative value
 		if(settings.yScale == Scale.LOG) {
@@ -327,12 +367,33 @@ public class RectangularPlot extends JPanel implements Observer {
 			}
 		}
 
-		
+		int yexp = 0;
+		// check for delta smaller 1
+		if((ymax-ymin) < 1) {
+			int expmax = (int)(Math.floor(Math.log10(Math.abs(ymax))));	//exponent
+			int expmin = (int)(Math.floor(Math.log10(Math.abs(ymin))));	//exponent
+			// get smaller exponent
+			if(expmax > expmin) yexp = expmax; else yexp = expmin;
+			System.out.println("yexp="+yexp);
+			// divide out the exponent
+			ymin = ymin / (Math.pow(10, yexp));
+			ymax = ymax / (Math.pow(10, yexp));
+		}
+		verAxis.setExp(yexp);
+
+//		System.out.println("WO EXPd: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
 		// round the values
 		xmin = MathUtil.roundNice(xmin);
 		xmax = MathUtil.roundNice(xmax);
 		ymin = MathUtil.roundNice(ymin);
 		ymax = MathUtil.roundNice(ymax);
+//		System.out.println("NICE: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
+		
+		// reapply exponent
+//		ymin = ymin * (Math.pow(10, yexp));
+//		ymax = ymax * (Math.pow(10, yexp));
+//		System.out.println("EXPd: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
+		
 		
 		settings.xAxisMaximum=xmax;
 		settings.xAxisMinimum=xmin;

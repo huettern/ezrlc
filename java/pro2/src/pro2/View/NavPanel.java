@@ -25,7 +25,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import pro2.MVC.Controller;
+import pro2.MVC.Controller.DataSource;
 import pro2.Plot.DataSetLabelPanel;
+import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.View.WorkPanel.ViewType;
 
 import javax.swing.JScrollPane;
@@ -293,6 +295,14 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	}
 	
 
+	/**
+	 * Builds the necessary datasets for the IGAssist panel
+	 */
+	private void buildIGAssistDataSet() {
+		// create datasets
+		controller.buildIGAssistDataSet();
+	}
+	
 	//================================================================================
     // Public Functions
     //================================================================================
@@ -306,6 +316,8 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 			File f = fileChooser.getFile();
 			if (f != null) {
 				controller.loadFile(f);
+				this.buildIGAssistDataSet();
+				controller.manualNotify();
 			}	
 		}
 		
@@ -330,7 +342,8 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		}
 		
 	}
-	
+
+
 	/**
 	 * Sets the selected status of the view switcher of the work panel
 	 * @param t ViewType

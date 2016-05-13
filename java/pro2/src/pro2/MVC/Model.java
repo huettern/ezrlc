@@ -19,7 +19,16 @@ import pro2.RFData.RFData.MeasurementType;
 import pro2.util.Complex;
 
 public class Model extends Observable {
+
+	//================================================================================
+    // Public Data
+    //================================================================================
+	public enum UpdateEvent {FILE};
 	
+	
+	//================================================================================
+    // Private Data
+    //================================================================================
 	private Controller controller;
 	
 	private RFData rfDataFile;
@@ -41,18 +50,19 @@ public class Model extends Observable {
 		Complex[] data = null;
 		double[] outdata = null;
 		// Get Data
+		
 		if(nm.src == DataSource.FILE) {
 			outdata = new double[rfDataFile.size()];
 			switch (nm.type) {
-			case S:
-				data = this.rfDataFile.getsData();
-				break;
-			case Z:
-				data = this.rfDataFile.getzData();
-				break;
-			case Y:
-				data = this.rfDataFile.getyData();
-				break;
+			case S: data = this.rfDataFile.getsData(); break;
+			case Z: data = this.rfDataFile.getzData(); break;
+			case Y: data = this.rfDataFile.getyData(); break;
+			case Rs: outdata = RFData.z2Rs(this.rfDataFile.getzData()); break;
+			case Rp: outdata = RFData.y2Rp(this.rfDataFile.getyData()); break;
+			case Ls: outdata = RFData.z2Ls(this.rfDataFile.getzData(), rfDataFile.getfData()); break;
+			case Lp: outdata = RFData.y2Lp(this.rfDataFile.getyData(), rfDataFile.getfData()); break;
+			case Cs: outdata = RFData.z2Cs(this.rfDataFile.getzData(), rfDataFile.getfData()); break;
+			case Cp: outdata = RFData.y2Cp(this.rfDataFile.getyData(), rfDataFile.getfData()); break;
 			default:
 				break;
 			}
@@ -71,36 +81,40 @@ public class Model extends Observable {
 			default:
 				break;
 			}
-		}
+		} 
 		
 		// Convert to Complex Modifier
-		outdata = new double[data.length];
-		switch(nm.cpxMod) {
-		case REAL:
-	        // Extract real part
-			for(int i = 0; i < data.length; i++){
-				outdata[i] = data[i].re();
+		if(nm.type == MeasurementType.S || nm.type == MeasurementType.Y || nm.type == MeasurementType.Z) {
+			outdata = new double[data.length];
+			switch(nm.cpxMod) {
+			case REAL:
+		        // Extract real part
+				for(int i = 0; i < data.length; i++){
+					outdata[i] = data[i].re();
+				}
+				break;
+			case IMAG:
+		        // Extract imaginary part
+				for(int i = 0; i < data.length; i++){
+					outdata[i] = data[i].im();
+				}
+				break;
+			case MAG:
+		        // Extract magnitude
+				for(int i = 0; i < data.length; i++){
+					outdata[i] = data[i].abs();
+				}
+				break;
+			case ANGLE:
+		        // Extract angle
+				for(int i = 0; i < data.length; i++){
+					outdata[i] = data[i].angle();
+				}
+				break;
+				default: break;
 			}
-			break;
-		case IMAG:
-	        // Extract imaginary part
-			for(int i = 0; i < data.length; i++){
-				outdata[i] = data[i].im();
-			}
-			break;
-		case MAG:
-	        // Extract magnitude
-			for(int i = 0; i < data.length; i++){
-				outdata[i] = data[i].abs();
-			}
-			break;
-		case ANGLE:
-	        // Extract angle
-			for(int i = 0; i < data.length; i++){
-				outdata[i] = data[i].angle();
-			}
-			break;
 		}
+		
 		
 		
 		// Now create the dataset and add it to the dataset list
@@ -169,6 +183,8 @@ public class Model extends Observable {
 			// TODO: handle exception
 			return null;
 		}
+//		setChanged();
+//		notifyObservers(UpdateEvent.FILE);
 		return null;
 	}
 

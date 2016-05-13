@@ -46,6 +46,7 @@ public class Axis {
 	private double min = 0;
 	private double max = 0;
 	private int step = 1;
+	private int exp = 0;
 	
 	// Log scale params
 	private double logUpperBound = 1;
@@ -62,7 +63,8 @@ public class Axis {
 	private Point[] tic_pos = new Point[MAX_NUM_POINTS];		// major tics
 	private List<Point> sub_tic_pos = new ArrayList<Point>();
 	private int ticLenght = 10;
-
+	private Point expLabelLocation = new Point();
+	
 	//================================================================================
     // Constructors
     //================================================================================
@@ -119,6 +121,12 @@ public class Axis {
 		
 		for (Point p : this.sub_tic_pos) {
 			this.drawSubTick(g, p);
+		}
+		
+		// exponent label
+		if(exp != 0) {
+			g.setFont(new Font(g.getFont().getFontName(), Font.ITALIC | Font.BOLD, 12));
+			UIUtil.drawCenterString(g, expLabelLocation, "x10e"+exp);
 		}
 	}
 
@@ -221,6 +229,13 @@ public class Axis {
 		return this.max;
 	}
 	
+	public void setExp(int exp ) {
+		this.exp = exp;
+	}
+	public int getExp() {
+		return this.exp;
+	}
+	
 	
 	//================================================================================
     // Private Functions
@@ -319,6 +334,9 @@ public class Axis {
 					}
 				}
 			}
+			// exp label location
+			expLabelLocation.y = label_posy[0];
+			expLabelLocation.x = label_posx[0]-40;
 		}
 		else if(or == Orientation.VERTICAL) {
 			// Calculate origins
@@ -371,6 +389,9 @@ public class Axis {
 					}
 				}
 			}
+			// exp label location
+			expLabelLocation.y = label_posy[label_count]-15;
+			expLabelLocation.x = label_posx[0];
 		}
 	}
 	

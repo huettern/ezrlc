@@ -178,6 +178,9 @@ public class MainView extends JFrame implements Observer {
 		workPanel.setView(t);
 		navPanel.setViewButtonStatus(t);
 	}
+	public void buildIGAssistDataSet() {
+		workPanel.buildIGAssistDataSet();
+	}
 
 	
 }

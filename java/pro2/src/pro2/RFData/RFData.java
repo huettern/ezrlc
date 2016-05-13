@@ -9,12 +9,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
 
 import pro2.util.Complex;
+import pro2.util.MathUtil;
 
 /**
  * @author noah
@@ -30,7 +32,7 @@ public class RFData {
 	 *
 	 */
 	public enum MeasurementType {
-	    S, Y, Z
+	    S, Y, Z, Rs, Rp, Ls, Lp, Cs, Cp
 	}
 	
 	/**
@@ -498,5 +500,110 @@ public class RFData {
 			y[i] = Complex.div(tmp, z[i]);
 		}
 		return y;
+	}
+
+	/**
+	 * Calculates the series resistance in ohms
+	 * Rs = Re(Z)
+	 * @param z impedance array in ohms
+	 * @param f freq data
+	 * @return resistance array in ohms
+	 */
+	public static double[] z2Rs(Complex[] z) {
+		double[] res = new double[z.length];
+		for (int i = 0; i < z.length; i++) {
+			res[i] = z[i].re();
+		}
+		return res;
+	}
+	/**
+	 * Calculates the parallel resistance in ohms
+	 * Rp = 1/Re(Y)
+	 * @param y admittance data
+	 * @param f freq data
+	 * @return resistance array in ohms
+	 */
+	public static double[] y2Rp(Complex[] y) {
+		double[] res = new double[y.length];
+		for (int i = 0; i < y.length; i++) {
+			res[i] = 1.0/y[i].re();
+		}
+		return res;
+	}
+	/**
+	 * Calculates the series inductance in H
+	 * Ls = Im(Z)/w
+	 * @param z impedance array in ohms
+	 * @param f freq data
+	 * @return inductance array in ohms
+	 */
+	public static double[] z2Ls(Complex[] z, double[] f) {
+		double[] w = RFData.f2w(f);
+		double[] res = new double[z.length];
+		for (int i = 0; i < z.length; i++) {
+			res[i] = z[i].im()/w[i];
+		}
+//		MathUtil.dumpListDouble("tmp.txt", res);
+//		MathUtil.dumpListDouble("tmp.txt", w);
+		return res;
+	}
+	/**
+	 * Calculates the parallel inductance in H
+	 * Lp = -1/(w*im(y))
+	 * @param y admittance data
+	 * @param f freq data
+	 * @return inductance array in ohms
+	 */
+	public static double[] y2Lp(Complex[] y, double[] f) {
+		double[] w = RFData.f2w(f);
+		double[] res = new double[y.length];
+		for (int i = 0; i < y.length; i++) {
+			res[i] = -1/(y[i].im()*w[i]);
+		}
+		return res;
+	}
+	/**
+	 * Calculates the series capacitance in F
+	 * Cs = -1/(w*im(z))
+	 * @param z impedance array in ohms
+	 * @param f freq data
+	 * @return capacitance array in ohms
+	 */
+	public static double[] z2Cs(Complex[] z, double[] f) {
+		double[] w = RFData.f2w(f);
+		double[] res = new double[z.length];
+		for (int i = 0; i < z.length; i++) {
+			res[i] = -1/(z[i].im()*w[i]);
+		}
+		return res;
+	}
+	/**
+	 * Calculates the parallel capacitance in F
+	 * Cp = im(y)/w
+	 * @param y admittance data
+	 * @param f freq data
+	 * @return capacitance array in ohms
+	 */
+	public static double[] y2Cp(Complex[] y, double[] f) {
+		double[] w = RFData.f2w(f);
+		double[] res = new double[y.length];
+		for (int i = 0; i < y.length; i++) {
+			res[i] = y[i].im()/w[i];
+		}
+		return res;
+	}
+	
+	/**
+	 * converts f to w
+	 * w = 2*pi*f
+	 * @param f frequency vector
+	 * @return omega vector
+	 */
+	public static double[] f2w (double[] f){
+		double[] res = new double[f.length];
+		for (int i = 0; i < f.length; i++) {
+			res[i] = 2.0*Math.PI*f[i];
+		}
+		return res;
 	}
 }

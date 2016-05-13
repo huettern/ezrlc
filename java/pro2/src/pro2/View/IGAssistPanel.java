@@ -1,18 +1,30 @@
 package pro2.View;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.Observable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.xml.ws.handler.MessageContext.Scope;
 
+import pro2.MVC.Controller.DataSource;
+import pro2.MVC.Controller;
+import pro2.MVC.Model;
+import pro2.MVC.Model.UpdateEvent;
+import pro2.Plot.Axis.Scale;
+import pro2.Plot.PlotDataSet;
+import pro2.Plot.RectPlot.RectPlotNewMeasurement;
+import pro2.Plot.RectPlot.RectPlotSettings;
 import pro2.Plot.RectPlot.RectangularPlot;
+import pro2.RFData.RFData.MeasurementType;
 import pro2.util.UIUtil;
 
 public class IGAssistPanel extends JPanel {
@@ -20,27 +32,22 @@ public class IGAssistPanel extends JPanel {
 	//================================================================================
     // Settings
     //================================================================================
-	private final int topVGap = 5;
-	private final int topHGap = 5;
-
-	private final int subVGap = 2;
-	private final int subHGap = 2;
-
 	private final String[] topTitles = {"RL Series","RL Parallel","RC Series","RC Parallel"};
 	private final String[] plotTitles = {
-			"R0 - Resistance in Ohm",
-			"L - Iductance in H",
-			"R0 - Resistance in Ohm",
-			"L - Iductance in H",
-			"R0 - Resistance in Ohm",
-			"C0 - Capacitance in F",
-			"R0 - Resistance in Ohm",
-			"C0 - Capacitance in F"};
+			"R - Series Resistance in Ohm",
+			"L - Series Iductance in H",
+			"R - Parallel Resistance in Ohm",
+			"L - Parallel Iductance in H",
+			"R - Series Resistance in Ohm",
+			"C - Series Capacitance in F",
+			"R - Parallel Resistance in Ohm",
+			"C - Parallel Capacitance in F"};
 	
 	//================================================================================
     // Private data
     //================================================================================
 	private static final long serialVersionUID = 1L;
+	private Controller controller;
 	
 	private RectangularPlot[] plots = new RectangularPlot[8];
 	
@@ -48,16 +55,62 @@ public class IGAssistPanel extends JPanel {
 
 	private final int[] plotXLoc = {1,2,1,2,1,2,1,2};
 	private final int[] plotYLoc = {0,0,1,1,2,2,3,3};
+	private final MeasurementType[] plotMeasType = {MeasurementType.Rs, MeasurementType.Ls,
+			MeasurementType.Rp, MeasurementType.Lp, MeasurementType.Rs, MeasurementType.Cs,
+			MeasurementType.Rp, MeasurementType.Cp};
+	
+	private PlotDataSet[] dataSets = new PlotDataSet[8];
 	
 	//================================================================================
     // Constructors
     //================================================================================
-	public IGAssistPanel() {
+	public IGAssistPanel(Controller c) {
+		controller = c;
 		GridBagLayout layout = new GridBagLayout();
 		this.setLayout(layout);
 		this.setBackground(Color.WHITE);
 	}
 
+	//================================================================================
+    // Private methods
+    //================================================================================
+	/**
+	 * Creates the 8 datasets
+	 * @param m
+	 */
+	public void createDatasets() {
+		int id;
+		RectPlotNewMeasurement nm = new RectPlotNewMeasurement();
+		nm.src = DataSource.FILE;
+		for (int i = 0; i < 8; i++) {
+			// Delete old datasets
+			plots[i].removeAllDatasets();
+			nm.type = plotMeasType[i];
+			nm.src_name = plotTitles[i];
+			id = controller.createDataset(nm);
+			plots[i].addDataSet(id, nm);
+		}
+	}
+	
+	/**
+	 * Sets the plot settings of the plots
+	 * @param o
+	 */
+	private void setPlotSettings(Model o) {
+		RectPlotSettings s = new RectPlotSettings();
+		for (int i = 0; i < 8; i++) {
+			plots[i].autoScale(Scale.LOG, Scale.LINEAR);
+			s = plots[i].getSettings();
+			s.yAxisSteps = 5;
+			//if(s.yAxisMinimum < 0) s.yAxisMinimum = 0;
+			//s.xAxisMinimum = 1;
+			s.xScale = Scale.LOG;
+			plots[i].setSettings(s);
+			plots[i].repaint();
+		}
+	}
+
+	
 	//================================================================================
     // Public methods
     //================================================================================
@@ -111,6 +164,31 @@ public class IGAssistPanel extends JPanel {
 //		}
 //		
 		this.updateUI();
+	}
+
+	public void update () {
+		
+	}
+	
+	/**
+	 * Gets called by model if update event happens
+	 * @param o model
+	 * @param arg arguments
+	 */
+	public void update(Observable o, Object arg) {
+		System.out.println("IGA Update");
+//		Model.UpdateEvent e = (Model.UpdateEvent)arg;
+//		// only update if event is file
+//		if(e != UpdateEvent.FILE) return;
+//		// create datasets
+//		createDatasets((Model)o);
+//		// set plot settings
+		
+//		// repaint all plots
+		for (int i = 0; i < 8; i++) {
+			plots[i].update(o, arg);
+		}
+		setPlotSettings((Model)o);
 	}
 
 }

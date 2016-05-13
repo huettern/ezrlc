@@ -3,6 +3,7 @@ package pro2.util;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MathUtil {
@@ -147,6 +148,24 @@ public class MathUtil {
 		writer.close();
 	}
 	/**
+	 * Dumps a List of complex numbers into a file
+	 * It can be read with matlab using following code
+	 * <code>
+	 * rawData = dlmread('../java/pro2/tmp.txt');
+	 * complexData = complex(rawData(:, 1), rawData(:, 2));
+	 * </code>
+	 * @param fname filename
+	 * @param clist List of complex numbers
+	 */
+	public static void dumpListComplex (String fname, Complex[] clist) {
+		List<Complex> l = new ArrayList<Complex>(clist.length);
+		for(int i = 0; i < clist.length; i++) {
+			l.add(new Complex(clist[i].re(), clist[i].im()));
+		}
+		MathUtil.dumpListComplex(fname, l);
+	}
+	
+	/**
 	 * Dumps a List of double numbers into a file
 	 * It can be read with matlab using following code
 	 * <code>
@@ -172,6 +191,22 @@ public class MathUtil {
 		}
 		writer.flush();
 		writer.close();
+	}
+	/**
+	 * Dumps a List of double numbers into a file
+	 * It can be read with matlab using following code
+	 * <code>
+	 * Data = dlmread('../java/pro2/tmp.txt');
+	 * </code>
+	 * @param fname filename
+	 * @param clist List of double numbers
+	 */
+	public static void dumpListDouble (String fname, double[] clist) {
+		List<Double> l = new ArrayList<Double>(clist.length);
+		for(int i = 0; i < clist.length; i++) {
+			l.add(clist[i]);
+		}
+		MathUtil.dumpListDouble(fname, l);
 	}
 	
 	/**
