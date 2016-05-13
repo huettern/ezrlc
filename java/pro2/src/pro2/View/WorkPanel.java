@@ -34,7 +34,8 @@ public class WorkPanel extends JPanel implements Observer {
 	
 	private Figure topFigure, bottomFigure, fullFigure;
 
-	private JPanel pnlFigure, pnlIGAssist;
+	private JPanel pnlFigure;
+	private IGAssistPanel pnlIGAssist;
 	
 	//================================================================================
     // Constructors
@@ -56,7 +57,9 @@ public class WorkPanel extends JPanel implements Observer {
 		
 		pnlFigure = new JPanel();
 		pnlFigure.setLayout(new GridLayout(1, 1));
-		pnlIGAssist = new JPanel();
+		pnlIGAssist = new IGAssistPanel();
+		pnlIGAssist.setBorder(new LineBorder(Color.WHITE, 10));
+		pnlIGAssist.build();
 		this.setView(ViewType.IGASSIST);
 	}
 	
