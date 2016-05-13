@@ -170,6 +170,87 @@ public class MCWorker extends Thread {
 	 * @param circuits list of possible circuit models
 	 */
 	private void analyticalSolver(double[] w, Complex[] yz, Complex[] ys, List<MCEqCircuit> circuits) {
+		//circuits.get(0).getS()[0].abs()
+		double yzAbs[]=new double[yz.length];
+		double ysAbs[]=new double[ys.length];
+		for (int i=0;i<ys.length;i++){ //ysAbs
+			ysAbs[i]=ys[i].abs();
+		}
+		for (int i=0;i<yz.length;i++){ //yzAbs
+			yzAbs[i]=yz[i].abs();
+		}
+		
+		double[] diffSAbs = new double[ys.length-1];
+		
+		double R;
+		double Y;
+		double L;
+		double C;
+		
+		//Sinnvolle Messpunkte auswählen
+		diffSAbs=MathUtil.diff(ysAbs);
+		int index1=MathUtil.getMaxIndex(diffSAbs);
+		int index2=MathUtil.getMinIndex(diffSAbs);
+		
+		double w21=w[index1];
+		double w22=w[index2];
+		
+		double realz21=yz[index1].re();
+		double realz22=yz[index2].re();
+		double imagz21=yz[index1].im();
+		double imagz22=yz[index2].im();
+		
+		double realy21=Complex.div(new Complex(1,0), yz[index1]).re();
+		double realy22=Complex.div(new Complex(1,0), yz[index2]).re();
+		double imagy21=Complex.div(new Complex(1,0), yz[index1]).im();
+		double imagy22=Complex.div(new Complex(1,0), yz[index2]).im();
+		
+		//EqCircuit 0
+		circuits.get(0).setParameter(4, imagz21/w21); 		//L
+		circuits.get(0).setParameter(0, realz21); 			//R
+		
+		//EqCircuit 1
+		circuits.get(1).setParameter(0, 1/imagy21); 			//R
+		circuits.get(1).setParameter(4, -1/(w21*imagy21)); 	//L
+		
+		//EqCircuit 2
+		circuits.get(2).setParameter(0, realz21); 			//R
+		circuits.get(2).setParameter(5, -1/(w21*imagz21)); 	//C
+		
+		//EqCircuit 3
+		circuits.get(3).setParameter(5, imagy21/w21); 		//C
+		circuits.get(3).setParameter(0, 1/(realy21)); 		//R
+		
+		//EqCircuit 4
+		C=(-(Math.pow(w21,2)-Math.pow(w22,2)))/(w21*w22*(w21*imagz22-w22*imagz21));
+		L=(imagz21+1/(w21*C))/w21;
+		circuits.get(4).setParameter(0, realz21); 			//R
+		circuits.get(4).setParameter(5, C); 				//C
+		circuits.get(4).setParameter(4, L); 				//L
+		
+		//EqCircuit 5
+		L=(-(Math.pow(w21,2)-Math.pow(w22,2)))/(w21*w22*(w21*imagy22-w22*imagy21));
+		C=(imagy21+1/(w21*L))/w21;
+		circuits.get(5).setParameter(0, realz21); 			//R
+		circuits.get(5).setParameter(5, C); 				//C
+		circuits.get(5).setParameter(4, L); 				//L
+		
+		//EqCircuit 6
+		L=Math.sqrt(-(Math.pow(w21,2)*realy21-Math.pow(w22,2)*realy22)*(realy21-realy22))/((Math.pow(w21,2)-Math.pow(w22,2))*realy21*realy22);
+		R=(Math.sqrt(1-4*Math.pow(L, 2)*Math.pow(w21, 2)*Math.pow(realy21, 2))+1)/(2*realy21);
+		C=(imagy21+(w21*L/(Math.pow(w21*L, 2)+Math.pow(R, 2))))/w21;
+		circuits.get(6).setParameter(0, R); 				//R
+		circuits.get(6).setParameter(5, C); 				//C
+		circuits.get(6).setParameter(4, L); 				//L
+		
+		//EqCircuit 7
+		C=Math.sqrt(-(Math.pow(w21,2)*realz21-Math.pow(w22,2)*realz22)*(realz21-realz22))/((Math.pow(w21,2)-Math.pow(w22,2))*realz21*realz22);
+		Y=(Math.sqrt(1-4*Math.pow(C, 2)*Math.pow(w21, 2)*Math.pow(realz21, 2))+1)/(2*realz21);
+		R=1/Y;
+		L=(imagz21+(w21*C/(Math.pow(w21*C, 2)+Math.pow(Y, 2))))/w21;
+		circuits.get(7).setParameter(0, R); 				//R
+		circuits.get(7).setParameter(5, C); 				//C
+		circuits.get(7).setParameter(4, L); 				//L
 		
 	}
 

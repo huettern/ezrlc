@@ -95,10 +95,10 @@ public class Pro2 {
         view.build();
 
 //        controller.loadFile(new File("/Users/noah/git/pro2/sample_files/bsp1.s1p"));
-        controller.loadFile(new File("/Users/noah/git/pro2/sample_files/RLC_S_Sven.s1p"));
+        controller.loadFile(new File("E:\\proj2\\sample_files\\RLC_S_Sven.s1p"));
         
         MCOptions ops = new MCOptions();
-        ops.modelAutoSelect = true;
+        ops.modelAutoSelect = false;
         ops.modelID = 4;
         ops.paramsAuto[0] = false;
         ops.params[0] = 60.0; //r
