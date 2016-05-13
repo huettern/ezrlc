@@ -170,6 +170,7 @@ public class MCWorker extends Thread {
 	 * @param circuits list of possible circuit models
 	 */
 	private void analyticalSolver(double[] w, Complex[] yz, Complex[] ys, List<MCEqCircuit> circuits) {
+		System.out.println("*****AnalyticalSolver*****");
 		//circuits.get(0).getS()[0].abs()
 		double yzAbs[]=new double[yz.length];
 		double ysAbs[]=new double[ys.length];
@@ -190,7 +191,13 @@ public class MCWorker extends Thread {
 		//Sinnvolle Messpunkte auswählen
 		diffSAbs=MathUtil.diff(ysAbs);
 		int index1=MathUtil.getMaxIndex(diffSAbs);
+		if (index1==0){
+			index1=1;
+		}
 		int index2=MathUtil.getMinIndex(diffSAbs);
+		if (index2==0){
+			index2=1;
+		}
 		
 		double w21=w[index1];
 		double w22=w[index2];
@@ -210,7 +217,7 @@ public class MCWorker extends Thread {
 		circuits.get(0).setParameter(0, realz21); 			//R
 		
 		//EqCircuit 1
-		circuits.get(1).setParameter(0, 1/imagy21); 			//R
+		circuits.get(1).setParameter(0, 1/realy21); 		//R
 		circuits.get(1).setParameter(4, -1/(w21*imagy21)); 	//L
 		
 		//EqCircuit 2
@@ -227,13 +234,17 @@ public class MCWorker extends Thread {
 		circuits.get(4).setParameter(0, realz21); 			//R
 		circuits.get(4).setParameter(5, C); 				//C
 		circuits.get(4).setParameter(4, L); 				//L
+
 		
 		//EqCircuit 5
 		L=(-(Math.pow(w21,2)-Math.pow(w22,2)))/(w21*w22*(w21*imagy22-w22*imagy21));
 		C=(imagy21+1/(w21*L))/w21;
-		circuits.get(5).setParameter(0, realz21); 			//R
+		circuits.get(5).setParameter(0, 1/realy21); 		//R
 		circuits.get(5).setParameter(5, C); 				//C
 		circuits.get(5).setParameter(4, L); 				//L
+		System.out.println("R="+(1/realy21));
+		System.out.println("C="+C);
+		System.out.println("L="+L);
 		
 		//EqCircuit 6
 		L=Math.sqrt(-(Math.pow(w21,2)*realy21-Math.pow(w22,2)*realy22)*(realy21-realy22))/((Math.pow(w21,2)-Math.pow(w22,2))*realy21*realy22);
@@ -242,6 +253,9 @@ public class MCWorker extends Thread {
 		circuits.get(6).setParameter(0, R); 				//R
 		circuits.get(6).setParameter(5, C); 				//C
 		circuits.get(6).setParameter(4, L); 				//L
+		System.out.println("R="+R);
+		System.out.println("C="+C);
+		System.out.println("L="+L);
 		
 		//EqCircuit 7
 		C=Math.sqrt(-(Math.pow(w21,2)*realz21-Math.pow(w22,2)*realz22)*(realz21-realz22))/((Math.pow(w21,2)-Math.pow(w22,2))*realz21*realz22);
@@ -251,7 +265,10 @@ public class MCWorker extends Thread {
 		circuits.get(7).setParameter(0, R); 				//R
 		circuits.get(7).setParameter(5, C); 				//C
 		circuits.get(7).setParameter(4, L); 				//L
-		
+		System.out.println("R="+R);
+		System.out.println("C="+C);
+		System.out.println("L="+L);
+				
 	}
 
 

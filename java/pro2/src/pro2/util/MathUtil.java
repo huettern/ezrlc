@@ -273,8 +273,8 @@ public class MathUtil {
 	 */
 	public static double[] diff(double[] d){
 		double[] diff = new double[d.length-1];
-		for (int i=0;i<d.length-1;i++){
-			diff[i]=d[i+1]-d[1];
+		for (int i=0;i<(d.length-1);i++){
+			diff[i]=d[i+1]-d[i];
 		}
 		return diff;
 	}
