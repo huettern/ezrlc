@@ -99,10 +99,12 @@ public class MCWorker extends Thread {
 		// get necessary data
 		double[] f = rfData.getfData();
 		Complex[] s = rfData.getSData(50);
+		Complex[] z = rfData.getzData();
 		
 		// apply ops
 		double[] w = MCUtil.applyMCOpsToF(ops, f, MCUtil.DATA_FORMAT.OMEGA);
 		Complex[] ys = MCUtil.applyMCOpsToData(ops, f, s);
+		Complex[] yz = MCUtil.applyMCOpsToData(ops, f, z);
 		
 		// Create model index list
 		CircuitType[] circuitIdxes;
@@ -116,7 +118,7 @@ public class MCWorker extends Thread {
 		}
 		
 		// Do analytical solving
-		analyticalSolver(circuits);
+		analyticalSolver(w, yz, ys, circuits);
 		
 		// apply manual parameters
 		for(int i = 0; i < ops.paramsAuto.length; i++){
@@ -156,23 +158,18 @@ public class MCWorker extends Thread {
 	//================================================================================
     // Private methods
     //================================================================================
-	private void success (MCEqCircuit eqc) {		
-//		System.out.println("-------------------------");
-//		System.out.println("Results:");
-//		System.out.println("R0= " +res[0]);
-//		System.out.println("f0= " +res[1]);
-//		System.out.println("a = " +res[2]);
-//		System.out.println("R1= " +res[3]);
-//		System.out.println("L = " +res[4]);
-//		System.out.println("C0= " +res[5]);
-//		System.out.println("C1= " +res[6]);
-//		System.out.println("-------------------------");
-		
+	private void success (MCEqCircuit eqc) {
 		System.out.println("MCWorker " +workerName +" has successfully completed");
 	}
 
-	private void analyticalSolver(List<MCEqCircuit> circuits) {
-		// TODO Auto-generated method stub
+	/**
+	 * Does analytical solving stuff
+	 * @param w frequency vecotr in omega
+	 * @param yz measured impedance data
+	 * @param ys measured scattering data
+	 * @param circuits list of possible circuit models
+	 */
+	private void analyticalSolver(double[] w, Complex[] yz, Complex[] ys, List<MCEqCircuit> circuits) {
 		
 	}
 
