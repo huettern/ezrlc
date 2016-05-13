@@ -26,6 +26,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import pro2.MVC.Controller;
 import pro2.Plot.DataSetLabelPanel;
+import pro2.View.WorkPanel.ViewType;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -164,6 +165,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//IGAssist Button
 		btnIGAssist = new JButton("IGAssist");
+		btnIGAssist.setSelected(true);
 		//btnNewGraph.setPreferredSize(new Dimension(87, 23));
 		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
 		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
@@ -177,6 +179,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//Figure Button
 		btnFigure = new JButton("Figure");
+		btnFigure.setSelected(false);
 		//btnNewGraph.setPreferredSize(new Dimension(87, 23));
 		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
 		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
@@ -314,21 +317,32 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//handle new Model
 		if(e.getSource() == btnNewModel) {
 			newModelWindow.buildNewModelWindow();
-			
-			
-//			// Dataset list entry
-//			ModelLabelPanel p = new ModelLabelPanel();
-//			modelLabelPanels.add(p);
-//			pnlModel.add(p, new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,5,0), 0, 0));
-//			// adjust pnlDataSets gridbaglayout so that row weights are zero except last one
-//			double[] d = new double[modelPnlRowCnt+1];
-//			for (int i = 0; i<d.length; i++) { d[i] = 0.0; }
-//			d[modelPnlRowCnt] = 1.0;
-//			gbl_pnlModel.rowWeights = d;
-//			pnlModel.setLayout(gbl_pnlModel);
-//			super.updateUI();
 		}
 		
+		// handle work panel switcher
+		if(e.getSource() == btnFigure) {
+			controller.setWorkPanelView(ViewType.FIGURE);
+			this.setViewButtonStatus(ViewType.FIGURE);
+		}
+		if(e.getSource() == btnIGAssist) {
+			controller.setWorkPanelView(ViewType.IGASSIST);
+			this.setViewButtonStatus(ViewType.IGASSIST);
+		}
+		
+	}
+	
+	/**
+	 * Sets the selected status of the view switcher of the work panel
+	 * @param t ViewType
+	 */
+	public void setViewButtonStatus (ViewType t) {
+		if(t == ViewType.FIGURE) {
+			btnFigure.setSelected(true);
+			btnIGAssist.setSelected(false);
+		}else if(t == ViewType.IGASSIST) {
+			btnFigure.setSelected(false);
+			btnIGAssist.setSelected(true);
+		}
 	}
 
 

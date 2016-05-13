@@ -10,6 +10,7 @@ import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.Plot.SmithChart.SmithChartNewMeasurement;
 import pro2.RFData.RFData;
 import pro2.View.MainView;
+import pro2.View.WorkPanel.ViewType;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -131,6 +132,14 @@ public class Controller {
 	 */
 	public void createEqCircuit(MCOptions ops) {
 		model.createEqCircuit(ops);
+	}
+
+	/**
+	 * Set the work panel view to the given type
+	 * @param t ViewType
+	 */
+	public void setWorkPanelView(ViewType t) {
+		view.setWorkPanelView(t);
 	}
 
 }

@@ -57,7 +57,7 @@ public class WorkPanel extends JPanel implements Observer {
 		pnlFigure = new JPanel();
 		pnlFigure.setLayout(new GridLayout(1, 1));
 		pnlIGAssist = new JPanel();
-		pnlIGAssist.setBackground(Color.GREEN);
+		this.setView(ViewType.IGASSIST);
 	}
 	
 	//================================================================================
@@ -102,8 +102,7 @@ public class WorkPanel extends JPanel implements Observer {
 				break;
 		}
 		
-
-		this.updateUI();
+		this.setView(ViewType.FIGURE);
 	}
 
 	/**
@@ -138,16 +137,18 @@ public class WorkPanel extends JPanel implements Observer {
 		if(figure == fullFigure) {
 			fullFigure = null;
 			graphArr = WINDOW_ARR.NONE;
-			this.setLayout(new GridLayout(1, 1));
+			pnlFigure.setLayout(new GridLayout(1, 1));
+			pnlFigure.removeAll();
 			System.out.println("delete Full-Graph");
 		}
 		else if (figure == topFigure) {
 			fullFigure = bottomFigure;
 			topFigure = null;
 			bottomFigure = null;
-			
-			this.setLayout(new GridLayout(1, 1));
-			this.add(fullFigure, 0);
+
+			pnlFigure.removeAll();
+			pnlFigure.setLayout(new GridLayout(1, 1));
+			pnlFigure.add(fullFigure, 0);
 			graphArr = WINDOW_ARR.FULL;
 			System.out.println("delete Top-Graph");
 		}
@@ -155,9 +156,10 @@ public class WorkPanel extends JPanel implements Observer {
 			fullFigure = topFigure;
 			topFigure = null;
 			bottomFigure = null;
-			
-			this.setLayout(new GridLayout(1, 1));
-			this.add(fullFigure, 0);
+
+			pnlFigure.removeAll();
+			pnlFigure.setLayout(new GridLayout(1, 1));
+			pnlFigure.add(fullFigure, 0);
 			graphArr = WINDOW_ARR.FULL;
 			System.out.println("delete Bottom-Graph");
 		}
@@ -173,6 +175,7 @@ public class WorkPanel extends JPanel implements Observer {
 			this.remove(pnlFigure);
 			this.add(pnlIGAssist,0);
 		}
+		this.updateUI();
 	}
 
 

@@ -50,6 +50,7 @@ import javax.swing.tree.DefaultTreeModel;
 import pro2.MVC.Controller;
 import pro2.Plot.Figure;
 import pro2.Plot.Figure.ENPlotType;
+import pro2.View.WorkPanel.ViewType;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.border.TitledBorder;
@@ -136,6 +137,7 @@ public class MainView extends JFrame implements Observer {
 	public void addGraph(ENPlotType type) {
 		// TODO Auto-generated method stub
 		workPanel.addGraph(type);
+		navPanel.setViewButtonStatus(ViewType.FIGURE);
 	}
 	
 	public void setFileName(String name) {
@@ -166,6 +168,15 @@ public class MainView extends JFrame implements Observer {
 	 */
 	public void setNewGraphButtonEnabled(boolean b) {
 		navPanel.setNewGraphButtonEnabled(b);
+	}
+
+	/**
+	 * Set the work panel view to the given type
+	 * @param t ViewType
+	 */
+	public void setWorkPanelView(ViewType t) {
+		workPanel.setView(t);
+		navPanel.setViewButtonStatus(t);
 	}
 
 	
