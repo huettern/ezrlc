@@ -9,7 +9,7 @@ function [w,yz,ys,rbez]=filereader
 clear
 addpath incomming/s-param_toolbox/sbox/
 
-IN.file = '../sample_files/bsp6.s1p';
+IN.file = '../../sample_files/bsp6.s1p';
 
 % read Datafile
 fid_log = fopen('SXPParse_log.txt','w');

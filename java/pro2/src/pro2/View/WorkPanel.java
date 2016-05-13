@@ -19,6 +19,11 @@ import pro2.Plot.Figure;
 import pro2.Plot.Figure.ENPlotType;
 
 public class WorkPanel extends JPanel implements Observer {
+
+	//================================================================================
+    // Public Variables
+    //================================================================================
+	public enum ViewType { FIGURE, IGASSIST };
 	
 	//================================================================================
     // Local Variables
@@ -26,8 +31,11 @@ public class WorkPanel extends JPanel implements Observer {
 	private Controller controller;
 	private enum WINDOW_ARR {NONE, FULL, SPLIT}
 	private WINDOW_ARR graphArr = WINDOW_ARR.NONE;
+	
 	private Figure topFigure, bottomFigure, fullFigure;
 
+	private JPanel pnlFigure, pnlIGAssist;
+	
 	//================================================================================
     // Constructors
     //================================================================================
@@ -45,11 +53,20 @@ public class WorkPanel extends JPanel implements Observer {
 	public void build () {
 		this.setPreferredSize(new Dimension(800, 600));
 		this.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		
+		pnlFigure = new JPanel();
+		pnlFigure.setLayout(new GridLayout(1, 1));
+		pnlIGAssist = new JPanel();
+		pnlIGAssist.setBackground(Color.GREEN);
 	}
 	
 	//================================================================================
     // Public Functions
     //================================================================================
+	/**
+	 * Adds a new Figure to the figure panel
+	 * @param type
+	 */
 	public void addGraph(ENPlotType type) {
 		Figure f = new Figure(this.controller);
 		
@@ -62,19 +79,19 @@ public class WorkPanel extends JPanel implements Observer {
 		
 		switch (graphArr) {
 			case NONE:
-				this.setLayout(new GridLayout(1, 1));
+				pnlFigure.setLayout(new GridLayout(1, 1));
 				fullFigure = f;
-				this.add(fullFigure, 0);
+				pnlFigure.add(fullFigure, 0);
 				graphArr = WINDOW_ARR.FULL;
 				break;
 			case FULL:
-				this.setLayout(new GridLayout(2, 1));
+				pnlFigure.setLayout(new GridLayout(2, 1));
 				topFigure = fullFigure;
 				fullFigure = null;
-				this.add(topFigure, 0);
+				pnlFigure.add(topFigure, 0);
 				
 				bottomFigure = f;
-				this.add(bottomFigure, 1);
+				pnlFigure.add(bottomFigure, 1);
 				graphArr = WINDOW_ARR.SPLIT;
 				
 				// notify controller to disable new graph button
@@ -89,6 +106,11 @@ public class WorkPanel extends JPanel implements Observer {
 		this.updateUI();
 	}
 
+	/**
+	 * Updates the containing figures
+	 * @param o model
+	 * @param arg arguments
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		try {
@@ -107,6 +129,10 @@ public class WorkPanel extends JPanel implements Observer {
 		}		
 	}
 
+	/**
+	 * Delete a figure
+	 * @param figure
+	 */
 	public void deleteFigure(Figure figure) {
 		this.remove(figure);
 		if(figure == fullFigure) {
@@ -137,6 +163,16 @@ public class WorkPanel extends JPanel implements Observer {
 		}
 		
 		this.updateUI();
+	}
+	
+	public void setView (ViewType t) {
+		if(t == ViewType.FIGURE) {
+			this.remove(pnlIGAssist);
+			this.add(pnlFigure,0);
+		} else if(t == ViewType.IGASSIST) {
+			this.remove(pnlFigure);
+			this.add(pnlIGAssist,0);
+		}
 	}
 
 

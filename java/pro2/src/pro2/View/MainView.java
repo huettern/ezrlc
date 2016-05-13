@@ -82,7 +82,7 @@ public class MainView extends JFrame implements Observer {
     //================================================================================
 	/**
 	 * Create the frame.
-	 * 
+	 * @wbp.parser.entryPoint
 	 */
 	public void build () {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

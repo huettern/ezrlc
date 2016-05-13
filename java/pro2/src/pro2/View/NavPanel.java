@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +44,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	private GraphWindow graphWindow;
 	private NewModelWindow newModelWindow;
 	
-	private JButton btnLoadFile, btnNewModel, btnNewGraph;
+	private JButton btnLoadFile, btnNewModel, btnNewGraph, btnFigure, btnIGAssist;
 	private JLabel lblInputFile;
 	private File file;
 	private JPanel pnlModel;
@@ -69,6 +70,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
     //================================================================================
 	/**
 	 * Builds the navigation Panel
+	 * @wbp.parser.entryPoint
 	 */
 	public void build() {
 		this.setBorder(null);
@@ -76,12 +78,13 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		GridBagLayout gbl_navPanel = new GridBagLayout();
 		gbl_navPanel.columnWidths = new int[] {0, 0};
-		gbl_navPanel.rowHeights = new int[] {0, 0, 0};
+		gbl_navPanel.rowHeights = new int[] {0, 0, 0, 0};
 		gbl_navPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_navPanel.rowWeights = new double[]{0.0, 0.0, 1.0};
+		gbl_navPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0};
 		this.setLayout(gbl_navPanel);
 		
 		this.buildFilePanel();
+		this.buildViewTypePanel();
 		this.buildGraphPanel();
 		this.buildModelPanel();
 	}
@@ -135,7 +138,57 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		fileChooser.fileFilter();
 	}
+
+	
+	/**
+	 * Build the panel with the view type switch
+	 */
+	private void buildViewTypePanel() {
+		JPanel pnlPanel = new JPanel();
+		pnlPanel.setMaximumSize(new Dimension(0, 0));
+		pnlPanel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "View Type", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_pnlPanel = new GridBagConstraints();
+		gbc_pnlPanel.anchor = GridBagConstraints.NORTH;
+		gbc_pnlPanel.insets = new Insets(5, 0, 0, 0);
+		gbc_pnlPanel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_pnlPanel.gridx = 0;
+		gbc_pnlPanel.gridy = 1;
+		this.add(pnlPanel, gbc_pnlPanel);
+//		GridBagLayout gbl_pnlPanel = new GridBagLayout();
+//		gbl_pnlPanel.columnWidths = new int[] {0,0};
+//		gbl_pnlPanel.rowHeights = new int[] {0,0};
+//		gbl_pnlPanel.columnWeights = new double[]{1.0,1.0};
+//		gbl_pnlPanel.rowWeights = new double[]{0.0,0.0};
+//		pnlPanel.setLayout(gbl_pnlPanel);
+		pnlPanel.setLayout(new GridLayout(1, 2));
 		
+		//IGAssist Button
+		btnIGAssist = new JButton("IGAssist");
+		//btnNewGraph.setPreferredSize(new Dimension(87, 23));
+		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
+		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
+		GridBagConstraints gbc_btnIGAssist = new GridBagConstraints();
+		gbc_btnIGAssist.insets = new Insets(4, 4, 4, 0);
+		gbc_btnIGAssist.fill = GridBagConstraints.BOTH;
+		gbc_btnIGAssist.gridx = 0;
+		gbc_btnIGAssist.gridy = 0;
+		pnlPanel.add(btnIGAssist, gbc_btnIGAssist);
+		btnIGAssist.addActionListener(this);
+		
+		//Figure Button
+		btnFigure = new JButton("Figure");
+		//btnNewGraph.setPreferredSize(new Dimension(87, 23));
+		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
+		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
+		GridBagConstraints gbc_btnFigure = new GridBagConstraints();
+		gbc_btnFigure.insets = new Insets(4, 0, 4, 4);
+		gbc_btnFigure.fill = GridBagConstraints.BOTH;
+		gbc_btnFigure.gridx = 1;
+		gbc_btnFigure.gridy = 0;
+		pnlPanel.add(btnFigure, gbc_btnFigure);
+		btnFigure.addActionListener(this);
+	}
+	
 	/**
 	 * build the Graph panel
 	 */
@@ -148,7 +201,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		gbc_pnlPanel.insets = new Insets(5, 0, 0, 0);
 		gbc_pnlPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_pnlPanel.gridx = 0;
-		gbc_pnlPanel.gridy = 1;
+		gbc_pnlPanel.gridy = 2;
 		this.add(pnlPanel, gbc_pnlPanel);
 		GridBagLayout gbl_pnlPanel = new GridBagLayout();
 		gbl_pnlPanel.columnWidths = new int[] {52};
@@ -183,7 +236,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		gbc_pnlModel.anchor = GridBagConstraints.NORTH;
 		gbc_pnlModel.fill = GridBagConstraints.BOTH;
 		gbc_pnlModel.gridx = 0;
-		gbc_pnlModel.gridy = 2;
+		gbc_pnlModel.gridy = 3;
 		this.add(pnlModelBorder, gbc_pnlModel);
 		GridBagLayout gbl_pnlModelBorder = new GridBagLayout();
 		gbl_pnlModelBorder.columnWidths = new int[]{189};
