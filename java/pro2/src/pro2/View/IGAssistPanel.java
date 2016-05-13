@@ -25,8 +25,17 @@ public class IGAssistPanel extends JPanel {
 
 	private final int subVGap = 2;
 	private final int subHGap = 2;
-	
+
 	private final String[] topTitles = {"RL Series","RL Parallel","RC Series","RC Parallel"};
+	private final String[] plotTitles = {
+			"R0 - Resistance in Ohm",
+			"L - Iductance in H",
+			"R0 - Resistance in Ohm",
+			"L - Iductance in H",
+			"R0 - Resistance in Ohm",
+			"C0 - Capacitance in F",
+			"R0 - Resistance in Ohm",
+			"C0 - Capacitance in F"};
 	
 	//================================================================================
     // Private data
@@ -80,6 +89,7 @@ public class IGAssistPanel extends JPanel {
 		for(int i = 0; i < 8; i++) {
 			plots[i] = new RectangularPlot();
 			plots[i].setBorder(new LineBorder(new Color(0, 0, 0)));
+			plots[i].setTitle(plotTitles[i]);
 			this.add(plots[i], new GridBagConstraints(plotXLoc[i], plotYLoc[i], 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(3,0,3,3), 0, 0));
 		}
 		

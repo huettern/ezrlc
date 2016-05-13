@@ -1,6 +1,7 @@
 package pro2.Plot.RectPlot;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Area;
@@ -13,11 +14,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import pro2.MVC.Model;
 import pro2.Plot.Grid.Orientation;
 import pro2.util.MathUtil;
+import pro2.util.UIUtil;
 import pro2.Plot.Axis;
 import pro2.Plot.Axis.Scale;
 import pro2.Plot.Grid;
@@ -58,6 +61,9 @@ public class RectangularPlot extends JPanel implements Observer {
 			));
 	private int PlotSetColorsCtr = 0;	//Holds the index of the next color to be used
 	private boolean enableAutoAutoscale = true;
+	
+	private String title = null;
+	private int titleSize = 12;
 	
 	//================================================================================
     // Constructors
@@ -210,6 +216,13 @@ public class RectangularPlot extends JPanel implements Observer {
 				plotDataSet.paint(g, plotArea);
 			}
 		}
+        
+        // paint title
+        if(title != null) {
+        	Font f = g.getFont();
+        	g.setFont(new Font(f.getFontName(), Font.BOLD, titleSize));
+        	UIUtil.drawCenterString(g, new Point(this.getWidth()/2, 12), title );
+        }
     }
 
 	/**
@@ -333,5 +346,13 @@ public class RectangularPlot extends JPanel implements Observer {
 		updateSettings();
 		
 		repaint();
+	}
+	
+	/**
+	 * Sets the title string
+	 * @param s
+	 */
+	public void setTitle (String s) {
+		title = s;
 	}
 }
