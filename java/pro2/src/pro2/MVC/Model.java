@@ -23,7 +23,7 @@ public class Model extends Observable {
 	//================================================================================
     // Public Data
     //================================================================================
-	public enum UpdateEvent {FILE};
+	public enum UpdateEvent {FILE, NEW_EQC};
 	
 	
 	//================================================================================
@@ -35,7 +35,8 @@ public class Model extends Observable {
 
 	private List<PlotDataSet> plotDataSetList = new ArrayList<PlotDataSet>();
 	private List<SmithChartDataSet> smithPlotDataSetList = new ArrayList<SmithChartDataSet>();
-
+	private List<MCEqCircuit> eqCircuits = new ArrayList<MCEqCircuit>();
+	
 	MCWorker worker;
 	
 	public Model() {
@@ -302,6 +303,14 @@ public class Model extends Observable {
 		worker.setMCOptions(ops);
 		worker.start();
 	}
+	
+	/**
+	 * Returns the ID of the last created Model
+	 * @return
+	 */
+	public int getEQCID () {
+		return eqCircuits.size()-1;
+	}
 
 	/**
 	 * Returns the current state of the worker
@@ -317,6 +326,25 @@ public class Model extends Observable {
 	 */
 	public MCWorker getWorker() {
 		return worker;
+	}
+
+	/**
+	 * Gets called if the MCWorker succeeds
+	 * @param eqc Equivalent circuit that was generated
+	 */
+	public void mcWorkerSuccess(MCEqCircuit eqc) {
+		eqCircuits.add(eqc);
+		setChanged();
+		notifyObservers(UpdateEvent.NEW_EQC);
+	}
+
+	/**
+	 * Returns the MCEqCircuit by ID
+	 * @param eqcID ID of MCEqCircuit
+	 * @return MCEqCircuit
+	 */
+	public MCEqCircuit getEquivalentCircuit(int eqcID) {
+		return eqCircuits.get(eqcID);
 	}
 
 	

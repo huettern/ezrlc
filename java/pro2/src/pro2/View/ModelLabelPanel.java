@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Observable;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -19,7 +20,10 @@ import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
 import pro2.MVC.Controller;
+import pro2.MVC.Model;
+import pro2.ModelCalculation.MCEqCircuit;
 import pro2.Plot.Figure;
+import pro2.util.MathUtil;
 import pro2.util.UIUtil;
 
 import java.awt.Color;
@@ -42,8 +46,18 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	private JTextField txtF;
 	private JTextField txtR1;
 	
-	private ImageIcon[] modelImage = new ImageIcon[10];
+	private ImageIcon[] modelImage = new ImageIcon[21];
 	int j = 0;
+	
+	private int eqcID;
+	
+	private final boolean[] r0EditableLUT = {true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,};
+	private final boolean[] f0EditableLUT = {false,false,false,false,false,false,false,false,false,false,false,false,false,true,true,true,true,true,true,true,true};
+	private final boolean[] alphaEditableLUT = {false,false,false,false,false,false,false,false,false,false,false,false,false,true,true,true,true,true,true,true,true};
+	private final boolean[] r1EditableLUT = {false,false,false,false,false,false,false,false,true,true,true,true,false,false,false,false,true,true,true,true,false};
+	private final boolean[] lEditableLUT = {true,true,false,false,true,true,true,true,false,true,true,true,true,true,true,true,false,true,true,true,true};
+	private final boolean[] c0EditableLUT = {false,false,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,};
+	private final boolean[] c1EditableLUT = {false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,true};
 	
 	//================================================================================
     // Constructors
@@ -71,16 +85,15 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 //		}
 		
 		// load image icon
-		for (int i = 0; i <= modelImage.length; i++) {
-			modelImage[0] = UIUtil.loadResourceIcon("model_" + 18 + ".png", 160, 100);
-		}
-				
-		// create new label with the image and add it
-		JLabel label = new JLabel("", modelImage[0], JLabel.CENTER);
-		label.setOpaque(false);
-		add( label, 0 );	
+		for (int i = 0; i < modelImage.length; i++) {
+			modelImage[i] = UIUtil.loadResourceIcon("model_" + i + ".png", 160, 100);
+		}	
 
-		
+		// create new label with the image and add it
+		JLabel label = new JLabel("", JLabel.CENTER);
+		label.setOpaque(false);
+		add( label, 0 );
+				
 		//Parameters of R, L, C, ...
 		JPanel pnlModelLabel = new JPanel();
 		add(pnlModelLabel,1);
@@ -136,6 +149,16 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		txtC1.setColumns(10);
 	}
 
+	/**
+	 * Builds a new ModelLabelPanel with the id to the equivalent circuit
+	 * @param id ID to the EQC in the model
+	 */
+	public ModelLabelPanel(int id) {
+		this();
+		eqcID = id;
+	}
+	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -146,6 +169,38 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	//================================================================================
     // Paint Functions
     //================================================================================
+	/**
+	 * Adapts the UI to the stored EQC
+	 */
+	private void adaptToEQC(MCEqCircuit e) {
+		// create new label with the image and add it
+		JLabel label = new JLabel("", modelImage[e.getCircuitType().ordinal()], JLabel.CENTER);
+		label.setOpaque(false);
+		add( label, 0 );
+		
+		txtR0.setEditable(r0EditableLUT[e.getCircuitType().ordinal()]);
+		txtF.setEditable(f0EditableLUT[e.getCircuitType().ordinal()]);
+		txtAlpha.setEditable(alphaEditableLUT[e.getCircuitType().ordinal()]);
+		txtR1.setEditable(r1EditableLUT[e.getCircuitType().ordinal()]);
+		txtL0.setEditable(lEditableLUT[e.getCircuitType().ordinal()]);
+		txtC0.setEditable(c0EditableLUT[e.getCircuitType().ordinal()]);
+		txtC1.setEditable(c1EditableLUT[e.getCircuitType().ordinal()]);
+	}
+	
+	/**
+	 * Updates the parameters
+	 */
+	private void updateParams(MCEqCircuit e) {
+		double[] p = e.getParameters();
+		txtR0.setText(MathUtil.num2eng(p[0], 2));
+		txtF.setText(MathUtil.num2eng(p[1], 2));
+		txtAlpha.setText(MathUtil.num2eng(p[2], 2));
+		txtR1.setText(MathUtil.num2eng(p[3], 2));
+		txtL0.setText(MathUtil.num2eng(p[4], 2));
+		txtC0.setText(MathUtil.num2eng(p[5], 2));
+		txtC1.setText(MathUtil.num2eng(p[6], 2));
+	}
+	
 //	@Override
 //	public void paintComponent(Graphics g) {
 //		System.out.println("paint image");
@@ -161,6 +216,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	//================================================================================
     // Public Functions
     //================================================================================
+	public void update(Observable o, Object arg) {
+		Model m = (Model)o;
+		adaptToEQC(m.getEquivalentCircuit(this.eqcID));
+		updateParams(m.getEquivalentCircuit(this.eqcID));
+	}
+	
 //	/**
 //	 * load model images
 //	 */

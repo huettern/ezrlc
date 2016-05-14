@@ -26,6 +26,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
+import pro2.MVC.Model;
+import pro2.MVC.Model.UpdateEvent;
 import pro2.Plot.DataSetLabelPanel;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.View.WorkPanel.ViewType;
@@ -302,6 +304,19 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		// create datasets
 		controller.buildIGAssistDataSet();
 	}
+
+	/**
+	 * Adds a new Model label panel based on the new generated Equivalent circuit
+	 * @param o
+	 */
+	private void addNewModelLabel(Model m) {
+		modelLabelPanels.add(new ModelLabelPanel(m.getEQCID()));
+		pnlModel.add(modelLabelPanels.get(modelLabelPanels.size()-1), 
+				new GridBagConstraints(0, modelLabelPanels.size()-1, 1, 1, 0.0, 0.0, 
+						GridBagConstraints.NORTH, GridBagConstraints.NONE, 
+						new Insets(0,0,0,0), 0, 0));
+		updateUI();
+	}
 	
 	//================================================================================
     // Public Functions
@@ -370,9 +385,14 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		if(arg == UpdateEvent.NEW_EQC) {
+			addNewModelLabel((Model)o);
+		}
+		for (ModelLabelPanel modelLabelPanel : modelLabelPanels) {
+			modelLabelPanel.update(o, arg);
+		}
 	}
+
 
 
 	/**
