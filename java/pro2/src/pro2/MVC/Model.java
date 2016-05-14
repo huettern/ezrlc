@@ -181,7 +181,7 @@ public class Model extends Observable {
 			rfDataFile.parse();
 		} catch (Exception e) {
 			// TODO: handle exception
-			return null;
+			System.err.println("FATAL: Error in file parsing");
 		}
 //		setChanged();
 //		notifyObservers(UpdateEvent.FILE);

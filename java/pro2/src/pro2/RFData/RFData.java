@@ -227,12 +227,12 @@ public class RFData {
 	private void normalizeRawData() {
 		double angle = 0;
 		double mag = 0;
+		normalizedData = new Complex[this.rawData.size()];
 		switch (this.dataUnit)
 		{
 		case RI:
 			// convert raw data to complex number
 			
-			normalizedData = new Complex[this.rawData.size()];
 			for(int i = 0; i<this.rawData.size(); i++){
 				normalizedData[i] = new Complex(this.rawData.get(i).getData1(), 
 												this.rawData.get(i).getData2());
