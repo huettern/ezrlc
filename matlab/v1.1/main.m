@@ -6,14 +6,14 @@ tic
 
 %options
 
-%ES-Liste für Tooplogien mit 2 Elementen
+%ES-Liste f?r Tooplogien mit 2 Elementen
 fMax = 1e10/pi/2;
 fMin = 1e4/pi/2;
 anzElementeMin=2;
 anzElementeMax=2;
 skin=0;
 [w,yz,ys,ES2]=inputModifier(anzElementeMin,anzElementeMax,fMin,fMax,skin,w,yz,ys);
-%ES-Liste für Tooplogien mit 3 Elementen
+%ES-Liste f?r Tooplogien mit 3 Elementen
 anzElementeMin=3; 
 anzElementeMax=3;
 [w,yz,ys,ES3]=inputModifier(anzElementeMin,anzElementeMax,fMin,fMax,skin,w,yz,ys);
@@ -21,11 +21,11 @@ anzElementeMax=3;
 
 A=AnalyticSolver(w,yz,ys);
 % Der analytic solver versucht durch analytische Methoden geeignete 
-% Startwerte für fminsearch zu finden. Die Werte müssen erfahrungsgemäss
+% Startwerte f?r fminsearch zu finden. Die Werte m?ssen erfahrungsgem?ss
 % auf eine dekade genau stimmen
 %A ist die Parameter-Matrix 
 
-%  A=ones(21,7); %Parametermatrix (ersatz für analyticSolver
+%  A=ones(21,7); %Parametermatrix (ersatz f?r analyticSolver
 %  A(1,1)=0.01;       %Test R  
 %  A(1,5)=836e-6;      %Test L
 % A(5,6)=1e-7;    %Test C0
@@ -38,7 +38,7 @@ rangliste3=analyzer(w,yz,A,ES3) %Rangliste der 2 ES mit 3 Elementen
 
 
  
-%Optionen für fminsearch
+%Optionen f?r fminsearch
 options = optimset('TolFun',1e-12,'TolX',1e-12,'MaxFunEvals',10000,'MaxIter',10000);
 
 %Parameter der ES mit 2 Elementen Optimieren
@@ -50,7 +50,7 @@ Parameter1Platz3=fminsearch(@(a) fehlersummeSAbs(rangliste3(1),w,ys,a,Rbez),A(ra
 Parameter2Platz3=fminsearch(@(a) fehlersummeSAbs(rangliste3(2),w,ys,a,Rbez),A(rangliste3(2),:),options);
 
 %Beste 2 ES mit 2 Elementen auf 3 Elemente erweitern
-%Der Zusätzliche Parameter wird analytisch bei einem Punkt bestimmt
+%Der Zus?tzliche Parameter wird analytisch bei einem Punkt bestimmt
 [ES1Platz3,Parameter1Platz3ext]=ESextend(rangliste2(1),Parameter1Platz2,w,ys,yz);
 [ES2Platz3,Parameter2Platz3ext]=ESextend(rangliste2(2),Parameter2Platz2,w,ys,yz);
 
@@ -93,7 +93,7 @@ fehlersummePlatz13ext=rangliste(1,2);
 parPlatz13ext=rangliste(1,3:9);
 
 
-%Alle Lösungen zusammenführen und eine Rangliste erstellen
+%Alle L?sungen zusammenf?hren und eine Rangliste erstellen
 ZfehlersummePlatz12=fehlersummeZAbs(Platz12,w,yz,parPlatz12);
 ZfehlersummePlatz13=fehlersummeZAbs(Platz13,w,yz,parPlatz13);
 ZfehlersummePlatz13ext=fehlersummeZAbs(Platz13ext,w,yz,parPlatz13ext);
@@ -176,184 +176,184 @@ legend('Messwerte','Optimiert');
 
 
 
-% Plotting
-%f1=figure;
-% figure('units','normalized','outerposition',[0 0 1 1])
-% %s-Parameter Mag
-% p1=subplot(231); grid on; hold on;
-% set(p1,'XScale','log');
-% 
-% plot(w,abs(ys),'.-')
-% plot(w,abs(s(rangliste(1),w,A(rangliste(1),:),Rbez)),'r')
-% plot(w,abs(s(rangliste(1),w,Parameter1Platz2,Rbez)),'g')
-% 
-% title('S-Parameter Magnitude')
-% legend('Eingelesene Daten','Bestes Analytisches Resultat','Optimiert');
-% xlabel('\omega');
-% 
-% 
-% %Fehler in dB
-% p2=subplot(234); hold on; grid on;
-% set(p2,'XScale','log');
-% ylabel('dB');
-% 
-% h1=transpose(s(rangliste(1),w,Parameter1Platz2,Rbez));
-% fehlers1=abs(ys)-abs(h1);
-% fehler1db=20*log10(abs(fehlers1));
-% 
-% h2=transpose(s(rangliste(1),w,A(rangliste(1),:),Rbez));
-% fehlers2=abs(ys)-abs(h2);
-% fehler2db=20*log10(abs(fehlers2));
-% 
-% plot(w,fehler1db,w,fehler2db);
-% 
-% title('Deviation Magnitude')
-% legend('Abweichung nach Optimierung','Abweichung Analytisches Resultat');
-% xlabel('\omega');
-% 
-% 
-% % p5=subplot(232); grid on; hold on;
-% % set(p5,'XScale','log');
-% % 
-% % plot(w,abs(ys),'.-')
-% % plot(w,abs(s(rangliste(2),w,A(rangliste(2),:),Rbez)),'r')
-% % plot(w,abs(s(rangliste(2),w,Parameter2Platz,Rbez)),'g')
-% % 
-% % title('S-Parameter Magnitude')
-% % legend('Eingelesene Daten','Bestes Analytisches Resultat','Optimiert');
-% % xlabel('\omega');
-% 
-% 
-% %Fehler in dB
-% % p6=subplot(235); hold on; grid on;
-% % set(p6,'XScale','log');
-% % ylabel('dB');
-% % 
-% % h1=transpose(s(rangliste(2),w,Parameter2Platz,Rbez));
-% % fehlers1=abs(ys)-abs(h1);
-% % fehler1db=20*log10(abs(fehlers1));
-% % 
-% % h2=transpose(s(rangliste(2),w,A(rangliste(2),:),Rbez));
-% % fehlers2=ys-h2;
-% % fehler2db=20*log10(abs(fehlers2));
-% % plot(w,fehler1db,w,fehler2db);
-% % 
-% % title('Deviation Magnitude')
-% % legend('Abweichung nach Optimierung','Abweichung Analytisches Resultat');
-% % xlabel('\omega');
-% 
-% % p3=subplot(233); hold on; grid on;
-% % set(p3,'XScale','log');
-% % set(p3,'YScale','log');
-% % ylabel('|Z|');
-% % 
-% % plot(w,abs(z(rangliste(1),w,A(rangliste(1),:))),'r');
-% % plot(w,abs(z(rangliste(1),w,Parameter3Platz)),'g');
-% % plot(w,abs(yz),'b');
-% % legend('AnalyticSolver','Optimiert','Messerte');
-% % 
-% % p4=subplot(236); hold on; grid on;
-% % set(p4,'XScale','log');
-% % ylabel('angle(Z)');
-% % 
-% % plot(w,angle(z(rangliste(1),w,A(rangliste(1),:))),'r');
-% % plot(w,angle(z(rangliste(1),w,Parameter1Platz)),'g');
-% % plot(w,angle(yz),'b');
-% % legend('AnalyticSolver','Optimiert','Messerte');
-% 
-% % p5=subplot(233); grid on; hold on;
-% % set(p5,'XScale','log');
-% % 
-% % plot(w,abs(ys),'.-')
-% % plot(w,abs(s(rangliste(3),w,A(rangliste(3),:),Rbez)),'r')
-% % plot(w,abs(s(rangliste(3),w,Parameter3Platz,Rbez)),'g')
-% % 
-% % title('S-Parameter Magnitude')
-% % legend('Eingelesene Daten','Bestes Analytisches Resultat','Optimiert');
-% % xlabel('\omega');
-% % 
-% % p6=subplot(236); hold on; grid on;
-% % set(p6,'XScale','log');
-% % ylabel('dB');
-% % 
-% % h1=transpose(s(rangliste(3),w,Parameter3Platz,Rbez));
-% % fehlers1=abs(ys)-abs(h1);
-% % fehler1db=20*log10(abs(fehlers1));
-% % 
-% % h2=transpose(s(rangliste(3),w,A(rangliste(3),:),Rbez));
-% % fehlers2=abs(ys)-abs(h2);
-% % fehler2db=20*log10(abs(fehlers2));
-% % 
-% % plot(w,fehler1db,w,fehler2db);
-% % 
-% % title('Deviation Magnitude')
-% % legend('Abweichung nach Optimierung','Abweichung Analytisches Resultat');
-% % xlabel('\omega');
-% 
-% 
-% % 
-% % p3=subplot(233); hold on; grid on;
-% % set(p3,'XScale','log');
-% % ylabel('|Z|');
-% % 
-% % plot(w,abs(z(rangliste(3),w,A(rangliste(3),:))),'r');
-% % plot(w,abs(z(rangliste(3),w,Parameter3Platz)),'g');
-% % plot(w,abs(yz),'b');
-% % legend('AnalyticSolver','Optimiert','Messerte');
-% 
-% p10=subplot(232); grid on; hold on;
-% set(p10,'XScale','log');
-% 
-% plot(w,abs(ys),'.-')
-% plot(w,abs(s(ES1Platz3,w,AnalyticParameter1Platz3ext,Rbez)),'r')
-% plot(w,abs(s(ES1Platz3,w,Parameter1Platz3,Rbez)),'g')
-% 
-% title('S-Parameter Magnitude')
-% legend('Eingelesene Daten','Bestes Analytisches Resultat','Optimiert');
-% xlabel('\omega');
-% 
-% 
-% %Fehler in dB
-% p11=subplot(235); hold on; grid on;
-% set(p11,'XScale','log');
-% ylabel('dB');
-% 
-% h1=transpose(s(ES1Platz3,w,Parameter1Platz3,Rbez));
-% fehlers1=abs(ys)-abs(h1);
-% fehler1db=20*log10(abs(fehlers1));
-% 
-% h2=transpose(s(ES1Platz3,w,AnalyticParameter1Platz3ext,Rbez));
-% fehlers2=abs(ys)-abs(h2);
-% fehler2db=20*log10(abs(fehlers2));
-% 
-% plot(w,fehler1db,w,fehler2db);
-% 
-% title('Deviation Magnitude')
-% legend('Abweichung nach Optimierung','Abweichung Analytisches Resultat');
-% xlabel('\omega');
-% 
-% 
-% 
-% p12=subplot(233); hold on; grid on;
-% set(p12,'XScale','log');
-% set(p12,'YScale','log');
-% ylabel('|Z|');
-% 
-% plot(w,abs(yz),'b.-');
-% plot(w,abs(z(rangliste(1),w,Platz1Par)),'g');
-% legend('Messerte','Optimiert');
-% 
-% p13=subplot(236); hold on; grid on;
-% set(p13,'XScale','log');
-% ylabel('angle(Z)');
-% 
-% 
-% plot(w,angle(yz),'b.-');
-% plot(w,angle(z(Platz1,w,Platz1Par)),'g');
-% legend('Messerte','Optimiert');
+%Plotting
+f1=figure;
+figure('units','normalized','outerposition',[0 0 1 1])
+%s-Parameter Mag
+p1=subplot(231); grid on; hold on;
+set(p1,'XScale','log');
+
+plot(w,abs(ys),'.-')
+plot(w,abs(s(rangliste(1),w,A(rangliste(1),:),Rbez)),'r')
+plot(w,abs(s(rangliste(1),w,Parameter1Platz2,Rbez)),'g')
+
+title('S-Parameter Magnitude')
+legend('Eingelesene Daten','Bestes Analytisches Resultat','Optimiert');
+xlabel('\omega');
 
 
-%fehlersumme=fehlersummeSAbs(rangliste(1),w,ys,Parameter1Platz,Rbez)
+%Fehler in dB
+p2=subplot(234); hold on; grid on;
+set(p2,'XScale','log');
+ylabel('dB');
+
+h1=transpose(s(rangliste(1),w,Parameter1Platz2,Rbez));
+fehlers1=abs(ys)-abs(h1);
+fehler1db=20*log10(abs(fehlers1));
+
+h2=transpose(s(rangliste(1),w,A(rangliste(1),:),Rbez));
+fehlers2=abs(ys)-abs(h2);
+fehler2db=20*log10(abs(fehlers2));
+
+plot(w,fehler1db,w,fehler2db);
+
+title('Deviation Magnitude')
+legend('Abweichung nach Optimierung','Abweichung Analytisches Resultat');
+xlabel('\omega');
+
+% 
+p5=subplot(232); grid on; hold on;
+set(p5,'XScale','log');
+
+plot(w,abs(ys),'.-')
+plot(w,abs(s(rangliste(2),w,A(rangliste(2),:),Rbez)),'r')
+%plot(w,abs(s(rangliste(2),w,Parameter2Platz,Rbez)),'g')
+
+title('S-Parameter Magnitude')
+legend('Eingelesene Daten','Bestes Analytisches Resultat','Optimiert');
+xlabel('\omega');
+% 
+% 
+% %Fehler in dB
+p6=subplot(235); hold on; grid on;
+set(p6,'XScale','log');
+ylabel('dB');
+
+%h1=transpose(s(rangliste(2),w,Parameter2Platz,Rbez));
+fehlers1=abs(ys)-abs(h1);
+fehler1db=20*log10(abs(fehlers1));
+
+h2=transpose(s(rangliste(2),w,A(rangliste(2),:),Rbez));
+fehlers2=ys-h2;
+fehler2db=20*log10(abs(fehlers2));
+plot(w,fehler1db,w,fehler2db);
+
+title('Deviation Magnitude')
+legend('Abweichung nach Optimierung','Abweichung Analytisches Resultat');
+xlabel('\omega');
+
+p3=subplot(233); hold on; grid on;
+set(p3,'XScale','log');
+set(p3,'YScale','log');
+ylabel('|Z|');
+
+plot(w,abs(z(rangliste(1),w,A(rangliste(1),:))),'r');
+%plot(w,abs(z(rangliste(1),w,Parameter3Platz)),'g');
+plot(w,abs(yz),'b');
+legend('AnalyticSolver','Optimiert','Messerte');
+
+p4=subplot(236); hold on; grid on;
+set(p4,'XScale','log');
+ylabel('angle(Z)');
+
+plot(w,angle(z(rangliste(1),w,A(rangliste(1),:))),'r');
+%plot(w,angle(z(rangliste(1),w,Parameter1Platz)),'g');
+plot(w,angle(yz),'b');
+legend('AnalyticSolver','Optimiert','Messerte');
+
+p5=subplot(233); grid on; hold on;
+set(p5,'XScale','log');
+
+plot(w,abs(ys),'.-')
+plot(w,abs(s(rangliste(3),w,A(rangliste(3),:),Rbez)),'r')
+%plot(w,abs(s(rangliste(3),w,Parameter3Platz,Rbez)),'g')
+
+title('S-Parameter Magnitude')
+legend('Eingelesene Daten','Bestes Analytisches Resultat','Optimiert');
+xlabel('\omega');
+
+p6=subplot(236); hold on; grid on;
+set(p6,'XScale','log');
+ylabel('dB');
+
+h1=transpose(s(rangliste(3),w,Parameter3Platz,Rbez));
+fehlers1=abs(ys)-abs(h1);
+fehler1db=20*log10(abs(fehlers1));
+
+h2=transpose(s(rangliste(3),w,A(rangliste(3),:),Rbez));
+fehlers2=abs(ys)-abs(h2);
+fehler2db=20*log10(abs(fehlers2));
+
+plot(w,fehler1db,w,fehler2db);
+
+title('Deviation Magnitude')
+legend('Abweichung nach Optimierung','Abweichung Analytisches Resultat');
+xlabel('\omega');
+% 
+% 
+% % 
+p3=subplot(233); hold on; grid on;
+set(p3,'XScale','log');
+ylabel('|Z|');
+
+plot(w,abs(z(rangliste(3),w,A(rangliste(3),:))),'r');
+plot(w,abs(z(rangliste(3),w,Parameter3Platz)),'g');
+plot(w,abs(yz),'b');
+legend('AnalyticSolver','Optimiert','Messerte');
+% 
+p10=subplot(232); grid on; hold on;
+set(p10,'XScale','log');
+
+plot(w,abs(ys),'.-')
+plot(w,abs(s(ES1Platz3,w,AnalyticParameter1Platz3ext,Rbez)),'r')
+plot(w,abs(s(ES1Platz3,w,Parameter1Platz3,Rbez)),'g')
+
+title('S-Parameter Magnitude')
+legend('Eingelesene Daten','Bestes Analytisches Resultat','Optimiert');
+xlabel('\omega');
+
+
+%Fehler in dB
+p11=subplot(235); hold on; grid on;
+set(p11,'XScale','log');
+ylabel('dB');
+
+h1=transpose(s(ES1Platz3,w,Parameter1Platz3,Rbez));
+fehlers1=abs(ys)-abs(h1);
+fehler1db=20*log10(abs(fehlers1));
+
+h2=transpose(s(ES1Platz3,w,AnalyticParameter1Platz3ext,Rbez));
+fehlers2=abs(ys)-abs(h2);
+fehler2db=20*log10(abs(fehlers2));
+
+plot(w,fehler1db,w,fehler2db);
+
+title('Deviation Magnitude')
+legend('Abweichung nach Optimierung','Abweichung Analytisches Resultat');
+xlabel('\omega');
+
+
+
+p12=subplot(233); hold on; grid on;
+set(p12,'XScale','log');
+set(p12,'YScale','log');
+ylabel('|Z|');
+
+plot(w,abs(yz),'b.-');
+plot(w,abs(z(rangliste(1),w,Platz1Par)),'g');
+legend('Messerte','Optimiert');
+
+p13=subplot(236); hold on; grid on;
+set(p13,'XScale','log');
+ylabel('angle(Z)');
+
+
+plot(w,angle(yz),'b.-');
+plot(w,angle(z(Platz1,w,Platz1Par)),'g');
+legend('Messerte','Optimiert');
+
+
+fehlersumme=fehlersummeSAbs(rangliste(1),w,ys,Parameter1Platz,Rbez)
 toc
 
 
