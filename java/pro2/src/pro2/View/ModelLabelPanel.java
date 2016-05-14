@@ -66,7 +66,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		int panelWidth = 220;
 		int panelLength = 150;
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(150, 220));
+		setPreferredSize(new Dimension(340, 220));
 		setMaximumSize(new Dimension(32767, 32767));
 		setMinimumSize(new Dimension(10, 100));
 		setBorder(new LineBorder(Color.BLACK));
@@ -220,6 +220,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		Model m = (Model)o;
 		adaptToEQC(m.getEquivalentCircuit(this.eqcID));
 		updateParams(m.getEquivalentCircuit(this.eqcID));
+		updateUI();
 	}
 	
 //	/**

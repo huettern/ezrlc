@@ -311,10 +311,18 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	 */
 	private void addNewModelLabel(Model m) {
 		modelLabelPanels.add(new ModelLabelPanel(m.getEQCID()));
+		
 		pnlModel.add(modelLabelPanels.get(modelLabelPanels.size()-1), 
-				new GridBagConstraints(0, modelLabelPanels.size()-1, 1, 1, 0.0, 0.0, 
-						GridBagConstraints.NORTH, GridBagConstraints.NONE, 
-						new Insets(0,0,0,0), 0, 0));
+				new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, 
+						GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, 
+						new Insets(0,0,5,0), 0, 0));
+		// adjust pnlDataSets gridbaglayout so that row weights are zero except last one
+		double[] d = new double[modelPnlRowCnt+1];
+		for (int i = 0; i<d.length; i++) { d[i] = 0.0; }
+		d[modelPnlRowCnt] = 1.0;
+		gbl_pnlModel.rowWeights = d;
+		pnlModel.setLayout(gbl_pnlModel);
+		super.updateUI();
 		updateUI();
 	}
 	
