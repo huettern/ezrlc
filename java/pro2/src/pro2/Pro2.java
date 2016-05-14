@@ -95,22 +95,19 @@ public class Pro2 {
         view.build();
 
 //        controller.loadFile(new File("/Users/noah/git/pro2/sample_files/bsp1.s1p"));
-        controller.loadFile(new File("/Users/noah/git/pro2/sample_files/RLC_S_Sven.s1p"));
+        controller.loadFile(new File("E:\\proj2\\sample_files\\8.s1p"));
         
         MCOptions ops = new MCOptions();
         ops.modelAutoSelect = true;
-        ops.modelID = 4;
-        ops.paramsAuto[0] = false;
-        ops.params[0] = 60.0; //r
-        ops.paramsAuto[4] = false;
-        ops.params[4] = 10.0e-6; //l
-        ops.paramsAuto[5] = false;
-        ops.params[5] = 2.0e-6; //c
+//        ops.modelID = 4;
+//        ops.paramsAuto[0] = false;
+//        ops.params[0] = 60.0; //r
+//        ops.paramsAuto[4] = false;
+//        ops.params[4] = 10.0e-6; //l
+//        ops.paramsAuto[5] = false;
+//        ops.params[5] = 2.0e-6; //c
         model.createEqCircuit(ops);
-        
-        while(model.getWorker().isAlive());
-        System.out.println("done");
-        return;
+       
         										
 		//================================================================================
 	    // MC Test

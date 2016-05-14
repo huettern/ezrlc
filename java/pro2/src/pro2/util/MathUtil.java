@@ -18,7 +18,7 @@ public class MathUtil {
 	 * @return
 	 */
 	public static double getMax(List<Double> d) {
-		double res = Double.MIN_VALUE;
+		double res = -Double.MAX_VALUE;
 		for (Double db : d) {
 			if(db > res) res = db;
 		}
@@ -30,7 +30,7 @@ public class MathUtil {
 	 * @return
 	 */
 	public static double getMax(double[] d) {
-		double res = Double.MIN_VALUE;
+		double res = -Double.MAX_VALUE;
 		for (Double db : d) {
 			if(db > res) res = db;
 		}
@@ -264,6 +264,54 @@ public class MathUtil {
 		}
 		
 		return res;
+	}
+	
+	/**
+	 * returns index of maximum value of an Array with doubles
+	 * @param d
+	 * @return
+	 */
+	public static int getMaxIndex(double[] d) {
+		int res=0;
+		double db=-Double.MAX_VALUE;
+		for (int i=0;i<d.length;i++) {
+			if(d[i] > db){
+				db=d[i];
+				res=i;
+			}
+		}
+		return res;
+	}
+	
+	/**
+	 * returns index of minimum value of an Array with doubles
+	 * @param d
+	 * @return
+	 */
+	public static int getMinIndex(double[] d) {
+		int res=0;
+		double db=Double.MAX_VALUE;
+		for (int i=0;i<d.length;i++) {
+			if(d[i] < db){
+				db=d[i];
+				res=i;
+			}
+		}
+		return res;
+	}
+	
+	
+	/**
+	 * returns differences of all elements in a double array
+	 * @param d
+	 * @return
+	 */
+	public static double[] diff(double[] d){
+		double[] diff = new double[d.length-1];
+		for (int i=0;i<(d.length-1);i++){
+			diff[i]=d[i+1]-d[i];
+		}
+		return diff;
 	}
 	
 
