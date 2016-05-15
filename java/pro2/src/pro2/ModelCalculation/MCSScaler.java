@@ -35,4 +35,9 @@ public class MCSScaler {
 	public void scale() {
 	}
 
+	public static double scale(Complex[] s, Complex[] z) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

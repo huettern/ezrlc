@@ -101,6 +101,13 @@ public class MCWorker extends Thread {
 		Complex[] s = rfData.getSData(50);
 		Complex[] z = rfData.getzData();
 		
+		// S Scaler
+		double rref = MCSScaler.scale(s,z);
+		
+		// Get new S Data
+		s = rfData.getSData(rref);
+		
+		
 		// apply ops
 		double[] w = MCUtil.applyMCOpsToF(ops, f, MCUtil.DATA_FORMAT.OMEGA);
 		Complex[] ys = MCUtil.applyMCOpsToData(ops, f, s);
