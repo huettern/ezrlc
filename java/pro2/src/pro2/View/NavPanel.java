@@ -310,7 +310,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	 * @param o
 	 */
 	private void addNewModelLabel(Model m) {
-		modelLabelPanels.add(new ModelLabelPanel(m.getEQCID()));
+		modelLabelPanels.add(new ModelLabelPanel(m.getEQCID(), m.getEquivalentCircuit(m.getEQCID()).getCircuitType()));
 		
 		pnlModel.add(modelLabelPanels.get(modelLabelPanels.size()-1), 
 				new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, 
