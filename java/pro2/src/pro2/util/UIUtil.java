@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -28,7 +31,18 @@ public class UIUtil {
     // Private Data
     //================================================================================
 	private static Container p = new Container();
-	
+
+	// Data line settings
+	private static List<Color> plotSetColors = Collections.unmodifiableList(Arrays.asList(
+				new Color(0, 113, 188),
+				new Color(216, 82, 24),
+				new Color(236, 176, 31),
+				new Color(125, 46, 141),
+				new Color(118, 171, 47),
+				new Color(76, 189, 237),
+				new Color(161, 19, 46)
+			));
+	private static int PlotSetColorsCtr = 0;	//Holds the index of the next color to be used
 	
 	public UIUtil() {
 		// TODO Auto-generated constructor stub
@@ -216,4 +230,28 @@ public class UIUtil {
 		return icon;
 	}
 
+
+	/**
+	 * Gets the next color in the color palette and increments counter
+	 * @return
+	 */
+	public static Color getNextColor() {
+		Color c = plotSetColors.get(PlotSetColorsCtr);
+		PlotSetColorsCtr++;
+		// If the counter reached the end of the pallete
+		if(PlotSetColorsCtr >= plotSetColors.size()) {
+			//start from the beginning
+			PlotSetColorsCtr = 0;
+		}
+		return c;
+	}
+	
+	/**
+	 * Gets the color in the color palette
+	 * @param i color index
+	 * @return Color
+	 */
+	public static Color getColor(int i) {
+		return plotSetColors.get(i%plotSetColors.size());
+	}
 }

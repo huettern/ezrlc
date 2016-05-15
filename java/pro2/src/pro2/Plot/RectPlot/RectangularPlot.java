@@ -49,17 +49,6 @@ public class RectangularPlot extends JPanel implements Observer {
 	
 	private RectPlotSettings settings = new RectPlotSettings();
 	
-	// Data line settings
-	private List<Color> plotSetColors = Collections.unmodifiableList(Arrays.asList(
-				new Color(0, 113, 188),
-				new Color(216, 82, 24),
-				new Color(236, 176, 31),
-				new Color(125, 46, 141),
-				new Color(118, 171, 47),
-				new Color(76, 189, 237),
-				new Color(161, 19, 46)
-			));
-	private int PlotSetColorsCtr = 0;	//Holds the index of the next color to be used
 	private boolean enableAutoAutoscale = true;
 	
 	private String title = null;
@@ -159,20 +148,6 @@ public class RectangularPlot extends JPanel implements Observer {
 		}
 	}
 
-	/**
-	 * Gets the next color in the color palette and increments counter
-	 * @return
-	 */
-	private Color getNextColor() {
-		Color c = this.plotSetColors.get(this.PlotSetColorsCtr);
-		this.PlotSetColorsCtr++;
-		// If the counter reached the end of the pallete
-		if(this.PlotSetColorsCtr >= this.plotSetColors.size()) {
-			//start from the beginning
-			this.PlotSetColorsCtr = 0;
-		}
-		return c;
-	}
 
 	/**
 	 * Builds the labelname of the new plot
@@ -237,7 +212,23 @@ public class RectangularPlot extends JPanel implements Observer {
 	 */
 	public void addDataSet(int id, RectPlotNewMeasurement rectPlotNewMeasurement) {
 		DataSetSettings set = new DataSetSettings();
-		set.setLineColor(this.getNextColor());
+		set.setLineColor(UIUtil.getNextColor());
+		set.setLabel(this.createLabelString(rectPlotNewMeasurement));
+		
+		this.dataSetIDs.add(id);
+		this.dataSetSettings.add(set);
+		this.dataSets.add(null);
+	}
+	
+	/**
+	 * Add a new Dataset to the plot by ID
+	 * @param rectPlotNewMeasurement 
+	 * @param id
+	 * @param color Color index
+	 */
+	public void addDataSet(int id, RectPlotNewMeasurement rectPlotNewMeasurement, int color) {
+		DataSetSettings set = new DataSetSettings();
+		set.setLineColor(UIUtil.getColor(color));
 		set.setLabel(this.createLabelString(rectPlotNewMeasurement));
 		
 		this.dataSetIDs.add(id);
@@ -289,7 +280,6 @@ public class RectangularPlot extends JPanel implements Observer {
 			iter.remove();
 		}
 		this.enableAutoAutoscale = true;
-		this.PlotSetColorsCtr = 0;
 		this.repaint();
 	}
 

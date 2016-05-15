@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Insets;
 import javax.swing.JRadioButton;
+import javax.swing.MutableComboBoxModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.SwingConstants;
 import javax.naming.ldap.Rdn;
@@ -42,7 +43,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	private RectPlotNewMeasurement newMeas = new RectPlotNewMeasurement();
 	private JRadioButton rdbtnFile;
 	private JRadioButton rdbtnModel;
-	private JComboBox cbModelList;
+	private JComboBox<String> cbModelList;
 	private ButtonGroup btngrpSource;
 	private JRadioButton rdbtnZ;
 	private JRadioButton rdbtnS;
@@ -120,7 +121,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_rdbtnModel.gridy = 1;
 		pnlDataSource.add(rdbtnModel, gbc_rdbtnModel);
 		
-		cbModelList = new JComboBox();
+		cbModelList = new JComboBox<String>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -387,5 +388,27 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 
 	public RectPlotNewMeasurement getNewMeasurement() {
 		return this.newMeas;
+	}
+
+	/**
+	 * Sets the drop combo box items of the model list
+	 * @param modelIDs
+	 */
+	public void setModels(int[] modelIDs) {
+		String[] modelNames = new String[modelIDs.length];
+		for(int i = 0; i < modelIDs.length; i++){
+			modelNames[i] = "Model " +modelIDs[i];
+//			cbModelList.addItem(modelNames[i]);
+		}
+		
+		 MutableComboBoxModel<String> model=(MutableComboBoxModel<String>)cbModelList.getModel();
+
+		 for(int i = 0; i < model.getSize(); i++){
+			 model.removeElementAt(i);
+		 }
+		 
+		 for(int i = 0; i < modelIDs.length; i++){
+			 cbModelList.addItem(modelNames[i]);
+		 }
 	}
 }

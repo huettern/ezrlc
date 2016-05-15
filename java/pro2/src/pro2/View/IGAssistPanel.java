@@ -88,7 +88,7 @@ public class IGAssistPanel extends JPanel {
 			nm.type = plotMeasType[i];
 			nm.src_name = plotTitles[i];
 			id = controller.createDataset(nm);
-			plots[i].addDataSet(id, nm);
+			plots[i].addDataSet(id, nm, 0);
 		}
 	}
 	

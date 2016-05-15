@@ -329,6 +329,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		if(e.getSource()==btnAddMeasurement) {
 			if(plotType == ENPlotType.RECTANGULAR) {
 				newRectMeasurementWindow.setFilename(controller.getFilename());
+				newRectMeasurementWindow.setModels(controller.getModelIDs());
 				newRectMeasurementWindow.show();
 			} else if (plotType == ENPlotType.SMITH) {
 				newSmithMeasurementWindow.setFilename(controller.getFilename());

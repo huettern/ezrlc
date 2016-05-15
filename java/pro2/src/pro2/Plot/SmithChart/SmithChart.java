@@ -23,6 +23,7 @@ import pro2.Plot.RectPlot.DataSetSettings;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.util.Complex;
 import pro2.util.PointD;
+import pro2.util.UIUtil;
 
 public class SmithChart extends JPanel implements Observer, MouseListener {
 
@@ -39,20 +40,6 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 	private List<SmithChartDataSet> dataSets = new ArrayList<SmithChartDataSet>();
 	private List<Integer> dataSetIDs = new ArrayList<Integer>();
 	private List<DataSetSettings> dataSetSettings = new ArrayList<DataSetSettings>();
-	
-	
-	// Data line settings
-	private List<Color> plotSetColors = Collections.unmodifiableList(Arrays.asList(
-				new Color(0, 113, 188),
-				new Color(216, 82, 24),
-				new Color(236, 176, 31),
-				new Color(125, 46, 141),
-				new Color(118, 171, 47),
-				new Color(76, 189, 237),
-				new Color(161, 19, 46)
-			));
-	private int PlotSetColorsCtr = 0;	//Holds the index of the next color to be used
-		
 		
 	//================================================================================
     // Constructor
@@ -70,24 +57,9 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 		
 	}
 
-
-	/**
-	 * Gets the next color in the color palette and increments counter
-	 * @return
-	 */
-	private Color getNextColor() {
-		Color c = this.plotSetColors.get(this.PlotSetColorsCtr);
-		this.PlotSetColorsCtr++;
-		// If the counter reached the end of the pallete
-		if(this.PlotSetColorsCtr >= this.plotSetColors.size()) {
-			//start from the beginning
-			this.PlotSetColorsCtr = 0;
-		}
-		return c;
-	}
-
-
-
+	//================================================================================
+    // Private Functions
+    //================================================================================
 	/**
 	 * Updates the local stored datasets
 	 * @param model
@@ -125,7 +97,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 	 */
 	public void addDataSet(int id, SmithChartNewMeasurement newMeasurement) {
 		DataSetSettings set = new DataSetSettings();
-		set.setLineColor(this.getNextColor());
+		set.setLineColor(UIUtil.getNextColor());
 		set.setLabel(newMeasurement.src_name);
 
 		this.dataSetIDs.add(id);

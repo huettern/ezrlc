@@ -36,7 +36,7 @@ public class MCWorker extends Thread {
 	//================================================================================
     //Private Data
     //================================================================================
-	private Model parent;
+	private Model parentModel;
 	private Thread t;
 	private String workerName;
 	
@@ -47,7 +47,7 @@ public class MCWorker extends Thread {
     //Constructor
     //================================================================================
 	public MCWorker(Model parent, String s) {
-		this.parent = parent;
+		this.parentModel = parent;
 		this.workerName = s;
 	}
 	
@@ -100,6 +100,13 @@ public class MCWorker extends Thread {
 		double[] f = rfData.getfData();
 		Complex[] s = rfData.getSData(50);
 		Complex[] z = rfData.getzData();
+		
+		// S Scaler
+		double rref = MCSScaler.scale(s,z);
+		
+		// Get new S Data
+		s = rfData.getSData(rref);
+		
 		
 		// apply ops
 		double[] w = MCUtil.applyMCOpsToF(ops, f, MCUtil.DATA_FORMAT.OMEGA);
@@ -160,6 +167,7 @@ public class MCWorker extends Thread {
     //================================================================================
 	private void success (MCEqCircuit eqc) {
 		System.out.println("MCWorker " +workerName +" has successfully completed");
+		parentModel.mcWorkerSuccess(eqc);
 	}
 
 	/**
@@ -188,7 +196,7 @@ public class MCWorker extends Thread {
 		double L;
 		double C;
 		
-		//Sinnvolle Messpunkte auswählen
+		//Sinnvolle Messpunkte auswï¿½hlen
 		diffSAbs=MathUtil.diff(ysAbs);
 		int index1=MathUtil.getMaxIndex(diffSAbs);
 		if (index1==0){
