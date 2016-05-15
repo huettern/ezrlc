@@ -27,6 +27,7 @@ import pro2.Plot.Figure;
 import pro2.util.MathUtil;
 import pro2.util.UIUtil;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -69,10 +70,11 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	 * Builds a new ModelLabelPanel with the id to the equivalent circuit and the circuit type
 	 * @param id ID to the EQC in the model
 	 * @param t CircuitType of the model
+	 * @param c Color of the model
 	 */
 	public ModelLabelPanel(int id, CircuitType t) {
 		eqcID = id;
-		build(t);
+		build(t,id);
 	}
 	
 	
@@ -83,23 +85,37 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	 * Builds the panel according to the circuit type
 	 * @param t
 	 */
-	private void build (CircuitType t){
+	private void build (CircuitType t, int id){
 		int ordinal = t.ordinal();
 		GridBagLayout gbl = new GridBagLayout();
 		setLayout(gbl);
 		setBackground(Color.WHITE);
 		setBorder(new LineBorder(Color.BLACK));
 		
-		// Load image
-		modelImage = UIUtil.loadResourceIcon("model_" +  ordinal + ".png", 160, 100);
-		JLabel label = new JLabel("", modelImage, JLabel.CENTER);
-		label.setOpaque(false);
+		// Title
+		JPanel pnlTitle = new JPanel();
+		pnlTitle.setLayout(new BorderLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		add(pnlTitle, gbc);
+		JLabel title = new JLabel("Model "+id);
+		title.setHorizontalAlignment(JLabel.CENTER);
+		pnlTitle.add(title, BorderLayout.CENTER);
+		
+		// Load image
+		modelImage = UIUtil.loadResourceIcon("model_" +  ordinal + ".png", 160, 100);
+		JLabel label = new JLabel("", modelImage, JLabel.CENTER);
+		label.setOpaque(false);
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
 		add( label, gbc );
 		
 		// Create parameter panel
@@ -111,7 +127,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 		add( paramPanel, gbc );
 		
 		// Create Parameters
@@ -168,7 +184,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0;
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 3;
 		add(pnlBtn, gbc);
 		
 		btnDelete = new JButton("DEL");

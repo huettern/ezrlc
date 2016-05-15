@@ -347,8 +347,20 @@ public class Model extends Observable {
 		return eqCircuits.get(eqcID);
 	}
 
-	
-	
-
-
+	/**
+	 * Returns an int array with the currently available equivalent circuit models
+	 * @return int array with eqc IDs
+	 */
+	public int[] getModelIDs() {
+		int[] tmp = new int[eqCircuits.size()];
+		int j = 0;
+		for(int i = 0; i < eqCircuits.size(); i++){
+			if(eqCircuits.get(i) != null) {
+				tmp[j++] = i;
+			}
+		}
+		int[] res = new int[j];
+		System.arraycopy(tmp, 0, res, 0, j);
+		return res;
+	}
 }

@@ -146,4 +146,12 @@ public class Controller {
 		view.buildIGAssistDataSet();
 	}
 
+	/**
+	 * Returns an int array with the currently available equivalent circuit models
+	 * @return int array with eqc IDs
+	 */
+public int[] getModelIDs() {
+		return model.getModelIDs();
+	}
+
 }
