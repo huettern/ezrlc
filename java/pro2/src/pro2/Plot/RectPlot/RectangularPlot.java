@@ -156,8 +156,9 @@ public class RectangularPlot extends JPanel implements Observer {
 	 */
 	private String createLabelString(RectPlotNewMeasurement rpnm) {
 		String s;
-		
-		s = rpnm.src_name +" " +rpnm.type.name() +" " +rpnm.cpxMod.name();
+
+		//s = rpnm.src_name +" " +rpnm.type.name() +" " +rpnm.cpxMod.name();
+		s = "<html><B>" +rpnm.src_name +":</B> " +rpnm.type.name() +" " +rpnm.cpxMod.name() +"</html>";
 		
 		return s;
 	}

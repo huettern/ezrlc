@@ -334,6 +334,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 			} else if (plotType == ENPlotType.SMITH) {
 				newSmithMeasurementWindow.setFilename(controller.getFilename());
 				newSmithMeasurementWindow.setDatasets(smithChart.getDataSetSettings());
+				newSmithMeasurementWindow.setModels(controller.getModelIDs());
 				newSmithMeasurementWindow.show();
 			}
 		}

@@ -70,17 +70,17 @@ public class Controller {
 		model.manualNotify();
 	}
 	
-	/**
-	 * Adds a new Dataset in the model
-	 * @param src Datasource (File or Model)
-	 * @param ec MCEqCircuit
-	 * @param measType RFData.MeasurementType
-	 * @param cpxMod RFData.ComplexModifier
-	 * @return	unique data identifier of the plotdataset
-	 */
-	public int createDataset(DataSource src, MCEqCircuit ec, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
-		return model.createDataset(src,ec,measType,cpxMod);
-	}
+//	/**
+//	 * Adds a new Dataset in the model
+//	 * @param src Datasource (File or Model)
+//	 * @param ec MCEqCircuit
+//	 * @param measType RFData.MeasurementType
+//	 * @param cpxMod RFData.ComplexModifier
+//	 * @return	unique data identifier of the plotdataset
+//	 */
+//	public int createDataset(DataSource src, MCEqCircuit ec, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
+//		return model.createDataset(src,ec,measType,cpxMod);
+//	}
 	/**
 	 * Adds a new Dataset in the model
 	 * @param nm RectPlotNewMeasurement

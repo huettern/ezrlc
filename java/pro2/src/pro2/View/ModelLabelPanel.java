@@ -139,7 +139,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		int ordinal = t.ordinal();
 		
 		// Title
-		title.setText("Model "+id);
+		title.setText("<html><B>Model "+id +"</B></html>");
 		
 		// Load image
 		modelImage = UIUtil.loadResourceIcon("model_" +  ordinal + ".png", 160, 100);

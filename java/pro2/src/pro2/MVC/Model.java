@@ -68,16 +68,16 @@ public class Model extends Observable {
 				break;
 			}
 		} else if (nm.src == DataSource.MODEL) {
-			outdata = new double[nm.eqCircuit.getWSize()];
+			outdata = new double[eqCircuits.get(nm.eqCircuitID).getWSize()];
 			switch (nm.type) {
 			case S:
-				data = nm.eqCircuit.getS();
+				data = eqCircuits.get(nm.eqCircuitID).getS();
 				break;
 			case Y:
-				data = nm.eqCircuit.getY();
+				data = eqCircuits.get(nm.eqCircuitID).getY();
 				break;
 			case Z:
-				data = nm.eqCircuit.getS();
+				data = eqCircuits.get(nm.eqCircuitID).getZ();
 				break;
 			default:
 				break;
@@ -148,14 +148,17 @@ public class Model extends Observable {
 	 */
 	private int buildSmithChartDataSet(SmithChartNewMeasurement nm) {
 		Complex[] data = null;
-
+		SmithChartDataSet set = null;
 		// Get Data
 		if(nm.src == DataSource.FILE) {
 			data = rfDataFile.getzData();
+			 set  = new SmithChartDataSet(null, data, rfDataFile.getfData());
+		} else if(nm.src == DataSource.MODEL) {
+			data = eqCircuits.get(nm.eqCircuitID).getZ();
+			set  = new SmithChartDataSet(null, data, eqCircuits.get(nm.eqCircuitID).getF());
 		}
 		
 		// Create set
-		SmithChartDataSet set  = new SmithChartDataSet(null, data, rfDataFile.getfData());
 		this.smithPlotDataSetList.add(set);
 		return this.smithPlotDataSetList.size()-1;
 	}
@@ -216,10 +219,10 @@ public class Model extends Observable {
 	 * @param cpxMod RFData.ComplexModifier
 	 * @return	unique data identifier of the plotdataset
 	 */
-	public int createDataset(Controller.DataSource src, MCEqCircuit ec, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
+	public int createDataset(Controller.DataSource src, int ecID, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
 		RectPlotNewMeasurement nm = new RectPlotNewMeasurement();
 		nm.src = src;
-		nm.eqCircuit = ec;
+		nm.eqCircuitID = ecID;
 		nm.type=measType;
 		nm.cpxMod=cpxMod;
 		return this.buildDataSet(nm);

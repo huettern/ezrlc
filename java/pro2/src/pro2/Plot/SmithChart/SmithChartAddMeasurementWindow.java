@@ -18,6 +18,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.MutableComboBoxModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -197,6 +198,8 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		}
 		if(this.getSelectedButton(this.btngrpSource)  == rdbtnModel){
 			s.src=DataSource.MODEL;
+			s.eqCircuitID = Integer.parseInt(cbModelList.getSelectedItem().toString().split("( )")[1]);
+			s.src_name = cbModelList.getSelectedItem().toString();
 		}
 		this.newMeas = s;
 	}
@@ -253,5 +256,28 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 				rdbtnModel.setSelected(true);
 			}
 		}
+	}
+
+	
+	/**
+	 * Sets the drop combo box items of the model list
+	 * @param modelIDs
+	 */
+	public void setModels(int[] modelIDs) {
+		String[] modelNames = new String[modelIDs.length];
+		for(int i = 0; i < modelIDs.length; i++){
+			modelNames[i] = "Model " +modelIDs[i];
+//			cbModelList.addItem(modelNames[i]);
+		}
+		
+		 MutableComboBoxModel<String> model=(MutableComboBoxModel<String>)cbModelList.getModel();
+
+		 for(int i = 0; i < model.getSize(); i++){
+			 model.removeElementAt(i);
+		 }
+		 
+		 for(int i = 0; i < modelIDs.length; i++){
+			 cbModelList.addItem(modelNames[i]);
+		 }
 	}
 }

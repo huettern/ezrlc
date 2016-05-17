@@ -11,14 +11,13 @@ public class RectPlotNewMeasurement {
 	
 	public Controller.DataSource src;
 	public String src_name;
-	public MCEqCircuit eqCircuit;
+	public int eqCircuitID;
 	public RFData.MeasurementType type;
 	public RFData.ComplexModifier cpxMod;
 
 	public RectPlotNewMeasurement() {
 		src = DataSource.FILE;
 		src_name = "";
-		eqCircuit = null;
 		type = MeasurementType.Z;
 		cpxMod = ComplexModifier.REAL;
 	}

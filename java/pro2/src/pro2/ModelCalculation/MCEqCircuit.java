@@ -298,6 +298,19 @@ public class MCEqCircuit {
 		parameters = MCUtil.topo2Param(circuitType, optimum.getPoint());
 	}
 	
+	/**
+	 * Returns a copy of the stored frequency vector
+	 * @return frequency vector
+	 */
+	public double[] getF() {
+		double[] res = new double[wvector.length];
+		for(int i = 0; i < wvector.length; i++){
+			res[i] = wvector[i]/(2.0*Math.PI);
+		}
+		return res;
+	}
+
+	
 	//================================================================================
     // Private Functions 
     //================================================================================
