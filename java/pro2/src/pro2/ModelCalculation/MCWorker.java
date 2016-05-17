@@ -105,7 +105,8 @@ public class MCWorker extends Thread {
 		double rref = MCSScaler.scale(s,z);
 		
 		// Get new S Data
-		s = rfData.getSData(rref);
+		//s = rfData.getSData(rref);
+		s = rfData.getSData(50.0);
 		
 		
 		// apply ops
