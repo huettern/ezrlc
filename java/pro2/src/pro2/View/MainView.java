@@ -181,6 +181,9 @@ public class MainView extends JFrame implements Observer {
 	public void buildIGAssistDataSet() {
 		workPanel.buildIGAssistDataSet();
 	}
+	public void setupEqCircuitView() {
+		navPanel.setupEqCircuitView();
+	}
 
 	
 }

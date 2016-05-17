@@ -131,6 +131,7 @@ public class Controller {
 	 * @param ops
 	 */
 	public void createEqCircuit(MCOptions ops) {
+		view.setupEqCircuitView();
 		model.createEqCircuit(ops);
 	}
 

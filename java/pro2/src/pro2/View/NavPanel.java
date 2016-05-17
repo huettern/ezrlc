@@ -306,14 +306,10 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	}
 
 	/**
-	 * Adds a new Model label panel based on the new generated Equivalent circuit
-	 * @param o
+	 * Creates a new ModelLabelPanel but doesnt set settings yet
 	 */
-	private void addNewModelLabel(Model m) {
-		modelLabelPanels.add(new ModelLabelPanel(m.getEQCID(), 
-				m.getEquivalentCircuit(m.getEQCID()).getCircuitType())
-				);
-		
+	public void setupEqCircuitView() {
+		modelLabelPanels.add(new ModelLabelPanel());
 		pnlModel.add(modelLabelPanels.get(modelLabelPanels.size()-1), 
 				new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, 
 						GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, 
@@ -324,7 +320,18 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		d[modelPnlRowCnt] = 1.0;
 		gbl_pnlModel.rowWeights = d;
 		pnlModel.setLayout(gbl_pnlModel);
-		super.updateUI();
+		updateUI();
+	}
+	
+	
+	/**
+	 * Adds a new Model label panel based on the new generated Equivalent circuit
+	 * @param o
+	 */
+	private void updateNewModelLabel(Model m) {
+		modelLabelPanels.get(modelLabelPanels.size()-1).build( 
+				m.getEquivalentCircuit(m.getEQCID()).getCircuitType(),
+				m.getEQCID());
 		updateUI();
 	}
 	
@@ -396,7 +403,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg == UpdateEvent.NEW_EQC) {
-			addNewModelLabel((Model)o);
+			updateNewModelLabel((Model)o);
 		}
 		for (ModelLabelPanel modelLabelPanel : modelLabelPanels) {
 			modelLabelPanel.update(o, arg);
@@ -412,5 +419,5 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	public void setNewGraphButtonEnabled(boolean b) {
 		btnNewGraph.setEnabled(b);
 	}
-	
+
 }
