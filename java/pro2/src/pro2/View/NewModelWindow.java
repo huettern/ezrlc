@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,10 +25,12 @@ import pro2.util.UIUtil;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 
 import javax.swing.JSeparator;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -94,6 +97,20 @@ public class NewModelWindow implements ActionListener{
 	private JLabel lblC1;
 	private JLabel lblCompMin;
 	private JLabel lblCompMax;
+	
+	// error handling
+	private enum Errors {
+		None,
+		CompMinLargerMax, 
+		CompMaxSmallerMin,
+		CompMaxLarger4,
+		CompMinSmaller0,
+		FMinLargerMax,
+		FMaxSmallerMin,
+		NoNegF
+		};
+	private Errors parseError;
+	private JDialog errorDialog;
 	
 	//================================================================================
     // Constructors
@@ -526,37 +543,18 @@ public class NewModelWindow implements ActionListener{
 		if(index == 0) {
 			ops.modelAutoSelect = true;
 			ops.modelID = 0;
-
-			// elements range
-//			ops.nElementsMinAuto = chBoxCompMin.isSelected();
-//			ops.nElementsMaxAuto = chBoxCompMax.isSelected();
-			if(ops.nElementsMinAuto == false) ops.nElementsMin = (int)Double.parseDouble(txtCompMin.getText());
-			if(ops.nElementsMaxAuto == false) ops.nElementsMax = (int)Double.parseDouble(txtCompMax.getText());
 		} else {
 			ops.modelID = index - 1;
 			ops.modelAutoSelect = false;
 		}
 		
+		// component count
+		if(txtCompMin.getText().isEmpty() == false) {ops.nElementsMinAuto = false; ops.nElementsMin = (int)txtCompMin.getValue();}
+		if(txtCompMax.getText().isEmpty() == false) {ops.nElementsMaxAuto = false; ops.nElementsMax = (int)txtCompMax.getValue();}
+			
 		// f range
-//		ops.fMinAuto = chBoxFmin.isSelected();
-//		ops.fMaxAuto = chBoxFmax.isSelected();
-		if(ops.fMinAuto == false) ops.fMin = Double.parseDouble(txtFmin.getText());
-		if(ops.fMaxAuto == false) ops.fMax = Double.parseDouble(txtFmax.getText());
-		
-		// elements range
-//		ops.nElementsMinAuto = chBoxCompMin.isSelected();
-//		ops.nElementsMaxAuto = chBoxCompMax.isSelected();
-		if(ops.nElementsMinAuto == false && txtCompMin.getSelectedText() != null) ops.nElementsMin = (int)Double.parseDouble(txtCompMin.getText());
-		if(ops.nElementsMaxAuto == false && txtCompMax.getSelectedText() != null) ops.nElementsMax = (int)Double.parseDouble(txtCompMax.getText());
-		
-		// element auto
-//		ops.paramsAuto[0] = chBoxR0.isSelected();
-//		ops.paramsAuto[1] = chBoxF.isSelected();
-//		ops.paramsAuto[2] = chBoxAlpha.isSelected();
-//		ops.paramsAuto[3] = chBoxR1.isSelected();
-//		ops.paramsAuto[4] = chBoxL.isSelected();
-//		ops.paramsAuto[5] = chBoxC0.isSelected();
-//		ops.paramsAuto[6] = chBoxC1.isSelected();
+		if(txtFmin.getText().isEmpty() == false) {ops.fMinAuto=false; ops.fMin=txtFmin.getValue();}
+		if(txtFmax.getText().isEmpty() == false) {ops.fMaxAuto=false; ops.fMax=txtFmax.getValue();}
 		
 		// element values
 		if(txtR0.getText().isEmpty() == false) { ops.params[0] = Double.parseDouble(txtR0.getText()); ops.paramsAuto[0] = false; }
@@ -567,6 +565,21 @@ public class NewModelWindow implements ActionListener{
 		if(txtC0.getText().isEmpty() == false) { ops.params[5] = Double.parseDouble(txtC0.getText())/(1); ops.paramsAuto[5] = false; }
 		if(txtC1.getText().isEmpty() == false) { ops.params[6] = Double.parseDouble(txtC1.getText())/(1); ops.paramsAuto[6] = false; }
 
+		// Check values
+		parseError = Errors.None;
+		if(!ops.nElementsMaxAuto && !ops.nElementsMinAuto) {
+			if(ops.nElementsMax < ops.nElementsMin) {parseError = Errors.CompMaxSmallerMin; return null;}
+			if(ops.nElementsMin > ops.nElementsMax) {parseError = Errors.CompMinLargerMax; return null;} 
+		}
+		if(ops.nElementsMax > 4) {parseError = Errors.CompMaxLarger4; return null;}
+		if(ops.nElementsMin < 0) {parseError = Errors.CompMinSmaller0; return null;}
+		if(!ops.fMinAuto && !ops.fMaxAuto) {
+			if(ops.fMax < ops.fMin) {parseError = Errors.FMaxSmallerMin; return null;}
+			if(ops.fMin > ops.fMax) {parseError = Errors.FMinLargerMax; return null;}	
+		}
+		if(ops.fMax < 0) {parseError = Errors.NoNegF; return null;}
+		if(ops.fMin < 0) {parseError = Errors.NoNegF; return null;}
+		
 		return ops;
 	}
 
@@ -597,13 +610,17 @@ public class NewModelWindow implements ActionListener{
 		
 		if(e.getSource() == btnGenerate) {
 			MCOptions ops = this.parseInput();
-			controller.createEqCircuit(ops);
-			
-			System.out.println(txtL.getText());
-			
-			dialog.dispose();
-		}	
-
+			if(ops != null){
+				controller.createEqCircuit(ops);
+				dialog.dispose();
+				return;
+			} else {
+				JOptionPane.showMessageDialog(dialog,
+						parseError.toString(),
+						"Input Parameter Error",
+					    JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 	
 	

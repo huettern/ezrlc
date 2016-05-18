@@ -116,10 +116,12 @@ public class Model extends Observable {
 			}
 		}
 		
-		
+		double[] xdata = null;
+		if(nm.src == DataSource.FILE) xdata = rfDataFile.getfData();
+		if(nm.src == DataSource.MODEL) xdata = eqCircuits.get(nm.eqCircuitID).getF();
 		
 		// Now create the dataset and add it to the dataset list
-		PlotDataSet dataSet = new PlotDataSet(rfDataFile.getfData(), outdata);
+		PlotDataSet dataSet = new PlotDataSet(xdata, outdata);
 		this.plotDataSetList.add(dataSet);
 		// mark as value changed
 //		setChanged();

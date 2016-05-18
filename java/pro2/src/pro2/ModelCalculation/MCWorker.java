@@ -117,28 +117,47 @@ public class MCWorker extends Thread {
 		// Create model index list
 		CircuitType[] circuitIdxes;
 		circuitIdxes = MCUtil.createModelList(ops);
-		
+
 		// Create equivalent circuit models
-		List<MCEqCircuit> circuits = new ArrayList<MCEqCircuit>(circuitIdxes.length);
+		List<MCEqCircuit> userCircuits = new ArrayList<MCEqCircuit>(circuitIdxes.length);
 		for (CircuitType type : circuitIdxes) {
-			circuits.add(new MCEqCircuit(type));
-			circuits.get(circuits.size()-1).setWVector(w);
+			userCircuits.add(new MCEqCircuit(type));
+			userCircuits.get(userCircuits.size()-1).setWVector(w);
+		}
+		
+		// Create circuit list for analytical solver
+		CircuitType[] solverCircuitTypes = {CircuitType.MODEL0, CircuitType.MODEL1, CircuitType.MODEL2, 
+				CircuitType.MODEL3, CircuitType.MODEL4, CircuitType.MODEL5,
+				CircuitType.MODEL6, CircuitType.MODEL7 };
+		List<MCEqCircuit> solverCircuits = new ArrayList<MCEqCircuit>(8);
+		for(int i = 0; i < 8; i++) {
+			solverCircuits.add(new MCEqCircuit(solverCircuitTypes[i]));
+			solverCircuits.get(solverCircuits.size()-1).setWVector(w);
 		}
 		
 		// Do analytical solving
-		analyticalSolver(w, yz, ys, circuits);
+		analyticalSolver(w, yz, ys, solverCircuits);
+		
+		// Apply solver parameters
+		for(int i = 0; i < solverCircuits.size(); i++){
+			for(int j = 0; j < userCircuits.size(); j++) {
+				if(userCircuits.get(j).getCircuitType() == solverCircuits.get(i).getCircuitType()){
+					userCircuits.get(j).setParameters(solverCircuits.get(i).getParameters());
+				}
+			}
+		}
 		
 		// apply manual parameters
 		for(int i = 0; i < ops.paramsAuto.length; i++){
 			if(ops.paramsAuto[i] == false) {
-				for (MCEqCircuit circuit : circuits) {
+				for (MCEqCircuit circuit : userCircuits) {
 					circuit.setParameter(i,ops.params[i]);
 				}
 			}
 		}
 		
 		// Generate rank of equivalent circuits
-		ArrayList<MCEqCircuit> sortedList = MCRank.sortByError(ys, circuits);
+		ArrayList<MCEqCircuit> sortedList = MCRank.sortByError(ys, userCircuits);
 		
 //		// Run optimizer
 //		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
