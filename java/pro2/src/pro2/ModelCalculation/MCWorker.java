@@ -105,8 +105,8 @@ public class MCWorker extends Thread {
 		double rref = MCSScaler.scale(s);
 		
 		// Get new S Data
-		//s = rfData.getSData(rref);
-		s = rfData.getSData(50.0);
+		s = rfData.getSData(rref);
+		//s = rfData.getSData(50.0);
 		
 		
 		// apply ops
@@ -123,6 +123,7 @@ public class MCWorker extends Thread {
 		for (CircuitType type : circuitIdxes) {
 			userCircuits.add(new MCEqCircuit(type));
 			userCircuits.get(userCircuits.size()-1).setWVector(w);
+			userCircuits.get(userCircuits.size()-1).setZ0(rref);
 		}
 		
 		// Create circuit list for analytical solver
@@ -133,6 +134,7 @@ public class MCWorker extends Thread {
 		for(int i = 0; i < 8; i++) {
 			solverCircuits.add(new MCEqCircuit(solverCircuitTypes[i]));
 			solverCircuits.get(solverCircuits.size()-1).setWVector(w);
+			solverCircuits.get(solverCircuits.size()-1).setZ0(rref);
 		}
 		
 		// Do analytical solving

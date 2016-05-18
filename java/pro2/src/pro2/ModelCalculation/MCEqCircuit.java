@@ -563,6 +563,10 @@ public class MCEqCircuit {
 		return null;
 	}
 
+	public void setZ0(double rref) {
+		this.z0 = rref;
+	}
+
 	
 	
 
