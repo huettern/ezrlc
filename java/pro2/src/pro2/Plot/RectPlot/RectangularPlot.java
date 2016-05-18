@@ -58,8 +58,17 @@ public class RectangularPlot extends JPanel implements Observer {
     // Constructors
     //================================================================================
 	public RectangularPlot() {
+		this(Scale.LINEAR, Scale.LINEAR);
+	}
+
+	/**
+	 * Builds a new rect plot with given scales
+	 * @param x x scale
+	 * @param y y scale
+	 */
+	public RectangularPlot(Scale x, Scale y) {
 		// TODO Auto-generated constructor stub
-		
+
 		System.out.println("New Rect Plot");
 		Color col = super.getBackground();
 		super.setBackground(Color.WHITE);
@@ -68,10 +77,10 @@ public class RectangularPlot extends JPanel implements Observer {
 		
 		
 		// Init settings
-		settings.xAxisMinimum = 0;
+		settings.xAxisMinimum = 0.1;
 		settings.xAxisMaximum = 1;
 		settings.xAxisSteps = 1;
-		settings.yAxisMinimum = 0;
+		settings.yAxisMinimum = 0.1;
 		settings.yAxisMaximum = 1;
 		settings.yAxisSteps = 1;
 		
@@ -80,12 +89,12 @@ public class RectangularPlot extends JPanel implements Observer {
 		//horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin);
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 0, 100, 10, 20);	// Use for test data
 		//this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin, 40, 1e6, 1e9, 10, 20); 	// Use for r100l10uZRI
-		this.horAxis = new Axis(this, Axis.Scale.LINEAR, Axis.Orientation.HORIZONTAL, origin, rightMargin, 
+		this.horAxis = new Axis(this, x, Axis.Orientation.HORIZONTAL, origin, rightMargin, 
 				settings.xAxisMinimum, settings.xAxisMaximum, settings.xAxisSteps, 20); 	// Use for bsp11
 		//verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin);
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 1, 20, -20); // Use for test data
 		//this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40, 0, 70e3, 20, -20); // Use for r100l10uZRI
-		this.verAxis = new Axis(this, Axis.Scale.LINEAR, Axis.Orientation.VERTICAL, origin, topMargin, 
+		this.verAxis = new Axis(this, y, Axis.Orientation.VERTICAL, origin, topMargin, 
 				settings.yAxisMinimum, settings.yAxisMaximum, settings.xAxisSteps, -30); // Use for bsp11
 		
 		// Add Grid
@@ -94,7 +103,7 @@ public class RectangularPlot extends JPanel implements Observer {
 		
 		repaint();
 	}
-
+	
 	//================================================================================
     // Private Function
     //================================================================================
@@ -311,7 +320,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	 * Scales Axis to show all Data
 	 */
 	public void autoScale() {
-		autoScale(Scale.LINEAR, Scale.LINEAR);
+		autoScale(Scale.LOG, Scale.LINEAR);
 	}
 	/**
 	 * Scales Axis to show all Data, with x ang y scale
@@ -390,6 +399,8 @@ public class RectangularPlot extends JPanel implements Observer {
 		settings.xAxisMinimum=xmin;
 		settings.yAxisMaximum=ymax;
 		settings.yAxisMinimum=ymin;
+		settings.xScale = sx;
+		settings.yScale = sy;
 		
 		// set step to 10
 		if(settings.xScale == Scale.LINEAR) settings.xAxisSteps = 10;
