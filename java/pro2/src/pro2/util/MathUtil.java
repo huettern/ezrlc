@@ -362,5 +362,17 @@ public class MathUtil {
 	   }
 	}
 	
-
+	
+	/**
+	 * returns Magnitudes of an Array of Complex
+	 * @param d
+	 * @return dabs
+	 */
+	public static double[] abs(Complex[] d){
+		double[] dabs = new double[d.length];
+		for (int i=0;i<d.length;i++){
+			dabs[i] = d[i].abs();
+		}
+		return dabs;
+	}
 }

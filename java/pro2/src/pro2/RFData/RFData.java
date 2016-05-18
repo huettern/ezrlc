@@ -606,4 +606,21 @@ public class RFData {
 		}
 		return res;
 	}
+	
+	/**
+	 * converts s Data to z data
+	 * z=zo*(1+s)/(1-s)
+	 * @param zo
+	 * @param s
+	 * @return z
+	 */
+	public static Complex[] s2z(double zo, Complex[] s){
+		Complex[] z = new Complex[s.length];
+		Complex ro = new Complex(zo,0);
+		Complex tmp = new Complex(1,0);
+		for(int i = 0; i < s.length; i++) {
+			z[i] = Complex.mul(Complex.div(Complex.add(tmp, s[i]),Complex.sub(tmp, s[i])), ro);
+		}
+		return z;
+	}
 }
