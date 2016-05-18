@@ -40,6 +40,8 @@ import java.awt.Rectangle;
 
 public class ModelLabelPanel extends JPanel implements ActionListener {
 
+	private Controller controller;
+	
 	private JEngineerField txtC0;
 	private JEngineerField txtR0;
 	private JEngineerField txtAlpha;
@@ -80,8 +82,10 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	
 	/**
 	 * Creates an empty ModelLabelPanel
+	 * @param c controller object
 	 */
-	public ModelLabelPanel() {
+	public ModelLabelPanel(Controller c) {
+		controller = c;
 		buildEmpty();
 	}
 	//================================================================================
@@ -124,8 +128,10 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		add(pnlBtn, gbc);
 		
 		btnDelete = new JButton("DEL");
+		btnDelete.addActionListener(this);
 		pnlBtn.add(btnDelete, 0);
 		btnOptimize= new JButton("OPT");
+		btnOptimize.addActionListener(this);
 		pnlBtn.add(btnOptimize, 1);
 	}
 	
@@ -220,8 +226,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
     //================================================================================
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getSource() == btnDelete) {
+			controller.removeEqCircuit(eqcID);
+		}
+		if(e.getSource() == btnOptimize) {
+		//	controller.optimizeEqCircuit(eqcID);
+		}
 	}
 	
 	
@@ -250,6 +260,11 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		Model m = (Model)o;
 		updateParams(m.getEquivalentCircuit(this.eqcID));
 		updateUI();
+	}
+
+	public int getID() {
+		// TODO Auto-generated method stub
+		return this.eqcID;
 	}
 	
 }

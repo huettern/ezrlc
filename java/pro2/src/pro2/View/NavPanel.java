@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -309,7 +310,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	 * Creates a new ModelLabelPanel but doesnt set settings yet
 	 */
 	public void setupEqCircuitView() {
-		modelLabelPanels.add(new ModelLabelPanel());
+		modelLabelPanels.add(new ModelLabelPanel(controller));
 		pnlModel.add(modelLabelPanels.get(modelLabelPanels.size()-1), 
 				new GridBagConstraints(0, modelPnlRowCnt++, 1, 1, 1.0, 0.0, 
 						GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, 
@@ -402,11 +403,23 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		Model model = (Model)o;
 		if(arg == UpdateEvent.NEW_EQC) {
 			updateNewModelLabel((Model)o);
 		}
+		if(arg == UpdateEvent.REMOVE_EQC) {
+			// if model label panel doesnt exist, remove it
+			for (Iterator<ModelLabelPanel> iter = modelLabelPanels.iterator(); iter.hasNext(); ) {
+				ModelLabelPanel i = iter.next();
+				if(model.isEqCircuit(i.getID()) == false) {
+					pnlModel.remove(i);
+					iter.remove();
+				}
+			}
+			updateUI();
+		}
 		for (ModelLabelPanel modelLabelPanel : modelLabelPanels) {
-			modelLabelPanel.update(o, arg);
+			if(modelLabelPanel != null) modelLabelPanel.update(o, arg);
 		}
 	}
 

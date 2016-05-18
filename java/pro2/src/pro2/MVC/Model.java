@@ -23,7 +23,7 @@ public class Model extends Observable {
 	//================================================================================
     // Public Data
     //================================================================================
-	public enum UpdateEvent {FILE, NEW_EQC};
+	public enum UpdateEvent {FILE, NEW_EQC, REMOVE_EQC};
 	
 	
 	//================================================================================
@@ -367,5 +367,29 @@ public class Model extends Observable {
 		int[] res = new int[j];
 		System.arraycopy(tmp, 0, res, 0, j);
 		return res;
+	}
+
+	/**
+	 * Removes an equivalent circuit
+	 * @param eqcID ID to the circuit
+	 */
+	public void removeEqCircuit(int eqcID) {
+		this.eqCircuits.set(eqcID, null);
+		setChanged();
+		notifyObservers(UpdateEvent.REMOVE_EQC);
+	}
+
+	/**
+	 * Checks if the eqcircuit given by the id exists
+	 * @param id ID to the eqcircuit
+	 * @return true if existing, flase if not
+	 */
+	public boolean isEqCircuit(int id) {
+		try {
+			if(this.eqCircuits.get(id) != null) return true;
+			else return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

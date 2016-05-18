@@ -155,4 +155,12 @@ public int[] getModelIDs() {
 		return model.getModelIDs();
 	}
 
+	/**
+	 * Removes an equivalent circuit from the model
+	 * @param eqcID
+	 */
+	public void removeEqCircuit(int eqcID) {
+		model.removeEqCircuit(eqcID);
+	}
+
 }
