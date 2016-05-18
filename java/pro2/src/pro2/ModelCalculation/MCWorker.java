@@ -102,7 +102,7 @@ public class MCWorker extends Thread {
 		Complex[] z = rfData.getzData();
 		
 		// S Scaler
-		double rref = MCSScaler.scale(s,z);
+		double rref = MCSScaler.scale(s);
 		
 		// Get new S Data
 		s = rfData.getSData(rref);

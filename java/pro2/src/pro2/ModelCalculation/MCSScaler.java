@@ -1,6 +1,8 @@
 package pro2.ModelCalculation;
 
+import pro2.RFData.RFData;
 import pro2.util.Complex;
+import pro2.util.MathUtil;
 
 /**
  * Calculates the bes reference resistance for scattering parameters
@@ -12,18 +14,12 @@ public class MCSScaler {
 	//================================================================================
     // Private variables
     //================================================================================
-	private double z0;
-	private Complex[] yz;
-	private Complex[] ys;
 
 	//================================================================================
     // Constructors
     //================================================================================
 	public MCSScaler(Complex[] yz) {
-		yz = new Complex[yz.length];
-		ys = new Complex[yz.length];
-		System.arraycopy(yz, 0, this.yz, 0, yz.length);
-		z0 = 50;	// start value
+
 	}
 
 	//================================================================================
@@ -32,12 +28,31 @@ public class MCSScaler {
 	/**
 	 * Scales the ys data to find the best reference resistance
 	 */
-	public void scale() {
-	}
 
-	public static double scale(Complex[] s, Complex[] z) {
-		// TODO Auto-generated method stub
-		return 0;
+	public static double scale(Complex[] ys) {
+		
+		System.out.println("****Scaler Start****");
+		
+		Complex[] yz = new Complex[ys.length];
+		double r0 = 0.00001;	// start value
+		yz=RFData.s2z(50, ys);
+		ys=RFData.z2s(r0, yz);
+		
+		double[] ysabs= new double[ys.length];
+		ysabs=MathUtil.abs(ys);
+		
+		while((Math.abs(Math.abs(MathUtil.getMax(ysabs))-Math.abs(MathUtil.getMin(ysabs)))<0.6)&(r0<10000)){
+//			System.out.println("MAX="+MathUtil.getMax(ysabs));
+//			System.out.println("MIN="+MathUtil.getMin(ysabs));
+//			System.out.println("Diff="+Math.abs(Math.abs(MathUtil.getMax(ysabs))-Math.abs(MathUtil.getMin(ysabs))));
+			yz=RFData.s2z(r0,ys);
+			r0 *= 2;
+			ys=RFData.z2s(r0,yz);
+			ysabs=MathUtil.abs(ys);
+			System.out.println("Rref="+r0);
+		}
+		System.out.println("****Scaler End****");
+		return r0;
 	}
 
 }
