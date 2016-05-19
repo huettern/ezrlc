@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pro2.Plot.RectPlot.DataSetSettings;
+import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.util.Complex;
 import pro2.util.PointD;
 
@@ -26,6 +27,7 @@ public class SmithChartDataSet {
 	private int points;
 	
 	private DataSetSettings settings = new DataSetSettings();
+	private SmithChartNewMeasurement nm;
 		
 	private List<Point> data_pts = new ArrayList<Point>(); // Datapoints on the chart
 	
@@ -41,11 +43,12 @@ public class SmithChartDataSet {
 	 * @param data List of complex data
 	 * @param freq frequency points
 	 */
-	public SmithChartDataSet(SmithChartGrid grid, Complex[] data, double[] freq) {
+	public SmithChartDataSet(SmithChartGrid grid, Complex[] data, double[] freq, SmithChartNewMeasurement nm) {
 		if(data.length != freq.length) {
 			System.out.println("FATAL(SmithChartDataSet): data size not equal freq size");
 			return;
 		}
+		this.nm = nm;
 		// Copy Data
 		this.data = new Complex[data.length];
 		System.arraycopy(data, 0, this.data, 0, data.length);
@@ -110,6 +113,14 @@ public class SmithChartDataSet {
 
 	public void setDataSetSettings(DataSetSettings s) {
 		this.settings = s;
+	}
+	
+	/**
+	 * Returns the new measurement object with which the dataset was created
+	 * @return SmithChartNewMeasurement
+	 */
+	public SmithChartNewMeasurement getNM() {
+		return nm;
 	}
 	
 	

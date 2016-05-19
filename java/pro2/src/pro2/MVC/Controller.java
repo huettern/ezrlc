@@ -163,4 +163,13 @@ public int[] getModelIDs() {
 		model.removeEqCircuit(eqcID);
 	}
 
+	/**
+	 * Updates a equivalent circuits parameters in the model
+	 * @param eqcID id of the model
+	 * @param parameters parameter list
+	 */
+	public void updateEqcParams(int eqcID, double[] parameters) {
+		model.updateEqcParams(eqcID, parameters);
+	}
+
 }

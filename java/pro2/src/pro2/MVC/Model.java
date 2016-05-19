@@ -23,7 +23,7 @@ public class Model extends Observable {
 	//================================================================================
     // Public Data
     //================================================================================
-	public enum UpdateEvent {FILE, NEW_EQC, REMOVE_EQC};
+	public enum UpdateEvent {MANUAL, FILE, NEW_EQC, REMOVE_EQC};
 	
 	
 	//================================================================================
@@ -37,6 +37,10 @@ public class Model extends Observable {
 	private List<SmithChartDataSet> smithPlotDataSetList = new ArrayList<SmithChartDataSet>();
 	private List<MCEqCircuit> eqCircuits = new ArrayList<MCEqCircuit>();
 	
+	// Stores the plotDataSetList ids to the corresponding model id
+	private List<Integer[]> eqCircuitRectPlotIDs = new ArrayList<Integer[]>();
+	private List<Integer[]> eqCircuitSmithPlotIDs = new ArrayList<Integer[]>();
+	
 	MCWorker worker;
 	
 	public Model() {
@@ -47,7 +51,12 @@ public class Model extends Observable {
 	//================================================================================
     // Private Functions
     //================================================================================
-	private int buildDataSet(RectPlotNewMeasurement nm) {
+	/**
+	 * Builds a new dataset with the given settings
+	 * @param nm RectPlotNewMeasurement
+	 * @return PlotDataSet
+	 */
+	private PlotDataSet buildDataSetRaw(RectPlotNewMeasurement nm) {
 		Complex[] data = null;
 		double[] outdata = null;
 		// Get Data
@@ -121,26 +130,46 @@ public class Model extends Observable {
 		if(nm.src == DataSource.MODEL) xdata = eqCircuits.get(nm.eqCircuitID).getF();
 		
 		// Now create the dataset and add it to the dataset list
-		PlotDataSet dataSet = new PlotDataSet(xdata, outdata);
+		PlotDataSet dataSet = new PlotDataSet(xdata, outdata, nm);
+		return dataSet;
+	}
+	
+	private int buildDataSet(RectPlotNewMeasurement nm) {
+		PlotDataSet dataSet = buildDataSetRaw(nm);
 		this.plotDataSetList.add(dataSet);
-		// mark as value changed
-//		setChanged();
-//		notifyObservers();
 		
 		// Return the number in the list
-		return this.plotDataSetList.size() - 1;
+		int id = this.plotDataSetList.size() - 1;
 		
+		// save id in list to associate it to its source
+		if(nm.src == DataSource.MODEL) {
+			Integer[] lst = eqCircuitRectPlotIDs.get(nm.eqCircuitID);
+			Integer[] newlst = new Integer[lst.length+1];
+			System.arraycopy(lst, 0, newlst, 0, lst.length);
+			newlst[lst.length] = id;
+			eqCircuitRectPlotIDs.set(nm.eqCircuitID, newlst);
+		}
 		
+		return id;
+	}
 
-//	      List<Double> xtest2 = new ArrayList<Double>();
-//	      List<Double> ytest2 = new ArrayList<Double>();
-//	      xtest2.add(50.0);
-//	      xtest2.add(60.0);
-//	      ytest2.add(0.10);
-//	      ytest2.add(0.20);
-//	      PlotDataSet testset2 = new PlotDataSet(xtest2, ytest2);
-//	      this.plotDataSetList.add(testset2);
-//	      return (this.plotDataSetList.size() - 1);
+	/**
+	 * Builds a new dataset with the given settings
+	 * @param nm SmithChartNewMeasurement
+	 * @return SmithChartDataSet
+	 */
+	private SmithChartDataSet buildSmithChartDataSetRaw (SmithChartNewMeasurement nm) {
+		Complex[] data = null;
+		SmithChartDataSet set = null;
+		// Get Data
+		if(nm.src == DataSource.FILE) {
+			data = rfDataFile.getzData();
+			 set  = new SmithChartDataSet(null, data, rfDataFile.getfData(), nm);
+		} else if(nm.src == DataSource.MODEL) {
+			data = eqCircuits.get(nm.eqCircuitID).getZ();
+			set  = new SmithChartDataSet(null, data, eqCircuits.get(nm.eqCircuitID).getF(), nm);
+		}
+		return set;
 	}
 	
 	/**
@@ -149,20 +178,24 @@ public class Model extends Observable {
 	 * @return ID in the list of smith chart datasets
 	 */
 	private int buildSmithChartDataSet(SmithChartNewMeasurement nm) {
-		Complex[] data = null;
-		SmithChartDataSet set = null;
-		// Get Data
-		if(nm.src == DataSource.FILE) {
-			data = rfDataFile.getzData();
-			 set  = new SmithChartDataSet(null, data, rfDataFile.getfData());
-		} else if(nm.src == DataSource.MODEL) {
-			data = eqCircuits.get(nm.eqCircuitID).getZ();
-			set  = new SmithChartDataSet(null, data, eqCircuits.get(nm.eqCircuitID).getF());
-		}
+		SmithChartDataSet set = buildSmithChartDataSetRaw(nm);
 		
 		// Create set
 		this.smithPlotDataSetList.add(set);
-		return this.smithPlotDataSetList.size()-1;
+
+		int id = this.smithPlotDataSetList.size()-1;
+		
+		if(nm.src == DataSource.MODEL) {
+			// save id in list to associate it to its source
+			Integer[] lst = eqCircuitSmithPlotIDs.get(nm.eqCircuitID);
+			Integer[] newlst = new Integer[lst.length+1];
+			System.arraycopy(lst, 0, newlst, 0, lst.length);
+			newlst[lst.length] = id;
+			eqCircuitSmithPlotIDs.set(nm.eqCircuitID, newlst);
+		}
+		
+		
+		return id;
 	}
 	//================================================================================
     // Public Functions
@@ -234,7 +267,7 @@ public class Model extends Observable {
 	public void manualNotify() {
 		// mark as value changed
 		setChanged();
-		notifyObservers();	
+		notifyObservers(UpdateEvent.MANUAL);	
 	}
 
 	public PlotDataSet getDataSet(int intValue) {
@@ -339,6 +372,8 @@ public class Model extends Observable {
 	 */
 	public void mcWorkerSuccess(MCEqCircuit eqc) {
 		eqCircuits.add(eqc);
+		eqCircuitRectPlotIDs.add(new Integer[] {});
+		eqCircuitSmithPlotIDs.add(new Integer[] {});
 		setChanged();
 		notifyObservers(UpdateEvent.NEW_EQC);
 	}
@@ -391,5 +426,33 @@ public class Model extends Observable {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	/**
+	 * Updates a equivalent circuits parameters in the model
+	 * @param eqcID id of the model
+	 * @param parameters parameter list
+	 */
+	public void updateEqcParams(int eqcID, double[] parameters) {
+		eqCircuits.get(eqcID).setParameters(parameters);
+		// update the associated plots
+		for (Integer i : eqCircuitRectPlotIDs.get(eqcID) ) {
+			updateRectPlotDataset(i);
+		}
+		for (Integer i : eqCircuitSmithPlotIDs.get(eqcID) ) {
+			updateSmithPlotDataset(i);
+		}
+		setChanged();
+		notifyObservers();
+	}
+
+	private void updateRectPlotDataset(Integer i) {
+		RectPlotNewMeasurement nm = plotDataSetList.get(i).getNM();
+	 	plotDataSetList.set(i, buildDataSetRaw(nm));
+	}
+
+	private void updateSmithPlotDataset(Integer i) {
+		SmithChartNewMeasurement nm = smithPlotDataSetList.get(i).getNM();
+	 	smithPlotDataSetList.set(i, buildSmithChartDataSetRaw(nm));
 	}
 }

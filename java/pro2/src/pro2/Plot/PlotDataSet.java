@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pro2.Plot.RectPlot.DataSetSettings;
+import pro2.Plot.RectPlot.RectPlotNewMeasurement;
+import pro2.View.NewModelWindow;
 import pro2.util.MathUtil;
 
 public class PlotDataSet {
@@ -35,6 +37,7 @@ public class PlotDataSet {
 	private GeneralPath data_path;
 	
 	private DataSetSettings settings = new DataSetSettings();
+	private RectPlotNewMeasurement nm;
 
 	private BasicStroke data_stroke = new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 	
@@ -46,11 +49,12 @@ public class PlotDataSet {
 	 * @param x: X Data
 	 * @param y: Y Data
 	 */
-	public PlotDataSet(double[] x,double[] y) {
+	public PlotDataSet(double[] x,double[] y, RectPlotNewMeasurement nm) {
 		if(x.length != y.length) {
 			System.out.println("PlotDataSet: Error! Data not the same size");
 			return;
 		}
+		this.nm = nm;
 		x_data = new double[x.length];
 		y_data = new double[x.length];
 		System.arraycopy(x, 0, x_data, 0, x.length);
@@ -205,5 +209,13 @@ public class PlotDataSet {
 	 */
 	public void setDataSetSettings(DataSetSettings set) {
 		this.settings = set;
+	}
+	
+	/**
+	 * Returns the new measurement object with which the dataset was created
+	 * @return RectPlotNewMeasurement
+	 */
+	public RectPlotNewMeasurement getNM() {
+		return nm;
 	}
 }

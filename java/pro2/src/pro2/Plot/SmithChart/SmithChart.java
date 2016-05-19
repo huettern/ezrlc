@@ -80,15 +80,15 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
     // Public Functions
     //================================================================================
 	
-	/**
-	 * Adds a new Dataset to the plot
-	 * @param data Complex List of data
-	 * @param freq Double List of freq data
-	 */
-	public void addDataSet (Complex[] data, double[] freq) {
-		SmithChartDataSet set = new SmithChartDataSet(grid, data, freq);
-		dataSets.add(set);	
-	}
+//	/**
+//	 * Adds a new Dataset to the plot
+//	 * @param data Complex List of data
+//	 * @param freq Double List of freq data
+//	 */
+//	public void addDataSet (Complex[] data, double[] freq) {
+//		SmithChartDataSet set = new SmithChartDataSet(grid, data, freq, null);
+//		dataSets.add(set);	
+//	}
 	
 	/**
 	 * Add dataset in model by ID
@@ -110,6 +110,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 	public void update(Observable o, Object arg) {
 		Model model = (Model) o;
 		this.updateDatasets(model);
+		repaint();
 	}
 	
 

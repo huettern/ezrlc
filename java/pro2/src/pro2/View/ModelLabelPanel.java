@@ -18,6 +18,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import pro2.MVC.Controller;
 import pro2.MVC.Model;
@@ -38,9 +40,10 @@ import java.awt.Image;
 import javax.swing.JTextField;
 import java.awt.Rectangle;
 
-public class ModelLabelPanel extends JPanel implements ActionListener {
+public class ModelLabelPanel extends JPanel implements ActionListener, DocumentListener {
 
 	private Controller controller;
+	private boolean lockUpdate;
 	
 	private JEngineerField txtC0;
 	private JEngineerField txtR0;
@@ -50,6 +53,8 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	private JEngineerField txtF;
 	private JEngineerField txtR1;
 	
+	private double[] parameters;
+	
 	JLabel title;
 
 	private JButton btnDelete;
@@ -58,6 +63,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	private ImageIcon modelImage;
 	
 	private int eqcID;
+	private CircuitType circuitType;
 	
 	private final boolean[] r0EditableLUT = {true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,};
 	private final boolean[] f0EditableLUT = {false,false,false,false,false,false,false,false,false,false,false,false,false,true,true,true,true,true,true,true,true};
@@ -77,6 +83,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	 */
 	public ModelLabelPanel(int id, CircuitType t) {
 		eqcID = id;
+		circuitType = t;
 		build(t,id);
 	}
 	
@@ -143,6 +150,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	public void build (CircuitType t, int id){
 		eqcID = id;
 		int ordinal = t.ordinal();
+		circuitType = t;
 		
 		// Title
 		title.setText("<html><B>Model "+id +"</B></html>");
@@ -176,43 +184,50 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		if(r0EditableLUT[ordinal]) {
 			JLabel lblR0 = new JLabel("<html> R<sub>0</sub> </html>");
 			paramPanel.add(lblR0, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
-			txtR0 = new JEngineerField();
+			txtR0 = new JEngineerField(4,3,"E24");
+			txtR0.getDocument().addDocumentListener(this);
 			paramPanel.add(txtR0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(f0EditableLUT[ordinal]) {
 			JLabel lblF = new JLabel("f");
 			paramPanel.add(lblF, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
-			txtF = new JEngineerField();
+			txtF = new JEngineerField(4,3,"E24");
+			txtF.getDocument().addDocumentListener(this);
 			paramPanel.add(txtF, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(alphaEditableLUT[ordinal]) {
 			JLabel lbla = new JLabel("\u03B1");
 			paramPanel.add(lbla, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
-			txtAlpha = new JEngineerField();
+			txtAlpha = new JEngineerField(4,3,"E24");
+			txtAlpha.getDocument().addDocumentListener(this);
 			paramPanel.add(txtAlpha, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(r1EditableLUT[ordinal]) {
 			JLabel lblR1 = new JLabel("<html> R<sub>1</sub> </html>");
 			paramPanel.add(lblR1, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
-			txtR1 = new JEngineerField();
+			txtR1 = new JEngineerField(4,3,"E24");
+			txtR1.getDocument().addDocumentListener(this);
 			paramPanel.add(txtR1, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(lEditableLUT[ordinal]) {
 			JLabel lblL = new JLabel("L");
 			paramPanel.add(lblL, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
-			txtL0 = new JEngineerField();
+			txtL0 = new JEngineerField(4,3,"E24");
+			txtL0.getDocument().addDocumentListener(this);
 			paramPanel.add(txtL0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(c0EditableLUT[ordinal]) {
 			JLabel lblc0 = new JLabel("<html> C<sub>0</sub> </html>");
 			paramPanel.add(lblc0, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
-			txtC0 = new JEngineerField();
+			txtC0 = new JEngineerField(4,3,"E24");
+			txtC0.getDocument().addDocumentListener(this);
 			paramPanel.add(txtC0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(c1EditableLUT[ordinal]) {
 			JLabel lblc1 = new JLabel("<html> C<sub>1</sub> </html>");
 			paramPanel.add(lblc1, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
-			txtC1 = new JEngineerField();
+			txtC1 = new JEngineerField(4,3,"E24");
+			txtC1.getDocument().addDocumentListener(this);
 			paramPanel.add(txtC1, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		
@@ -244,13 +259,29 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	private void updateParams(MCEqCircuit e) {
 		double[] p = e.getParameters();
 		int ordinal = e.getCircuitType().ordinal();
-		if(r0EditableLUT[ordinal]) txtR0.setText(MathUtil.num2eng(p[0], 2));
-		if(f0EditableLUT[ordinal]) txtF.setText(MathUtil.num2eng(p[1], 2));
-		if(alphaEditableLUT[ordinal]) txtAlpha.setText(MathUtil.num2eng(p[2], 2));
-		if(r1EditableLUT[ordinal]) txtR1.setText(MathUtil.num2eng(p[3], 2));
-		if(lEditableLUT[ordinal]) txtL0.setText(MathUtil.num2eng(p[4], 2));
-		if(c0EditableLUT[ordinal]) txtC0.setText(MathUtil.num2eng(p[5], 2));
-		if(c1EditableLUT[ordinal]) txtC1.setText(MathUtil.num2eng(p[6], 2));
+		if(r0EditableLUT[ordinal]) txtR0.setValue(p[0]);
+		if(f0EditableLUT[ordinal]) txtF.setValue(p[1]);
+		if(alphaEditableLUT[ordinal]) txtAlpha.setValue(p[2]);
+		if(r1EditableLUT[ordinal]) txtR1.setValue(p[3]);
+		if(lEditableLUT[ordinal]) txtL0.setValue(p[4]);
+		if(c0EditableLUT[ordinal]) txtC0.setValue(p[5]);
+		if(c1EditableLUT[ordinal]) txtC1.setValue(p[6]);
+	}
+	
+	/**
+	 * Reads all values and stores them in a parameter list
+	 */
+	private void parseValues() {
+		double p[] = new double[] {0,0,0,0,0,0,0};
+		int ordinal = circuitType.ordinal();
+		if(r0EditableLUT[ordinal]) p[0] = txtR0.getValue();
+		if(f0EditableLUT[ordinal]) p[1] = txtF.getValue();
+		if(alphaEditableLUT[ordinal]) p[2] = txtAlpha.getValue();
+		if(r1EditableLUT[ordinal]) p[3] = txtR1.getValue();
+		if(lEditableLUT[ordinal]) p[4] = txtL0.getValue();
+		if(c0EditableLUT[ordinal]) p[5] = txtC0.getValue();
+		if(c1EditableLUT[ordinal]) p[6] = txtC0.getValue();
+		parameters = p;
 	}
 	
 	//================================================================================
@@ -258,13 +289,41 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
     //================================================================================
 	public void update(Observable o, Object arg) {
 		Model m = (Model)o;
-		updateParams(m.getEquivalentCircuit(this.eqcID));
-		updateUI();
+		if(lockUpdate == false) {
+			lockUpdate = true;
+			updateParams(m.getEquivalentCircuit(this.eqcID));
+			updateUI();
+			lockUpdate = false;
+		}
 	}
 
 	public int getID() {
 		// TODO Auto-generated method stub
 		return this.eqcID;
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		if(lockUpdate == false) {
+			lockUpdate = true;
+			this.parseValues();
+			controller.updateEqcParams(eqcID, parameters);
+			lockUpdate = false;
+		}
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		if(lockUpdate == false) {
+			lockUpdate = true;
+			this.parseValues();
+			controller.updateEqcParams(eqcID, parameters);
+			lockUpdate = false;
+		}
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
 	}
 	
 }

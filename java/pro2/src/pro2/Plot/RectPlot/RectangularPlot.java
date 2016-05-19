@@ -298,6 +298,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		Model model = (Model) o;
 		this.updateDatasets(model);
+		repaint();
 	}
 
 	

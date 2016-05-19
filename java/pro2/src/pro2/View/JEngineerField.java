@@ -150,8 +150,15 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 			rnd = 10.0;
 		else
 			rnd = 100.0;
-		for (int i = 0; i < nEReihe; i++) {
-			mEReihe[i] = Math.round(rnd * Math.pow(10.0, (double) i / nEReihe)) / rnd;
+		
+		if(nEReihe == 12) {
+			mEReihe = new double[] {1.0,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2};
+		} else if (nEReihe == 24) {
+			mEReihe = new double[] {1.0,1.1,1.2,1.3,1.5,1.6,1.8,2.0,2.2,2.4,2.7,3.0,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1};
+		} else {
+			for (int i = 0; i < nEReihe; i++) {
+				mEReihe[i] = Math.round(rnd * Math.pow(10.0, (double) i / nEReihe)) / rnd;
+			}
 		}
 
 		addMouseWheelListener(this);
@@ -244,6 +251,7 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
+		if(super.isFocusOwner() == false) return;
 		fireActionPerformed();
 		double exp = Math.pow(10.0, (int) Math.floor(Math.log10(Math.abs(getValue()))));
 		double mantisse = getValue() / exp;
