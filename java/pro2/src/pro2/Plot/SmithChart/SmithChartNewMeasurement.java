@@ -6,7 +6,7 @@ public class SmithChartNewMeasurement {
 
 	public Controller.DataSource src;
 	public String src_name;
-	public int modelID;
+	public int eqCircuitID;
 	
 	public SmithChartNewMeasurement() {
 		// TODO Auto-generated constructor stub

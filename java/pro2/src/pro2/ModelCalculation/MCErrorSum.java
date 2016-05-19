@@ -81,7 +81,6 @@ public class MCErrorSum implements MultivariateFunction {
 	 */
 	@Override
 	public double value(double[] params) {
-		System.out.println("Interface value, params=" +Arrays.toString(params));
 		// set new parameter
 		double[] p = MCUtil.topo2Param(this.circuit.getCircuitType(),params);
 		circuit.setParameters(p);
@@ -95,7 +94,9 @@ public class MCErrorSum implements MultivariateFunction {
 			magmeas[i] = this.measured[i].abs();
 		}
 		// calc error
-		return MCErrorSum.getError(magmeas, magS);
+		double error = MCErrorSum.getError(magmeas, magS);
+		System.out.println("Interface value, params=" +Arrays.toString(params) +" ERR=" + error);
+		return error;
 	}
 
 	

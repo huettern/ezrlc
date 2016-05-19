@@ -307,6 +307,8 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		}
 		if(this.getSelectedButton(this.btngrpSource)  == rdbtnModel){
 			nm.src=DataSource.MODEL;
+			nm.eqCircuitID = Integer.parseInt(cbModelList.getSelectedItem().toString().split("( )")[1]);
+			nm.src_name = cbModelList.getSelectedItem().toString();
 		}
 		// Measurement Tyoe
 		if(this.getSelectedButton(this.btngrpMeasType)  == rdbtnS) {

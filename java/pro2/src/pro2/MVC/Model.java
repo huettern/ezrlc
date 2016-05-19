@@ -23,7 +23,7 @@ public class Model extends Observable {
 	//================================================================================
     // Public Data
     //================================================================================
-	public enum UpdateEvent {FILE, NEW_EQC};
+	public enum UpdateEvent {FILE, NEW_EQC, REMOVE_EQC};
 	
 	
 	//================================================================================
@@ -68,16 +68,16 @@ public class Model extends Observable {
 				break;
 			}
 		} else if (nm.src == DataSource.MODEL) {
-			outdata = new double[nm.eqCircuit.getWSize()];
+			outdata = new double[eqCircuits.get(nm.eqCircuitID).getWSize()];
 			switch (nm.type) {
 			case S:
-				data = nm.eqCircuit.getS();
+				data = eqCircuits.get(nm.eqCircuitID).getS();
 				break;
 			case Y:
-				data = nm.eqCircuit.getY();
+				data = eqCircuits.get(nm.eqCircuitID).getY();
 				break;
 			case Z:
-				data = nm.eqCircuit.getS();
+				data = eqCircuits.get(nm.eqCircuitID).getZ();
 				break;
 			default:
 				break;
@@ -116,10 +116,12 @@ public class Model extends Observable {
 			}
 		}
 		
-		
+		double[] xdata = null;
+		if(nm.src == DataSource.FILE) xdata = rfDataFile.getfData();
+		if(nm.src == DataSource.MODEL) xdata = eqCircuits.get(nm.eqCircuitID).getF();
 		
 		// Now create the dataset and add it to the dataset list
-		PlotDataSet dataSet = new PlotDataSet(rfDataFile.getfData(), outdata);
+		PlotDataSet dataSet = new PlotDataSet(xdata, outdata);
 		this.plotDataSetList.add(dataSet);
 		// mark as value changed
 //		setChanged();
@@ -148,14 +150,17 @@ public class Model extends Observable {
 	 */
 	private int buildSmithChartDataSet(SmithChartNewMeasurement nm) {
 		Complex[] data = null;
-
+		SmithChartDataSet set = null;
 		// Get Data
 		if(nm.src == DataSource.FILE) {
 			data = rfDataFile.getzData();
+			 set  = new SmithChartDataSet(null, data, rfDataFile.getfData());
+		} else if(nm.src == DataSource.MODEL) {
+			data = eqCircuits.get(nm.eqCircuitID).getZ();
+			set  = new SmithChartDataSet(null, data, eqCircuits.get(nm.eqCircuitID).getF());
 		}
 		
 		// Create set
-		SmithChartDataSet set  = new SmithChartDataSet(null, data, rfDataFile.getfData());
 		this.smithPlotDataSetList.add(set);
 		return this.smithPlotDataSetList.size()-1;
 	}
@@ -216,10 +221,10 @@ public class Model extends Observable {
 	 * @param cpxMod RFData.ComplexModifier
 	 * @return	unique data identifier of the plotdataset
 	 */
-	public int createDataset(Controller.DataSource src, MCEqCircuit ec, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
+	public int createDataset(Controller.DataSource src, int ecID, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
 		RectPlotNewMeasurement nm = new RectPlotNewMeasurement();
 		nm.src = src;
-		nm.eqCircuit = ec;
+		nm.eqCircuitID = ecID;
 		nm.type=measType;
 		nm.cpxMod=cpxMod;
 		return this.buildDataSet(nm);
@@ -362,5 +367,29 @@ public class Model extends Observable {
 		int[] res = new int[j];
 		System.arraycopy(tmp, 0, res, 0, j);
 		return res;
+	}
+
+	/**
+	 * Removes an equivalent circuit
+	 * @param eqcID ID to the circuit
+	 */
+	public void removeEqCircuit(int eqcID) {
+		this.eqCircuits.set(eqcID, null);
+		setChanged();
+		notifyObservers(UpdateEvent.REMOVE_EQC);
+	}
+
+	/**
+	 * Checks if the eqcircuit given by the id exists
+	 * @param id ID to the eqcircuit
+	 * @return true if existing, flase if not
+	 */
+	public boolean isEqCircuit(int id) {
+		try {
+			if(this.eqCircuits.get(id) != null) return true;
+			else return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

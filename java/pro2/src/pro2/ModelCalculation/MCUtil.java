@@ -278,7 +278,7 @@ public class MCUtil {
 			break;
 		case MODEL1: res[0] = p[0]; res[4] = p[1];
 			break;
-		case MODEL2: res[0] = p[0]; res[5] = p[2];
+		case MODEL2: res[0] = p[0]; res[5] = p[1];
 			break;
 		case MODEL3: res[0] = p[0]; res[4] = p[1];
 			break;

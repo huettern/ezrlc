@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import pro2.MVC.Controller;
 import pro2.MVC.Controller.DataSource;
 import pro2.MVC.Model;
+import pro2.Plot.Axis.Scale;
 import pro2.Plot.RectPlot.RectPlotAddMeasurementWindow;
 import pro2.Plot.RectPlot.RectPlotSettings;
 import pro2.Plot.RectPlot.RectPlotSettingsWindow;
@@ -206,7 +207,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	 */
 	public void buildRectPlot() {
 		plotType = ENPlotType.RECTANGULAR;
-		rectPlot = new RectangularPlot();
+		rectPlot = new RectangularPlot(Scale.LOG, Scale.LINEAR);
 		rectPlot.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_plot = new GridBagConstraints();
 		gbc_plot.weighty = 1.0;
@@ -334,6 +335,7 @@ public class Figure extends JPanel implements ActionListener, Observer {
 			} else if (plotType == ENPlotType.SMITH) {
 				newSmithMeasurementWindow.setFilename(controller.getFilename());
 				newSmithMeasurementWindow.setDatasets(smithChart.getDataSetSettings());
+				newSmithMeasurementWindow.setModels(controller.getModelIDs());
 				newSmithMeasurementWindow.show();
 			}
 		}

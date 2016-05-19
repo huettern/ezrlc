@@ -40,6 +40,8 @@ import java.awt.Rectangle;
 
 public class ModelLabelPanel extends JPanel implements ActionListener {
 
+	private Controller controller;
+	
 	private JEngineerField txtC0;
 	private JEngineerField txtR0;
 	private JEngineerField txtAlpha;
@@ -47,6 +49,8 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	private JEngineerField txtL0;
 	private JEngineerField txtF;
 	private JEngineerField txtR1;
+	
+	JLabel title;
 
 	private JButton btnDelete;
 	private JButton btnOptimize;
@@ -70,23 +74,27 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 	 * Builds a new ModelLabelPanel with the id to the equivalent circuit and the circuit type
 	 * @param id ID to the EQC in the model
 	 * @param t CircuitType of the model
-	 * @param c Color of the model
 	 */
 	public ModelLabelPanel(int id, CircuitType t) {
 		eqcID = id;
 		build(t,id);
 	}
 	
-	
+	/**
+	 * Creates an empty ModelLabelPanel
+	 * @param c controller object
+	 */
+	public ModelLabelPanel(Controller c) {
+		controller = c;
+		buildEmpty();
+	}
 	//================================================================================
     // Private Functions
     //================================================================================
 	/**
-	 * Builds the panel according to the circuit type
-	 * @param t
+	 * Builds an empty model label panel
 	 */
-	private void build (CircuitType t, int id){
-		int ordinal = t.ordinal();
+	private void buildEmpty() {
 		GridBagLayout gbl = new GridBagLayout();
 		setLayout(gbl);
 		setBackground(Color.WHITE);
@@ -102,15 +110,48 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		add(pnlTitle, gbc);
-		JLabel title = new JLabel("Model "+id);
+		title = new JLabel("Creating new Model..");
 		title.setHorizontalAlignment(JLabel.CENTER);
 		pnlTitle.add(title, BorderLayout.CENTER);
+		
+
+		// buttons
+		JPanel pnlBtn = new JPanel();
+		pnlBtn.setLayout(new GridLayout(1, 2, 0, 0));
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		add(pnlBtn, gbc);
+		
+		btnDelete = new JButton("DEL");
+		btnDelete.addActionListener(this);
+		pnlBtn.add(btnDelete, 0);
+		btnOptimize= new JButton("OPT");
+		btnOptimize.addActionListener(this);
+		pnlBtn.add(btnOptimize, 1);
+	}
+	
+	/**
+	 * Builds a new ModelLabelPanel with the id to the equivalent circuit and the circuit type
+	 * @param id ID to the EQC in the model
+	 * @param t CircuitType of the model
+	 */
+	public void build (CircuitType t, int id){
+		eqcID = id;
+		int ordinal = t.ordinal();
+		
+		// Title
+		title.setText("<html><B>Model "+id +"</B></html>");
 		
 		// Load image
 		modelImage = UIUtil.loadResourceIcon("model_" +  ordinal + ".png", 160, 100);
 		JLabel label = new JLabel("", modelImage, JLabel.CENTER);
 		label.setOpaque(false);
-		gbc = new GridBagConstraints();
+		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -175,22 +216,6 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 			paramPanel.add(txtC1, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		
-		// buttons
-		JPanel pnlBtn = new JPanel();
-		pnlBtn.setLayout(new GridLayout(1, 2, 0, 0));
-		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(0, 0, 0, 0);
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0;
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		add(pnlBtn, gbc);
-		
-		btnDelete = new JButton("DEL");
-		pnlBtn.add(btnDelete, 0);
-		btnOptimize= new JButton("OPT");
-		pnlBtn.add(btnOptimize, 1);
 	}
 	
 	
@@ -201,8 +226,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
     //================================================================================
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getSource() == btnDelete) {
+			controller.removeEqCircuit(eqcID);
+		}
+		if(e.getSource() == btnOptimize) {
+		//	controller.optimizeEqCircuit(eqcID);
+		}
 	}
 	
 	
@@ -231,6 +260,11 @@ public class ModelLabelPanel extends JPanel implements ActionListener {
 		Model m = (Model)o;
 		updateParams(m.getEquivalentCircuit(this.eqcID));
 		updateUI();
+	}
+
+	public int getID() {
+		// TODO Auto-generated method stub
+		return this.eqcID;
 	}
 	
 }
