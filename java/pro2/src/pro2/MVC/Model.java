@@ -8,6 +8,7 @@ import pro2.MVC.Controller.DataSource;
 import pro2.ModelCalculation.MCEqCircuit;
 import pro2.ModelCalculation.MCOptions;
 import pro2.ModelCalculation.MCWorker;
+import pro2.ModelCalculation.MCWorker.WorkerMode;
 import pro2.Plot.PlotDataSet;
 import pro2.Plot.Figure.ENPlotType;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
@@ -23,7 +24,7 @@ public class Model extends Observable {
 	//================================================================================
     // Public Data
     //================================================================================
-	public enum UpdateEvent {MANUAL, FILE, NEW_EQC, REMOVE_EQC};
+	public enum UpdateEvent {MANUAL, FILE, NEW_EQC, REMOVE_EQC, CHANGE_EQC};
 	
 	
 	//================================================================================
@@ -370,12 +371,26 @@ public class Model extends Observable {
 	 * Gets called if the MCWorker succeeds
 	 * @param eqc Equivalent circuit that was generated
 	 */
-	public void mcWorkerSuccess(MCEqCircuit eqc) {
-		eqCircuits.add(eqc);
-		eqCircuitRectPlotIDs.add(new Integer[] {});
-		eqCircuitSmithPlotIDs.add(new Integer[] {});
-		setChanged();
-		notifyObservers(UpdateEvent.NEW_EQC);
+	public void mcWorkerSuccess(MCEqCircuit eqc,  MCWorker.WorkerMode mode) {
+		if(mode == WorkerMode.NORMAL) {
+			eqCircuits.add(eqc);
+			eqCircuitRectPlotIDs.add(new Integer[] {});
+			eqCircuitSmithPlotIDs.add(new Integer[] {});
+			setChanged();
+			notifyObservers(UpdateEvent.NEW_EQC);
+		} else if (mode == WorkerMode.OPT_ONLY) {
+			// update plots
+			for (int i = 0; i < plotDataSetList.size(); i++) {
+				if(plotDataSetList.get(i) != null)
+					updateRectPlotDataset(i);
+			}
+			for (int i = 0; i < smithPlotDataSetList.size(); i++) {
+				if(smithPlotDataSetList.get(i) != null)
+					updateSmithPlotDataset(i);
+			}
+			setChanged();
+			notifyObservers(UpdateEvent.CHANGE_EQC);
+		}
 	}
 
 	/**
@@ -454,5 +469,17 @@ public class Model extends Observable {
 	private void updateSmithPlotDataset(Integer i) {
 		SmithChartNewMeasurement nm = smithPlotDataSetList.get(i).getNM();
 	 	smithPlotDataSetList.set(i, buildSmithChartDataSetRaw(nm));
+	}
+
+	/**
+	 * Starts the optimizer of the eqcircuit
+	 * @param eqcID
+	 */
+	public void optimizeEqCircuit(int eqcID) {
+		// Create worker, set data and start it
+		worker = new MCWorker(this, "MCWorker-EQCOptimizer-"+eqcID);
+		worker.setRFDataSet(rfDataFile);
+		worker.setEQCircuit(eqCircuits.get(eqcID));
+		worker.start();
 	}
 }

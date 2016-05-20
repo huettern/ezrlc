@@ -34,6 +34,11 @@ import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.NelderMeadSimplex
 public class MCWorker extends Thread {
 
 	//================================================================================
+    //Public Data
+    //================================================================================
+	public enum WorkerMode {NORMAL, OPT_ONLY};
+	
+	//================================================================================
     //Private Data
     //================================================================================
 	private Model parentModel;
@@ -42,6 +47,9 @@ public class MCWorker extends Thread {
 	
 	private RFData rfData;
 	private MCOptions ops;
+	private MCEqCircuit eqCircuit;
+	
+	private WorkerMode workerMode;
 
 	//================================================================================
     //Constructor
@@ -70,8 +78,18 @@ public class MCWorker extends Thread {
 	 */
 	public void setMCOptions (MCOptions options) {
 		ops = options;
+		workerMode = WorkerMode.NORMAL;
 	}
 
+	/**
+	 * Set the model to be optimized
+	 * @param mcEqCircuit MCEqCircuit
+	 */
+	public void setEQCircuit(MCEqCircuit mcEqCircuit) {
+		eqCircuit = mcEqCircuit;
+		ops = eqCircuit.getOps();
+		workerMode = WorkerMode.OPT_ONLY;
+	}
 
 	//================================================================================
     // Start Method
@@ -108,11 +126,17 @@ public class MCWorker extends Thread {
 		s = rfData.getSData(rref);
 		//s = rfData.getSData(50.0);
 		
-		
 		// apply ops
 		double[] w = MCUtil.applyMCOpsToF(ops, f, MCUtil.DATA_FORMAT.OMEGA);
 		Complex[] ys = MCUtil.applyMCOpsToData(ops, f, s);
 		Complex[] yz = MCUtil.applyMCOpsToData(ops, f, z);
+		
+		// if mode is optimize only, do it now
+		if(workerMode == WorkerMode.OPT_ONLY) {
+			eqCircuit.optimize(ys);
+			success(eqCircuit);
+			return;
+		}
 		
 		// Create model index list
 		CircuitType[] circuitIdxes;
@@ -179,6 +203,7 @@ public class MCWorker extends Thread {
 //		double[] res = optimum.getPoint();
 		
 		// Run optimizer
+		sortedList.get(0).setOps(ops);
 		sortedList.get(0).optimize(ys);
 		sortedList.get(0).printParameters();
 		success(sortedList.get(0));
@@ -189,7 +214,7 @@ public class MCWorker extends Thread {
     //================================================================================
 	private void success (MCEqCircuit eqc) {
 		System.out.println("MCWorker " +workerName +" has successfully completed");
-		parentModel.mcWorkerSuccess(eqc);
+		parentModel.mcWorkerSuccess(eqc, this.workerMode);
 	}
 
 	/**
@@ -306,6 +331,5 @@ public class MCWorker extends Thread {
 		System.out.println("L="+L);
 				
 	}
-
 
 }

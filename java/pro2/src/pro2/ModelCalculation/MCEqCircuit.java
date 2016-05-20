@@ -44,6 +44,7 @@ public class MCEqCircuit {
     // Private Data
     //================================================================================
 	private CircuitType circuitType;
+	private MCOptions ops;
 
 	private double[] parameters;
 	private double[] shortParameters;
@@ -567,6 +568,13 @@ public class MCEqCircuit {
 		this.z0 = rref;
 	}
 
+	public void setOps(MCOptions ops) {
+		this.ops = ops;
+	}
+	
+	public MCOptions getOps () {
+		return ops;
+	}
 	
 	
 

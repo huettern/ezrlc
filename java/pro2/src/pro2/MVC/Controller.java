@@ -172,4 +172,12 @@ public int[] getModelIDs() {
 		model.updateEqcParams(eqcID, parameters);
 	}
 
+	/**
+	 * Starts the optimizer of the eqcircuit
+	 * @param eqcID
+	 */
+	public void optimizeEqCircuit(int eqcID) {
+		model.optimizeEqCircuit(eqcID);
+	}
+
 }

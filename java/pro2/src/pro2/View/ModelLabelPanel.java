@@ -245,7 +245,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			controller.removeEqCircuit(eqcID);
 		}
 		if(e.getSource() == btnOptimize) {
-		//	controller.optimizeEqCircuit(eqcID);
+			controller.optimizeEqCircuit(eqcID);
 		}
 	}
 	

@@ -1,5 +1,16 @@
-# pro2 
-Circle-CI Build: [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/master.svg?style=svg)](https://circleci.com/gh/noah95/pro2/tree/master)
+# pro2  [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/master.svg?style=shield&amp;circle-token=1242b68593e38e62a5369f0a6cf95e30adc733d2)](https://circleci.com/gh/noah95/pro2/tree/master)
+
+FHNW 2nd Semester project working repository
+
+------------
+
+## Build status
+
+| Branch   | Status |
+|----------|--------|
+| **master**   | [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/master.svg?style=shield&amp;circle-token=1242b68593e38e62a5369f0a6cf95e30adc733d2)](https://circleci.com/gh/noah95/pro2/tree/master)       |
+| **solver**   | [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/solver.svg?style=shield&amp;circle-token=1242b68593e38e62a5369f0a6cf95e30adc733d2)](https://circleci.com/gh/noah95/pro2/tree/master)       |
+| **igassist** | [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/igassist.svg?style=shield&amp;circle-token=1242b68593e38e62a5369f0a6cf95e30adc733d2)](https://circleci.com/gh/noah95/pro2/tree/master)       |
 
 ------------
 
@@ -61,7 +72,7 @@ Build Path -> Libraries
 `brew install ant`
 `brew install maven`
 
-##Installing Windowbuilder
+## Installing Windowbuilder
 use this link:
 help > install new software > work with
 http://download.eclipse.org/windowbuilder/WB/release/R201506241200-1/4.5/
