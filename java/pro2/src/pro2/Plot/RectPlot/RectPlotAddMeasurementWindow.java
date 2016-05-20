@@ -122,6 +122,12 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		pnlDataSource.add(rdbtnModel, gbc_rdbtnModel);
 		
 		cbModelList = new JComboBox<String>();
+		cbModelList.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        rdbtnFile.setSelected(false);
+		        rdbtnModel.setSelected(true);
+		    }
+		});
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -412,5 +418,6 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		 for(int i = 0; i < modelIDs.length; i++){
 			 cbModelList.addItem(modelNames[i]);
 		 }
+		 resetButtons();
 	}
 }
