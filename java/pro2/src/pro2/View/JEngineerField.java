@@ -253,6 +253,9 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		if(super.isFocusOwner() == false) return;
 		fireActionPerformed();
+		
+		if(getValue() == 0.0) setValue(1e-15);
+		
 		double exp = Math.pow(10.0, (int) Math.floor(Math.log10(Math.abs(getValue()))));
 		double mantisse = getValue() / exp;
 		double dist = Double.MAX_VALUE;
