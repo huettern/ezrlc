@@ -9,6 +9,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -55,6 +56,8 @@ import pro2.View.WorkPanel.ViewType;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.OceanTheme;
 
 import java.awt.Frame;
 
@@ -70,6 +73,11 @@ public class MainView extends JFrame implements Observer {
 	// Storing the Files in a MenuItem List and a second one containing the UIDs
 	private List<UUID> fileTreeItemsUID = new ArrayList<UUID>();   
 	
+	private static enum LAF {
+		METAL, OCEAN, SYSTEM, NIMROD
+	}
+
+	private static LAF laf = LAF.SYSTEM;
 
 
 	//================================================================================
@@ -121,6 +129,31 @@ public class MainView extends JFrame implements Observer {
 		pack();
 		setMinimumSize(getPreferredSize());
 	//	setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+		// Look and feel
+		try {
+			switch (laf) {
+				case METAL:
+					UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+					break;
+				case OCEAN:
+					UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+					MetalLookAndFeel.setCurrentTheme(new OceanTheme());
+					break;
+				case SYSTEM:
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					break;
+				case NIMROD:
+					//UIManager.setLookAndFeel(new MyNimRODLookAndFeel("DarkGray.theme"));
+					break;
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		if (laf != LAF.SYSTEM) {
+			setUndecorated(true);
+			getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
+		}
 		
 	}
 	
