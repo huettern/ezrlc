@@ -80,10 +80,11 @@ public class RectangularPlot extends JPanel implements Observer {
 		settings.xAxisMinimum = 0.1;
 		settings.xAxisMaximum = 1;
 		settings.xAxisSteps = 1;
+		settings.xScale = x;
 		settings.yAxisMinimum = 0.1;
 		settings.yAxisMaximum = 1;
 		settings.yAxisSteps = 1;
-		
+		settings.yScale = y;
 		
 		// Add Axis
 		//horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin);

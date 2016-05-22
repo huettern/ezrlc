@@ -408,6 +408,16 @@ public class RectPlotSettingsWindow implements ActionListener {
 		txtYmax.setValue(settings.yAxisMaximum);
 		txtYmin.setValue(settings.yAxisMinimum);
 		txtYstep.setValue(settings.yAxisSteps);
+
+		rdbtnLinX.setSelected(false);
+		rdbtnLinY.setSelected(false);
+		rdbtnLogX.setSelected(false);
+		rdbtnLogY.setSelected(false);
+		if(s.xScale == Scale.LINEAR) rdbtnLinX.setSelected(true);
+		else rdbtnLogX.setSelected(true);
+		if(s.yScale == Scale.LINEAR) rdbtnLinY.setSelected(true);
+		else rdbtnLogY.setSelected(true);
+			
 	}
 
 	public RectPlotSettings getSettings() {
