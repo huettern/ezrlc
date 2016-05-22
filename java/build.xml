@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project pro2">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="${dir.buildfile}"/>
+    <property name="dir.jarfile" value="${dir.workspace}/pro2/target/archive-tmp"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/pro2-.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="pro2.Pro2"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="${dir.workspace}/pro2/target/classes"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/pro2/lib/commons-math3-3.6/commons-math3-3.6.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/pro2/lib/commons-math3-3.6/commons-math3-3.6-javadoc.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/noah/.m2/repository/org/apache/commons/commons-math3/3.6/commons-math3-3.6.jar"/>
+        </jar>
+    </target>
+</project>

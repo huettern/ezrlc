@@ -36,6 +36,7 @@ public class ImageComboBox extends JPanel implements ActionListener{
         Integer[] intArray = new Integer[imagesName.length];
         for (int i = 0; i < imagesName.length; i++) {
             intArray[i] = new Integer(i);
+            System.out.println("Loading " +imagesName[i]);
             images[i] = UIUtil.loadResourceIcon(imagesName[i]);
             if (images[i] != null) {
                 images[i].setDescription(imagesText[i]);

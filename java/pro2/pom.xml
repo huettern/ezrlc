@@ -42,6 +42,14 @@
 			</plugin>
 
 		</plugins>
+		<resources>
+      		<resource>
+      			<directory>src/img</directory>
+      			<includes>
+		          <include>**/*.*</include>
+		        </includes>
+			</resource>
+      	</resources>
 	</build>
 	<dependencies>
 
