@@ -16,6 +16,7 @@ import pro2.Plot.SmithChart.SmithChartSettings;
 import pro2.Plot.SmithChart.SmithChartSettingsWindow;
 import pro2.RFData.RFData.ComplexModifier;
 import pro2.RFData.RFData.MeasurementType;
+import pro2.View.JEngineerField;
 
 import java.awt.Color;
 import java.awt.GridBagLayout;
@@ -33,6 +34,8 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.border.LineBorder;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -42,7 +45,7 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.ScrollPaneConstants;
 
-public class Figure extends JPanel implements ActionListener, Observer {
+public class Figure extends JPanel implements ActionListener, Observer, DocumentListener {
 
 	//================================================================================
     // Private Data
@@ -58,12 +61,15 @@ public class Figure extends JPanel implements ActionListener, Observer {
 	private SmithChartAddMeasurementWindow newSmithMeasurementWindow;
 	private Controller controller;
 	private JButton btnAddMeasurement;
+	private JEngineerField tfZ0;
 	
 	private List<Integer> dataIDList = new ArrayList<Integer>();
 	private JButton btnAutoscale;
 	private JPanel panel_1;
 	
 	private SmithChartSettingsWindow smithChartSettingWindow;
+	
+	private SmithChartSettings smithChartSettings;
 
 	private JButton btnDeleteGraph;
 	private JPanel pnlDataSetsBorder;
@@ -86,13 +92,14 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		
 		setBackground(UIManager.getColor("ToggleButton.background"));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0};
+//		gridBagLayout.columnWidths = new int[]{0, 0, 0};
+//		gridBagLayout.rowHeights = new int[]{0, 0};
+//		gridBagLayout.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+//		gridBagLayout.rowWeights = new double[]{0.0, 1.0};
 		setLayout(gridBagLayout);
 		
 		panel_1 = new JPanel();
+		panel_1.setPreferredSize(new Dimension(180, 200));
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.insets = new Insets(5, 0, 5, 5);
@@ -115,15 +122,6 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_btnAddMeasurement.gridy = 0;
 		panel_1.add(btnAddMeasurement, gbc_btnAddMeasurement);
 		btnAddMeasurement.addActionListener(this);
-		
-		btnSettings = new JButton("Settings");
-		GridBagConstraints gbc_btnSettings = new GridBagConstraints();
-		gbc_btnSettings.insets = new Insets(0, 5, 5, 5);
-		gbc_btnSettings.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSettings.gridx = 0;
-		gbc_btnSettings.gridy = 1;
-		panel_1.add(btnSettings, gbc_btnSettings);
-		btnSettings.addActionListener(this);
 		
 		btnAutoscale = new JButton("Autoscale");
 		GridBagConstraints gbc_btnAutoscale = new GridBagConstraints();
@@ -218,6 +216,16 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_plot.gridy = 1;
 		add(rectPlot, gbc_plot);
 
+		// settings button
+		btnSettings = new JButton("Settings");
+		GridBagConstraints gbc_btnSettings = new GridBagConstraints();
+		gbc_btnSettings.insets = new Insets(0, 5, 5, 5);
+		gbc_btnSettings.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSettings.gridx = 0;
+		gbc_btnSettings.gridy = 1;
+		panel_1.add(btnSettings, gbc_btnSettings);
+		btnSettings.addActionListener(this);
+		
 		// Settings Dialog
 		rectPlotSettingWindow = new RectPlotSettingsWindow(this.controller, this);
 		
@@ -241,6 +249,24 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		gbc_plot.gridy = 1;
 		panel_1.remove(btnAutoscale);
 		add(smithChart, gbc_plot);
+		
+		// settings textfield
+		JPanel pnl_z0 = new JPanel(new GridBagLayout());
+		panel_1.add(pnl_z0, new GridBagConstraints(0,1,1,1,1.0,0.0,GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,new Insets(0, 5, 5, 5),0,0));
+		
+		JLabel lblZ0 = new JLabel("Z0 =");
+		pnl_z0.add(lblZ0, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0));
+		
+		tfZ0 = new JEngineerField(3, 20, "E24");
+		tfZ0.getDocument().addDocumentListener(this);
+		pnl_z0.add(tfZ0, new GridBagConstraints(1,0,1,1,1.0,0.0,GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,new Insets(0, 5, 5, 5),0,0));
+		
+		JLabel lblOhm = new JLabel("\u2126");
+		pnl_z0.add(lblOhm, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0));
+		
+		// settings
+		smithChartSettings = smithChart.getSettings();
+		tfZ0.setValue(smithChartSettings.referenceResistance);
 		
 		// Settings dialog
 		smithChartSettingWindow = new SmithChartSettingsWindow(this.controller, this);
@@ -365,6 +391,24 @@ public class Figure extends JPanel implements ActionListener, Observer {
 		}
 		pnlDataSets.revalidate();
 		pnlDataSets.repaint();
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		smithChartSettings.referenceResistance = tfZ0.getValue();
+		smithChart.setSettings(smithChartSettings);
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		smithChartSettings.referenceResistance = tfZ0.getValue();
+		smithChart.setSettings(smithChartSettings);
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

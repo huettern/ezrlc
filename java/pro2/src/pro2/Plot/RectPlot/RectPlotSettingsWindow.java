@@ -135,7 +135,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 	  //  System.out.println("cur"+current+"min"+min+"max"+max+"stp"+step);
 		
 	    
-		txtXmin = new JEngineerField(3, 20, "E3");
+		txtXmin = new JEngineerField(3, 20, "E24");
 		txtXmin.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinXmin = new GridBagConstraints();
 		gbc_spinXmin.gridwidth = 2;
@@ -153,7 +153,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblMaximumX.gridy = 1;
 		pnlX.add(lblMaximumX, gbc_lblMaximumX);
 		
-		txtXmax = new JEngineerField(3, 20, "E3");
+		txtXmax = new JEngineerField(3, 20, "E24");
 		txtXmax.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinXmax = new GridBagConstraints();
 		gbc_spinXmax.gridwidth = 2;
@@ -171,7 +171,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblStepsX.gridy = 2;
 		pnlX.add(lblStepsX, gbc_lblStepsX);
 		
-		txtXstep = new JEngineerField(3, 20, "E3");
+		txtXstep = new JEngineerField(3, 20);
 		txtXstep.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinXstep = new GridBagConstraints();
 		gbc_spinXstep.gridwidth = 2;
@@ -225,7 +225,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblMinimumY.gridy = 0;
 		pnlY.add(lblMinimumY, gbc_lblMinimumY);
 		
-		txtYmin = new JEngineerField(3, 20, "E3");
+		txtYmin = new JEngineerField(3, 20, "E24");
 		txtYmin.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinYmin = new GridBagConstraints();
 		gbc_spinYmin.gridwidth = 2;
@@ -243,7 +243,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblMaximumY.gridy = 1;
 		pnlY.add(lblMaximumY, gbc_lblMaximumY);
 		
-		txtYmax = new JEngineerField(3, 20, "E3");
+		txtYmax = new JEngineerField(3, 20, "E24");
 		txtYmax.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinYmax = new GridBagConstraints();
 		gbc_spinYmax.gridwidth = 2;
@@ -261,7 +261,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblStepsY.gridy = 2;
 		pnlY.add(lblStepsY, gbc_lblStepsY);
 		
-		txtYstep = new JEngineerField(3, 20, "E3");
+		txtYstep = new JEngineerField(3, 20);
 		txtYstep.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinYstep = new GridBagConstraints();
 		gbc_spinYstep.gridwidth = 2;

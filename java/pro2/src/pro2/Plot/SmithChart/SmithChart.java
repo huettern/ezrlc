@@ -22,6 +22,7 @@ import pro2.Plot.PlotDataSet;
 import pro2.Plot.RectPlot.DataSetSettings;
 import pro2.Plot.RectPlot.RectPlotNewMeasurement;
 import pro2.util.Complex;
+import pro2.util.MathUtil;
 import pro2.util.PointD;
 import pro2.util.UIUtil;
 
@@ -133,7 +134,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
         // Paint reference resistance
         g.setColor(Color.LIGHT_GRAY);
         g.setFont(new Font("Arial", 0, 18));
-        g.drawString(String.format("Z0: %.1f\u2126", settings.referenceResistance), 10, this.getHeight()-10);
+        g.drawString(String.format("Z0: %s\u2126", MathUtil.num2eng(settings.referenceResistance, 2)), 10, this.getHeight()-10);
     }
 
 
