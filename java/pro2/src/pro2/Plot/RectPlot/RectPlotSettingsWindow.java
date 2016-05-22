@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.ButtonGroup;
@@ -171,7 +172,8 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblStepsX.gridy = 2;
 		pnlX.add(lblStepsX, gbc_lblStepsX);
 		
-		txtXstep = new JEngineerField(3, 20);
+		txtXstep = new JEngineerField(new DecimalFormat("###"), 0);
+		txtXstep.setMinValue(1);
 		txtXstep.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinXstep = new GridBagConstraints();
 		gbc_spinXstep.gridwidth = 2;
@@ -261,7 +263,8 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblStepsY.gridy = 2;
 		pnlY.add(lblStepsY, gbc_lblStepsY);
 		
-		txtYstep = new JEngineerField(3, 20);
+		txtYstep = new JEngineerField(new DecimalFormat("###"), 0);
+		txtYstep.setMinValue(1);
 		txtYstep.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinYstep = new GridBagConstraints();
 		gbc_spinYstep.gridwidth = 2;
@@ -414,9 +417,9 @@ public class RectPlotSettingsWindow implements ActionListener {
 		rdbtnLogX.setSelected(false);
 		rdbtnLogY.setSelected(false);
 		if(s.xScale == Scale.LINEAR) rdbtnLinX.setSelected(true);
-		else rdbtnLogX.setSelected(true);
+		else { rdbtnLogX.setSelected(true); txtXstep.setEnabled(false); }
 		if(s.yScale == Scale.LINEAR) rdbtnLinY.setSelected(true);
-		else rdbtnLogY.setSelected(true);
+		else { rdbtnLogY.setSelected(true); txtYstep.setEnabled(false);}
 			
 	}
 

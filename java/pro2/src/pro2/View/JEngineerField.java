@@ -53,7 +53,7 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	private int digits = 3, outputMode = ENG;
 	private boolean inputEXP = true, inputUNIT = true;
 	private boolean edited = false, errorDisplayed = false, zeroEnabled = true;
-	private String errorText = "Invalide!", disabledText = "-";
+	private String errorText = "invalid input", disabledText = "-";
 	private int errorShowTime = 1000;
 	private int nEReihe = 0, indexEReihe = 0;
 	private double dEReihe = 0.0;
