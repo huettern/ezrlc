@@ -285,6 +285,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//New Model Button
 		btnNewModel = new JButton("New Model");
+		btnNewModel.setEnabled(false);
 		//btnNewModel.setPreferredSize(new Dimension(87, 23));
 		//btnNewModel.setMinimumSize(new Dimension(87, 23));
 		//btnNewModel.setMaximumSize(new Dimension(87, 23));
@@ -398,6 +399,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	 */
 	public void setFileName(String name) {
 		lblInputFile.setText(name);
+		btnNewModel.setEnabled(true);
 	}
 
 
