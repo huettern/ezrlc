@@ -76,7 +76,7 @@ public class PlotDataSet {
 		this.y_span = this.y_max - this.y_min;
 		if(this.y_span == 0) this.y_span = Double.MIN_VALUE;
 		
-		System.out.println("New Dataset added. x_min:" +this.x_min +" x_max:" +this.x_max +" y_min:" +this.y_min +" y_max:" +this.y_max);
+		// System.out.println("New Dataset added. x_min:" +this.x_min +" x_max:" +this.x_max +" y_min:" +this.y_min +" y_max:" +this.y_max);
 	}
 
 	//================================================================================

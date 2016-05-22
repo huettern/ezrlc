@@ -47,6 +47,8 @@ public class Axis {
 	private double max = 0;
 	private int step = 1;
 	private int exp = 0;
+	private double minlabel = 0;
+	private double maxlabel = 0;
 	
 	// Log scale params
 	private double logUpperBound = 1;
@@ -112,7 +114,7 @@ public class Axis {
 		
 		g.drawLine(this.start_x, this.start_y, this.end_x, this.end_y);
 		
-		for(int i = 0; i <= label_count; i++)
+		for(int i = 0; i < label_count; i++)
 		{
 			//g.drawString(this.formatAxisValue(label_val[i]), label_posx[i], label_posy[i]);
 			this.drawCenteredString(g,this.formatAxisValue(label_val[i]),new Point(label_posx[i], label_posy[i]), new Font("Arial", Font.PLAIN, 12));
@@ -283,6 +285,9 @@ public class Axis {
 	 * Caluclates all the necessary pixel values of the Axis to paint it
 	 */
 	private void evalSize() {
+		// calculate exponent
+		calcExponent();
+		
 		if(or == Orientation.HORIZONTAL) {
 			// Calculate origins
 			this.start_x = this.origin_x;
@@ -292,17 +297,18 @@ public class Axis {
 			
 			// Calculate String and tic positions
 			if(this.scale == Scale.LINEAR) {
-				label_count = this.step;
+				label_count = this.step + 1;
 				double spacing = ((this.end_x-this.start_x)/this.step);
-				double data_spacing = ((this.max-this.min)/this.step);
-				for(int i = 0; i <= label_count; i++)
+				double data_spacing = ((this.maxlabel-this.minlabel)/this.step);
+				for(int i = 0; i < label_count; i++)
 				{
 					label_posx[i] = this.start_x + (int)(i*spacing);
 					label_posy[i] = this.start_y + this.label_offset;
-					label_val[i] = this.min + (i*data_spacing);
+					label_val[i] = this.minlabel + (i*data_spacing);
 					tic_pos[i].x = this.start_x + (int)(i*spacing);
 					tic_pos[i].y = this.start_y;
 				}
+				expLabelLocation.x = label_posx[label_count];
 			}
 			else if(this.scale == Scale.LOG) {
 				// calculate min and max exponent
@@ -312,9 +318,9 @@ public class Axis {
 				
 				int startExp = (int) Math.ceil(min_exp);
 				// Calculate string and major tic positions
-				for(int i = 0; i <= label_count; i++) {
-					label_val[i] = Math.pow(10, startExp);
-					label_posx[i] = this.getPixelValueWithoutEval(label_val[i]);
+				for(int i = 0; i < label_count; i++) {
+					label_val[i] = Math.pow(10, startExp-exp);
+					label_posx[i] = this.getPixelValueWithoutEval( Math.pow(10, startExp));
 					label_posy[i] = this.start_y + this.label_offset;
 					tic_pos[i].x = label_posx[i];
 					tic_pos[i].y = this.start_y;
@@ -333,10 +339,10 @@ public class Axis {
 						}
 					}
 				}
+				expLabelLocation.x = label_posx[label_count-1];
 			}
 			// exp label location
-			expLabelLocation.y = label_posy[0];
-			expLabelLocation.x = label_posx[0]-40;
+			expLabelLocation.y = label_posy[0] +15;
 		}
 		else if(or == Orientation.VERTICAL) {
 			// Calculate origins
@@ -347,17 +353,18 @@ public class Axis {
 			
 			// Calculate String and tic positions
 			if(this.scale == Scale.LINEAR) {
-				label_count = this.step;
+				label_count = this.step + 1;
 				double spacing = ((this.start_y-this.end_y)/this.step);
-				double data_spacing = ((this.max-this.min)/this.step);
-				for(int i = 0; i <= label_count; i++)
+				double data_spacing = ((this.maxlabel-this.minlabel)/this.step);
+				for(int i = 0; i < label_count; i++)
 				{
 					label_posy[i] = this.start_y - (int)(i*spacing);
 					label_posx[i] = this.start_x + this.label_offset;
-					label_val[i] = this.min + (i*data_spacing);
+					label_val[i] = this.minlabel + (i*data_spacing);
 					tic_pos[i].x = this.start_x;
 					tic_pos[i].y = this.start_y - (int)(i*spacing);
 				}
+				expLabelLocation.y = label_posy[label_count]-15;
 			}
 			else if(this.scale == Scale.LOG) {
 				// calculate min and max exponent
@@ -367,7 +374,7 @@ public class Axis {
 				
 				int startExp = (int) Math.ceil(min_exp);
 				// Calculate string and major tic positions
-				for(int i = 0; i <= label_count; i++) {
+				for(int i = 0; i < label_count; i++) {
 					label_val[i] = Math.pow(10, startExp);
 					label_posy[i] = this.getPixelValueWithoutEval(label_val[i]);
 					label_posx[i] = this.start_x + this.label_offset;
@@ -388,13 +395,38 @@ public class Axis {
 						}
 					}
 				}
+				expLabelLocation.y = label_posy[label_count-1]-15;
 			}
 			// exp label location
-			expLabelLocation.y = label_posy[label_count]-15;
 			expLabelLocation.x = label_posx[0];
 		}
 	}
 	
+	/**
+	 * Calculates the axis exponent
+	 */
+	private void calcExponent() {
+		int exp = 0;
+		// check for max exponents
+		int expmax, expmin, maxsign, minsign;
+		expmax = (int)(Math.floor(Math.log10(Math.abs(max))));	//exponent
+		if(max == 0) expmax = 0;
+		maxsign = (int) Math.signum(max);
+		expmin = (int)(Math.floor(Math.log10(Math.abs(min))));	//exponent
+		if(min == 0) expmin = 0;
+		minsign = (int) Math.signum(min);
+		// only if delta is larger than 3
+		if( Math.abs(maxsign*expmax - minsign*expmin) > 3) {
+			// get smaller exponent
+			if(expmax > expmin) exp = expmax; else exp = expmin; 
+		} else {
+			exp = 0;
+		}
+		setExp(exp);
+		minlabel = min / Math.pow(10, exp);
+		maxlabel = max / Math.pow(10, exp);
+	}
+
 	/**
 	 * Formats the axis Label
 	 * @param d

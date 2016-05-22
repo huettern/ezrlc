@@ -165,10 +165,6 @@ public class IGAssistPanel extends JPanel {
 //		
 		this.updateUI();
 	}
-
-	public void update () {
-		
-	}
 	
 	/**
 	 * Gets called by model if update event happens

@@ -58,7 +58,7 @@ public class SmithChartDataSet {
 		
 		// Save grid
 		this.grid = grid;
-		System.out.println("new SmithChartDataSet Added with size="+this.points);
+//		System.out.println("new SmithChartDataSet Added with size="+this.points);
 	}
 
 

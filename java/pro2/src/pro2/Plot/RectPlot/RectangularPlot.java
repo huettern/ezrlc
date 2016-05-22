@@ -31,7 +31,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	//================================================================================
     // Private Data
     //================================================================================
-	Point origin = new Point(100,30); // Origin of the coordinate set from bottom left
+	Point origin = new Point(100,50); // Origin of the coordinate set from bottom left
 	private int rightMargin = 40;
 	private int topMargin = 40;
 	private int plotWidth = 0;

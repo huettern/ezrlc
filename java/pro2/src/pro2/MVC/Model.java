@@ -458,7 +458,7 @@ public class Model extends Observable {
 			updateSmithPlotDataset(i);
 		}
 		setChanged();
-		notifyObservers();
+		notifyObservers(UpdateEvent.CHANGE_EQC);
 	}
 
 	private void updateRectPlotDataset(Integer i) {
