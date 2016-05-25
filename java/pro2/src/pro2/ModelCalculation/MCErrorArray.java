@@ -32,7 +32,7 @@ public class MCErrorArray {
 	 * @return error sum
 	 */
 	private static double[] deltaArray (double[] measured, double[] simulated) {
-		double[] delta = {};
+		double[] delta = new double[measured.length];
 		
 		for(int ctr = 0; ctr < measured.length; ctr++) {
 			delta[ctr] = simulated[ctr] - measured[ctr];

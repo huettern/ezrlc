@@ -29,7 +29,7 @@ import pro2.util.Complex;
  * @author noah
  *
  */
-public class MCEqCircuit {
+public class MCEqCircuit implements Runnable {
 
 	//================================================================================
     // Public Data
@@ -52,6 +52,9 @@ public class MCEqCircuit {
 	private double[] wvector;
 	
 	private double z0 = 50.0;
+	
+	// Used for threadded optimizing
+	private Complex[] ys;
 	
 	private double optStepDefault = 0.001;
 //	private double optRelThDefault = 1e-11;
@@ -286,6 +289,7 @@ public class MCEqCircuit {
 		errorFunction = new MCErrorSum(ys, this);
 		optimum = null;
 		try {
+			System.out.println("Starting Optimizer on Thread" +Thread.currentThread().getName());
 			optimum = optimizer.optimize(
 				new MaxEval(100000), 
 				new ObjectiveFunction(errorFunction),
@@ -297,7 +301,25 @@ public class MCEqCircuit {
 		}
 		// save new parameters
 		parameters = MCUtil.topo2Param(circuitType, optimum.getPoint());
+		System.out.println("Optimizer done on Thread" +Thread.currentThread().getName());
 	}
+	
+	/**
+	 * Optimizes the circuit to the given ys vector in a threaded operation
+	 * Usage: 
+	 * 	eqc.optimizeThreaded(ys);
+	 *	Thread t2_1 = new Thread(eqc, "EQC-Thread-t2_1"); t2_1.run();
+	 * @param ys complex scattering parameters to which the model is optimized
+	 */
+	public void optimizeThreaded(Complex[] ys) {
+		this.ys = ys;
+	}
+
+	@Override
+	public void run() {
+		optimize(ys);
+	}
+	
 	
 	/**
 	 * Returns a copy of the stored frequency vector
@@ -575,7 +597,6 @@ public class MCEqCircuit {
 	public MCOptions getOps () {
 		return ops;
 	}
-	
 	
 
 }

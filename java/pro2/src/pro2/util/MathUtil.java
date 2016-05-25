@@ -375,4 +375,18 @@ public class MathUtil {
 		}
 		return dabs;
 	}
+
+	/**
+	 * returns Magnitudes of an Array of double
+	 * @param d array of doubles
+	 * @return dabs absolutes
+	 */
+	public static double[] abs(double[] d){
+		double[] dabs = new double[d.length];
+		for (int i=0;i<d.length;i++){
+			dabs[i] = Math.abs(d[i]);
+		}
+		return dabs;
+	}
+	
 }

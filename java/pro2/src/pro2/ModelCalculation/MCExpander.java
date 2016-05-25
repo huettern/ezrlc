@@ -1,3 +1,5 @@
+package pro2.ModelCalculation;
+
 import pro2.ModelCalculation.MCEqCircuit.CircuitType;
 import pro2.RFData.RFData;
 import pro2.util.Complex;
@@ -34,17 +36,18 @@ public class MCExpander {
 		
 		//Eval delta Max
 		double[] deltaZAbs = MCErrorArray.getErrorArray(yzAbs, zeqcAbs);
+		deltaZAbs = MathUtil.abs(deltaZAbs);
 		int deltaMaxIndex=MathUtil.getMaxIndex(deltaZAbs);
 		
 		//deltaMax Values
 		double wDeltaMax=w[deltaMaxIndex];
-		Complex zDeltaMax=eqc.getZ()[deltaMaxIndex];
+		Complex zDeltaMax = yz[deltaMaxIndex];
 		
 		//expand EQcircuit
 		double r0 = eqc.getParameters()[0];
 		double l = eqc.getParameters()[4];
 		double c0 = eqc.getParameters()[5];
-		Complex Y = zDeltaMax.reciprocal();
+		Complex Y = yz[deltaMaxIndex].reciprocal();
 		MCEqCircuit eqcExt=null;
 		switch (eqc.getCircuitType()){
 		case MODEL0:	
@@ -63,10 +66,12 @@ public class MCExpander {
 			eqcExt = new MCEqCircuit(CircuitType.MODEL7);
 			l=(zDeltaMax.im()+wDeltaMax*c0/(1/Math.pow(r0, 2)+Math.pow(wDeltaMax*c0,2)))/wDeltaMax;
 			break;
+		default: System.err.println("FATAL"); break;	
 		}
 		eqcExt.setParameter(0, r0);
 		eqcExt.setParameter(4, l);
 		eqcExt.setParameter(5, c0);
+		eqcExt.setWVector(w);
 	
 		return eqcExt;
 	}

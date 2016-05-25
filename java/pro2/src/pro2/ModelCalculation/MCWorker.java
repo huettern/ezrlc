@@ -114,6 +114,18 @@ public class MCWorker extends Thread {
 	 * method
 	 */
 	public void run() {
+		// Data
+		// Results of analytical solver
+		List<MCEqCircuit> solverCircuits;
+		// Results of the three branches
+		List<MCEqCircuit> branch1, branch2, branch3;
+		// three branches merged and sorted
+		List<MCEqCircuit> rank;
+		
+
+		//----------------------------------------
+		// Get Data and scale
+		//----------------------------------------
 		// get necessary data
 		double[] f = rfData.getfData();
 		Complex[] s = rfData.getSData(50);
@@ -125,7 +137,10 @@ public class MCWorker extends Thread {
 		// Get new S Data
 		s = rfData.getSData(rref);
 		//s = rfData.getSData(50.0);
-		
+
+		//----------------------------------------
+		// Apply OPS
+		//----------------------------------------
 		// apply ops
 		double[] w = MCUtil.applyMCOpsToF(ops, f, MCUtil.DATA_FORMAT.OMEGA);
 		Complex[] ys = MCUtil.applyMCOpsToData(ops, f, s);
@@ -139,8 +154,7 @@ public class MCWorker extends Thread {
 		}
 		
 		// Create model index list
-		CircuitType[] circuitIdxes;
-		circuitIdxes = MCUtil.createModelList(ops);
+		CircuitType[] circuitIdxes = MCUtil.createModelList(ops);
 
 		// Create equivalent circuit models
 		List<MCEqCircuit> userCircuits = new ArrayList<MCEqCircuit>(circuitIdxes.length);
@@ -154,7 +168,7 @@ public class MCWorker extends Thread {
 		CircuitType[] solverCircuitTypes = {CircuitType.MODEL0, CircuitType.MODEL1, CircuitType.MODEL2, 
 				CircuitType.MODEL3, CircuitType.MODEL4, CircuitType.MODEL5,
 				CircuitType.MODEL6, CircuitType.MODEL7 };
-		List<MCEqCircuit> solverCircuits = new ArrayList<MCEqCircuit>(8);
+		solverCircuits = new ArrayList<MCEqCircuit>(8);
 		for(int i = 0; i < 8; i++) {
 			solverCircuits.add(new MCEqCircuit(solverCircuitTypes[i]));
 			solverCircuits.get(solverCircuits.size()-1).setWVector(w);
@@ -163,6 +177,7 @@ public class MCWorker extends Thread {
 		
 		// Do analytical solving
 		analyticalSolver(w, yz, ys, solverCircuits);
+		// solverCircuits contains solved circuits 0..8
 		
 		// Apply solver parameters
 		for(int i = 0; i < solverCircuits.size(); i++){
@@ -183,30 +198,99 @@ public class MCWorker extends Thread {
 		}
 		
 		// Generate rank of equivalent circuits
-		ArrayList<MCEqCircuit> sortedList = MCRank.sortByError(ys, userCircuits);
+		ArrayList<MCEqCircuit> sortedList = MCRank.sortByErrorZAbs(ys, solverCircuits);
 		
-//		// Run optimizer
-//		MultivariateFunction e = new MCErrorSum(ys, sortedList.get(0));
-//		SimplexOptimizer optimizer = new SimplexOptimizer(1e-11, 1e-14);
-//		PointValuePair optimum = null;
-//		try {
-//			optimum = optimizer.optimize(
-//				new MaxEval(100000), 
-//				new ObjectiveFunction(e),
-//				GoalType.MINIMIZE, 
-//				new InitialGuess(sortedList.get(0).getParameters()), 
-//				new NelderMeadSimplex(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 }));
-//		} catch(TooManyEvaluationsException ex) {
-//			System.out.println("Optimizer reached MaxEval");
-//		}
-//
-//		double[] res = optimum.getPoint();
 		
-		// Run optimizer
-		sortedList.get(0).setOps(ops);
-		sortedList.get(0).optimize(ys);
-		sortedList.get(0).printParameters();
-		success(sortedList.get(0));
+
+		//----------------------------------------
+		// Branch 2
+		// Models with 2 elements optimize
+		//----------------------------------------
+		branch2 = new ArrayList<MCEqCircuit>(4);
+		// get 4 best circuits with 3 elements
+		for(int i = 0; i < sortedList.size(); i++) {
+			if(MCUtil.modelNElements[sortedList.get(i).getCircuitType().ordinal()] == 2) {
+				branch2.add(sortedList.get(i));
+			}
+			// This should never happen, but just for safety..
+			if(branch2.size() >= 4) break;
+		}
+		// get 2 best
+		branch2 = MCRank.sortByErrorZAbs(yz, branch2, 2);
+		// Optimize them
+		branch2.get(0).optimizeThreaded(ys);
+		Thread t2_0 = new Thread(branch2.get(0), "EQC-Thread-t2_0"); t2_0.start();
+		branch2.get(1).optimizeThreaded(ys);
+		Thread t2_1 = new Thread(branch2.get(1), "EQC-Thread-t2_1"); t2_1.start();
+		
+
+
+		//----------------------------------------
+		// Branch 1
+		// Models with 3 elements optimize
+		//----------------------------------------
+		branch1 = new ArrayList<MCEqCircuit>(4);
+		// get 4 best circuits with 3 elements
+		for(int i = 0; i < sortedList.size(); i++) {
+			if(MCUtil.modelNElements[sortedList.get(i).getCircuitType().ordinal()] == 3) {
+				branch1.add(sortedList.get(i));
+			}
+			// This should never happen, but just for safety..
+			if(branch1.size() >= 4) break;
+		}
+		// get 2 best
+		branch1 = MCRank.sortByErrorZAbs(yz, branch1, 2);
+		// Optimize them
+		branch1.get(0).optimizeThreaded(ys);
+		Thread t1_0 = new Thread(branch1.get(0), "EQC-Thread-t1_0"); t1_0.start();
+		branch1.get(1).optimizeThreaded(ys);
+		Thread t1_1 = new Thread(branch1.get(1), "EQC-Thread-t1_1"); t1_1.start();
+
+		//----------------------------------------
+		// Branch 3
+		// extend optimized Models with 2 elements 
+		//----------------------------------------
+		// Wait for thread completion
+		try {
+			t2_0.join();
+			t2_1.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Calculate rank
+		branch2 = MCRank.sortByErrorZAbs(yz, branch2, 2);
+		
+		branch3 = new ArrayList<MCEqCircuit>(2);
+		branch3.add(MCExpander.expand(branch2.get(0), yz, w));
+		branch3.add(MCExpander.expand(branch2.get(1), yz, w));
+
+		//----------------------------------------
+		// Last rank
+		//----------------------------------------
+
+		// Wait for all threads completion
+		try {
+			t1_0.join();
+			t1_1.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// merge three branches
+		rank = new ArrayList<MCEqCircuit>(6);
+		rank.add(branch1.get(0));
+		rank.add(branch1.get(1));
+		rank.add(branch2.get(0));
+		rank.add(branch2.get(1));
+		rank.add(branch3.get(0));
+		rank.add(branch3.get(1));
+		// Sort them
+		rank = MCRank.sortByErrorZAbs(yz, rank, 1);
+		
+		// Done doing magic
+		success(rank.get(0));
 	}
 
 	//================================================================================
