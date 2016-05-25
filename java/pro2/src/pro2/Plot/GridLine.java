@@ -45,6 +45,9 @@ public class GridLine {
 	 * @param g
 	 */
 	public void paint(Graphics g) {
+		if(start.y != 188) {
+			System.out.println("HERE");
+		}
 		Color col = g.getColor();
 		g.setColor(this.color);
 		g.drawLine(start.x, start.y, end.x, end.y);

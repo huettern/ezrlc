@@ -62,6 +62,9 @@ public class Grid {
 	 */
 	public void paint (Graphics g) {
 		this.evalSize();
+		if(or == Orientation.VERTICAL) {
+			System.out.println("HERE");
+		}
 		for (GridLine gridLine : this.lines) {
 			gridLine.paint(g);
 		}
@@ -79,7 +82,8 @@ public class Grid {
 		this.numLines = points.size();
 		int length = 0;
 		
-		lines.clear();
+//		lines.clear();
+		lines = new ArrayList<GridLine>(numLines);
 
 		if(this.or == Orientation.VERTICAL) {
 			length = this.size;

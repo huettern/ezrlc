@@ -181,8 +181,8 @@ public class Axis {
 	 * @return
 	 */
 	public List<Point> getTicPoints() {
-		List<Point> points = new ArrayList<Point>();
-		for(int i = 0; i <= this.label_count; i++) {
+		List<Point> points = new ArrayList<Point>(label_count);
+		for(int i = 0; i < this.label_count; i++) {
 			points.add(tic_pos[i]);
 		}
 		for (Point point : sub_tic_pos) {
