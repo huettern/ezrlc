@@ -58,7 +58,8 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	private int nEReihe = 0, indexEReihe = 0;
 	private double dEReihe = 0.0;
 	private double[] mEReihe;
-
+	private boolean isEnabled = true;
+	
 	// Constructor:
 	/**
 	 * Builds a default JEngineerField (outputmode = ENG and digits = 3)
@@ -252,7 +253,9 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		if(super.isFocusOwner() == false) return;
+		if(isEnabled == false) return;
 		fireActionPerformed();
+	
 		
 		if(getValue() == 0.0) setValue(1e-15);
 		
@@ -391,6 +394,7 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 
 	@Override
 	public void setEnabled(boolean b) {
+		isEnabled = b;
 		if (b) {
 			txtField.setValue(value);
 		} else {
@@ -430,7 +434,7 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	public void setMaxValue(double maxValue) {
 		this.maxValue = maxValue;
 		zeroEnabled = true;
-		setToolTipText("Wert \u2264 " + DoubletoStringENG(maxValue, 4, JEngineerField.UNIT));
+		setToolTipText("Value \u2264 " + DoubletoStringENG(maxValue, 4, JEngineerField.UNIT));
 	}
 
 	/**
@@ -442,7 +446,7 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	public void setMinValue(double minValue) {
 		this.minValue = minValue;
 		zeroEnabled = true;
-		setToolTipText("Wert \u2265 " + DoubletoStringENG(minValue, 4, JEngineerField.UNIT));
+		setToolTipText("Value \u2265 " + DoubletoStringENG(minValue, 4, JEngineerField.UNIT));
 	}
 
 	/**
@@ -467,7 +471,7 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		zeroEnabled = true;
-		setToolTipText(DoubletoStringENG(minValue, 4, JEngineerField.UNIT) + " \u2264 Wert \u2264 "
+		setToolTipText(DoubletoStringENG(minValue, 4, JEngineerField.UNIT) + " \u2264 Value \u2264 "
 				+ DoubletoStringENG(maxValue, 4, JEngineerField.UNIT));
 	}
 
@@ -484,43 +488,43 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 			minValue = -Double.MAX_VALUE;
 			maxValue = Double.MAX_VALUE;
 			zeroEnabled = true;
-			setToolTipText("Wert \u2208 {\u211D}");
+			setToolTipText("Value \u2208 {\u211D}");
 			break;
 		case POS:
 			minValue = 0;
 			maxValue = Double.MAX_VALUE;
 			zeroEnabled = true;
-			setToolTipText("Wert \u2265 0");
+			setToolTipText("Value \u2265 0");
 			break;
 		case NEG:
 			minValue = -Double.MAX_VALUE;
 			maxValue = 0;
 			zeroEnabled = true;
-			setToolTipText("Wert \u2264 0");
+			setToolTipText("Value \u2264 0");
 			break;
 		case NOZERO:
 			minValue = -Double.MAX_VALUE;
 			maxValue = Double.MAX_VALUE;
 			zeroEnabled = false;
-			setToolTipText("Wert \u2208 {\u211D\\0}");
+			setToolTipText("Value \u2208 {\u211D\\0}");
 			break;
 		case POSNOZERO:
 			minValue = 0;
 			maxValue = Double.MAX_VALUE;
 			zeroEnabled = false;
-			setToolTipText("Wert > 0");
+			setToolTipText("Value > 0");
 			break;
 		case NEGNOZERO:
 			minValue = -Double.MAX_VALUE;
 			maxValue = 0;
 			zeroEnabled = false;
-			setToolTipText("Wert < 0");
+			setToolTipText("Value < 0");
 			break;
 		default:
 			minValue = -Double.MAX_VALUE;
 			maxValue = Double.MAX_VALUE;
 			zeroEnabled = true;
-			setToolTipText("Wert \u2208 {\u211D}");
+			setToolTipText("Value \u2208 {\u211D}");
 			break;
 		}
 	}

@@ -121,7 +121,13 @@ public class MCWorker extends Thread {
 		List<MCEqCircuit> branch1, branch2, branch3;
 		// three branches merged and sorted
 		List<MCEqCircuit> rank;
-		
+
+		Thread t1_0 = null;
+		Thread t1_1 = null;
+		Thread t2_0 = null;
+		Thread t2_1 = null;
+		boolean do3ElementOptimize = false;
+		boolean doExpand = true;
 
 		//----------------------------------------
 		// Get Data and scale
@@ -196,11 +202,25 @@ public class MCWorker extends Thread {
 				}
 			}
 		}
-		
+
 		// Generate rank of equivalent circuits
 		ArrayList<MCEqCircuit> sortedList = MCRank.sortByErrorZAbs(ys, solverCircuits);
 		
+		//----------------------------------------
+		// Check which mode is requested
+		//----------------------------------------
+		if(ops.modelAutoSelect == false) {
+			MCEqCircuit eqc = createManualCircuit();
+			eqc.setWVector(w);
+			success(eqc);
+			return;
+		}
 		
+		int min = ops.nElementsMin;
+		int max = ops.nElementsMax;
+		if(( (min<4) && (max>2) ) || ops.nElementsMinAuto) do3ElementOptimize = true;
+		
+		if( max < 3 ) doExpand = false;
 
 		//----------------------------------------
 		// Branch 2
@@ -219,9 +239,9 @@ public class MCWorker extends Thread {
 		branch2 = MCRank.sortByErrorZAbs(yz, branch2, 2);
 		// Optimize them
 		branch2.get(0).optimizeThreaded(ys);
-		Thread t2_0 = new Thread(branch2.get(0), "EQC-Thread-t2_0"); t2_0.start();
+		t2_0 = new Thread(branch2.get(0), "EQC-Thread-t2_0"); t2_0.start();
 		branch2.get(1).optimizeThreaded(ys);
-		Thread t2_1 = new Thread(branch2.get(1), "EQC-Thread-t2_1"); t2_1.start();
+		t2_1 = new Thread(branch2.get(1), "EQC-Thread-t2_1"); t2_1.start();
 		
 
 
@@ -230,40 +250,45 @@ public class MCWorker extends Thread {
 		// Models with 3 elements optimize
 		//----------------------------------------
 		branch1 = new ArrayList<MCEqCircuit>(4);
-		// get 4 best circuits with 3 elements
-		for(int i = 0; i < sortedList.size(); i++) {
-			if(MCUtil.modelNElements[sortedList.get(i).getCircuitType().ordinal()] == 3) {
-				branch1.add(sortedList.get(i));
+		if(do3ElementOptimize) {
+			System.out.println("BABABAAAA");
+			// get 4 best circuits with 3 elements
+			for(int i = 0; i < sortedList.size(); i++) {
+				if(MCUtil.modelNElements[sortedList.get(i).getCircuitType().ordinal()] == 3) {
+					branch1.add(sortedList.get(i));
+				}
+				// This should never happen, but just for safety..
+				if(branch1.size() >= 4) break;
 			}
-			// This should never happen, but just for safety..
-			if(branch1.size() >= 4) break;
+			// get 2 best
+			branch1 = MCRank.sortByErrorZAbs(yz, branch1, 2);
+			// Optimize them
+			branch1.get(0).optimizeThreaded(ys);
+			t1_0 = new Thread(branch1.get(0), "EQC-Thread-t1_0"); t1_0.start();
+			branch1.get(1).optimizeThreaded(ys);
+			t1_1 = new Thread(branch1.get(1), "EQC-Thread-t1_1"); t1_1.start();
 		}
-		// get 2 best
-		branch1 = MCRank.sortByErrorZAbs(yz, branch1, 2);
-		// Optimize them
-		branch1.get(0).optimizeThreaded(ys);
-		Thread t1_0 = new Thread(branch1.get(0), "EQC-Thread-t1_0"); t1_0.start();
-		branch1.get(1).optimizeThreaded(ys);
-		Thread t1_1 = new Thread(branch1.get(1), "EQC-Thread-t1_1"); t1_1.start();
 
 		//----------------------------------------
 		// Branch 3
 		// extend optimized Models with 2 elements 
 		//----------------------------------------
-		// Wait for thread completion
-		try {
-			t2_0.join();
-			t2_1.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// Calculate rank
-		branch2 = MCRank.sortByErrorZAbs(yz, branch2, 2);
-		
 		branch3 = new ArrayList<MCEqCircuit>(2);
-		branch3.add(MCExpander.expand(branch2.get(0), yz, w));
-		branch3.add(MCExpander.expand(branch2.get(1), yz, w));
+		if(doExpand) {
+			// Wait for thread completion
+			try {
+				t2_0.join();
+				t2_1.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// Calculate rank
+			branch2 = MCRank.sortByErrorZAbs(yz, branch2, 2);
+			
+			branch3.add(MCExpander.expand(branch2.get(0), yz, w));
+			branch3.add(MCExpander.expand(branch2.get(1), yz, w));
+		}
 
 		//----------------------------------------
 		// Last rank
@@ -271,8 +296,10 @@ public class MCWorker extends Thread {
 
 		// Wait for all threads completion
 		try {
-			t1_0.join();
-			t1_1.join();
+			if(do3ElementOptimize) {
+				t1_0.join();
+				t1_1.join();
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -280,18 +307,40 @@ public class MCWorker extends Thread {
 		
 		// merge three branches
 		rank = new ArrayList<MCEqCircuit>(6);
-		rank.add(branch1.get(0));
-		rank.add(branch1.get(1));
+		if(do3ElementOptimize) {
+			rank.add(branch1.get(0));
+			rank.add(branch1.get(1));
+		}
 		rank.add(branch2.get(0));
 		rank.add(branch2.get(1));
-		rank.add(branch3.get(0));
-		rank.add(branch3.get(1));
+		if(doExpand) {
+			rank.add(branch3.get(0));
+			rank.add(branch3.get(1));
+		}
 		// Sort them
 		rank = MCRank.sortByErrorZAbs(yz, rank, 1);
 		
 		// Done doing magic
+		rank.get(0).setOps(ops);
 		success(rank.get(0));
 	}
+
+	private MCEqCircuit createManualCircuit() {
+		MCEqCircuit eqc = new MCEqCircuit(CircuitType.values()[ops.modelID]);
+		// Copy parameters
+		double[] p = {1e-3, 0, 0, 1e-3, 1e-9, 1e-12, 1e-12};
+		if(ops.params[0] != 0.0) p[0] = ops.params[0];
+		if(ops.params[1] != 0.0) p[1] = ops.params[1];
+		if(ops.params[2] != 0.0) p[2] = ops.params[2];
+		if(ops.params[3] != 0.0) p[3] = ops.params[3];
+		if(ops.params[4] != 0.0) p[4] = ops.params[4];
+		if(ops.params[5] != 0.0) p[5] = ops.params[5];
+		if(ops.params[6] != 0.0) p[6] = ops.params[6];
+		eqc.setParameters(p);
+		return eqc;
+	}
+
+
 
 	//================================================================================
     // Private methods

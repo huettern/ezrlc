@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -193,7 +194,8 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblCompMin.gridy = 0;
 		pnlComponents.add(lblCompMin, gbc_lblCompMin);
 		
-		txtCompMin = new JEngineerField(3, 20, "E3");
+		txtCompMin = new JEngineerField(new DecimalFormat("#"), 0);
+		txtCompMin.setValue(2);
 		txtCompMin.setMinValue(2);
 		txtCompMin.setMaxValue(4);
 		txtCompMin.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -203,7 +205,6 @@ public class NewModelWindow implements ActionListener{
 		gbc_txtCompMin.gridx = 1;
 		gbc_txtCompMin.gridy = 0;
 		pnlComponents.add(txtCompMin, gbc_txtCompMin);
-		txtCompMin.setColumns(10);
 		
 		JLabel label_1 = new JLabel("");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
@@ -220,7 +221,8 @@ public class NewModelWindow implements ActionListener{
 		gbc_lblCompMax.gridy = 1;
 		pnlComponents.add(lblCompMax, gbc_lblCompMax);
 		
-		txtCompMax = new JEngineerField(3, 20, "E3");
+		txtCompMax = new JEngineerField(new DecimalFormat("#"), 0);
+		txtCompMax.setValue(4);
 		txtCompMax.setMinValue(2);
 		txtCompMax.setMaxValue(4);
 		txtCompMax.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -230,7 +232,6 @@ public class NewModelWindow implements ActionListener{
 		gbc_txtCompMax.gridx = 1;
 		gbc_txtCompMax.gridy = 1;
 		pnlComponents.add(txtCompMax, gbc_txtCompMax);
-		txtCompMax.setColumns(10);
 		
 		//Frequency
 		JPanel pnlFrequency = new JPanel();
@@ -523,6 +524,8 @@ public class NewModelWindow implements ActionListener{
 		pnlButtons.add(btnGenerate, gbc_btnGenerate);
 		btnGenerate.addActionListener(this);		
 		
+		setParameterEnabled(0);
+		
 		dialog.setVisible(true);
 	}
 	
@@ -557,13 +560,13 @@ public class NewModelWindow implements ActionListener{
 		if(txtFmax.getText().isEmpty() == false) {ops.fMaxAuto=false; ops.fMax=txtFmax.getValue();}
 		
 		// element values
-		if(txtR0.getText().isEmpty() == false) { ops.params[0] = Double.parseDouble(txtR0.getText()); ops.paramsAuto[0] = false; }
-		if(txtF.getText().isEmpty() == false) { ops.params[1] = Double.parseDouble(txtF.getText()); ops.paramsAuto[1] = false; }
-		if(txtAlpha.getText().isEmpty() == false) { ops.params[2] = Double.parseDouble(txtAlpha.getText()); ops.paramsAuto[2] = false; }
-		if(txtR1.getText().isEmpty() == false) { ops.params[3] = Double.parseDouble(txtR1.getText()); ops.paramsAuto[3] = false; }
-		if(txtL.getText().isEmpty() == false) { ops.params[4] = Double.parseDouble(txtL.getText())/(1); ops.paramsAuto[4] = false; }
-		if(txtC0.getText().isEmpty() == false) { ops.params[5] = Double.parseDouble(txtC0.getText())/(1); ops.paramsAuto[5] = false; }
-		if(txtC1.getText().isEmpty() == false) { ops.params[6] = Double.parseDouble(txtC1.getText())/(1); ops.paramsAuto[6] = false; }
+		if(txtR0.getText().isEmpty() == false) { ops.params[0] = txtR0.getValue(); ops.paramsAuto[0] = false; }
+		if(txtF.getText().isEmpty() == false) { ops.params[1] = txtF.getValue(); ops.paramsAuto[1] = false; }
+		if(txtAlpha.getText().isEmpty() == false) { ops.params[2] = txtAlpha.getValue(); ops.paramsAuto[2] = false; }
+		if(txtR1.getText().isEmpty() == false) { ops.params[3] = txtR1.getValue(); ops.paramsAuto[3] = false; }
+		if(txtL.getText().isEmpty() == false) { ops.params[4] = txtL.getValue(); ops.paramsAuto[4] = false; }
+		if(txtC0.getText().isEmpty() == false) { ops.params[5] = txtC0.getValue(); ops.paramsAuto[5] = false; }
+		if(txtC1.getText().isEmpty() == false) { ops.params[6] = txtC1.getValue(); ops.paramsAuto[6] = false; }
 
 		// Check values
 		parseError = Errors.None;
@@ -629,104 +632,112 @@ public class NewModelWindow implements ActionListener{
 	 */
 	public void comboBoxSelected(ActionEvent e) {
 		lblCompMin.setForeground(Color.LIGHT_GRAY);
-		txtCompMin.setEditable(false);
+		txtCompMin.setEnabled(false);
 		
 		lblCompMax.setForeground(Color.LIGHT_GRAY);
-		txtCompMax.setEditable(false);
+		txtCompMax.setEnabled(false);
 		
 		list = (JComboBox)e.getSource();
-		switch (list.getSelectedIndex()) {
+		setParameterEnabled(list.getSelectedIndex());
+	}
+	
+	/**
+	 * Sets the enabled status of the parameters based on the selected index of the combobox
+	 * @param i index of the combobox
+	 */
+	private void setParameterEnabled(int i) {
+		switch (i) {
 		case 0:
-			lblL.setForeground(Color.BLACK);
-			txtL.setEditable(true);
-			lblMh.setForeground(Color.BLACK);
+			lblL.setForeground(Color.LIGHT_GRAY);
+			txtL.setEnabled(false);
+			lblMh.setForeground(Color.LIGHT_GRAY);
 			
-			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
-			lblUf.setForeground(Color.BLACK);
+			lblC0.setForeground(Color.LIGHT_GRAY);
+			txtC0.setEnabled(false);
+			lblUf.setForeground(Color.LIGHT_GRAY);
 			
-			lblC1.setForeground(Color.BLACK);
-			txtC1.setEditable(true);
-			lblUf_1.setForeground(Color.BLACK);
+			lblC1.setForeground(Color.LIGHT_GRAY);
+			txtC1.setEnabled(false);
+			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
-			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
-			lblOhm0.setForeground(Color.BLACK);
+			lblR0.setForeground(Color.LIGHT_GRAY);
+			txtR0.setEnabled(false);
+			lblOhm0.setForeground(Color.LIGHT_GRAY);
 			
-			lblR1.setForeground(Color.BLACK);
-			txtR1.setEditable(true);
-			lblOhm1.setForeground(Color.BLACK);
+			lblR1.setForeground(Color.LIGHT_GRAY);
+			txtR1.setEnabled(false);
+			lblOhm1.setForeground(Color.LIGHT_GRAY);
 			
-			lblAlpha.setForeground(Color.BLACK);
-			txtAlpha.setEditable(true);
+			lblAlpha.setForeground(Color.LIGHT_GRAY);
+			txtAlpha.setEnabled(false);
 			
-			lblF.setForeground(Color.BLACK);
-			txtF.setEditable(true);
-			lblHz_2.setForeground(Color.BLACK);
+			lblF.setForeground(Color.LIGHT_GRAY);
+			txtF.setEnabled(false);
+			lblHz_2.setForeground(Color.LIGHT_GRAY);
 			
 			lblCompMin.setForeground(Color.BLACK);
-			txtCompMin.setEditable(true);
+			txtCompMin.setEnabled(true);
 			
 			lblCompMax.setForeground(Color.BLACK);
-			txtCompMax.setEditable(true);
+			txtCompMax.setEnabled(true);
 			break;
 		case 1:
 		case 2:
 			lblL.setForeground(Color.BLACK);
-			txtL.setEditable(true);
+			txtL.setEnabled(true);
 			lblMh.setForeground(Color.BLACK);
 			
 			lblC0.setForeground(Color.LIGHT_GRAY);
-			txtC0.setEditable(false);
+			txtC0.setEnabled(false);
 			lblUf.setForeground(Color.LIGHT_GRAY);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
-			txtC1.setEditable(false);
+			txtC1.setEnabled(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
-			txtR1.setEditable(false);
+			txtR1.setEnabled(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
-			txtAlpha.setEditable(false);
+			txtAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
-			txtF.setEditable(false);
+			txtF.setEnabled(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
 			break;
 			
 		case 3:
 		case 4:
 			lblL.setForeground(Color.LIGHT_GRAY);
-			txtL.setEditable(false);
+			txtL.setEnabled(false);
 			lblMh.setForeground(Color.LIGHT_GRAY);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
-			txtC1.setEditable(false);
+			txtC1.setEnabled(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
-			txtR1.setEditable(false);
+			txtR1.setEnabled(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
-			txtAlpha.setEditable(false);
+			txtAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
-			txtF.setEditable(false);
+			txtF.setEnabled(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
 			break;
 			
@@ -735,59 +746,59 @@ public class NewModelWindow implements ActionListener{
 		case 7:
 		case 8:
 			lblL.setForeground(Color.BLACK);
-			txtL.setEditable(true);
+			txtL.setEnabled(true);
 			lblMh.setForeground(Color.BLACK);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
-			txtC1.setEditable(false);
+			txtC1.setEnabled(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
-			txtR1.setEditable(false);
+			txtR1.setEnabled(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
-			txtAlpha.setEditable(false);
+			txtAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
-			txtF.setEditable(false);
+			txtF.setEnabled(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
 			break;
 			
 		case 9:
 			lblL.setForeground(Color.LIGHT_GRAY);
-			txtL.setEditable(false);
+			txtL.setEnabled(false);
 			lblMh.setForeground(Color.LIGHT_GRAY);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
-			txtC1.setEditable(false);
+			txtC1.setEnabled(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.BLACK);
-			txtR1.setEditable(true);
+			txtR1.setEnabled(true);
 			lblOhm1.setForeground(Color.BLACK);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
-			txtAlpha.setEditable(false);
+			txtAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
-			txtF.setEditable(false);
+			txtF.setEnabled(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
 			break;
 			
@@ -795,59 +806,59 @@ public class NewModelWindow implements ActionListener{
 		case 11:
 		case 12:
 			lblL.setForeground(Color.BLACK);
-			txtL.setEditable(true);
+			txtL.setEnabled(true);
 			lblMh.setForeground(Color.BLACK);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
-			txtC1.setEditable(false);
+			txtC1.setEnabled(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.BLACK);
-			txtR1.setEditable(true);
+			txtR1.setEnabled(true);
 			lblOhm1.setForeground(Color.BLACK);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
-			txtAlpha.setEditable(false);
+			txtAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
-			txtF.setEditable(false);
+			txtF.setEnabled(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
 			break;
 			
 		case 13:
 			lblL.setForeground(Color.BLACK);
-			txtL.setEditable(true);
+			txtL.setEnabled(true);
 			lblMh.setForeground(Color.BLACK);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.BLACK);
-			txtC1.setEditable(true);
+			txtC1.setEnabled(true);
 			lblUf_1.setForeground(Color.BLACK);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
-			txtR1.setEditable(false);
+			txtR1.setEnabled(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
 			
 			lblAlpha.setForeground(Color.LIGHT_GRAY);
-			txtAlpha.setEditable(false);
+			txtAlpha.setEnabled(false);
 			
 			lblF.setForeground(Color.LIGHT_GRAY);
-			txtF.setEditable(false);
+			txtF.setEnabled(false);
 			lblHz_2.setForeground(Color.LIGHT_GRAY);
 			break;
 			
@@ -855,59 +866,59 @@ public class NewModelWindow implements ActionListener{
 		case 15:
 		case 16:
 			lblL.setForeground(Color.BLACK);
-			txtL.setEditable(true);
+			txtL.setEnabled(true);
 			lblMh.setForeground(Color.BLACK);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
-			txtC1.setEditable(false);
+			txtC1.setEnabled(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
-			txtR1.setEditable(false);
+			txtR1.setEnabled(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
 			
 			lblAlpha.setForeground(Color.BLACK);
-			txtAlpha.setEditable(true);
+			txtAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
-			txtF.setEditable(true);
+			txtF.setEnabled(true);
 			lblHz_2.setForeground(Color.BLACK);
 			break;
 			
 		case 17:
 			lblL.setForeground(Color.LIGHT_GRAY);
-			txtL.setEditable(false);
+			txtL.setEnabled(false);
 			lblMh.setForeground(Color.LIGHT_GRAY);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
-			txtC1.setEditable(false);
+			txtC1.setEnabled(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.BLACK);
-			txtR1.setEditable(true);
+			txtR1.setEnabled(true);
 			lblOhm1.setForeground(Color.BLACK);
 			
 			lblAlpha.setForeground(Color.BLACK);
-			txtAlpha.setEditable(true);
+			txtAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
-			txtF.setEditable(true);
+			txtF.setEnabled(true);
 			lblHz_2.setForeground(Color.BLACK);
 			break;
 			
@@ -915,62 +926,61 @@ public class NewModelWindow implements ActionListener{
 		case 19:
 		case 20:
 			lblL.setForeground(Color.BLACK);
-			txtL.setEditable(true);
+			txtL.setEnabled(true);
 			lblMh.setForeground(Color.BLACK);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.LIGHT_GRAY);
-			txtC1.setEditable(false);
+			txtC1.setEnabled(false);
 			lblUf_1.setForeground(Color.LIGHT_GRAY);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.BLACK);
-			txtR1.setEditable(true);
+			txtR1.setEnabled(true);
 			lblOhm1.setForeground(Color.BLACK);
 			
 			lblAlpha.setForeground(Color.BLACK);
-			txtAlpha.setEditable(true);
+			txtAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
-			txtF.setEditable(true);
+			txtF.setEnabled(true);
 			lblHz_2.setForeground(Color.BLACK);
 			break;
 			
 		case 21:
 			lblL.setForeground(Color.BLACK);
-			txtL.setEditable(true);
+			txtL.setEnabled(true);
 			lblMh.setForeground(Color.BLACK);
 			
 			lblC0.setForeground(Color.BLACK);
-			txtC0.setEditable(true);
+			txtC0.setEnabled(true);
 			lblUf.setForeground(Color.BLACK);
 			
 			lblC1.setForeground(Color.BLACK);
-			txtC1.setEditable(true);
+			txtC1.setEnabled(true);
 			lblUf_1.setForeground(Color.BLACK);
 			
 			lblR0.setForeground(Color.BLACK);
-			txtR0.setEditable(true);
+			txtR0.setEnabled(true);
 			lblOhm0.setForeground(Color.BLACK);
 			
 			lblR1.setForeground(Color.LIGHT_GRAY);
-			txtR1.setEditable(false);
+			txtR1.setEnabled(false);
 			lblOhm1.setForeground(Color.LIGHT_GRAY);
 	
 			lblAlpha.setForeground(Color.BLACK);
-			txtAlpha.setEditable(true);
+			txtAlpha.setEnabled(true);
 			
 			lblF.setForeground(Color.BLACK);
-			txtF.setEditable(true);
+			txtF.setEnabled(true);
 			lblHz_2.setForeground(Color.BLACK);
 			break;			
 		}
-		
 	}
 }

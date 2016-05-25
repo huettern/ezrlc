@@ -120,17 +120,6 @@ public class RectPlotSettingsWindow implements ActionListener {
 //	    Double max = new Double(Double.MAX_VALUE);
 //	    Double step = new Double(Double.MIN_VALUE);
 
-		// Spinner settings for Axis min and max
-	    double acurrent = 0;
-	    double amin = -(1e50);
-	    double amax = 1e50;
-	    double astep = 1e-9;
-	    
-	    // Spinner settings for Axis step
-	    double scurrent = 2;
-	    double smin = 1;
-	    double smax = 100;
-	    double sstep = 1;
 		
 		
 	  //  System.out.println("cur"+current+"min"+min+"max"+max+"stp"+step);
