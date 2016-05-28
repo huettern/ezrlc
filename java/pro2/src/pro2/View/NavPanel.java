@@ -76,7 +76,6 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
     //================================================================================
 	/**
 	 * Builds the navigation Panel
-	 * @wbp.parser.entryPoint
 	 */
 	public void build() {
 		this.setBorder(null);
@@ -148,6 +147,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	
 	/**
 	 * Build the panel with the view type switch
+	 * @wbp.parser.entryPoint
 	 */
 	private void buildViewTypePanel() {
 		JPanel pnlPanel = new JPanel();
@@ -160,13 +160,13 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		gbc_pnlPanel.gridx = 0;
 		gbc_pnlPanel.gridy = 1;
 		this.add(pnlPanel, gbc_pnlPanel);
-//		GridBagLayout gbl_pnlPanel = new GridBagLayout();
-//		gbl_pnlPanel.columnWidths = new int[] {0,0};
-//		gbl_pnlPanel.rowHeights = new int[] {0,0};
-//		gbl_pnlPanel.columnWeights = new double[]{1.0,1.0};
-//		gbl_pnlPanel.rowWeights = new double[]{0.0,0.0};
-//		pnlPanel.setLayout(gbl_pnlPanel);
-		pnlPanel.setLayout(new GridLayout(1, 2));
+		GridBagLayout gbl_pnlPanel = new GridBagLayout();
+		gbl_pnlPanel.columnWidths = new int[] {0,0};
+		gbl_pnlPanel.rowHeights = new int[] {0,0};
+		gbl_pnlPanel.columnWeights = new double[]{1.0,1.0};
+		gbl_pnlPanel.rowWeights = new double[]{0.0,0.0};
+		pnlPanel.setLayout(gbl_pnlPanel);
+	//	pnlPanel.setLayout(new GridLayout(1, 2));
 		
 		//IGAssist Button
 		btnIGAssist = new JButton("IGAssist");
@@ -175,8 +175,8 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
 		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnIGAssist = new GridBagConstraints();
-		gbc_btnIGAssist.insets = new Insets(4, 4, 4, 0);
-		gbc_btnIGAssist.fill = GridBagConstraints.BOTH;
+		gbc_btnIGAssist.insets = new Insets(4, 4, 4, 2);
+		gbc_btnIGAssist.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnIGAssist.gridx = 0;
 		gbc_btnIGAssist.gridy = 0;
 		pnlPanel.add(btnIGAssist, gbc_btnIGAssist);
@@ -189,8 +189,8 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
 		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnFigure = new GridBagConstraints();
-		gbc_btnFigure.insets = new Insets(4, 0, 4, 4);
-		gbc_btnFigure.fill = GridBagConstraints.BOTH;
+		gbc_btnFigure.insets = new Insets(4, 2, 4, 4);
+		gbc_btnFigure.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnFigure.gridx = 1;
 		gbc_btnFigure.gridy = 0;
 		pnlPanel.add(btnFigure, gbc_btnFigure);
@@ -234,7 +234,6 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 	/**
 	 * build the model panel
-	 * @wbp.parser.entryPoint
 	 */
 	private void buildModelPanel() {
 		JPanel pnlModelBorder = new JPanel();
@@ -346,9 +345,9 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//handle the file chooser
 		if(e.getSource() == btnLoadFile) {
 			String fName = fileChooser.showFileChooser();			
-			lblInputFile.setText(fName);
 			File f = fileChooser.getFile();
-			if (f != null) {
+			if (fName != null) {
+				lblInputFile.setText(fName);
 				controller.loadFile(f);
 				this.buildIGAssistDataSet();
 				controller.manualNotify();

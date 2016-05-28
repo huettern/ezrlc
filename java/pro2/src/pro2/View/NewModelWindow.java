@@ -523,6 +523,7 @@ public class NewModelWindow implements ActionListener{
 		pnlButtons.add(btnGenerate, gbc_btnGenerate);
 		btnGenerate.addActionListener(this);		
 		
+		dialog.pack();
 		dialog.setVisible(true);
 	}
 	

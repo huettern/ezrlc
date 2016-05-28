@@ -59,10 +59,11 @@ public class GraphWindow implements ActionListener{
     //================================================================================
 	/**
 	 * Builds the Graph Panel
-	 *
+	 * @wbp.parser.entryPoint
 	 */
 	public void buildDialog() {
 		graphDialog = new JDialog(controller.getMainView());
+		graphDialog.getContentPane().setPreferredSize(new Dimension(250, 150));
 		graphDialog.setResizable(false);
 		graphDialog.setTitle("New Graph");		
 		graphDialog.setModal(true);
@@ -162,6 +163,7 @@ public class GraphWindow implements ActionListener{
 		btnCreate.addActionListener(this);
 		
 		graphDialog.getRootPane().setDefaultButton(btnCreate);
+		graphDialog.pack();
 		graphDialog.setVisible(true);
 	}
 

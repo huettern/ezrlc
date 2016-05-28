@@ -63,7 +63,6 @@ public class DataSetLabelPanel extends JPanel implements ActionListener {
 		gbc_btnRemove.gridx = 0;
 		gbc_btnRemove.gridy = 2;
 		add(btnRemove, gbc_btnRemove);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setColor (Color c) {
