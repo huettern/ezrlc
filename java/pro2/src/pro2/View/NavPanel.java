@@ -162,21 +162,17 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		this.add(pnlPanel, gbc_pnlPanel);
 		GridBagLayout gbl_pnlPanel = new GridBagLayout();
 		gbl_pnlPanel.columnWidths = new int[] {0,0};
-		gbl_pnlPanel.rowHeights = new int[] {0,0};
+		gbl_pnlPanel.rowHeights = new int[] {0};
 		gbl_pnlPanel.columnWeights = new double[]{1.0,1.0};
-		gbl_pnlPanel.rowWeights = new double[]{0.0,0.0};
+		gbl_pnlPanel.rowWeights = new double[]{0.0};
 		pnlPanel.setLayout(gbl_pnlPanel);
-	//	pnlPanel.setLayout(new GridLayout(1, 2));
 		
 		//IGAssist Button
 		btnIGAssist = new JButton("IGAssist");
 		btnIGAssist.setSelected(true);
-		//btnNewGraph.setPreferredSize(new Dimension(87, 23));
-		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
-		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnIGAssist = new GridBagConstraints();
-		gbc_btnIGAssist.insets = new Insets(4, 4, 4, 2);
 		gbc_btnIGAssist.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnIGAssist.insets = new Insets(4, 4, 4, 5);
 		gbc_btnIGAssist.gridx = 0;
 		gbc_btnIGAssist.gridy = 0;
 		pnlPanel.add(btnIGAssist, gbc_btnIGAssist);
@@ -185,9 +181,6 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//Figure Button
 		btnFigure = new JButton("Figure");
 		btnFigure.setSelected(false);
-		//btnNewGraph.setPreferredSize(new Dimension(87, 23));
-		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
-		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnFigure = new GridBagConstraints();
 		gbc_btnFigure.insets = new Insets(4, 2, 4, 4);
 		gbc_btnFigure.fill = GridBagConstraints.HORIZONTAL;
@@ -220,9 +213,6 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		
 		//New Graph Button
 		btnNewGraph = new JButton("New Graph");
-		//btnNewGraph.setPreferredSize(new Dimension(87, 23));
-		//btnNewGraph.setMinimumSize(new Dimension(87, 23));
-		//btnNewGraph.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnNewGraph = new GridBagConstraints();
 		gbc_btnNewGraph.insets = new Insets(4, 4, 4, 4);
 		gbc_btnNewGraph.fill = GridBagConstraints.HORIZONTAL;
@@ -285,9 +275,6 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		//New Model Button
 		btnNewModel = new JButton("New Model");
 		btnNewModel.setEnabled(false);
-		//btnNewModel.setPreferredSize(new Dimension(87, 23));
-		//btnNewModel.setMinimumSize(new Dimension(87, 23));
-		//btnNewModel.setMaximumSize(new Dimension(87, 23));
 		GridBagConstraints gbc_btnNewModel = new GridBagConstraints();
 		gbc_btnNewModel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewModel.insets = new Insets(4, 4, 4, 4);
@@ -307,7 +294,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	}
 
 	/**
-	 * Creates a new ModelLabelPanel but doesnt set settings yet
+	 * Creates a new ModelLabelPanel but doesn't set settings yet
 	 */
 	public void setupEqCircuitView() {
 		modelLabelPanels.add(new ModelLabelPanel(controller));
@@ -402,7 +389,9 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	}
 
 
-	@Override
+	/**
+	 * update NavPanel
+	 */
 	public void update(Observable o, Object arg) {
 		Model model = (Model)o;
 		if(arg == UpdateEvent.NEW_EQC) {

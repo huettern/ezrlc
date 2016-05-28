@@ -19,7 +19,7 @@ import pro2.util.UIUtil;
 public class ImageComboBox extends JPanel implements ActionListener{
 
 	//================================================================================
-    // Private Data
+    // Private Variables
     //================================================================================
 	private ImageIcon[] images;
 	private JComboBox list;
@@ -32,6 +32,7 @@ public class ImageComboBox extends JPanel implements ActionListener{
 		super(new BorderLayout());
 		this.parent = parent;
 		
+		//Load images
 		images = new ImageIcon[imagesName.length];
         Integer[] intArray = new Integer[imagesName.length];
         for (int i = 0; i < imagesName.length; i++) {
@@ -43,6 +44,7 @@ public class ImageComboBox extends JPanel implements ActionListener{
             }
         }
         
+        //create JComboBox
         list = new JComboBox(intArray);
         Color bg = (Color) UIManager.get("ComboBox.background");
         Color fg = (Color) UIManager.get("ComboBox.foreground");

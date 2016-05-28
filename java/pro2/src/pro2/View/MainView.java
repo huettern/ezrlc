@@ -63,6 +63,9 @@ import java.awt.Frame;
 
 public class MainView extends JFrame implements Observer {
 	
+	//================================================================================
+    // Local Variables
+    //================================================================================
 	private NavPanel navPanel;
 	private WorkPanel workPanel;
 	
@@ -86,11 +89,12 @@ public class MainView extends JFrame implements Observer {
 	public MainView() {
 	
 	}
+	
 	//================================================================================
     // Public Functions
     //================================================================================
 	/**
-	 * Create the frame.
+	 * Create the frame from NanPanel and WorkPanel.
 	 * @wbp.parser.entryPoint
 	 */
 	public void build () {
@@ -166,13 +170,20 @@ public class MainView extends JFrame implements Observer {
 		this.controller = controller;
 	}
 
-	
+	/**
+	 * added Graph to WorkPanel
+	 * @param type
+	 */
 	public void addGraph(ENPlotType type) {
 		// TODO Auto-generated method stub
 		workPanel.addGraph(type);
 		navPanel.setViewButtonStatus(ViewType.FIGURE);
 	}
 	
+	/**
+	 * Set name of the file
+	 * @param name
+	 */
 	public void setFileName(String name) {
 		navPanel.setFileName(name);
 		
@@ -190,6 +201,10 @@ public class MainView extends JFrame implements Observer {
 		navPanel.update(o, arg);
 		
 	}
+	/**
+	 * delete Figure at WorkPanel
+	 * @param figure
+	 */
 	public void deleteFigure(Figure figure) {
 		workPanel.deleteFigure(figure);
 		

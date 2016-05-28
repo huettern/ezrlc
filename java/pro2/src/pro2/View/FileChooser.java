@@ -17,7 +17,7 @@ public class FileChooser extends JComponent implements Accessible{
     // Local Variables
     //================================================================================
 	private Controller controller;
-	JFileChooser fileChooser = new JFileChooser();
+	private JFileChooser fileChooser = new JFileChooser();
 	private File file;
 	
 	//================================================================================
@@ -27,6 +27,13 @@ public class FileChooser extends JComponent implements Accessible{
 		this.controller = controller;
 	}
 	
+	//================================================================================
+    // Public Functions
+    //================================================================================
+	/**
+	 * open the file chooser and read file name
+	 * @return
+	 */
 	public String showFileChooser() {
 		int returnVal = fileChooser.showDialog(this.controller.getMainView(), "Open File");
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -38,6 +45,9 @@ public class FileChooser extends JComponent implements Accessible{
 		}	
  	}
 	
+	/**
+	 * file filter of the JFileChooser
+	 */
 	public void fileFilter() {
 		FileNameExtensionFilter fileFilter = new FileNameExtensionFilter(
 		        "Touchstone File Format (*.s1p, *.z1p, *.y1p)", "s1p", "z1p", "y1p");
@@ -46,6 +56,10 @@ public class FileChooser extends JComponent implements Accessible{
 		
 	}
 
+	/**
+	 * get selected file by the JFileChooser
+	 * @return
+	 */
 	public File getFile() {
 		// TODO Auto-generated method stub
 		return fileChooser.getSelectedFile();

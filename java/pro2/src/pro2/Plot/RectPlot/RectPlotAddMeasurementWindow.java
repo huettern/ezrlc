@@ -33,6 +33,9 @@ import java.awt.Dimension;
 
 public class RectPlotAddMeasurementWindow implements ActionListener {
 
+	//================================================================================
+    // Local Variables
+    //================================================================================
 	private Controller controller;
 	private Figure figure;
 	
@@ -59,13 +62,21 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	//================================================================================
     // Constructors
     //================================================================================
-
-	/**
-	 * 
-	 */	
+	
 	public RectPlotAddMeasurementWindow(Controller controller, Figure fig)  {
 		this.controller = controller;
 		this.figure = fig;
+		
+		builtRectPlotAddMeasurementWindow();
+	}
+
+	//================================================================================
+    // Private Functions
+    //================================================================================
+	/**
+	 * built the whole Window for the reactangular plot to add measurements
+	 */
+	private void builtRectPlotAddMeasurementWindow() {
 		dialog = new JDialog(controller.getMainView());
 		dialog.setResizable(false);
 		dialog.setTitle("Add Measurement");		
@@ -79,6 +90,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		dialog.getContentPane().setLayout(gridBagLayout);
 		
+		//data source
 		JPanel pnlDataSource = new JPanel();
 		pnlDataSource.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Source", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlDataSource.setToolTipText("");
@@ -139,6 +151,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpSource.add(rdbtnModel);
 		btngrpSource.add(rdbtnFile);
 		
+		//measurement type
 		JPanel pnlMeasurementType = new JPanel();
 		pnlMeasurementType.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Measurement Type", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlMeasurementType = new GridBagConstraints();
@@ -184,6 +197,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpMeasType.add(rdbtnY);
 		btngrpMeasType.add(rdbtnZ);
 		
+		//complex modifier
 		JPanel pnlComplexModifier = new JPanel();
 		pnlComplexModifier.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Complex Modifier", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlComplexModifier = new GridBagConstraints();
@@ -238,6 +252,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpCpxMod.add(rdbtnImag);
 		btngrpCpxMod.add(rdbtnReal);
 		
+		//buttons
 		JPanel pnlButtons = new JPanel();
 		GridBagConstraints gbc_pnlButtons = new GridBagConstraints();
 		gbc_pnlButtons.insets = new Insets(0, 5, 5, 5);
@@ -252,7 +267,6 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbl_pnlButtons.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		pnlButtons.setLayout(gbl_pnlButtons);
 		
-	
 		btnCancel = new JButton("Cancel");
 		btnCancel.setPreferredSize(new Dimension(0, 0));
 		btnCancel.setMinimumSize(new Dimension(0, 0));
@@ -279,10 +293,8 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		
 		dialog.getRootPane().setDefaultButton(btnOk);
 	}
-
-	//================================================================================
-    // Private Functions
-    //================================================================================
+	
+	
 	/**
 	 * Returns the selected Button in the given ButtonGroup
 	 * @param buttonGroup ButtonGroup

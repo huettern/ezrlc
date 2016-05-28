@@ -671,6 +671,7 @@ public class NewModelWindow implements ActionListener{
 			lblCompMax.setForeground(Color.BLACK);
 			txtCompMax.setEditable(true);
 			break;
+			
 		case 1:
 		case 2:
 			lblL.setForeground(Color.BLACK);

@@ -42,6 +42,9 @@ import java.awt.Rectangle;
 
 public class ModelLabelPanel extends JPanel implements ActionListener, DocumentListener {
 
+	//================================================================================
+    // Local Variables
+    //================================================================================
 	private Controller controller;
 	private boolean lockUpdate;
 	

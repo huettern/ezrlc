@@ -58,6 +58,11 @@ public class RectPlotSettingsWindow implements ActionListener {
 	public RectPlotSettingsWindow(Controller controller, Figure fig) {
 		this.controller = controller;
 		this.figure = fig;
+		
+		builtRectPlotSettingsWindow();
+	}
+
+	private void builtRectPlotSettingsWindow() {
 		dialog = new JDialog(controller.getMainView());
 		dialog.setResizable(false);
 		dialog.setTitle("Graph Settings");		
@@ -79,7 +84,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_tabbed.gridy = 0;
 		dialog.getContentPane().add(tabbed, gbc_tabbed);
 		
-		//****Axis****
+		//****Tab Axis****
 		JPanel tabAxis = new JPanel();
 		tabbed.addTab("Axis", null, tabAxis, null);
 		GridBagLayout gbl_tabAxis = new GridBagLayout();
@@ -112,29 +117,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblMinimumX.gridx = 0;
 		gbc_lblMinimumX.gridy = 0;
 		pnlX.add(lblMinimumX, gbc_lblMinimumX);
-		
-		// Spinner Model for Axis min and max
-		//	SpinnerNumberModel smdlAxisSize = new SpinnerNumberModel(0, Double.MIN_VALUE, Double.MAX_VALUE, Double.MIN_VALUE);
-//		Double current = new Double(0);
-//	    Double min = new Double(Double.MIN_VALUE);
-//	    Double max = new Double(Double.MAX_VALUE);
-//	    Double step = new Double(Double.MIN_VALUE);
 
-		// Spinner settings for Axis min and max
-	    double acurrent = 0;
-	    double amin = -(1e50);
-	    double amax = 1e50;
-	    double astep = 1e-9;
-	    
-	    // Spinner settings for Axis step
-	    double scurrent = 2;
-	    double smin = 1;
-	    double smax = 100;
-	    double sstep = 1;
-		
-		
-	  //  System.out.println("cur"+current+"min"+min+"max"+max+"stp"+step);
-		
 	    
 		txtXmin = new JEngineerField(3, 20, "E24");
 		txtXmin.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -335,7 +318,6 @@ public class RectPlotSettingsWindow implements ActionListener {
 		
 		dialog.getRootPane().setDefaultButton(btnOk);
 	}
-
 	//================================================================================
     // Public Functions
     //================================================================================

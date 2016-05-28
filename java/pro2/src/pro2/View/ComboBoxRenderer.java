@@ -20,8 +20,6 @@ class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 	private ImageIcon[] image;
 	private String[] text;
 	
-
-	
 	//================================================================================
     // Constructors
     //================================================================================
@@ -38,7 +36,7 @@ class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 	//================================================================================
     // Public Functions
     //================================================================================
-	/*
+	/**
 	* This method finds the image and text corresponding
 	* to the selected value and returns the label, set up
 	* to display the text and image.

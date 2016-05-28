@@ -80,6 +80,7 @@ public class WorkPanel extends JPanel implements Observer {
 			f.buildSmithChart();
 		}
 		
+		//switch Graph arrangement
 		switch (graphArr) {
 			case NONE:
 				pnlFigure.setLayout(new GridLayout(1, 1));
@@ -101,7 +102,6 @@ public class WorkPanel extends JPanel implements Observer {
 				controller.setNewGraphButtonEnabled(false);
 				break;
 			case SPLIT:
-				System.err.println("Es k�nnen nicht mehr als zwei Plots geopfert werden!");
 				break;
 		}
 		
@@ -168,6 +168,10 @@ public class WorkPanel extends JPanel implements Observer {
 		this.updateUI();
 	}
 	
+	/**
+	 * Set View Type of the WorkPanel
+	 * @param t
+	 */
 	public void setView (ViewType t) {
 		if(t == ViewType.FIGURE) {
 			this.remove(pnlIGAssist);
@@ -179,6 +183,9 @@ public class WorkPanel extends JPanel implements Observer {
 		this.updateUI();
 	}
 
+	/**
+	 * Creat the data sets of the IGAssist
+	 */
 	public void buildIGAssistDataSet() {
 		pnlIGAssist.createDatasets();
 	}

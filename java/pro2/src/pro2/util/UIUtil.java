@@ -75,6 +75,7 @@ public class UIUtil {
 		}
 		return d;
 	}
+	
 	/**
 	 * Evaluates the numeric int value of a spinner object
 	 * @param spin JSpinner
@@ -114,12 +115,18 @@ public class UIUtil {
 		return d;
 	}
 	
+	/**
+	 * normal number to scientific notation
+	 * @param d
+	 * @return
+	 */
 	public static String num2Scientific(double d) {
 		String s;
 		NumberFormat formatter = new DecimalFormat();
 		formatter = new DecimalFormat("0.###E0");
 	    return formatter.format(d); // 1.2345E-1
 	}
+	
 	/**
 	 * Draws a circle arround the given midpoint and radius
 	 * @param g Graphics object
