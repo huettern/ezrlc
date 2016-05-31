@@ -94,7 +94,6 @@ public class RFData {
 	public RFData(String fname) {
 		// TODO Auto-generated constructor stub
 		this.fname = fname;
-		System.out.println("Filename " +this.fname);
 		this.uid = UUID.randomUUID();
 	}
 	
@@ -102,7 +101,6 @@ public class RFData {
 		// TODO Auto-generated constructor stub
 		this.fname = file.getAbsolutePath();
 		this.file = file;
-		System.out.println("Filename " +this.fname);
 		this.uid = UUID.randomUUID();
 	}
 	
@@ -211,10 +209,6 @@ public class RFData {
 	    for (int i = 0; i < rawData.size(); i++) {
 			fData[i] = rawData.get(i).getFreq();
 		}
-		
-	    System.out.println("comments=" +this.commentEntrys +" instructions=" +this.instructionEntrys +" data=" +this.dataEntries);
-		System.out.println("Freq multiplier="+this.freqMultiplier);
-		System.out.println("Type: "+this.dataType+" Units: "+this.dataUnit+" R: "+this.r);
 	}
 
 	//================================================================================

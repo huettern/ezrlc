@@ -105,28 +105,21 @@ public class MathUtil {
 		int onedig;
 		if(d >= 0) {
 			onedig = (int)Math.floor(ds);	// first digit
-			//System.out.println("d="+d+"exp="+exp+"ds="+ds+"decdig="+decdig+"onedig="+onedig);
 			if(decdig == 0) decdig = 0;
 			else if(decdig <= 2) decdig = 2;
 			else if(decdig <= 5) decdig = 5;
 			else if(decdig <= 10) decdig = 10;
-			//System.out.println("decdig="+decdig);
 		} else {
 			onedig = (int)Math.ceil(ds);	// first digit
-			//System.out.println("d="+d+"exp="+exp+"ds="+ds+"decdig="+decdig+"onedig="+onedig);
 			if(decdig == 0) decdig = 0;
 			else if(decdig >= -2) decdig = -2;
 			else if(decdig >= -5) decdig = -5;
 			else if(decdig >= -10) decdig = -10;
-			//System.out.println("decdig="+decdig);
 		}
 		
 		// add them up
 		Double newnum =  onedig + 0.1*decdig;
 		newnum = newnum * Math.pow(10.0, exp); // re-apply exponent
-
-//		System.out.println("d="+d+"exp="+exp+"ds="+ds+"decdig="+decdig+"onedig="+onedig);
-//		System.out.println("decdig="+decdig);
 		return newnum;
 	}
 	

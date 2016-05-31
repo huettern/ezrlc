@@ -46,16 +46,12 @@ public class Controller {
 	}
 
 	public void contol() {
-		// TODO Auto-generated method stub
-		System.out.println("control");
-		
 	}
 	/**
 	 * Reads the inputfile given by the user
 	 * @param file
 	 */
 	public void loadFile (File file) {
-        System.out.println("Opening: " + file.getName());
         // Read the file
         this.model.newInputFile(file);
         view.setFileName(file.getName());

@@ -173,14 +173,6 @@ public class IGAssistPanel extends JPanel {
 	 */
 	public void update(Observable o, Object arg) {
 		if(arg == UpdateEvent.MANUAL || arg == UpdateEvent.FILE) {
-			System.out.println("IGA Update");
-	//		Model.UpdateEvent e = (Model.UpdateEvent)arg;
-	//		// only update if event is file
-	//		if(e != UpdateEvent.FILE) return;
-	//		// create datasets
-	//		createDatasets((Model)o);
-	//		// set plot settings
-			
 	//		// repaint all plots
 			for (int i = 0; i < 8; i++) {
 				plots[i].update(o, arg);

@@ -69,7 +69,6 @@ public class RectangularPlot extends JPanel implements Observer {
 	public RectangularPlot(Scale x, Scale y) {
 		// TODO Auto-generated constructor stub
 
-		System.out.println("New Rect Plot");
 		Color col = super.getBackground();
 		super.setBackground(Color.WHITE);
 
@@ -324,14 +323,20 @@ public class RectangularPlot extends JPanel implements Observer {
 	public void autoScale() {
 		autoScale(Scale.LOG, Scale.LINEAR);
 	}
+	
+	/**
+	 * Autoscales the plot using the scales currently set in the axis
+	 */
+	public void autoScaleKeepScale() {
+		autoScale(horAxis.getScale(), verAxis.getScale());
+	}
+	
 	/**
 	 * Scales Axis to show all Data, with x ang y scale
+	 * @param sx Horizontal scale
+	 * @param sy vertical scale
 	 */
 	public void autoScale(Scale sx, Scale sy) {
-//		double xmin = 0;
-//		double xmax = 1;
-//		double ymin = 0;
-//		double ymax = 1;
 		double xmin = Double.MAX_VALUE;
 		double xmax = -Double.MAX_VALUE;
 		double ymin = Double.MAX_VALUE;
@@ -349,17 +354,18 @@ public class RectangularPlot extends JPanel implements Observer {
 				if(dataSets.get(i).getXData()[0] == 0) { xmin = dataSets.get(i).getXData()[1]; }
 				else { xmin = dataSets.get(i).getXData()[0]; }
 			}
+			i++;
 		}
 
-		System.out.println("ORIG: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
+		System.out.println("ymax="+ymax);
+		
 //		xmax *= 1.1;
 		ymax *= 1.1;
 		ymin *= 0.9;
 //		xmin *= 0.9;
-//		System.out.println("LIM: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
 		
 		// if log Y-axis, set minimum at first non-zero or negative value
-		if(settings.yScale == Scale.LOG) {
+		if(sy == Scale.LOG) {
 			ymin = Double.MAX_VALUE;
 			for (PlotDataSet dataset : this.dataSets) {
 				for (Double d : dataset.getYData()) {
@@ -369,32 +375,28 @@ public class RectangularPlot extends JPanel implements Observer {
 			}
 		}
 
-		int yexp = 0;
-		// check for delta smaller 1
-		if((ymax-ymin) < 1) {
-			int expmax = (int)(Math.floor(Math.log10(Math.abs(ymax))));	//exponent
-			int expmin = (int)(Math.floor(Math.log10(Math.abs(ymin))));	//exponent
-			// get smaller exponent
-			if(expmax > expmin) yexp = expmax; else yexp = expmin;
-			System.out.println("yexp="+yexp);
-			// divide out the exponent
-			ymin = ymin / (Math.pow(10, yexp));
-			ymax = ymax / (Math.pow(10, yexp));
-		}
-		verAxis.setExp(yexp);
+//		int yexp = 0;
+//		// check for delta smaller 1
+//		if((ymax-ymin) < 1) {
+//			int expmax = (int)(Math.floor(Math.log10(Math.abs(ymax))));	//exponent
+//			int expmin = (int)(Math.floor(Math.log10(Math.abs(ymin))));	//exponent
+//			// get smaller exponent
+//			if(expmax > expmin) yexp = expmax; else yexp = expmin;
+//			// divide out the exponent
+//			ymin = ymin / (Math.pow(10, yexp));
+//			ymax = ymax / (Math.pow(10, yexp));
+//		}
+//		verAxis.setExp(yexp);
 
-//		System.out.println("WO EXPd: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
 		// round the values
 		xmin = MathUtil.roundNice(xmin);
 		xmax = MathUtil.roundNice(xmax);
 		ymin = MathUtil.roundNice(ymin);
 		ymax = MathUtil.roundNice(ymax);
-//		System.out.println("NICE: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
 		
 		// reapply exponent
 //		ymin = ymin * (Math.pow(10, yexp));
 //		ymax = ymax * (Math.pow(10, yexp));
-//		System.out.println("EXPd: xmin="+xmin+" xmax="+xmax+" ymin="+ymin+" ymax="+ymax);
 		
 		
 		settings.xAxisMaximum=xmax;

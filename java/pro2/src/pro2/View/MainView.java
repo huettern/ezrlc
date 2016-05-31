@@ -196,7 +196,6 @@ public class MainView extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("Main View update!");
 		workPanel.update(o, arg);
 		navPanel.update(o, arg);
 		

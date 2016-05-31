@@ -30,9 +30,6 @@ public class MCSScaler {
 	 */
 
 	public static double scale(Complex[] ys) {
-		
-		System.out.println("****Scaler Start****");
-		
 		Complex[] yz = new Complex[ys.length];
 		double r0 = 0.00001;	// start value
 		yz=RFData.s2z(50, ys);
@@ -42,16 +39,12 @@ public class MCSScaler {
 		ysabs=MathUtil.abs(ys);
 		
 		while((Math.abs(Math.abs(MathUtil.getMax(ysabs))-Math.abs(MathUtil.getMin(ysabs)))<0.6)&(r0<10000)){
-//			System.out.println("MAX="+MathUtil.getMax(ysabs));
-//			System.out.println("MIN="+MathUtil.getMin(ysabs));
-//			System.out.println("Diff="+Math.abs(Math.abs(MathUtil.getMax(ysabs))-Math.abs(MathUtil.getMin(ysabs))));
 			yz=RFData.s2z(r0,ys);
 			r0 *= 2;
 			ys=RFData.z2s(r0,yz);
 			ysabs=MathUtil.abs(ys);
 			System.out.println("Rref="+r0);
 		}
-		System.out.println("****Scaler End****");
 		return r0;
 	}
 

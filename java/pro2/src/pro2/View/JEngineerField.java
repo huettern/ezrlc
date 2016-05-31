@@ -139,7 +139,6 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 		this.digits = digits;
 		try {
 			String[] s = stEReihe.trim().toUpperCase().split("[E ]+");
-			System.out.println(s);
 			nEReihe = Integer.parseInt(s[1]);
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException();

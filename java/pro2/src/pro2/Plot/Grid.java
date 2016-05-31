@@ -62,9 +62,6 @@ public class Grid {
 	 */
 	public void paint (Graphics g) {
 		this.evalSize();
-		if(or == Orientation.VERTICAL) {
-			System.out.println("HERE");
-		}
 		for (GridLine gridLine : this.lines) {
 			gridLine.paint(g);
 		}

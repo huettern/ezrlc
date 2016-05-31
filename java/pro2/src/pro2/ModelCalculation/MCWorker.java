@@ -251,7 +251,6 @@ public class MCWorker extends Thread {
 		//----------------------------------------
 		branch1 = new ArrayList<MCEqCircuit>(4);
 		if(do3ElementOptimize) {
-			System.out.println("BABABAAAA");
 			// get 4 best circuits with 3 elements
 			for(int i = 0; i < sortedList.size(); i++) {
 				if(MCUtil.modelNElements[sortedList.get(i).getCircuitType().ordinal()] == 3) {
@@ -358,7 +357,6 @@ public class MCWorker extends Thread {
 	 * @param circuits list of possible circuit models
 	 */
 	private void analyticalSolver(double[] w, Complex[] yz, Complex[] ys, List<MCEqCircuit> circuits) {
-		System.out.println("*****AnalyticalSolver*****");
 		//circuits.get(0).getS()[0].abs()
 		double yzAbs[]=new double[yz.length];
 		double ysAbs[]=new double[ys.length];
@@ -430,9 +428,6 @@ public class MCWorker extends Thread {
 		circuits.get(5).setParameter(0, 1/realy21); 		//R
 		circuits.get(5).setParameter(5, C); 				//C
 		circuits.get(5).setParameter(4, L); 				//L
-		System.out.println("R="+(1/realy21));
-		System.out.println("C="+C);
-		System.out.println("L="+L);
 		
 		//EqCircuit 6
 		L=Math.sqrt(-(Math.pow(w21,2)*realy21-Math.pow(w22,2)*realy22)*(realy21-realy22))/((Math.pow(w21,2)-Math.pow(w22,2))*realy21*realy22);
@@ -444,9 +439,6 @@ public class MCWorker extends Thread {
 		circuits.get(6).setParameter(0, R); 				//R
 		circuits.get(6).setParameter(5, C); 				//C
 		circuits.get(6).setParameter(4, L); 				//L
-		System.out.println("R="+R);
-		System.out.println("C="+C);
-		System.out.println("L="+L);
 		
 		//EqCircuit 7
 		C=Math.sqrt(-(Math.pow(w21,2)*realz21-Math.pow(w22,2)*realz22)*(realz21-realz22))/((Math.pow(w21,2)-Math.pow(w22,2))*realz21*realz22);
@@ -458,11 +450,7 @@ public class MCWorker extends Thread {
 		L=Math.abs(L);
 		circuits.get(7).setParameter(0, R); 				//R
 		circuits.get(7).setParameter(5, C); 				//C
-		circuits.get(7).setParameter(4, L); 				//L
-		System.out.println("R="+R);
-		System.out.println("C="+C);
-		System.out.println("L="+L);
-				
+		circuits.get(7).setParameter(4, L); 				//L	
 	}
 
 }

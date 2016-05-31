@@ -366,7 +366,7 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 			}
 		}
 		if(e.getSource()==btnAutoscale) {
-			if(plotType == ENPlotType.RECTANGULAR) rectPlot.autoScale();
+			if(plotType == ENPlotType.RECTANGULAR) rectPlot.autoScaleKeepScale();
 		}
 		if(e.getSource()==btnDeleteGraph){
 			controller.deleteFigure(this);

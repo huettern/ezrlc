@@ -181,7 +181,6 @@ public class SmithChartSettingsWindow implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnOk) {
 			settings.referenceResistance = UIUtil.getTextFieldDoubleValue(tfRefResistance);
-			System.out.println("RES="+settings.referenceResistance);
 			this.figure.updatePlotSettings();
 			dialog.dispose();
 		} else if (e.getSource() == btnCancel) {

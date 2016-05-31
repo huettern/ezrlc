@@ -322,10 +322,8 @@ public class Model extends Observable {
 		if(plottype == ENPlotType.RECTANGULAR) {
 			// remove set from list
 			this.plotDataSetList.set(id, null);
-			System.out.println("removed dataset id="+id);
 		} else if(plottype == ENPlotType.SMITH) {
 			this.smithPlotDataSetList.set(id, null);
-			System.out.println("removed dataset id="+id);
 		}
 		this.setChanged();
 		this.notifyObservers();

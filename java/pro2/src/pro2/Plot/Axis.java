@@ -127,7 +127,7 @@ public class Axis {
 		
 		// exponent label
 		if(exp != 0) {
-			g.setFont(new Font(g.getFont().getFontName(), Font.ITALIC | Font.BOLD, 12));
+		//	g.setFont(new Font(g.getFont().getFontName(), Font.ITALIC | Font.BOLD, 12));
 			UIUtil.drawCenterString(g, expLabelLocation, "x10e"+exp);
 		}
 	}
@@ -364,7 +364,7 @@ public class Axis {
 					tic_pos[i].x = this.start_x;
 					tic_pos[i].y = this.start_y - (int)(i*spacing);
 				}
-				expLabelLocation.y = label_posy[label_count]-15;
+				expLabelLocation.y = label_posy[label_count-1]-15;
 			}
 			else if(this.scale == Scale.LOG) {
 				// calculate min and max exponent
@@ -417,7 +417,7 @@ public class Axis {
 		minsign = (int) Math.signum(min);
 		// only if delta is larger than 3
 		if( Math.abs(maxsign*expmax - minsign*expmin) > 3) {
-			// get smaller exponent
+			// get larger exponent
 			if(expmax > expmin) exp = expmax; else exp = expmin; 
 		} else {
 			exp = 0;

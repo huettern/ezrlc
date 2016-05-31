@@ -46,7 +46,6 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
     // Constructor
     //================================================================================
 	public SmithChart() {
-		System.out.println("New SmithChart");
 		super.setBackground(Color.WHITE);
 		
 		settings.referenceResistance = 50.0;
@@ -141,7 +140,6 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("X="+e.getX()+" Y="+e.getY());
 	}
 
 

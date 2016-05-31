@@ -140,7 +140,6 @@ public class WorkPanel extends JPanel implements Observer {
 			graphArr = WINDOW_ARR.NONE;
 			pnlFigure.setLayout(new GridLayout(1, 1));
 			pnlFigure.removeAll();
-			System.out.println("delete Full-Graph");
 		}
 		else if (figure == topFigure) {
 			fullFigure = bottomFigure;
@@ -151,7 +150,6 @@ public class WorkPanel extends JPanel implements Observer {
 			pnlFigure.setLayout(new GridLayout(1, 1));
 			pnlFigure.add(fullFigure, 0);
 			graphArr = WINDOW_ARR.FULL;
-			System.out.println("delete Top-Graph");
 		}
 		else if (figure == bottomFigure) {
 			fullFigure = topFigure;
@@ -162,7 +160,6 @@ public class WorkPanel extends JPanel implements Observer {
 			pnlFigure.setLayout(new GridLayout(1, 1));
 			pnlFigure.add(fullFigure, 0);
 			graphArr = WINDOW_ARR.FULL;
-			System.out.println("delete Bottom-Graph");
 		}
 		
 		this.updateUI();

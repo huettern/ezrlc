@@ -95,7 +95,6 @@ public class MCErrorSum implements MultivariateFunction {
 		}
 		// calc error
 		double error = MCErrorSum.getError(magmeas, magS);
-//		System.out.println("Interface value, params=" +Arrays.toString(params) +" ERR=" + error);
 		return error;
 	}
 
