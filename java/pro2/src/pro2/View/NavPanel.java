@@ -294,7 +294,8 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	}
 
 	/**
-	 * Creates a new ModelLabelPanel but doesn't set settings yet
+	 * Creates a new ModelLabelPanel but doesn't set settings yet,
+	 * disables the New Model button
 	 */
 	public void setupEqCircuitView() {
 		modelLabelPanels.add(new ModelLabelPanel(controller));
@@ -308,6 +309,9 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		d[modelPnlRowCnt] = 1.0;
 		gbl_pnlModel.rowWeights = d;
 		pnlModel.setLayout(gbl_pnlModel);
+		// New model button disable
+		btnNewModel.setEnabled(false);
+		btnNewModel.setToolTipText("Model calculation already in progress.");
 		updateUI();
 	}
 	
@@ -320,6 +324,9 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		modelLabelPanels.get(modelLabelPanels.size()-1).build( 
 				m.getEquivalentCircuit(m.getEQCID()).getCircuitType(),
 				m.getEQCID());
+		// New model button disable
+		btnNewModel.setEnabled(true);
+		btnNewModel.setToolTipText("");
 		updateUI();
 	}
 	
