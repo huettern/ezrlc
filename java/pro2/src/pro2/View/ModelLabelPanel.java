@@ -248,6 +248,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			controller.removeEqCircuit(eqcID);
 		}
 		if(e.getSource() == btnOptimize) {
+			btnOptimize.setEnabled(false);
 			controller.optimizeEqCircuit(eqcID);
 		}
 	}
@@ -269,6 +270,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		if(lEditableLUT[ordinal]) txtL0.setValue(p[4]);
 		if(c0EditableLUT[ordinal]) txtC0.setValue(p[5]);
 		if(c1EditableLUT[ordinal]) txtC1.setValue(p[6]);
+		btnOptimize.setEnabled(true);
 	}
 	
 	/**
