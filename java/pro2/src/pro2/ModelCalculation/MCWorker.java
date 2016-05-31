@@ -144,6 +144,15 @@ public class MCWorker extends Thread {
 		s = rfData.getSData(rref);
 		//s = rfData.getSData(50.0);
 
+
+		// if mode is optimize only, do it now
+		if(workerMode == WorkerMode.OPT_ONLY) {
+			Complex[] ys = MCUtil.applyMCOpsToData(eqCircuit.getOps(), f, s);
+			eqCircuit.optimize(ys);
+			success(eqCircuit);
+			return;
+		}
+		
 		//----------------------------------------
 		// Apply OPS
 		//----------------------------------------
@@ -152,12 +161,6 @@ public class MCWorker extends Thread {
 		Complex[] ys = MCUtil.applyMCOpsToData(ops, f, s);
 		Complex[] yz = MCUtil.applyMCOpsToData(ops, f, z);
 		
-		// if mode is optimize only, do it now
-		if(workerMode == WorkerMode.OPT_ONLY) {
-			eqCircuit.optimize(ys);
-			success(eqCircuit);
-			return;
-		}
 		
 		// Create model index list
 		CircuitType[] circuitIdxes = MCUtil.createModelList(ops);
@@ -212,6 +215,7 @@ public class MCWorker extends Thread {
 		if(ops.modelAutoSelect == false) {
 			MCEqCircuit eqc = createManualCircuit();
 			eqc.setWVector(w);
+			eqc.setOps(ops);
 			success(eqc);
 			return;
 		}
