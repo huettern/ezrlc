@@ -357,6 +357,9 @@ public class RectangularPlot extends JPanel implements Observer {
 		double ymin = Double.MAX_VALUE;
 		double ymax = -Double.MAX_VALUE;
 		
+		// dont autoscale if no ids here
+		if(this.dataSetIDs.size() == 0) return;
+		
 		// Crawl all datasets for max / min values
 		int i = 0;
 		for (Integer ctr : this.dataSetIDs) {
@@ -371,8 +374,6 @@ public class RectangularPlot extends JPanel implements Observer {
 			}
 			i++;
 		}
-
-		System.out.println("ymax="+ymax);
 		
 //		xmax *= 1.1;
 		ymax *= 1.1;
