@@ -9,7 +9,8 @@ public class DataSetSettings {
     // Private Data
     //================================================================================
 	private Color lineColor = new Color(0,0,0);
-	private String label = "";
+	private String labelName = "";
+	private String labelType = "";
 	
 	//================================================================================
     // Constructors
@@ -28,12 +29,20 @@ public class DataSetSettings {
 		return this.lineColor;
 	}
 
-	public String getLabel() {
-		return label;
+	public String getLabelName() {
+		return labelName;
+	}
+	
+	public String getLabelType() {
+		return labelType;
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
+	public void setLabelName(String name) {
+		this.labelName = name;
+	}
+
+	public void setLabelType(String type) {
+		this.labelType = type;
 	}
 	
 

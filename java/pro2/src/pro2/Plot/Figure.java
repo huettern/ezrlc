@@ -300,7 +300,9 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 			rectPlot.addDataSet(id, this.newRectMeasurementWindow.getNewMeasurement());
 			controller.manualNotify();
 			rectPlot.repaint();		
-			p = new DataSetLabelPanel(this, rectPlot.getDataSetSettings(id).getLineColor(), id, rectPlot.getDataSetSettings(id).getLabel());
+			p = new DataSetLabelPanel(this, rectPlot.getDataSetSettings(id).getLineColor(), id, 
+					rectPlot.getDataSetSettings(id).getLabelName(), 
+					rectPlot.getDataSetSettings(id).getLabelType());
 		} else if (plotType == ENPlotType.SMITH) {
 			id = controller.createDataset(this.newSmithMeasurementWindow.getNewMeasurement());
 			// Save the data entry in the list
@@ -308,7 +310,9 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 			smithChart.addDataSet(id, this.newSmithMeasurementWindow.getNewMeasurement());
 			controller.manualNotify();
 			smithChart.repaint();
-			p = new DataSetLabelPanel(this, smithChart.getDataSetSettings(id).getLineColor(), id, smithChart.getDataSetSettings(id).getLabel());
+			p = new DataSetLabelPanel(this, smithChart.getDataSetSettings(id).getLineColor(), id, 
+					smithChart.getDataSetSettings(id).getLabelName(), 
+					smithChart.getDataSetSettings(id).getLabelType());
 		}
 
 		// Dataset list entry

@@ -159,15 +159,28 @@ public class RectangularPlot extends JPanel implements Observer {
 
 
 	/**
-	 * Builds the labelname of the new plot
+	 * Builds the labelname of the new plot name field
 	 * @param rpnm RectPlotNewMeasurement
 	 * @return string
 	 */
-	private String createLabelString(RectPlotNewMeasurement rpnm) {
+	private String createLabelStringName(RectPlotNewMeasurement rpnm) {
 		String s;
 
 		//s = rpnm.src_name +" " +rpnm.type.name() +" " +rpnm.cpxMod.name();
-		s = "<html><B>" +rpnm.src_name +":</B> " +rpnm.type.name() +" " +rpnm.cpxMod.name() +"</html>";
+		s = "<html><B>" +rpnm.src_name +"</B></html>";
+		
+		return s;
+	}
+	/**
+	 * Builds the labelname of the new plot type field
+	 * @param rpnm RectPlotNewMeasurement
+	 * @return string
+	 */
+	private String createLabelStringType(RectPlotNewMeasurement rpnm) {
+		String s;
+
+		//s = rpnm.src_name +" " +rpnm.type.name() +" " +rpnm.cpxMod.name();
+		s = "<html>" +rpnm.type.name() +": " +rpnm.cpxMod.name() +"</html>";
 		
 		return s;
 	}
@@ -223,7 +236,8 @@ public class RectangularPlot extends JPanel implements Observer {
 	public void addDataSet(int id, RectPlotNewMeasurement rectPlotNewMeasurement) {
 		DataSetSettings set = new DataSetSettings();
 		set.setLineColor(UIUtil.getNextColor());
-		set.setLabel(this.createLabelString(rectPlotNewMeasurement));
+		set.setLabelName(this.createLabelStringName(rectPlotNewMeasurement));
+		set.setLabelType(this.createLabelStringType(rectPlotNewMeasurement));
 		
 		this.dataSetIDs.add(id);
 		this.dataSetSettings.add(set);
@@ -239,7 +253,8 @@ public class RectangularPlot extends JPanel implements Observer {
 	public void addDataSet(int id, RectPlotNewMeasurement rectPlotNewMeasurement, int color) {
 		DataSetSettings set = new DataSetSettings();
 		set.setLineColor(UIUtil.getColor(color));
-		set.setLabel(this.createLabelString(rectPlotNewMeasurement));
+		set.setLabelName(this.createLabelStringName(rectPlotNewMeasurement));
+		set.setLabelType(this.createLabelStringType(rectPlotNewMeasurement));
 		
 		this.dataSetIDs.add(id);
 		this.dataSetSettings.add(set);

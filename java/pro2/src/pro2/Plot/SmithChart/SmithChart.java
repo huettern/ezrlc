@@ -98,7 +98,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 	public void addDataSet(int id, SmithChartNewMeasurement newMeasurement) {
 		DataSetSettings set = new DataSetSettings();
 		set.setLineColor(UIUtil.getNextColor());
-		set.setLabel("<html><B>"+newMeasurement.src_name+"</html></B>");
+		set.setLabelName("<html><B>"+newMeasurement.src_name+"</html></B>");
 
 		this.dataSetIDs.add(id);
 		this.dataSetSettings.add(set);

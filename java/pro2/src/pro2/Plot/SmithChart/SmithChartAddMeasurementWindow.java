@@ -256,7 +256,7 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 	 */
 	public void setDatasets(List<DataSetSettings> dataSetSettings) {
 		for (DataSetSettings set : dataSetSettings) {
-			if(this.lblFileName.getText().compareTo(set.getLabel()) == 0) {
+			if(this.lblFileName.getText().compareTo(set.getLabelName()) == 0) {
 				rdbtnFile.setSelected(false);
 				rdbtnFile.setEnabled(false);
 				rdbtnModel.setSelected(true);
