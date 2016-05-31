@@ -375,4 +375,30 @@ public class MathUtil {
 		}
 		return dabs;
 	}
+
+	/**
+	 * returns Magnitudes of an Array of double
+	 * @param d array of doubles
+	 * @return dabs absolutes
+	 */
+	public static double[] abs(double[] d){
+		double[] dabs = new double[d.length];
+		for (int i=0;i<d.length;i++){
+			dabs[i] = Math.abs(d[i]);
+		}
+		return dabs;
+	}
+	
+	/**
+	 * Checks if value d is in range between min and max
+	 * @param d value
+	 * @param min minimal value
+	 * @param max maximal value
+	 * @return true if in range
+	 */
+	public static boolean isInRange (double d, double min, double max) {
+		if((d >= min) && (d <= max)) return true;
+		else return false;
+	}
+	
 }
