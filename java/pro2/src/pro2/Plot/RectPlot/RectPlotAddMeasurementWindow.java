@@ -422,7 +422,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		}
 		
 		 MutableComboBoxModel<String> model=(MutableComboBoxModel<String>)cbModelList.getModel();
-
+		 cbModelList.removeAllItems();
 		 for(int i = 0; i < model.getSize(); i++){
 			 model.removeElementAt(i);
 		 }
