@@ -220,7 +220,7 @@ public class MCWorker extends Thread {
 		branch2 = new ArrayList<MCEqCircuit>(4);
 		// get 4 best circuits with 3 elements
 		for (int i = 0; i < sortedList.size(); i++) {
-			if (MCUtil.modelNElements[sortedList.get(i).getCircuitType().ordinal()] == 2) {
+			if (MCUtil.modelNParameters[sortedList.get(i).getCircuitType().ordinal()] == 2) {
 				branch2.add(sortedList.get(i));
 			}
 			// This should never happen, but just for safety..
@@ -245,7 +245,7 @@ public class MCWorker extends Thread {
 		if (do3ElementOptimize) {
 			// get 4 best circuits with 3 elements
 			for (int i = 0; i < sortedList.size(); i++) {
-				if (MCUtil.modelNElements[sortedList.get(i).getCircuitType().ordinal()] == 3) {
+				if (MCUtil.modelNParameters[sortedList.get(i).getCircuitType().ordinal()] == 3) {
 					branch1.add(sortedList.get(i));
 				}
 				// This should never happen, but just for safety..

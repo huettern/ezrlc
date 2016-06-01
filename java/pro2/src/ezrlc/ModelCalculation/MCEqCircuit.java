@@ -389,7 +389,7 @@ public class MCEqCircuit implements Runnable {
 	 * Inits the optimizer
 	 */
 	private void initOptimizer() {
-		int nelements = MCUtil.modelNElements[this.circuitType.ordinal()];
+		int nelements = MCUtil.modelNParameters[this.circuitType.ordinal()];
 		optStep = new double[nelements];
 		for (int i = 0; i < nelements; i++) {
 			optStep[i] = optStepDefault;
@@ -615,8 +615,10 @@ public class MCEqCircuit implements Runnable {
 		for (int i=0;i<wvector.length;i++){
 			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
 			Complex Zl 		= new Complex(0, wvector[i]*l);
-			Complex Zr0 	= new Complex(r0*(1+Math.pow(wvector[i]/w0, a)), 0);	
-			res[i]=Complex.div(new Complex(1, 0), Complex.add(Complex.div(new Complex(1,0),Complex.add(Zl, Zr0)),Zc0));
+			Complex Zr0 	= new Complex(r0*(1+Math.pow(wvector[i]/w0, a)), 0);
+			
+			Complex Yc0 = Zc0.reciprocal();
+			res[i]=Complex.div(new Complex(1, 0), Complex.add(Complex.div(new Complex(1,0),Complex.add(Zl, Zr0)),Yc0));
 		}
 		return res;
 	}

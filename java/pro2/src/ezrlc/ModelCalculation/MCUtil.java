@@ -27,7 +27,7 @@ public class MCUtil {
 	/**
 	 * holds the number of elements in a model
 	 */
-	public final static int[] modelNElements = { 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4 };
+	public final static int[] modelNParameters = { 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6};
 
 	public static enum DATA_FORMAT {
 		HZ, OMEGA
@@ -228,7 +228,7 @@ public class MCUtil {
 
 		// count how many there are without skin effect
 		for (int ctr = 0; ctr < MCUtil.nModelSkinStart; ctr++) {
-			if (modelNElements[ctr] >= ops.nElementsMin && modelNElements[ctr] <= ops.nElementsMax)
+			if (modelNParameters[ctr] >= ops.nElementsMin && modelNParameters[ctr] <= ops.nElementsMax)
 				num_models++;
 		}
 		// count how many there are without skin effect
@@ -245,7 +245,7 @@ public class MCUtil {
 		int[] modelIdx = new int[num_models + num_models_skin];
 		int modelIdxCtr = 0;
 		for (int ctr = 0; ctr < MCUtil.nModelSkinStart; ctr++) {
-			if (modelNElements[ctr] >= ops.nElementsMin && modelNElements[ctr] <= ops.nElementsMax)
+			if (modelNParameters[ctr] >= ops.nElementsMin && modelNParameters[ctr] <= ops.nElementsMax)
 				modelIdx[modelIdxCtr++] = ctr;
 		}
 		// if(opt.skinEffectEnabled == true) {
@@ -434,7 +434,7 @@ public class MCUtil {
 		// if(p[i] != 0.0) ctr++;
 		// }
 		// copy
-		int n = modelNElements[type.ordinal()];
+		int n = modelNParameters[type.ordinal()];
 		double[] res = new double[n];
 		// for (int i = 0; i < p.length; i++){
 		// if(p[i] != 0.0) res[ctr2++] = p[i];
