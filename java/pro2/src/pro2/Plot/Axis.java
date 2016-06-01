@@ -375,8 +375,8 @@ public class Axis {
 				int startExp = (int) Math.ceil(min_exp);
 				// Calculate string and major tic positions
 				for(int i = 0; i < label_count; i++) {
-					label_val[i] = Math.pow(10, startExp);
-					label_posy[i] = this.getPixelValueWithoutEval(label_val[i]);
+					label_val[i] = Math.pow(10, startExp-exp);
+					label_posy[i] = this.getPixelValueWithoutEval(Math.pow(10, startExp));
 					label_posx[i] = this.start_x + this.label_offset;
 					tic_pos[i].y = label_posy[i];
 					tic_pos[i].x = this.start_x;
