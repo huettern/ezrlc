@@ -194,6 +194,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			paramPanel.add(lblR0, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
 			txtR0 = new JEngineerField(4,3,"E24");
 			txtR0.getDocument().addDocumentListener(this);
+			txtR0.addActionListener(this);
 			paramPanel.add(txtR0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(f0EditableLUT[ordinal]) {
@@ -201,6 +202,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			paramPanel.add(lblF, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
 			txtF = new JEngineerField(4,3,"E24");
 			txtF.getDocument().addDocumentListener(this);
+			txtF.addActionListener(this);
 			paramPanel.add(txtF, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(alphaEditableLUT[ordinal]) {
@@ -208,6 +210,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			paramPanel.add(lbla, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
 			txtAlpha = new JEngineerField(4,3,"E24");
 			txtAlpha.getDocument().addDocumentListener(this);
+			txtAlpha.addActionListener(this);
 			paramPanel.add(txtAlpha, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(r1EditableLUT[ordinal]) {
@@ -215,6 +218,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			paramPanel.add(lblR1, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
 			txtR1 = new JEngineerField(4,3,"E24");
 			txtR1.getDocument().addDocumentListener(this);
+			txtR1.addActionListener(this);
 			paramPanel.add(txtR1, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(lEditableLUT[ordinal]) {
@@ -222,6 +226,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			paramPanel.add(lblL, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
 			txtL0 = new JEngineerField(4,3,"E24");
 			txtL0.getDocument().addDocumentListener(this);
+			txtL0.addActionListener(this);
 			paramPanel.add(txtL0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(c0EditableLUT[ordinal]) {
@@ -229,6 +234,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			paramPanel.add(lblc0, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
 			txtC0 = new JEngineerField(4,3,"E24");
 			txtC0.getDocument().addDocumentListener(this);
+			txtC0.addActionListener(this);
 			paramPanel.add(txtC0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		if(c1EditableLUT[ordinal]) {
@@ -236,6 +242,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			paramPanel.add(lblc1, new GridBagConstraints(0, yctr, 1	, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,2,0,0), 0, 0));
 			txtC1 = new JEngineerField(4,3,"E24");
 			txtC1.getDocument().addDocumentListener(this);
+			txtC1.addActionListener(this);
 			paramPanel.add(txtC1, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
 		modelPanelBuilt = true;
@@ -243,22 +250,6 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	
 	
 	
-
-	//================================================================================
-    // Interface Functions
-    //================================================================================
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnDelete) {
-			controller.removeEqCircuit(eqcID);
-		}
-		if(e.getSource() == btnOptimize) {
-			btnOptimize.setEnabled(false);
-			btnDelete.setEnabled(false);
-			title.setText("Optimizing Model...");
-			controller.optimizeEqCircuit(eqcID);
-		}
-	}
 	
 	
 	//================================================================================
@@ -298,9 +289,41 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		parameters = p;
 	}
 	
+	/**
+	 * parses values and calls controller to do update
+	 */
+	private void tuner() {
+		if(lockUpdate == false) {
+			lockUpdate = true;
+			this.parseValues();
+			controller.updateEqcParams(eqcID, parameters);
+			lockUpdate = false;
+		}
+	}
+	
 	//================================================================================
     // Public Functions
     //================================================================================
+
+
+	//================================================================================
+    // Interface Functions
+    //================================================================================
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == btnDelete) {
+			controller.removeEqCircuit(eqcID);
+		} else if(e.getSource() == btnOptimize) {
+			btnOptimize.setEnabled(false);
+			btnDelete.setEnabled(false);
+			title.setText("Optimizing Model...");
+			controller.optimizeEqCircuit(eqcID);
+		} else {
+			System.out.println("action");
+			tuner();
+		}
+	}
+	
 	public void update(Observable o, Object arg) {
 		Model m = (Model)o;
 		if(lockUpdate == false && modelPanelBuilt) {
@@ -318,27 +341,16 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 
 	@Override
 	public void insertUpdate(DocumentEvent e) {
-		if(lockUpdate == false) {
-			lockUpdate = true;
-			this.parseValues();
-			controller.updateEqcParams(eqcID, parameters);
-			lockUpdate = false;
-		}
+		tuner();
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e) {
-		if(lockUpdate == false) {
-			lockUpdate = true;
-			this.parseValues();
-			controller.updateEqcParams(eqcID, parameters);
-			lockUpdate = false;
-		}
+		tuner();
 	}
 
 	@Override
 	public void changedUpdate(DocumentEvent e) {
-		System.out.println("Thada");
 	}
 	
 }
