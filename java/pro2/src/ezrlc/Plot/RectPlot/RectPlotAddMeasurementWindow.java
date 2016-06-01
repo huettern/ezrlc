@@ -42,6 +42,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	private RectPlotNewMeasurement newMeas = new RectPlotNewMeasurement();
 	private JRadioButton rdbtnFile;
 	private JRadioButton rdbtnModel;
+	private JRadioButton rdbtnCompare;
 	private JComboBox<String> cbModelList;
 	private ButtonGroup btngrpSource;
 	private JRadioButton rdbtnZ;
@@ -54,6 +55,10 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	private JRadioButton rdbtnAngle;
 	private ButtonGroup btngrpCpxMod;
 	private JLabel lblFileName;
+	private JPanel pnlUnit;
+	private JRadioButton rdbtnLinear;
+	private JRadioButton rdbtnDB;
+	private ButtonGroup btngrpUnit;
 
 	// ================================================================================
 	// Constructors
@@ -81,9 +86,9 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		dialog.setSize(300, 350);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 45, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 45, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		dialog.getContentPane().setLayout(gridBagLayout);
 
 		// data source
@@ -93,7 +98,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		pnlDataSource.setToolTipText("");
 		pnlDataSource.setName("");
 		GridBagConstraints gbc_pnlDataSource = new GridBagConstraints();
-		gbc_pnlDataSource.insets = new Insets(5, 5, 5, 5);
+		gbc_pnlDataSource.insets = new Insets(5, 5, 5, 0);
 		gbc_pnlDataSource.fill = GridBagConstraints.BOTH;
 		gbc_pnlDataSource.gridx = 0;
 		gbc_pnlDataSource.gridy = 0;
@@ -107,6 +112,14 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 
 		rdbtnFile = new JRadioButton("File:");
 		rdbtnFile.setSelected(true);
+		rdbtnFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnDB.setSelected(false);
+				rdbtnDB.setEnabled(false);
+				rdbtnLinear.setEnabled(false);
+				rdbtnLinear.setSelected(false);
+			}
+		});
 		GridBagConstraints gbc_rdbtnFile = new GridBagConstraints();
 		gbc_rdbtnFile.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnFile.insets = new Insets(0, 0, 5, 5);
@@ -123,9 +136,17 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		pnlDataSource.add(lblFileName, gbc_lblNewLabel);
 
 		rdbtnModel = new JRadioButton("Model:");
+		rdbtnModel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnDB.setSelected(false);
+				rdbtnDB.setEnabled(false);
+				rdbtnLinear.setEnabled(false);
+				rdbtnLinear.setSelected(false);
+			}
+		});
 		GridBagConstraints gbc_rdbtnModel = new GridBagConstraints();
 		gbc_rdbtnModel.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnModel.insets = new Insets(0, 0, 0, 5);
+		gbc_rdbtnModel.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnModel.gridx = 0;
 		gbc_rdbtnModel.gridy = 1;
 		pnlDataSource.add(rdbtnModel, gbc_rdbtnModel);
@@ -135,6 +156,10 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				rdbtnFile.setSelected(false);
 				rdbtnModel.setSelected(true);
+				rdbtnDB.setSelected(false);
+				rdbtnDB.setEnabled(false);
+				rdbtnLinear.setEnabled(false);
+				rdbtnLinear.setSelected(false);
 			}
 		});
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
@@ -144,16 +169,33 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_comboBox.gridy = 1;
 		pnlDataSource.add(cbModelList, gbc_comboBox);
 
+		rdbtnCompare = new JRadioButton("Delta");
+		rdbtnCompare.setEnabled(false);
+		rdbtnCompare.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnDB.setSelected(true);
+				rdbtnDB.setEnabled(true);
+				rdbtnLinear.setEnabled(true);
+			}
+		});
+		GridBagConstraints gbc_rdbtnCompare = new GridBagConstraints();
+		gbc_rdbtnCompare.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnCompare.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnCompare.gridx = 0;
+		gbc_rdbtnCompare.gridy = 2;
+		pnlDataSource.add(rdbtnCompare, gbc_rdbtnCompare);
+		
 		btngrpSource = new ButtonGroup();
 		btngrpSource.add(rdbtnModel);
 		btngrpSource.add(rdbtnFile);
+		btngrpSource.add(rdbtnCompare);
 
 		// measurement type
 		JPanel pnlMeasurementType = new JPanel();
 		pnlMeasurementType.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Measurement Type",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlMeasurementType = new GridBagConstraints();
-		gbc_pnlMeasurementType.insets = new Insets(0, 5, 5, 5);
+		gbc_pnlMeasurementType.insets = new Insets(0, 5, 5, 0);
 		gbc_pnlMeasurementType.fill = GridBagConstraints.BOTH;
 		gbc_pnlMeasurementType.gridx = 0;
 		gbc_pnlMeasurementType.gridy = 1;
@@ -199,7 +241,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		pnlComplexModifier.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Complex Modifier",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlComplexModifier = new GridBagConstraints();
-		gbc_pnlComplexModifier.insets = new Insets(0, 5, 5, 5);
+		gbc_pnlComplexModifier.insets = new Insets(0, 5, 5, 0);
 		gbc_pnlComplexModifier.fill = GridBagConstraints.BOTH;
 		gbc_pnlComplexModifier.gridx = 0;
 		gbc_pnlComplexModifier.gridy = 2;
@@ -249,14 +291,53 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpCpxMod.add(rdbtnMag);
 		btngrpCpxMod.add(rdbtnImag);
 		btngrpCpxMod.add(rdbtnReal);
+		
+		pnlUnit = new JPanel();
+		pnlUnit.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Measurement Unit",
+				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_pnlUnit = new GridBagConstraints();
+		gbc_pnlUnit.insets = new Insets(0, 5, 5, 0);
+		gbc_pnlUnit.fill = GridBagConstraints.BOTH;
+		gbc_pnlUnit.gridx = 0;
+		gbc_pnlUnit.gridy = 3;
+		dialog.getContentPane().add(pnlUnit, gbc_pnlUnit);
+		GridBagLayout gbl_pnlUnit = new GridBagLayout();
+		gbl_pnlUnit.columnWidths = new int[]{0};
+		gbl_pnlUnit.rowHeights = new int[]{0};
+		gbl_pnlUnit.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_pnlUnit.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		pnlUnit.setLayout(gbl_pnlUnit);
 
+
+		rdbtnLinear = new JRadioButton("Linear");
+		rdbtnLinear.setEnabled(false);
+		GridBagConstraints gbc_rdbtnLinear = new GridBagConstraints();
+		gbc_rdbtnLinear.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnLinear.insets = new Insets(0, 0, 0, 5);
+		gbc_rdbtnLinear.gridx = 0;
+		gbc_rdbtnLinear.gridy = 0;
+		pnlUnit.add(rdbtnLinear, gbc_rdbtnLinear);
+
+		rdbtnDB = new JRadioButton("dB");
+		rdbtnDB.setEnabled(false);
+		GridBagConstraints gbc_rdbtnDB = new GridBagConstraints();
+		gbc_rdbtnDB.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnDB.insets = new Insets(0, 0, 0, 5);
+		gbc_rdbtnDB.gridx = 1;
+		gbc_rdbtnDB.gridy = 0;
+		pnlUnit.add(rdbtnDB, gbc_rdbtnDB);
+
+		btngrpUnit = new ButtonGroup();
+		btngrpUnit.add(rdbtnDB);
+		btngrpUnit.add(rdbtnLinear);
+		
 		// buttons
 		JPanel pnlButtons = new JPanel();
 		GridBagConstraints gbc_pnlButtons = new GridBagConstraints();
-		gbc_pnlButtons.insets = new Insets(0, 5, 5, 5);
+		gbc_pnlButtons.insets = new Insets(0, 5, 5, 0);
 		gbc_pnlButtons.fill = GridBagConstraints.BOTH;
 		gbc_pnlButtons.gridx = 0;
-		gbc_pnlButtons.gridy = 3;
+		gbc_pnlButtons.gridy = 4;
 		dialog.getContentPane().add(pnlButtons, gbc_pnlButtons);
 		GridBagLayout gbl_pnlButtons = new GridBagLayout();
 		gbl_pnlButtons.columnWidths = new int[] { 90, 90, 0 };
@@ -358,6 +439,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	private void resetButtons() {
 		rdbtnFile.setSelected(true);
 		rdbtnModel.setSelected(false);
+		rdbtnCompare.setSelected(false);
 		rdbtnS.setSelected(false);
 		rdbtnY.setSelected(false);
 		rdbtnZ.setSelected(true);
@@ -365,6 +447,8 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		rdbtnImag.setSelected(false);
 		rdbtnMag.setSelected(false);
 		rdbtnAngle.setSelected(false);
+		rdbtnLinear.setSelected(true);
+		rdbtnDB.setSelected(false);
 	}
 
 	// ================================================================================
@@ -376,6 +460,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 			rdbtnFile.setEnabled(true);
 			rdbtnFile.setSelected(true);
 			rdbtnModel.setSelected(false);
+			rdbtnCompare.setEnabled(true);
 		} else {
 			rdbtnFile.setEnabled(false);
 			rdbtnModel.setSelected(true);
