@@ -226,15 +226,25 @@ public class MathUtil {
 		
 		int cut_idx = s.length()-1;
 		
-		int ctr = s.length()-1; // points to last char
-		while(s.charAt(ctr) != '.' && ctr!=0) {
-			if(s.charAt(ctr) == '0') cut_idx = ctr-1;
-			ctr--;
+		int i = s.length()-1;
+		// cut tailing zeros
+		while(s.charAt(i) == '0') {
+			s = s.substring(0, i);
+			i--;
 		}
-		// cut everything after the ctr
-		if(s.charAt(cut_idx)=='.') out = s.substring(0, cut_idx);
-		else out = s.substring(0, cut_idx+1);
-		return out;
+		
+		// check if decimal point reached
+		if(s.charAt(i) == '.') s = s.substring(0, i);
+		
+//		int ctr = s.length()-1; // points to last char
+//		while(s.charAt(ctr) != '.' && ctr!=0) {
+//			if(s.charAt(ctr) == '0') cut_idx = ctr-1;
+//			ctr--;
+//		}
+//		// cut everything after the ctr
+//		if(s.charAt(cut_idx)=='.') out = s.substring(0, cut_idx);
+//		else out = s.substring(0, cut_idx+1);
+		return s;
 	}
 	
 	/**
