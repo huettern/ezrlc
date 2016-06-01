@@ -75,11 +75,9 @@ public class Grid {
 	 */
 	private void evalSize() {
 		List<Point> points = this.ax.getTicPoints();
-		points.remove(0);	// Remove first entry
 		this.numLines = points.size();
 		int length = 0;
 		
-//		lines.clear();
 		lines = new ArrayList<GridLine>(numLines);
 
 		if(this.or == Orientation.VERTICAL) {

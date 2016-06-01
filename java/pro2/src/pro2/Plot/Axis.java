@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -187,6 +188,15 @@ public class Axis {
 		}
 		for (Point point : sub_tic_pos) {
 			points.add(point);
+		}
+		// Remove tics at origin
+		for (Iterator<Point> iter = points.iterator(); iter.hasNext(); ) {
+			Point p = iter.next();
+			if(or == Orientation.HORIZONTAL) {
+				if(p.x == start_x) iter.remove();
+			} else {
+				if(p.y == start_y) iter.remove();
+			}
 		}
 		return points; 
 	}
