@@ -20,15 +20,7 @@ public class MCOptions {
 	public int nElementsMin;
 	public boolean nElementsMaxAuto;
 	public boolean nElementsMinAuto;
-
-	// public double inductor;
-	// public double capacitor0;
-	// public double resistor1;
-	// public double capacitor1;
-	// public double resistor0;
-	// public double alpha;
-	// public double fSkin;
-
+	
 	public double[] params = new double[7];
 	public boolean[] paramsAuto = new boolean[7];
 

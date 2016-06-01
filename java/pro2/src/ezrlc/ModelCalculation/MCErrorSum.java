@@ -1,5 +1,8 @@
 package ezrlc.ModelCalculation;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 import org.apache.commons.math3.analysis.MultivariateFunction;
 
 import ezrlc.util.Complex;
