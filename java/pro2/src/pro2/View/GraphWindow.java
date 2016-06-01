@@ -63,7 +63,7 @@ public class GraphWindow implements ActionListener{
 	 */
 	public void buildDialog() {
 		graphDialog = new JDialog(controller.getMainView());
-		graphDialog.getContentPane().setPreferredSize(new Dimension(250, 150));
+		graphDialog.getContentPane().setPreferredSize(new Dimension(300, 180));
 		graphDialog.setResizable(false);
 		graphDialog.setTitle("New Graph");		
 		graphDialog.setModal(true);
