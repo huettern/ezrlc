@@ -47,6 +47,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
     //================================================================================
 	private Controller controller;
 	private boolean lockUpdate;
+	private boolean modelPanelBuilt = false;
 	
 	private JEngineerField txtC0;
 	private JEngineerField txtR0;
@@ -97,6 +98,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	public ModelLabelPanel(Controller c) {
 		controller = c;
 		buildEmpty();
+		modelPanelBuilt = false;
 	}
 	//================================================================================
     // Private Functions
@@ -143,6 +145,9 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		btnOptimize= new JButton("OPT");
 		btnOptimize.addActionListener(this);
 		pnlBtn.add(btnOptimize, 1);
+
+		btnOptimize.setEnabled(false);
+		btnDelete.setEnabled(false);
 	}
 	
 	/**
@@ -233,7 +238,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			txtC1.getDocument().addDocumentListener(this);
 			paramPanel.add(txtC1, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0, 0));
 		}
-		
+		modelPanelBuilt = true;
 	}
 	
 	
@@ -249,6 +254,8 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		}
 		if(e.getSource() == btnOptimize) {
 			btnOptimize.setEnabled(false);
+			btnDelete.setEnabled(false);
+			title.setText("Optimizing Model...");
 			controller.optimizeEqCircuit(eqcID);
 		}
 	}
@@ -271,6 +278,8 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		if(c0EditableLUT[ordinal]) txtC0.setValue(p[5]);
 		if(c1EditableLUT[ordinal]) txtC1.setValue(p[6]);
 		btnOptimize.setEnabled(true);
+		btnDelete.setEnabled(true);
+		title.setText("<html><B>Model "+this.eqcID +"</B></html>");
 	}
 	
 	/**
@@ -294,7 +303,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
     //================================================================================
 	public void update(Observable o, Object arg) {
 		Model m = (Model)o;
-		if(lockUpdate == false) {
+		if(lockUpdate == false && modelPanelBuilt) {
 			lockUpdate = true;
 			updateParams(m.getEquivalentCircuit(this.eqcID));
 			updateUI();
