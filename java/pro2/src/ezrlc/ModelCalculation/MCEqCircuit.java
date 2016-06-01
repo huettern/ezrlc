@@ -584,12 +584,19 @@ public class MCEqCircuit implements Runnable {
 	 * 
 	 * @return
 	 */
-	private Complex[] model13() {
-		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, p[4] * p[5], p[5], 1);
-		Polynomial pd = new Polynomial(0, 0, p[5], 0);
-		Complex[] res;
-		res = pn.polydiv(pd, wvector);
+	private Complex[] model13 () {
+		double r0=this.parameters[0];
+		double w0=this.parameters[1]*2*Math.PI;
+		double a=this.parameters[2];
+		double l=this.parameters[4];
+		double c0=this.parameters[5];
+		Complex[] res = new Complex[wvector.length];
+		for (int i=0;i<wvector.length;i++){
+			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
+			Complex Zl 		= new Complex(0, wvector[i]*l);
+			Complex Zr0 	= new Complex(r0*(1+Math.pow(wvector[i]/w0, a)), 0);	
+			res[i]=Complex.add(Zr0, Complex.add(Zc0, Zl));
+		}
 		return res;
 	}
 
@@ -598,12 +605,19 @@ public class MCEqCircuit implements Runnable {
 	 * 
 	 * @return
 	 */
-	private Complex[] model14() {
-		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, p[4], 1);
-		Polynomial pd = new Polynomial(0, p[5] * p[4], p[5], 1);
-		Complex[] res;
-		res = pn.polydiv(pd, wvector);
+	private Complex[] model14 () {
+		double r0=this.parameters[0];
+		double w0=this.parameters[1]*2*Math.PI;
+		double a=this.parameters[2];
+		double l=this.parameters[4];
+		double c0=this.parameters[5];
+		Complex[] res = new Complex[wvector.length];
+		for (int i=0;i<wvector.length;i++){
+			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
+			Complex Zl 		= new Complex(0, wvector[i]*l);
+			Complex Zr0 	= new Complex(r0*(1+Math.pow(wvector[i]/w0, a)), 0);	
+			res[i]=Complex.div(new Complex(1, 0), Complex.add(Complex.div(new Complex(1,0),Complex.add(Zl, Zr0)),Zc0));
+		}
 		return res;
 	}
 
@@ -612,12 +626,19 @@ public class MCEqCircuit implements Runnable {
 	 * 
 	 * @return
 	 */
-	private Complex[] model15() {
-		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, p[5] * p[4], p[4], 1);
-		Polynomial pd = new Polynomial(0, 0, p[5], 1);
-		Complex[] res;
-		res = pn.polydiv(pd, wvector);
+	private Complex[] model15 () {
+		double r0=this.parameters[0];
+		double w0=this.parameters[1]*2*Math.PI;
+		double a=this.parameters[2];
+		double l=this.parameters[4];
+		double c0=this.parameters[5];
+		Complex[] res = new Complex[wvector.length];
+		for (int i=0;i<wvector.length;i++){
+			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
+			Complex Zl 		= new Complex(0, wvector[i]*l);
+			Complex Zr0 	= new Complex(r0*(1+Math.pow(wvector[i]/w0, a)), 0);	
+			res[i]=Complex.add(Complex.div(new Complex(1, 0),Complex.add(Zc0, Complex.div(new Complex(1,0), Zr0)) ),Zl);
+		}
 		return res;
 	}
 
@@ -626,12 +647,18 @@ public class MCEqCircuit implements Runnable {
 	 * 
 	 * @return
 	 */
-	private Complex[] model16() {
-		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, p[5] * p[4], p[4], 1);
-		Polynomial pd = new Polynomial(0, 0, p[5] * p[0], 1);
-		Complex[] res;
-		res = pn.polydiv(pd, wvector);
+	private Complex[] model16 () {
+		double r0=this.parameters[0];
+		double w0=this.parameters[1]*2*Math.PI;
+		double a=this.parameters[2];
+		double r1=this.parameters[3];
+		double c0=this.parameters[5];
+		Complex[] res = new Complex[wvector.length];
+		for (int i=0;i<wvector.length;i++){
+			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
+			Complex Zr1 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);	
+			res[i]=Complex.add(Complex.div(new Complex(1,0), Complex.add(Zc0, new Complex(1/r0,0))),Zr1);
+		}
 		return res;
 	}
 
@@ -640,9 +667,21 @@ public class MCEqCircuit implements Runnable {
 	 * 
 	 * @return
 	 */
-	private Complex[] model17() {
-		double[] p = this.parameters;
-		return null;
+	private Complex[] model17 () {
+		double r0=this.parameters[0];
+		double w0=this.parameters[1]*2*Math.PI;
+		double a=this.parameters[2];
+		double r1=this.parameters[3];
+		double l=this.parameters[4];
+		double c0=this.parameters[5];
+		Complex[] res = new Complex[wvector.length];
+		for (int i=0;i<wvector.length;i++){
+			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
+			Complex Zl 		= new Complex(0, wvector[i]*l);
+			Complex Zr1 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);	
+			res[i]=Complex.add(Complex.add(Complex.div(new Complex(1,0), Complex.add(Zc0, new Complex(1/r0,0))),Zr1),Zl);
+		}
+		return res;
 	}
 
 	/**
@@ -650,9 +689,24 @@ public class MCEqCircuit implements Runnable {
 	 * 
 	 * @return
 	 */
-	private Complex[] model18() {
-		double[] p = this.parameters;
-		return null;
+	private Complex[] model18 () {
+		double r0=this.parameters[0];
+		double w0=this.parameters[1]*2*Math.PI;
+		double a=this.parameters[2];
+		double r1=this.parameters[3];
+		double l=this.parameters[4];
+		double c0=this.parameters[5];
+		Complex[] res = new Complex[wvector.length];
+		for (int i=0;i<wvector.length;i++){
+			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
+			Complex Zl 		= new Complex(0, wvector[i]*l);
+			Complex Zr1 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);
+			
+			Complex Yc0		= Zc0.reciprocal();
+			Complex Yl		= Zl.reciprocal();
+			res[i]=Complex.add(Complex.div(new Complex(1,0), Complex.add(Complex.add(new Complex(1/r0,0), Yl), Yc0)),Zr1);
+		}
+		return res;
 	}
 
 	/**
@@ -660,9 +714,23 @@ public class MCEqCircuit implements Runnable {
 	 * 
 	 * @return
 	 */
-	private Complex[] model19() {
-		double[] p = this.parameters;
-		return null;
+	private Complex[] model19 () {
+		double r0=this.parameters[0];
+		double w0=this.parameters[1]*2*Math.PI;
+		double a=this.parameters[2];
+		double r1=this.parameters[3];
+		double l=this.parameters[4];
+		double c0=this.parameters[5];
+		Complex[] res = new Complex[wvector.length];
+		for (int i=0;i<wvector.length;i++){
+			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
+			Complex Zl 		= new Complex(0, wvector[i]*l);
+			Complex Zr1 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);
+			
+			Complex Yc0		= Zc0.reciprocal();
+			res[i]=Complex.div(new Complex(1,0), Complex.add(Complex.add(new Complex(r0, 0), Complex.div(new Complex(1,0), Complex.add(Zl, Zr1))), Yc0));
+		}
+		return res;
 	}
 
 	/**
@@ -670,10 +738,24 @@ public class MCEqCircuit implements Runnable {
 	 * 
 	 * @return
 	 */
-	private Complex[] model20() {
-		double[] p = this.parameters;
-		return null;
+	private Complex[] model20 () {
+		double w0=this.parameters[1]*2*Math.PI;
+		double a=this.parameters[2];
+		double r1=this.parameters[3];
+		double l=this.parameters[4];
+		double c0=this.parameters[5];
+		double c1=this.parameters[6];
+		Complex[] res = new Complex[wvector.length];
+		for (int i=0;i<wvector.length;i++){
+			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
+			Complex Zc1 	= new Complex(0, -1/(wvector[i]*c1));
+			Complex Zl 		= new Complex(0, wvector[i]*l);
+			Complex Zr0 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);
+			res[i]=Complex.div(new Complex(1,0),Complex.add(Complex.div(new Complex(1,0), Complex.add(Complex.add(Zr0, Zc0), Zl)), Zc1));
+		}
+		return res;
 	}
+	
 
 	public void setZ0(double rref) {
 		this.z0 = rref;
