@@ -26,51 +26,47 @@ import ezrlc.MVC.Controller;
 import ezrlc.MVC.Controller.DataSource;
 import ezrlc.Plot.Figure;
 import ezrlc.Plot.RectPlot.DataSetSettings;
-import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
-import ezrlc.RFData.RFData.ComplexModifier;
-import ezrlc.RFData.RFData.MeasurementType;
 
 public class SmithChartAddMeasurementWindow implements ActionListener {
 
-	private Controller controller;
 	private Figure figure;
-	
+
 	private JDialog dialog;
 
 	private JButton btnCancel, btnOk;
-	
+
 	private SmithChartNewMeasurement newMeas = new SmithChartNewMeasurement();
 	private JRadioButton rdbtnFile;
 	private JRadioButton rdbtnModel;
-	private JComboBox cbModelList;
+	private JComboBox<String> cbModelList;
 	private ButtonGroup btngrpSource;
 	private JLabel lblFileName;
-	
-	//================================================================================
-    // Constructors
-    //================================================================================
+
+	// ================================================================================
+	// Constructors
+	// ================================================================================
 
 	/**
 	 * 
-	 */	
-	public SmithChartAddMeasurementWindow(Controller controller, Figure fig)  {
-		this.controller = controller;
+	 */
+	public SmithChartAddMeasurementWindow(Controller controller, Figure fig) {
 		this.figure = fig;
 		dialog = new JDialog(controller.getMainView());
 		dialog.setResizable(false);
-		dialog.setTitle("Add Measurement");		
+		dialog.setTitle("Add Measurement");
 		dialog.setModal(true);
 		dialog.setLocation(250, 150);
 		dialog.setSize(300, 350);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
 		dialog.getContentPane().setLayout(gridBagLayout);
-		
+
 		JPanel pnlDataSource = new JPanel();
-		pnlDataSource.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Source", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlDataSource.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Source", TitledBorder.CENTER,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlDataSource.setToolTipText("");
 		pnlDataSource.setName("");
 		GridBagConstraints gbc_pnlDataSource = new GridBagConstraints();
@@ -80,12 +76,12 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_pnlDataSource.gridy = 0;
 		dialog.getContentPane().add(pnlDataSource, gbc_pnlDataSource);
 		GridBagLayout gbl_pnlDataSource = new GridBagLayout();
-		gbl_pnlDataSource.columnWidths = new int[]{0, 0, 0};
-		gbl_pnlDataSource.rowHeights = new int[]{0, 0, 0};
-		gbl_pnlDataSource.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlDataSource.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlDataSource.columnWidths = new int[] { 0, 0, 0 };
+		gbl_pnlDataSource.rowHeights = new int[] { 0, 0, 0 };
+		gbl_pnlDataSource.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_pnlDataSource.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		pnlDataSource.setLayout(gbl_pnlDataSource);
-		
+
 		rdbtnFile = new JRadioButton("File:");
 		rdbtnFile.setSelected(true);
 		GridBagConstraints gbc_rdbtnFile = new GridBagConstraints();
@@ -94,7 +90,7 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_rdbtnFile.gridx = 0;
 		gbc_rdbtnFile.gridy = 0;
 		pnlDataSource.add(rdbtnFile, gbc_rdbtnFile);
-		
+
 		lblFileName = new JLabel("Filename");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
@@ -102,7 +98,7 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 0;
 		pnlDataSource.add(lblFileName, gbc_lblNewLabel);
-		
+
 		rdbtnModel = new JRadioButton("Model:");
 		GridBagConstraints gbc_rdbtnModel = new GridBagConstraints();
 		gbc_rdbtnModel.anchor = GridBagConstraints.WEST;
@@ -110,13 +106,13 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_rdbtnModel.gridx = 0;
 		gbc_rdbtnModel.gridy = 1;
 		pnlDataSource.add(rdbtnModel, gbc_rdbtnModel);
-		
-		cbModelList = new JComboBox();
-		cbModelList.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		        rdbtnFile.setSelected(false);
-		        rdbtnModel.setSelected(true);
-		    }
+
+		cbModelList = new JComboBox<String>();
+		cbModelList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnFile.setSelected(false);
+				rdbtnModel.setSelected(true);
+			}
 		});
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
@@ -124,7 +120,7 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 1;
 		pnlDataSource.add(cbModelList, gbc_comboBox);
-		
+
 		btngrpSource = new ButtonGroup();
 		btngrpSource.add(rdbtnModel);
 		btngrpSource.add(rdbtnFile);
@@ -137,13 +133,12 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_pnlButtons.gridy = 1;
 		dialog.getContentPane().add(pnlButtons, gbc_pnlButtons);
 		GridBagLayout gbl_pnlButtons = new GridBagLayout();
-		gbl_pnlButtons.columnWidths = new int[]{90, 90, 0};
-		gbl_pnlButtons.rowHeights = new int[]{22, 0};
-		gbl_pnlButtons.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlButtons.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_pnlButtons.columnWidths = new int[] { 90, 90, 0 };
+		gbl_pnlButtons.rowHeights = new int[] { 22, 0 };
+		gbl_pnlButtons.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_pnlButtons.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		pnlButtons.setLayout(gbl_pnlButtons);
-		
-	
+
 		btnCancel = new JButton("Cancel");
 		btnCancel.setPreferredSize(new Dimension(0, 0));
 		btnCancel.setMinimumSize(new Dimension(0, 0));
@@ -155,7 +150,7 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_btnCancel.gridx = 0;
 		gbc_btnCancel.gridy = 0;
 		pnlButtons.add(btnCancel, gbc_btnCancel);
-		
+
 		btnOk = new JButton("OK");
 		btnOk.setMaximumSize(new Dimension(0, 0));
 		btnOk.setMinimumSize(new Dimension(0, 0));
@@ -167,66 +162,66 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_btnOk.gridx = 1;
 		gbc_btnOk.gridy = 0;
 		pnlButtons.add(btnOk, gbc_btnOk);
-		
+
 		dialog.getRootPane().setDefaultButton(btnOk);
 	}
 
-	//================================================================================
-    // Private Functions
-    //================================================================================
+	// ================================================================================
+	// Private Functions
+	// ================================================================================
 	/**
 	 * Returns the selected Button in the given ButtonGroup
-	 * @param buttonGroup ButtonGroup
+	 * 
+	 * @param buttonGroup
+	 *            ButtonGroup
 	 * @return Returns the selected Button in the given ButtonGroup
 	 */
 	private AbstractButton getSelectedButton(ButtonGroup buttonGroup) {
-        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
-            AbstractButton button = buttons.nextElement();
+		for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+			AbstractButton button = buttons.nextElement();
 
-            if (button.isSelected()) {
-                return button;
-            }
-        }
+			if (button.isSelected()) {
+				return button;
+			}
+		}
 
-        return null;
-    }
-	
-	
+		return null;
+	}
+
 	/**
 	 * Build a RectPlotNewMeasurement Object based upon the user input
 	 */
-	private void parseInput () {
+	private void parseInput() {
 		SmithChartNewMeasurement s = new SmithChartNewMeasurement();
 		// Source
-		if(this.getSelectedButton(this.btngrpSource) == rdbtnFile){
-			s.src=DataSource.FILE;
-			s.src_name=this.lblFileName.getText();
+		if (this.getSelectedButton(this.btngrpSource) == rdbtnFile) {
+			s.src = DataSource.FILE;
+			s.src_name = this.lblFileName.getText();
 		}
-		if(this.getSelectedButton(this.btngrpSource)  == rdbtnModel){
-			s.src=DataSource.MODEL;
+		if (this.getSelectedButton(this.btngrpSource) == rdbtnModel) {
+			s.src = DataSource.MODEL;
 			s.eqCircuitID = Integer.parseInt(cbModelList.getSelectedItem().toString().split("( )")[1]);
 			s.src_name = cbModelList.getSelectedItem().toString();
 		}
 		this.newMeas = s;
 	}
-	
-	//================================================================================
-    // Public Functions
-    //================================================================================
+
+	// ================================================================================
+	// Public Functions
+	// ================================================================================
 	public void setFilename(String s) {
-		if(s != null) {
+		if (s != null) {
 			this.lblFileName.setText(s);
 			rdbtnFile.setEnabled(true);
 			rdbtnFile.setSelected(true);
 			rdbtnModel.setSelected(false);
-		}
-		else {
+		} else {
 			rdbtnFile.setEnabled(false);
 			rdbtnModel.setSelected(true);
 			this.lblFileName.setText("");
 		}
 	}
-	
+
 	public void show() {
 		newMeas = new SmithChartNewMeasurement();
 		dialog.setVisible(true);
@@ -234,15 +229,15 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnOk) {
+		if (e.getSource() == btnOk) {
 			this.parseInput();
 			this.figure.addNewMeasurement();
 			dialog.dispose();
 		}
-		if(e.getSource() == btnCancel) {
+		if (e.getSource() == btnCancel) {
 			dialog.dispose();
 		}
-		
+
 	}
 
 	public SmithChartNewMeasurement getNewMeasurement() {
@@ -250,13 +245,15 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 	}
 
 	/**
-	 * Get list of dataset settings and check if a measurement is already present and
-	 * disable this option
-	 * @param dataSetSettings list of dataSetSettings
+	 * Get list of dataset settings and check if a measurement is already
+	 * present and disable this option
+	 * 
+	 * @param dataSetSettings
+	 *            list of dataSetSettings
 	 */
 	public void setDatasets(List<DataSetSettings> dataSetSettings) {
 		for (DataSetSettings set : dataSetSettings) {
-			if(this.lblFileName.getText().compareTo(set.getLabelName()) == 0) {
+			if (this.lblFileName.getText().compareTo(set.getLabelName()) == 0) {
 				rdbtnFile.setSelected(false);
 				rdbtnFile.setEnabled(false);
 				rdbtnModel.setSelected(true);
@@ -264,28 +261,28 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		}
 	}
 
-	
 	/**
 	 * Sets the drop combo box items of the model list
+	 * 
 	 * @param modelIDs
 	 */
 	public void setModels(int[] modelIDs) {
 		String[] modelNames = new String[modelIDs.length];
-		for(int i = 0; i < modelIDs.length; i++){
-			modelNames[i] = "Model " +modelIDs[i];
-//			cbModelList.addItem(modelNames[i]);
+		for (int i = 0; i < modelIDs.length; i++) {
+			modelNames[i] = "Model " + modelIDs[i];
+			// cbModelList.addItem(modelNames[i]);
 		}
-		
-		 MutableComboBoxModel<String> model=(MutableComboBoxModel<String>)cbModelList.getModel();
 
-		 for(int i = 0; i < model.getSize(); i++){
-			 model.removeElementAt(i);
-		 }
-		 
-		 for(int i = 0; i < modelIDs.length; i++){
-			 cbModelList.addItem(modelNames[i]);
-		 }
-	        rdbtnFile.setSelected(true);
-	        rdbtnModel.setSelected(false);
+		MutableComboBoxModel<String> model = (MutableComboBoxModel<String>) cbModelList.getModel();
+
+		for (int i = 0; i < model.getSize(); i++) {
+			model.removeElementAt(i);
+		}
+
+		for (int i = 0; i < modelIDs.length; i++) {
+			cbModelList.addItem(modelNames[i]);
+		}
+		rdbtnFile.setSelected(true);
+		rdbtnModel.setSelected(false);
 	}
 }

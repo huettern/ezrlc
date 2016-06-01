@@ -23,6 +23,7 @@ import java.awt.FocusTraversalPolicy;
  */
 public class FocusTraversalOnArray extends FocusTraversalPolicy {
 	private final Component m_Components[];
+
 	////////////////////////////////////////////////////////////////////////////
 	//
 	// Constructor
@@ -31,6 +32,7 @@ public class FocusTraversalOnArray extends FocusTraversalPolicy {
 	public FocusTraversalOnArray(Component components[]) {
 		m_Components = components;
 	}
+
 	////////////////////////////////////////////////////////////////////////////
 	//
 	// Utilities
@@ -41,9 +43,10 @@ public class FocusTraversalOnArray extends FocusTraversalPolicy {
 		int next = (index + delta + size) % size;
 		return next;
 	}
+
 	private Component cycle(Component currentComponent, int delta) {
 		int index = -1;
-		loop : for (int i = 0; i < m_Components.length; i++) {
+		loop: for (int i = 0; i < m_Components.length; i++) {
 			Component component = m_Components[i];
 			for (Component c = currentComponent; c != null; c = c.getParent()) {
 				if (component == c) {
@@ -69,6 +72,7 @@ public class FocusTraversalOnArray extends FocusTraversalPolicy {
 		// not found
 		return currentComponent;
 	}
+
 	////////////////////////////////////////////////////////////////////////////
 	//
 	// FocusTraversalPolicy
@@ -77,15 +81,19 @@ public class FocusTraversalOnArray extends FocusTraversalPolicy {
 	public Component getComponentAfter(Container container, Component component) {
 		return cycle(component, 1);
 	}
+
 	public Component getComponentBefore(Container container, Component component) {
 		return cycle(component, -1);
 	}
+
 	public Component getFirstComponent(Container container) {
 		return m_Components[0];
 	}
+
 	public Component getLastComponent(Container container) {
 		return m_Components[m_Components.length - 1];
 	}
+
 	public Component getDefaultComponent(Container container) {
 		return getFirstComponent(container);
 	}

@@ -52,14 +52,13 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	private DecimalFormat formatter = null;
 	private int digits = 3, outputMode = ENG;
 	private boolean inputEXP = true, inputUNIT = true;
-	private boolean edited = false, errorDisplayed = false, zeroEnabled = true;
+	private boolean edited = false, errorDisplayed = false;
 	private String errorText = "invalid input", disabledText = "-";
 	private int errorShowTime = 1000;
-	private int nEReihe = 0, indexEReihe = 0;
-	private double dEReihe = 0.0;
+	private int nEReihe = 0;
 	private double[] mEReihe;
 	private boolean isEnabled = true;
-	
+
 	// Constructor:
 	/**
 	 * Builds a default JEngineerField (outputmode = ENG and digits = 3)
@@ -150,11 +149,12 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 			rnd = 10.0;
 		else
 			rnd = 100.0;
-		
-		if(nEReihe == 12) {
-			mEReihe = new double[] {1.0,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2};
+
+		if (nEReihe == 12) {
+			mEReihe = new double[] { 1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2 };
 		} else if (nEReihe == 24) {
-			mEReihe = new double[] {1.0,1.1,1.2,1.3,1.5,1.6,1.8,2.0,2.2,2.4,2.7,3.0,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1};
+			mEReihe = new double[] { 1.0, 1.1, 1.2, 1.3, 1.5, 1.6, 1.8, 2.0, 2.2, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.3,
+					4.7, 5.1, 5.6, 6.2, 6.8, 7.5, 8.2, 9.1 };
 		} else {
 			for (int i = 0; i < nEReihe; i++) {
 				mEReihe[i] = Math.round(rnd * Math.pow(10.0, (double) i / nEReihe)) / rnd;
@@ -251,13 +251,15 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		if(super.isFocusOwner() == false) return;
-		if(isEnabled == false) return;
+		if (super.isFocusOwner() == false)
+			return;
+		if (isEnabled == false)
+			return;
 		fireActionPerformed();
-	
-		
-		if(getValue() == 0.0) setValue(1e-15);
-		
+
+		if (getValue() == 0.0)
+			setValue(1e-15);
+
 		double exp = Math.pow(10.0, (int) Math.floor(Math.log10(Math.abs(getValue()))));
 		double mantisse = getValue() / exp;
 		double dist = Double.MAX_VALUE;
@@ -432,7 +434,6 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	 */
 	public void setMaxValue(double maxValue) {
 		this.maxValue = maxValue;
-		zeroEnabled = true;
 		setToolTipText("Value \u2264 " + DoubletoStringENG(maxValue, 4, JEngineerField.UNIT));
 	}
 
@@ -444,7 +445,6 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	 */
 	public void setMinValue(double minValue) {
 		this.minValue = minValue;
-		zeroEnabled = true;
 		setToolTipText("Value \u2265 " + DoubletoStringENG(minValue, 4, JEngineerField.UNIT));
 	}
 
@@ -469,7 +469,6 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 	public void setRange(double minValue, double maxValue) {
 		this.minValue = minValue;
 		this.maxValue = maxValue;
-		zeroEnabled = true;
 		setToolTipText(DoubletoStringENG(minValue, 4, JEngineerField.UNIT) + " \u2264 Value \u2264 "
 				+ DoubletoStringENG(maxValue, 4, JEngineerField.UNIT));
 	}
@@ -486,43 +485,36 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 		case ALL:
 			minValue = -Double.MAX_VALUE;
 			maxValue = Double.MAX_VALUE;
-			zeroEnabled = true;
 			setToolTipText("Value \u2208 {\u211D}");
 			break;
 		case POS:
 			minValue = 0;
 			maxValue = Double.MAX_VALUE;
-			zeroEnabled = true;
 			setToolTipText("Value \u2265 0");
 			break;
 		case NEG:
 			minValue = -Double.MAX_VALUE;
 			maxValue = 0;
-			zeroEnabled = true;
 			setToolTipText("Value \u2264 0");
 			break;
 		case NOZERO:
 			minValue = -Double.MAX_VALUE;
 			maxValue = Double.MAX_VALUE;
-			zeroEnabled = false;
 			setToolTipText("Value \u2208 {\u211D\\0}");
 			break;
 		case POSNOZERO:
 			minValue = 0;
 			maxValue = Double.MAX_VALUE;
-			zeroEnabled = false;
 			setToolTipText("Value > 0");
 			break;
 		case NEGNOZERO:
 			minValue = -Double.MAX_VALUE;
 			maxValue = 0;
-			zeroEnabled = false;
 			setToolTipText("Value < 0");
 			break;
 		default:
 			minValue = -Double.MAX_VALUE;
 			maxValue = Double.MAX_VALUE;
-			zeroEnabled = true;
 			setToolTipText("Value \u2208 {\u211D}");
 			break;
 		}
@@ -641,13 +633,17 @@ public class JEngineerField extends JTextField implements FocusListener, ActionL
 				try {
 					v = Double.parseDouble(unitCheck(txtField.getText()).trim());
 				} catch (NumberFormatException e) {
-					//errorMsg();
+					// errorMsg();
 					return false;
 				}
 				if (v > maxValue || v < minValue) {
 					errorMsg();
-					if (v > maxValue) {value = 4;}
-					if (v < minValue) {value = 2;}
+					if (v > maxValue) {
+						value = 4;
+					}
+					if (v < minValue) {
+						value = 2;
+					}
 					return false;
 				} else {
 					if (edited) {

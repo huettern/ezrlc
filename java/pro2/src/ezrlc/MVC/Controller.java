@@ -1,85 +1,81 @@
 package ezrlc.MVC;
 
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.UUID;
 
-import ezrlc.MVC.Model;
-import ezrlc.ModelCalculation.MCEqCircuit;
 import ezrlc.ModelCalculation.MCOptions;
 import ezrlc.Plot.Figure;
-import ezrlc.Plot.PlotDataSet;
 import ezrlc.Plot.Figure.ENPlotType;
 import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
 import ezrlc.Plot.SmithChart.SmithChartNewMeasurement;
-import ezrlc.RFData.RFData;
 import ezrlc.View.MainView;
 import ezrlc.View.WorkPanel.ViewType;
 
 public class Controller {
 
-	//================================================================================
-    // Public Data
-    //================================================================================
-	public enum DataSource {FILE, MODEL};
-	
-	
-	
-	//================================================================================
-    // Private Data
-    //================================================================================
-	private Model model;
-    private MainView view;
-    
+	// ================================================================================
+	// Public Data
+	// ================================================================================
+	public enum DataSource {
+		FILE, MODEL
+	};
 
-	//================================================================================
-    // Public Functions
-    //================================================================================
+	// ================================================================================
+	// Private Data
+	// ================================================================================
+	private Model model;
+	private MainView view;
+
+	// ================================================================================
+	// Public Functions
+	// ================================================================================
 
 	public Controller(Model model, MainView view) {
 		// TODO Auto-generated constructor stub
 		this.model = model;
-        this.view = view;
-		
+		this.view = view;
+
 	}
 
 	public void contol() {
 	}
+
 	/**
 	 * Reads the inputfile given by the user
+	 * 
 	 * @param file
 	 */
-	public void loadFile (File file) {
-        // Read the file
-        this.model.newInputFile(file);
-        view.setFileName(file.getName());
+	public void loadFile(File file) {
+		// Read the file
+		this.model.newInputFile(file);
+		view.setFileName(file.getName());
 	}
 
 	public MainView getMainView() {
 		// TODO Auto-generated method stub
 		return this.view;
 	}
-	
-	public void manualNotify () {
+
+	public void manualNotify() {
 		model.manualNotify();
 	}
-	
-//	/**
-//	 * Adds a new Dataset in the model
-//	 * @param src Datasource (File or Model)
-//	 * @param ec MCEqCircuit
-//	 * @param measType RFData.MeasurementType
-//	 * @param cpxMod RFData.ComplexModifier
-//	 * @return	unique data identifier of the plotdataset
-//	 */
-//	public int createDataset(DataSource src, MCEqCircuit ec, RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
-//		return model.createDataset(src,ec,measType,cpxMod);
-//	}
+
+	// /**
+	// * Adds a new Dataset in the model
+	// * @param src Datasource (File or Model)
+	// * @param ec MCEqCircuit
+	// * @param measType RFData.MeasurementType
+	// * @param cpxMod RFData.ComplexModifier
+	// * @return unique data identifier of the plotdataset
+	// */
+	// public int createDataset(DataSource src, MCEqCircuit ec,
+	// RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
+	// return model.createDataset(src,ec,measType,cpxMod);
+	// }
 	/**
 	 * Adds a new Dataset in the model
-	 * @param nm RectPlotNewMeasurement
+	 * 
+	 * @param nm
+	 *            RectPlotNewMeasurement
 	 * @return unique data identifier of the plotdataset
 	 */
 	public int createDataset(RectPlotNewMeasurement nm) {
@@ -88,13 +84,15 @@ public class Controller {
 
 	/**
 	 * Adds a new Dataset in the model
-	 * @param nm SmithChartNewMeasurement
+	 * 
+	 * @param nm
+	 *            SmithChartNewMeasurement
 	 * @return unique data identifier of the plotdataset
 	 */
 	public int createDataset(SmithChartNewMeasurement nm) {
 		return model.createDataset(nm);
 	}
-	
+
 	public String getFilename() {
 		// TODO Auto-generated method stub
 		return model.getFilename();
@@ -108,6 +106,7 @@ public class Controller {
 
 	/**
 	 * removes a dataset in the model
+	 * 
 	 * @param id
 	 */
 	public void removeDataset(ENPlotType plottype, int id) {
@@ -116,7 +115,9 @@ public class Controller {
 
 	/**
 	 * Sets the status of the new graph button
-	 * @param b enabled(true) or disabled(flase)
+	 * 
+	 * @param b
+	 *            enabled(true) or disabled(flase)
 	 */
 	public void setNewGraphButtonEnabled(boolean b) {
 		view.setNewGraphButtonEnabled(b);
@@ -124,6 +125,7 @@ public class Controller {
 
 	/**
 	 * Creates a new equivalent circuit based on the given options
+	 * 
 	 * @param ops
 	 */
 	public void createEqCircuit(MCOptions ops) {
@@ -133,7 +135,9 @@ public class Controller {
 
 	/**
 	 * Set the work panel view to the given type
-	 * @param t ViewType
+	 * 
+	 * @param t
+	 *            ViewType
 	 */
 	public void setWorkPanelView(ViewType t) {
 		view.setWorkPanelView(t);
@@ -144,15 +148,18 @@ public class Controller {
 	}
 
 	/**
-	 * Returns an int array with the currently available equivalent circuit models
+	 * Returns an int array with the currently available equivalent circuit
+	 * models
+	 * 
 	 * @return int array with eqc IDs
 	 */
-public int[] getModelIDs() {
+	public int[] getModelIDs() {
 		return model.getModelIDs();
 	}
 
 	/**
 	 * Removes an equivalent circuit from the model
+	 * 
 	 * @param eqcID
 	 */
 	public void removeEqCircuit(int eqcID) {
@@ -161,8 +168,11 @@ public int[] getModelIDs() {
 
 	/**
 	 * Updates a equivalent circuits parameters in the model
-	 * @param eqcID id of the model
-	 * @param parameters parameter list
+	 * 
+	 * @param eqcID
+	 *            id of the model
+	 * @param parameters
+	 *            parameter list
 	 */
 	public void updateEqcParams(int eqcID, double[] parameters) {
 		model.updateEqcParams(eqcID, parameters);
@@ -170,6 +180,7 @@ public int[] getModelIDs() {
 
 	/**
 	 * Starts the optimizer of the eqcircuit
+	 * 
 	 * @param eqcID
 	 */
 	public void optimizeEqCircuit(int eqcID) {

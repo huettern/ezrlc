@@ -1,43 +1,35 @@
 package ezrlc.Plot.RectPlot;
 
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JSpinner;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import ezrlc.MVC.Controller;
-import ezrlc.Plot.Figure;
 import ezrlc.Plot.Axis.Scale;
+import ezrlc.Plot.Figure;
 import ezrlc.View.JEngineerField;
-import ezrlc.util.UIUtil;
-
-import javax.swing.UIManager;
-import java.awt.Color;
-import javax.swing.SpinnerNumberModel;
-import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFormattedTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.JRadioButton;
 
 public class RectPlotSettingsWindow implements ActionListener {
-	
+
 	private Controller controller;
 	private Figure figure;
-	
+
 	private JDialog dialog;
 
 	private JButton btnCancel, btnOk;
@@ -45,12 +37,12 @@ public class RectPlotSettingsWindow implements ActionListener {
 	private JEngineerField txtXmin, txtXmax, txtXstep;
 	private JRadioButton rdbtnLinX, rdbtnLogX, rdbtnLinY, rdbtnLogY;
 	private ButtonGroup btngrpLinLogX, btngrpLinLogY;
-	
+
 	private RectPlotSettings settings = new RectPlotSettings();
-	
-	//================================================================================
-    // Constructors
-    //================================================================================
+
+	// ================================================================================
+	// Constructors
+	// ================================================================================
 
 	/**
 	 * @wbp.parser.entryPoint
@@ -58,24 +50,24 @@ public class RectPlotSettingsWindow implements ActionListener {
 	public RectPlotSettingsWindow(Controller controller, Figure fig) {
 		this.controller = controller;
 		this.figure = fig;
-		
+
 		builtRectPlotSettingsWindow();
 	}
 
 	private void builtRectPlotSettingsWindow() {
 		dialog = new JDialog(controller.getMainView());
 		dialog.setResizable(false);
-		dialog.setTitle("Graph Settings");		
+		dialog.setTitle("Graph Settings");
 		dialog.setModal(true);
 		dialog.setLocation(250, 150);
 		dialog.setSize(300, 422);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{322, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 322, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		dialog.getContentPane().setLayout(gridBagLayout);
-		
+
 		JTabbedPane tabbed = new JTabbedPane(JTabbedPane.TOP);
 		tabbed.setToolTipText("");
 		GridBagConstraints gbc_tabbed = new GridBagConstraints();
@@ -83,20 +75,21 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_tabbed.gridx = 0;
 		gbc_tabbed.gridy = 0;
 		dialog.getContentPane().add(tabbed, gbc_tabbed);
-		
-		//****Tab Axis****
+
+		// ****Tab Axis****
 		JPanel tabAxis = new JPanel();
 		tabbed.addTab("Axis", null, tabAxis, null);
 		GridBagLayout gbl_tabAxis = new GridBagLayout();
-		gbl_tabAxis.columnWidths = new int[]{0, 0};
-		gbl_tabAxis.rowHeights = new int[]{0, 0, 30, 0};
-		gbl_tabAxis.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_tabAxis.rowWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_tabAxis.columnWidths = new int[] { 0, 0 };
+		gbl_tabAxis.rowHeights = new int[] { 0, 0, 30, 0 };
+		gbl_tabAxis.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_tabAxis.rowWeights = new double[] { 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		tabAxis.setLayout(gbl_tabAxis);
-		
-		//X-Panel
+
+		// X-Panel
 		JPanel pnlX = new JPanel();
-		pnlX.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "X-Axis", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlX.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "X-Axis", TitledBorder.CENTER,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlX = new GridBagConstraints();
 		gbc_pnlX.insets = new Insets(5, 5, 5, 5);
 		gbc_pnlX.fill = GridBagConstraints.BOTH;
@@ -104,12 +97,12 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_pnlX.gridy = 0;
 		tabAxis.add(pnlX, gbc_pnlX);
 		GridBagLayout gbl_pnlX = new GridBagLayout();
-		gbl_pnlX.columnWidths = new int[] {0, 0, 0};
-		gbl_pnlX.rowHeights = new int[] {0, 0, 0, 0};
-		gbl_pnlX.columnWeights = new double[]{0.0, 1.0, 1.0};
-		gbl_pnlX.rowWeights = new double[]{1.0, 1.0, 1.0, 0.0};
+		gbl_pnlX.columnWidths = new int[] { 0, 0, 0 };
+		gbl_pnlX.rowHeights = new int[] { 0, 0, 0, 0 };
+		gbl_pnlX.columnWeights = new double[] { 0.0, 1.0, 1.0 };
+		gbl_pnlX.rowWeights = new double[] { 1.0, 1.0, 1.0, 0.0 };
 		pnlX.setLayout(gbl_pnlX);
-		
+
 		JLabel lblMinimumX = new JLabel("Minimum:");
 		GridBagConstraints gbc_lblMinimumX = new GridBagConstraints();
 		gbc_lblMinimumX.anchor = GridBagConstraints.WEST;
@@ -118,7 +111,6 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblMinimumX.gridy = 0;
 		pnlX.add(lblMinimumX, gbc_lblMinimumX);
 
-	    
 		txtXmin = new JEngineerField(3, 20, "E24");
 		txtXmin.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinXmin = new GridBagConstraints();
@@ -128,7 +120,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_spinXmin.gridx = 1;
 		gbc_spinXmin.gridy = 0;
 		pnlX.add(txtXmin, gbc_spinXmin);
-		
+
 		JLabel lblMaximumX = new JLabel("Maximum:");
 		GridBagConstraints gbc_lblMaximumX = new GridBagConstraints();
 		gbc_lblMaximumX.anchor = GridBagConstraints.WEST;
@@ -136,7 +128,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblMaximumX.gridx = 0;
 		gbc_lblMaximumX.gridy = 1;
 		pnlX.add(lblMaximumX, gbc_lblMaximumX);
-		
+
 		txtXmax = new JEngineerField(3, 20, "E24");
 		txtXmax.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinXmax = new GridBagConstraints();
@@ -146,7 +138,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_spinXmax.gridx = 1;
 		gbc_spinXmax.gridy = 1;
 		pnlX.add(txtXmax, gbc_spinXmax);
-		
+
 		JLabel lblStepsX = new JLabel("Steps:");
 		GridBagConstraints gbc_lblStepsX = new GridBagConstraints();
 		gbc_lblStepsX.anchor = GridBagConstraints.WEST;
@@ -154,7 +146,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblStepsX.gridx = 0;
 		gbc_lblStepsX.gridy = 2;
 		pnlX.add(lblStepsX, gbc_lblStepsX);
-		
+
 		txtXstep = new JEngineerField(new DecimalFormat("###"), 0);
 		txtXstep.setMinValue(1);
 		txtXstep.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -165,7 +157,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_spinXstep.gridx = 1;
 		gbc_spinXstep.gridy = 2;
 		pnlX.add(txtXstep, gbc_spinXstep);
-		
+
 		rdbtnLinX = new JRadioButton("Lin");
 		rdbtnLinX.setSelected(true);
 		GridBagConstraints gbc_rdbtnLinX = new GridBagConstraints();
@@ -174,21 +166,22 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_rdbtnLinX.gridy = 3;
 		pnlX.add(rdbtnLinX, gbc_rdbtnLinX);
 		rdbtnLinX.addActionListener(this);
-		
+
 		rdbtnLogX = new JRadioButton("Log");
 		GridBagConstraints gbc_rdbtnLogX = new GridBagConstraints();
 		gbc_rdbtnLogX.gridx = 2;
 		gbc_rdbtnLogX.gridy = 3;
 		pnlX.add(rdbtnLogX, gbc_rdbtnLogX);
 		rdbtnLogX.addActionListener(this);
-		
+
 		btngrpLinLogX = new ButtonGroup();
 		btngrpLinLogX.add(rdbtnLogX);
 		btngrpLinLogX.add(rdbtnLinX);
-		
-		//Y-Panel
+
+		// Y-Panel
 		JPanel pnlY = new JPanel();
-		pnlY.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Y-Axis", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlY.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Y-Axis", TitledBorder.CENTER,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlY = new GridBagConstraints();
 		gbc_pnlY.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlY.fill = GridBagConstraints.BOTH;
@@ -196,12 +189,12 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_pnlY.gridy = 1;
 		tabAxis.add(pnlY, gbc_pnlY);
 		GridBagLayout gbl_pnlY = new GridBagLayout();
-		gbl_pnlY.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_pnlY.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_pnlY.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlY.rowWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlY.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_pnlY.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_pnlY.columnWeights = new double[] { 0.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_pnlY.rowWeights = new double[] { 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
 		pnlY.setLayout(gbl_pnlY);
-		
+
 		JLabel lblMinimumY = new JLabel("Minimum:");
 		GridBagConstraints gbc_lblMinimumY = new GridBagConstraints();
 		gbc_lblMinimumY.anchor = GridBagConstraints.WEST;
@@ -209,7 +202,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblMinimumY.gridx = 0;
 		gbc_lblMinimumY.gridy = 0;
 		pnlY.add(lblMinimumY, gbc_lblMinimumY);
-		
+
 		txtYmin = new JEngineerField(3, 20, "E24");
 		txtYmin.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinYmin = new GridBagConstraints();
@@ -219,7 +212,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_spinYmin.gridx = 1;
 		gbc_spinYmin.gridy = 0;
 		pnlY.add(txtYmin, gbc_spinYmin);
-		
+
 		JLabel lblMaximumY = new JLabel("Maximum:");
 		GridBagConstraints gbc_lblMaximumY = new GridBagConstraints();
 		gbc_lblMaximumY.anchor = GridBagConstraints.WEST;
@@ -227,7 +220,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblMaximumY.gridx = 0;
 		gbc_lblMaximumY.gridy = 1;
 		pnlY.add(lblMaximumY, gbc_lblMaximumY);
-		
+
 		txtYmax = new JEngineerField(3, 20, "E24");
 		txtYmax.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_spinYmax = new GridBagConstraints();
@@ -237,7 +230,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_spinYmax.gridx = 1;
 		gbc_spinYmax.gridy = 1;
 		pnlY.add(txtYmax, gbc_spinYmax);
-		
+
 		JLabel lblStepsY = new JLabel("Steps:");
 		GridBagConstraints gbc_lblStepsY = new GridBagConstraints();
 		gbc_lblStepsY.anchor = GridBagConstraints.WEST;
@@ -245,7 +238,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_lblStepsY.gridx = 0;
 		gbc_lblStepsY.gridy = 2;
 		pnlY.add(lblStepsY, gbc_lblStepsY);
-		
+
 		txtYstep = new JEngineerField(new DecimalFormat("###"), 0);
 		txtYstep.setMinValue(1);
 		txtYstep.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -256,7 +249,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_spinYstep.gridx = 1;
 		gbc_spinYstep.gridy = 2;
 		pnlY.add(txtYstep, gbc_spinYstep);
-		
+
 		rdbtnLinY = new JRadioButton("Lin");
 		rdbtnLinY.setSelected(true);
 		GridBagConstraints gbc_rdbtnLinY = new GridBagConstraints();
@@ -265,19 +258,19 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_rdbtnLinY.gridy = 3;
 		pnlY.add(rdbtnLinY, gbc_rdbtnLinY);
 		rdbtnLinY.addActionListener(this);
-		
+
 		rdbtnLogY = new JRadioButton("Log");
 		GridBagConstraints gbc_rdbtnLogY = new GridBagConstraints();
 		gbc_rdbtnLogY.gridx = 2;
 		gbc_rdbtnLogY.gridy = 3;
 		pnlY.add(rdbtnLogY, gbc_rdbtnLogY);
 		rdbtnLogY.addActionListener(this);
-		
+
 		btngrpLinLogY = new ButtonGroup();
 		btngrpLinLogY.add(rdbtnLogY);
 		btngrpLinLogY.add(rdbtnLinY);
-		
-		//Buttons
+
+		// Buttons
 		JPanel pnlButton = new JPanel();
 		GridBagConstraints gbc_pnlButton = new GridBagConstraints();
 		gbc_pnlButton.insets = new Insets(0, 5, 0, 5);
@@ -286,12 +279,12 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_pnlButton.gridy = 2;
 		tabAxis.add(pnlButton, gbc_pnlButton);
 		GridBagLayout gbl_pnlButton = new GridBagLayout();
-		gbl_pnlButton.columnWidths = new int[]{0, 0, 0};
-		gbl_pnlButton.rowHeights = new int[]{22, 0};
-		gbl_pnlButton.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlButton.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_pnlButton.columnWidths = new int[] { 0, 0, 0 };
+		gbl_pnlButton.rowHeights = new int[] { 22, 0 };
+		gbl_pnlButton.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_pnlButton.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		pnlButton.setLayout(gbl_pnlButton);
-		
+
 		btnCancel = new JButton("Cancel");
 		btnCancel.setMinimumSize(new Dimension(0, 0));
 		btnCancel.setMaximumSize(new Dimension(0, 0));
@@ -303,7 +296,7 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_btnCancel.gridx = 0;
 		gbc_btnCancel.gridy = 0;
 		pnlButton.add(btnCancel, gbc_btnCancel);
-		
+
 		btnOk = new JButton("OK");
 		btnOk.setMinimumSize(new Dimension(0, 0));
 		btnOk.setMaximumSize(new Dimension(0, 0));
@@ -315,12 +308,13 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_btnOk.gridx = 1;
 		gbc_btnOk.gridy = 0;
 		pnlButton.add(btnOk, gbc_btnOk);
-		
+
 		dialog.getRootPane().setDefaultButton(btnOk);
 	}
-	//================================================================================
-    // Public Functions
-    //================================================================================
+
+	// ================================================================================
+	// Public Functions
+	// ================================================================================
 	public void show() {
 		// TODO Auto-generated method stub
 		dialog.setVisible(true);
@@ -328,53 +322,55 @@ public class RectPlotSettingsWindow implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnOk) {
-			Double d;
-			
+		if (e.getSource() == btnOk) {
 			// Build Settings Object
 			settings.xAxisMaximum = txtXmax.getValue();
 			settings.xAxisMinimum = txtXmin.getValue();
 			settings.xAxisSteps = (int) txtXstep.getValue();
 
-			if(rdbtnLinX.isSelected()) settings.xScale = Scale.LINEAR;
-			else settings.xScale = Scale.LOG;
-			if(rdbtnLinY.isSelected()) settings.yScale = Scale.LINEAR;
-			else settings.yScale = Scale.LOG;
-			
+			if (rdbtnLinX.isSelected())
+				settings.xScale = Scale.LINEAR;
+			else
+				settings.xScale = Scale.LOG;
+			if (rdbtnLinY.isSelected())
+				settings.yScale = Scale.LINEAR;
+			else
+				settings.yScale = Scale.LOG;
+
 			settings.yAxisMaximum = txtYmax.getValue();
 			settings.yAxisMinimum = txtYmin.getValue();
 			settings.yAxisSteps = (int) txtYstep.getValue();
-			
+
 			this.figure.updatePlotSettings();
-			
+
 			dialog.dispose();
 		}
-		if(e.getSource() == btnCancel) {
+		if (e.getSource() == btnCancel) {
 			dialog.dispose();
 		}
-		
-		//Step Spinners
-		if(e.getSource() == rdbtnLogX) {
+
+		// Step Spinners
+		if (e.getSource() == rdbtnLogX) {
 			txtXstep.setEnabled(false);
 			if (txtXmin.getValue() == 0) {
 				txtXmin.setValue(1);
 				txtXmax.setValue(1000);
-			}	
+			}
 		}
-		
-		if(e.getSource() == rdbtnLinX) {
+
+		if (e.getSource() == rdbtnLinX) {
 			txtXstep.setEnabled(true);
 		}
-		
-		if(e.getSource() == rdbtnLogY) {
+
+		if (e.getSource() == rdbtnLogY) {
 			txtYstep.setEnabled(false);
 			if (txtYmin.getValue() == 0) {
 				txtYmin.setValue(1);
 				txtYmax.setValue(1000);
-			}	
+			}
 		}
-		
-		if(e.getSource() == rdbtnLinY) {
+
+		if (e.getSource() == rdbtnLinY) {
 			txtYstep.setEnabled(true);
 		}
 
@@ -382,7 +378,9 @@ public class RectPlotSettingsWindow implements ActionListener {
 
 	/**
 	 * Sets the RectPlotSettings object
-	 * @param s RectPlotSettings
+	 * 
+	 * @param s
+	 *            RectPlotSettings
 	 */
 	public void setSettings(RectPlotSettings s) {
 		this.settings = s;
@@ -398,11 +396,19 @@ public class RectPlotSettingsWindow implements ActionListener {
 		rdbtnLinY.setSelected(false);
 		rdbtnLogX.setSelected(false);
 		rdbtnLogY.setSelected(false);
-		if(s.xScale == Scale.LINEAR) rdbtnLinX.setSelected(true);
-		else { rdbtnLogX.setSelected(true); txtXstep.setEnabled(false); }
-		if(s.yScale == Scale.LINEAR) rdbtnLinY.setSelected(true);
-		else { rdbtnLogY.setSelected(true); txtYstep.setEnabled(false);}
-			
+		if (s.xScale == Scale.LINEAR)
+			rdbtnLinX.setSelected(true);
+		else {
+			rdbtnLogX.setSelected(true);
+			txtXstep.setEnabled(false);
+		}
+		if (s.yScale == Scale.LINEAR)
+			rdbtnLinY.setSelected(true);
+		else {
+			rdbtnLogY.setSelected(true);
+			txtYstep.setEnabled(false);
+		}
+
 	}
 
 	public RectPlotSettings getSettings() {

@@ -1,16 +1,16 @@
 package ezrlc.ModelCalculation;
 
-
 /**
- * Holds the options, given by the user, needed to calculate an equivelant model 
+ * Holds the options, given by the user, needed to calculate an equivelant model
+ * 
  * @author noah
  *
  */
 public class MCOptions {
 
-	//================================================================================
-    // Public Data
-    //================================================================================
+	// ================================================================================
+	// Public Data
+	// ================================================================================
 	public double fMax;
 	public double fMin;
 	public boolean fMaxAuto;
@@ -20,31 +20,31 @@ public class MCOptions {
 	public int nElementsMin;
 	public boolean nElementsMaxAuto;
 	public boolean nElementsMinAuto;
-	
-//	public double inductor;
-//	public double capacitor0;
-//	public double resistor1;
-//	public double capacitor1;
-//	public double resistor0;
-//	public double alpha;
-//	public double fSkin;
+
+	// public double inductor;
+	// public double capacitor0;
+	// public double resistor1;
+	// public double capacitor1;
+	// public double resistor0;
+	// public double alpha;
+	// public double fSkin;
 
 	public double[] params = new double[7];
 	public boolean[] paramsAuto = new boolean[7];
-	
+
 	public boolean modelAutoSelect;
 	public int modelID;
 
-	//================================================================================
-    // Constructor
-    //================================================================================
+	// ================================================================================
+	// Constructor
+	// ================================================================================
 	public MCOptions() {
 		// Set all to auto
 		fMaxAuto = true;
 		fMinAuto = true;
 		nElementsMaxAuto = true;
 		nElementsMinAuto = true;
-		for(int i = 0; i < 7; i++){
+		for (int i = 0; i < 7; i++) {
 			paramsAuto[i] = true;
 		}
 		modelAutoSelect = true;

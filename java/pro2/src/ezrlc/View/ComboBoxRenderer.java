@@ -10,19 +10,18 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 
-import ezrlc.util.UIUtil;
-
-class ComboBoxRenderer extends JLabel implements ListCellRenderer {
-	//================================================================================
-    // Local Variables
-    //================================================================================
+class ComboBoxRenderer extends JLabel implements ListCellRenderer<Object> {
+	private static final long serialVersionUID = 1L;
+	// ================================================================================
+	// Local Variables
+	// ================================================================================
 	private Font uhOhFont;
 	private ImageIcon[] image;
 	private String[] text;
-	
-	//================================================================================
-    // Constructors
-    //================================================================================
+
+	// ================================================================================
+	// Constructors
+	// ================================================================================
 	public ComboBoxRenderer(ImageIcon[] image, String[] text) {
 		this.image = new ImageIcon[image.length];
 		this.text = new String[text.length];
@@ -32,25 +31,20 @@ class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 		setHorizontalAlignment(CENTER);
 		setVerticalAlignment(CENTER);
 	}
-	
-	//================================================================================
-    // Public Functions
-    //================================================================================
+
+	// ================================================================================
+	// Public Functions
+	// ================================================================================
 	/**
-	* This method finds the image and text corresponding
-	* to the selected value and returns the label, set up
-	* to display the text and image.
-	*/
-	public Component getListCellRendererComponent(
-					                JList list,
-					                Object value,
-					                int index,
-					                boolean isSelected,
-					                boolean cellHasFocus) {
-		//Get the selected index. (The index param isn't
-		//always valid, so just use the value.)
-		int selectedIndex = ((Integer)value).intValue();
-		
+	 * This method finds the image and text corresponding to the selected value
+	 * and returns the label, set up to display the text and image.
+	 */
+	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+			boolean cellHasFocus) {
+		// Get the selected index. (The index param isn't
+		// always valid, so just use the value.)
+		int selectedIndex = ((Integer) value).intValue();
+
 		if (isSelected) {
 			setBackground(list.getSelectionBackground());
 			setForeground(list.getSelectionForeground());
@@ -58,8 +52,8 @@ class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 			setBackground(list.getBackground());
 			setForeground(list.getForeground());
 		}
-		
-		//Set the icon and text.  If icon was null, say so.
+
+		// Set the icon and text. If icon was null, say so.
 		ImageIcon icon = image[selectedIndex];
 		String model = text[selectedIndex];
 		setIcon(icon);
@@ -67,17 +61,16 @@ class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 			setText(model);
 			setFont(list.getFont());
 		} else {
-			setUhOhText(model + " (no image available)",
-						list.getFont());
+			setUhOhText(model + " (no image available)", list.getFont());
 		}
-		
+
 		this.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		return this;
 	}
-	
-	//Set the font and text when no image was found.
+
+	// Set the font and text when no image was found.
 	protected void setUhOhText(String uhOhText, Font normalFont) {
-		if (uhOhFont == null) { //lazily create this font
+		if (uhOhFont == null) { // lazily create this font
 			uhOhFont = normalFont.deriveFont(Font.ITALIC);
 		}
 		setFont(uhOhFont);

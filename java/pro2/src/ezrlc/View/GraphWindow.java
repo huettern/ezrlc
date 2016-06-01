@@ -1,43 +1,32 @@
 package ezrlc.View;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JSplitPane;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Dimension;
-import javax.swing.JTabbedPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextField;
-
-import java.awt.Insets;
+import javax.swing.JRadioButton;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import ezrlc.MVC.Controller;
 import ezrlc.Plot.Figure.ENPlotType;
 
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.SwingConstants;
+public class GraphWindow implements ActionListener {
 
-public class GraphWindow implements ActionListener{
-
-	//================================================================================
-    // Local Variables
-    //================================================================================
+	// ================================================================================
+	// Local Variables
+	// ================================================================================
 	private Controller controller;
-	
+
 	private JDialog graphDialog;
 	private ButtonGroup btngrpGraphSelect;
 	private JButton btnCreate, btnCancel;
@@ -45,44 +34,43 @@ public class GraphWindow implements ActionListener{
 	private JRadioButton rdbtnRectangular;
 
 	private JRadioButton rdbtnSmithChart;
-	
-	
-	//================================================================================
-    // Constructors
-	//================================================================================
+
+	// ================================================================================
+	// Constructors
+	// ================================================================================
 	public GraphWindow(Controller controller) {
 		this.controller = controller;
 	}
 
-	
-	//================================================================================
-    // Public Functions
-    //================================================================================
+	// ================================================================================
+	// Public Functions
+	// ================================================================================
 	/**
 	 * Builds the Graph Panel
+	 * 
 	 * @wbp.parser.entryPoint
 	 */
 	public void buildDialog() {
 		graphDialog = new JDialog(controller.getMainView());
 		graphDialog.getContentPane().setPreferredSize(new Dimension(300, 180));
 		graphDialog.setResizable(false);
-		graphDialog.setTitle("New Graph");		
+		graphDialog.setTitle("New Graph");
 		graphDialog.setModal(true);
 		graphDialog.setLocation(250, 150);
 		graphDialog.setSize(300, 200);
-		
-		//Main Panel
+
+		// Main Panel
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
 		graphDialog.getContentPane().setLayout(gridBagLayout);
-		
-		
-		//Graph type
+
+		// Graph type
 		JPanel pnlSelectType = new JPanel();
-		pnlSelectType.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Graph Type", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		pnlSelectType.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Graph Type", TitledBorder.CENTER,
+				TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlSelectType = new GridBagConstraints();
 		gbc_pnlSelectType.insets = new Insets(5, 5, 5, 5);
 		gbc_pnlSelectType.fill = GridBagConstraints.BOTH;
@@ -90,14 +78,13 @@ public class GraphWindow implements ActionListener{
 		gbc_pnlSelectType.gridy = 0;
 		graphDialog.getContentPane().add(pnlSelectType, gbc_pnlSelectType);
 		GridBagLayout gbl_pnlSelectType = new GridBagLayout();
-		gbl_pnlSelectType.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_pnlSelectType.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_pnlSelectType.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_pnlSelectType.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlSelectType.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+		gbl_pnlSelectType.rowHeights = new int[] { 0, 0, 0, 0 };
+		gbl_pnlSelectType.columnWeights = new double[] { 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_pnlSelectType.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		pnlSelectType.setLayout(gbl_pnlSelectType);
-		
-				
-		//Graph Select
+
+		// Graph Select
 		JLabel lblSelectTheDesired = new JLabel("Select the desired type:");
 		GridBagConstraints gbc_lblSelectTheDesired = new GridBagConstraints();
 		gbc_lblSelectTheDesired.anchor = GridBagConstraints.WEST;
@@ -105,7 +92,7 @@ public class GraphWindow implements ActionListener{
 		gbc_lblSelectTheDesired.gridx = 0;
 		gbc_lblSelectTheDesired.gridy = 0;
 		pnlSelectType.add(lblSelectTheDesired, gbc_lblSelectTheDesired);
-		
+
 		rdbtnRectangular = new JRadioButton("Rectangular");
 		rdbtnRectangular.setSelected(true);
 		GridBagConstraints gbc_rdbtnRectangular = new GridBagConstraints();
@@ -115,10 +102,10 @@ public class GraphWindow implements ActionListener{
 		gbc_rdbtnRectangular.gridy = 1;
 		pnlSelectType.add(rdbtnRectangular, gbc_rdbtnRectangular);
 		rdbtnRectangular.addActionListener(this);
-		
+
 		btngrpGraphSelect = new ButtonGroup();
 		btngrpGraphSelect.add(rdbtnRectangular);
-		
+
 		rdbtnSmithChart = new JRadioButton("Smith Chart");
 		GridBagConstraints gbc_rdbtnSmithChart = new GridBagConstraints();
 		gbc_rdbtnSmithChart.insets = new Insets(0, 5, 0, 5);
@@ -128,9 +115,8 @@ public class GraphWindow implements ActionListener{
 		pnlSelectType.add(rdbtnSmithChart, gbc_rdbtnSmithChart);
 		btngrpGraphSelect.add(rdbtnSmithChart);
 		rdbtnSmithChart.addActionListener(this);
-		
-		
-		//Buttons
+
+		// Buttons
 		JPanel pnlButtons = new JPanel();
 		GridBagConstraints gbc_pnlButtons = new GridBagConstraints();
 		gbc_pnlButtons.insets = new Insets(5, 5, 0, 0);
@@ -139,12 +125,12 @@ public class GraphWindow implements ActionListener{
 		gbc_pnlButtons.gridy = 1;
 		graphDialog.getContentPane().add(pnlButtons, gbc_pnlButtons);
 		GridBagLayout gbl_pnlButtons = new GridBagLayout();
-		gbl_pnlButtons.columnWidths = new int[]{0, 0, 0};
-		gbl_pnlButtons.rowHeights = new int[]{0, 0};
-		gbl_pnlButtons.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_pnlButtons.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_pnlButtons.columnWidths = new int[] { 0, 0, 0 };
+		gbl_pnlButtons.rowHeights = new int[] { 0, 0 };
+		gbl_pnlButtons.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_pnlButtons.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		pnlButtons.setLayout(gbl_pnlButtons);
-		
+
 		btnCancel = new JButton("Cancel");
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.fill = GridBagConstraints.BOTH;
@@ -153,7 +139,7 @@ public class GraphWindow implements ActionListener{
 		gbc_btnCancel.gridy = 0;
 		pnlButtons.add(btnCancel, gbc_btnCancel);
 		btnCancel.addActionListener(this);
-		
+
 		btnCreate = new JButton("Create");
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
 		gbc_btnCreate.insets = new Insets(0, 5, 5, 6);
@@ -162,12 +148,11 @@ public class GraphWindow implements ActionListener{
 		gbc_btnCreate.gridy = 0;
 		pnlButtons.add(btnCreate, gbc_btnCreate);
 		btnCreate.addActionListener(this);
-		
+
 		graphDialog.getRootPane().setDefaultButton(btnCreate);
 		graphDialog.pack();
 		graphDialog.setVisible(true);
 	}
-
 
 	/**
 	 * 
@@ -175,20 +160,19 @@ public class GraphWindow implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == btnCreate) {
-			if(rdbtnRectangular.isSelected() == true) {
+		if (e.getSource() == btnCreate) {
+			if (rdbtnRectangular.isSelected() == true) {
 				this.controller.getMainView().addGraph(ENPlotType.RECTANGULAR);
-			}
-			else if(rdbtnSmithChart.isSelected() == true) {
+			} else if (rdbtnSmithChart.isSelected() == true) {
 				this.controller.getMainView().addGraph(ENPlotType.SMITH);
 			}
 			graphDialog.dispose();
 		}
-		
-		if(e.getSource() == btnCancel) {
+
+		if (e.getSource() == btnCancel) {
 			graphDialog.dispose();
-		}	
-		
+		}
+
 	}
 
 }

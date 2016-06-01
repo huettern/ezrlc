@@ -1,50 +1,51 @@
 package ezrlc.Plot;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import ezrlc.Plot.GridLine.GridLineStyle;
 import ezrlc.Plot.RectPlot.RectangularPlot;
 
 public class Grid {
-	//================================================================================
-    // Public Data
-    //================================================================================
+	// ================================================================================
+	// Public Data
+	// ================================================================================
 	public enum Orientation {
-		HORIZONTAL,
-		VERTICAL
+		HORIZONTAL, VERTICAL
 	};
 
-	
-	//================================================================================
-    // Private Data
-    //================================================================================
+	// ================================================================================
+	// Private Data
+	// ================================================================================
 	private RectangularPlot parent;
 	private Orientation or;
 	private Axis ax;
 	private Color color;
-	
-	private int numLines = 0;
-	
-	private int size = 0;	// Size of the grid (height or width)
-	
-	List<GridLine> lines = new ArrayList<GridLine>();
-	
 
-	//================================================================================
-    // Constructors
-    //================================================================================
+	private int numLines = 0;
+
+	private int size = 0; // Size of the grid (height or width)
+
+	List<GridLine> lines = new ArrayList<GridLine>();
+
+	// ================================================================================
+	// Constructors
+	// ================================================================================
 	/**
 	 * Add a new Grid
-	 * @param parent: Parent plot
-	 * @param or: Orientation of the plot lines, either HORIZONTAL or VERTICAL
-	 * @param color: Color of the grid
-	 * @param ax: Parent Axis
-	 * @param size: Size of the grid, relative to the parent plot (0 is maximum)
+	 * 
+	 * @param parent:
+	 *            Parent plot
+	 * @param or:
+	 *            Orientation of the plot lines, either HORIZONTAL or VERTICAL
+	 * @param color:
+	 *            Color of the grid
+	 * @param ax:
+	 *            Parent Axis
+	 * @param size:
+	 *            Size of the grid, relative to the parent plot (0 is maximum)
 	 */
 	public Grid(RectangularPlot parent, Orientation or, Color color, Axis ax, int size) {
 		this.parent = parent;
@@ -53,23 +54,25 @@ public class Grid {
 		this.size = size;
 		this.color = color;
 	}
-	//================================================================================
-    // Public Functions
-    //================================================================================
+
+	// ================================================================================
+	// Public Functions
+	// ================================================================================
 	/**
 	 * Paints the Grid
+	 * 
 	 * @param g
 	 */
-	public void paint (Graphics g) {
+	public void paint(Graphics g) {
 		this.evalSize();
 		for (GridLine gridLine : this.lines) {
 			gridLine.paint(g);
 		}
 	}
 
-	//================================================================================
-    // Private Functions
-    //================================================================================
+	// ================================================================================
+	// Private Functions
+	// ================================================================================
 	/**
 	 * Calculates all the necessary pixel values to paint the plot
 	 */
@@ -77,22 +80,21 @@ public class Grid {
 		List<Point> points = this.ax.getTicPoints();
 		this.numLines = points.size();
 		int length = 0;
-		
+
 		lines = new ArrayList<GridLine>(numLines);
 
-		if(this.or == Orientation.VERTICAL) {
+		if (this.or == Orientation.VERTICAL) {
 			length = this.size;
 			for (Point point : points) {
-				lines.add(new GridLine(GridLineStyle.LINE, this.color, point, new Point(point.x, length)));
+				lines.add(new GridLine(this.color, point, new Point(point.x, length)));
 			}
 		}
-		if(this.or == Orientation.HORIZONTAL) {
+		if (this.or == Orientation.HORIZONTAL) {
 			length = parent.getWidth() - this.size;
 			for (Point point : points) {
-				lines.add(new GridLine(GridLineStyle.LINE, this.color, point, new Point(length, point.y)));
+				lines.add(new GridLine(this.color, point, new Point(length, point.y)));
 			}
 		}
 	}
-
 
 }

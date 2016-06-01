@@ -8,10 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -27,86 +23,81 @@ import javax.swing.JSpinner;
 
 public class UIUtil {
 
-	//================================================================================
-    // Private Data
-    //================================================================================
+	// ================================================================================
+	// Private Data
+	// ================================================================================
 	private static Container p = new Container();
 
 	// Data line settings
-	private static List<Color> plotSetColors = Collections.unmodifiableList(Arrays.asList(
-				new Color(0, 113, 188),
-				new Color(216, 82, 24),
-				new Color(236, 176, 31),
-				new Color(125, 46, 141),
-				new Color(118, 171, 47),
-				new Color(76, 189, 237),
-				new Color(161, 19, 46)
-			));
-	private static int PlotSetColorsCtr = 0;	//Holds the index of the next color to be used
-	
+	private static List<Color> plotSetColors = Collections
+			.unmodifiableList(Arrays.asList(new Color(0, 113, 188), new Color(216, 82, 24), new Color(236, 176, 31),
+					new Color(125, 46, 141), new Color(118, 171, 47), new Color(76, 189, 237), new Color(161, 19, 46)));
+	private static int PlotSetColorsCtr = 0; // Holds the index of the next
+												// color to be used
+
 	public UIUtil() {
 		// TODO Auto-generated constructor stub
 	}
 
-	//================================================================================
-    // Private Functions
-    //================================================================================
+	// ================================================================================
+	// Private Functions
+	// ================================================================================
 
-
-	//================================================================================
-    // Public static Functions
-    //================================================================================
+	// ================================================================================
+	// Public static Functions
+	// ================================================================================
 	/**
 	 * Evaluates the numeric double value of a spinner object
-	 * @param spin JSpinner
+	 * 
+	 * @param spin
+	 *            JSpinner
 	 * @return double value of the spinner value
 	 */
-	public static Double getSpinnerDoubleValue (JSpinner spin) {
+	public static Double getSpinnerDoubleValue(JSpinner spin) {
 		Double d = 0.0;
 		int i = 0;
-		if(spin.getValue().getClass() == Double.class || 
-				spin.getValue().getClass() == double.class) {
+		if (spin.getValue().getClass() == Double.class || spin.getValue().getClass() == double.class) {
 			d = (double) spin.getValue();
 		}
-		if(spin.getValue().getClass() == Integer.class ||
-				spin.getValue().getClass() == int.class) {
-			i = (Integer)spin.getValue();
+		if (spin.getValue().getClass() == Integer.class || spin.getValue().getClass() == int.class) {
+			i = (Integer) spin.getValue();
 			d = (double) i;
 		}
 		return d;
 	}
-	
+
 	/**
 	 * Evaluates the numeric int value of a spinner object
-	 * @param spin JSpinner
+	 * 
+	 * @param spin
+	 *            JSpinner
 	 * @return int value of the spinner value
 	 */
-	public static int getSpinnerIntValue (JSpinner spin) {
+	public static int getSpinnerIntValue(JSpinner spin) {
 		return getSpinnerDoubleValue(spin).intValue();
 	}
-	
+
 	/**
 	 * Reads the double value of a textfield and returns it
-	 * @param tf textfield
+	 * 
+	 * @param tf
+	 *            textfield
 	 * @return double value
 	 */
-	public static double getTextFieldDoubleValue (JFormattedTextField tf) {
+	public static double getTextFieldDoubleValue(JFormattedTextField tf) {
 		Double d = 0.0;
 		int i = 0;
-		if(tf.getValue().getClass() == Double.class ||
-			tf.getValue().getClass() == double.class) {
+		if (tf.getValue().getClass() == Double.class || tf.getValue().getClass() == double.class) {
 			d = (double) tf.getValue();
-		} else if (tf.getValue().getClass() == Integer.class || 
-				tf.getValue().getClass() == int.class) {
-			i = (Integer)tf.getValue();
+		} else if (tf.getValue().getClass() == Integer.class || tf.getValue().getClass() == int.class) {
+			i = (Integer) tf.getValue();
 			d = (double) i;
-		} else if (tf.getValue().getClass() == long.class || 
-				tf.getValue().getClass() == Long.class) {
-			d = ((Long)tf.getValue()).doubleValue();
+		} else if (tf.getValue().getClass() == long.class || tf.getValue().getClass() == Long.class) {
+			d = ((Long) tf.getValue()).doubleValue();
 		}
-		if(tf.getValue().getClass() == String.class) {
+		if (tf.getValue().getClass() == String.class) {
 			try {
-				String s =  (String)tf.getValue();
+				String s = (String) tf.getValue();
 				d = Double.valueOf(s);
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -114,53 +105,61 @@ public class UIUtil {
 		}
 		return d;
 	}
-	
+
 	/**
 	 * normal number to scientific notation
+	 * 
 	 * @param d
 	 * @return
 	 */
 	public static String num2Scientific(double d) {
-		String s;
 		NumberFormat formatter = new DecimalFormat();
 		formatter = new DecimalFormat("0.###E0");
-	    return formatter.format(d); // 1.2345E-1
+		return formatter.format(d); // 1.2345E-1
 	}
-	
+
 	/**
 	 * Draws a circle arround the given midpoint and radius
-	 * @param g Graphics object
-	 * @param p Midpoint of the circle
-	 * @param radius radius of the circle
+	 * 
+	 * @param g
+	 *            Graphics object
+	 * @param p
+	 *            Midpoint of the circle
+	 * @param radius
+	 *            radius of the circle
 	 */
-	public static void drawCenterCircle (Graphics2D g, Point p, int radius) {
-		g.drawOval(p.x-radius, p.y-radius, 2*radius, 2*radius);
+	public static void drawCenterCircle(Graphics2D g, Point p, int radius) {
+		g.drawOval(p.x - radius, p.y - radius, 2 * radius, 2 * radius);
 	}
-	
-	
+
 	/**
 	 * Draws a centered string
-	 * @param g Grpahics object
-	 * @param p Location of string
-	 * @param text Text to draw
+	 * 
+	 * @param g
+	 *            Grpahics object
+	 * @param p
+	 *            Location of string
+	 * @param text
+	 *            Text to draw
 	 */
-	public static void drawCenterString (Graphics g, Point p, String text) {
-		Graphics2D g2d = (Graphics2D)g;
+	public static void drawCenterString(Graphics g, Point p, String text) {
+		Graphics2D g2d = (Graphics2D) g;
 
-	    // Get the FontMetrics
-	    FontMetrics metrics = g2d.getFontMetrics();
-	    int x = p.x - (metrics.stringWidth(text) / 2);
-	    // Determine the Y coordinate for the text
-	    int y = p.y + (int)(metrics.getHeight() / 3);
-	    
-	    g2d.drawString(text, x, y);
+		// Get the FontMetrics
+		FontMetrics metrics = g2d.getFontMetrics();
+		int x = p.x - (metrics.stringWidth(text) / 2);
+		// Determine the Y coordinate for the text
+		int y = p.y + (int) (metrics.getHeight() / 3);
+
+		g2d.drawString(text, x, y);
 	}
 
-	//================================================================================
-    // Public static Functions: Images
-    //================================================================================
+	// ================================================================================
+	// Public static Functions: Images
+	// ================================================================================
 	/**
 	 * Returns an image given from the path in the project img folder
+	 * 
 	 * @param strBild
 	 * @return Image
 	 */
@@ -179,8 +178,9 @@ public class UIUtil {
 	}
 
 	/**
-	 * Returns an image given from the path in the project img folder, transformed to 
-	 * width and height
+	 * Returns an image given from the path in the project img folder,
+	 * transformed to width and height
+	 * 
 	 * @param strBild
 	 * @param width
 	 * @param height
@@ -198,14 +198,15 @@ public class UIUtil {
 		} catch (InterruptedException ex) {
 			System.out.println("Can not load image: " + strBild);
 		} catch (IOException ex) {
-			
+
 		}
 		return img;
 	}
 
 	/**
-	 * Returns an icon given from the path in the project img folder, transformed to
-	 * width and height
+	 * Returns an icon given from the path in the project img folder,
+	 * transformed to width and height
+	 * 
 	 * @param strBild
 	 * @param width
 	 * @param height
@@ -221,8 +222,10 @@ public class UIUtil {
 		}
 		return icon;
 	}
+
 	/**
 	 * Returns an icon given from the path in the project img folder
+	 * 
 	 * @param strBild
 	 * @return Icon
 	 */
@@ -237,28 +240,30 @@ public class UIUtil {
 		return icon;
 	}
 
-
 	/**
 	 * Gets the next color in the color palette and increments counter
+	 * 
 	 * @return
 	 */
 	public static Color getNextColor() {
 		Color c = plotSetColors.get(PlotSetColorsCtr);
 		PlotSetColorsCtr++;
 		// If the counter reached the end of the pallete
-		if(PlotSetColorsCtr >= plotSetColors.size()) {
-			//start from the beginning
+		if (PlotSetColorsCtr >= plotSetColors.size()) {
+			// start from the beginning
 			PlotSetColorsCtr = 0;
 		}
 		return c;
 	}
-	
+
 	/**
 	 * Gets the color in the color palette
-	 * @param i color index
+	 * 
+	 * @param i
+	 *            color index
 	 * @return Color
 	 */
 	public static Color getColor(int i) {
-		return plotSetColors.get(i%plotSetColors.size());
+		return plotSetColors.get(i % plotSetColors.size());
 	}
 }

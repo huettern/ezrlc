@@ -1,11 +1,10 @@
 package ezrlc.Plot;
 
-import javax.swing.JPanel;
-
 import java.awt.Color;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,17 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.awt.Font;
+
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
-import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import ezrlc.MVC.Controller;
 import ezrlc.MVC.Model;
-import ezrlc.MVC.Controller.DataSource;
 import ezrlc.Plot.Axis.Scale;
 import ezrlc.Plot.RectPlot.RectPlotAddMeasurementWindow;
 import ezrlc.Plot.RectPlot.RectPlotSettings;
@@ -33,27 +36,24 @@ import ezrlc.Plot.SmithChart.SmithChart;
 import ezrlc.Plot.SmithChart.SmithChartAddMeasurementWindow;
 import ezrlc.Plot.SmithChart.SmithChartSettings;
 import ezrlc.Plot.SmithChart.SmithChartSettingsWindow;
-import ezrlc.RFData.RFData.ComplexModifier;
-import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.View.JEngineerField;
-
-import javax.swing.border.LineBorder;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import java.awt.GridLayout;
-import java.awt.Dimension;
-import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.ScrollPaneConstants;
 
 public class Figure extends JPanel implements ActionListener, Observer, DocumentListener {
 
-	//================================================================================
-    // Private Data
-    //================================================================================
-	public enum ENPlotType { RECTANGULAR, SMITH};
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// ================================================================================
+	// Private Data
+	// ================================================================================
+	public enum ENPlotType {
+		RECTANGULAR, SMITH
+	};
+
 	ENPlotType plotType = null;
-	
+
 	private RectangularPlot rectPlot;
 	private SmithChart smithChart;
 	private JButton btnSettings;
@@ -63,42 +63,43 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 	private Controller controller;
 	private JButton btnAddMeasurement;
 	private JEngineerField tfZ0;
-	
+
 	private List<Integer> dataIDList = new ArrayList<Integer>();
 	private JButton btnAutoscale;
 	private JPanel panel_1;
-	
+
 	private SmithChartSettingsWindow smithChartSettingWindow;
-	
+
 	private SmithChartSettings smithChartSettings;
 
 	private JButton btnDeleteGraph;
 	private JPanel pnlDataSetsBorder;
 	private JScrollPane spDataSets;
 	private JPanel pnlDataSets;
-	
+
 	private int dataSetPnlRowCnt = 0;
 	private List<DataSetLabelPanel> dataSetLabelPanels = new ArrayList<DataSetLabelPanel>();
 
 	private GridBagLayout gbl_pnlDataSets;
 	private Component verticalGlue;
 
-	//================================================================================
-    // Constructors
-    //================================================================================
+	// ================================================================================
+	// Constructors
+	// ================================================================================
 	public Figure(Controller controller) {
-		super.setBackground(new Color(238,238,238));
-		
+		super.setBackground(new Color(238, 238, 238));
+
 		this.controller = controller;
-		
+
 		setBackground(UIManager.getColor("ToggleButton.background"));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-//		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-//		gridBagLayout.rowHeights = new int[]{0, 0};
-//		gridBagLayout.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-//		gridBagLayout.rowWeights = new double[]{0.0, 1.0};
+		// gridBagLayout.columnWidths = new int[]{0, 0, 0};
+		// gridBagLayout.rowHeights = new int[]{0, 0};
+		// gridBagLayout.columnWeights = new double[]{1.0, 0.0,
+		// Double.MIN_VALUE};
+		// gridBagLayout.rowWeights = new double[]{0.0, 1.0};
 		setLayout(gridBagLayout);
-		
+
 		panel_1 = new JPanel();
 		panel_1.setPreferredSize(new Dimension(180, 200));
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -109,12 +110,12 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		gbc_panel_1.gridy = 1;
 		add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{95, 0};
-		gbl_panel_1.rowHeights = new int[]{29, 29, 0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.columnWidths = new int[] { 95, 0 };
+		gbl_panel_1.rowHeights = new int[] { 29, 29, 0, 0, 0, 0 };
+		gbl_panel_1.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_panel_1.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		panel_1.setLayout(gbl_panel_1);
-		
+
 		btnAddMeasurement = new JButton("Add Measurement");
 		GridBagConstraints gbc_btnAddMeasurement = new GridBagConstraints();
 		gbc_btnAddMeasurement.fill = GridBagConstraints.HORIZONTAL;
@@ -123,7 +124,7 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		gbc_btnAddMeasurement.gridy = 0;
 		panel_1.add(btnAddMeasurement, gbc_btnAddMeasurement);
 		btnAddMeasurement.addActionListener(this);
-		
+
 		btnAutoscale = new JButton("Autoscale");
 		GridBagConstraints gbc_btnAutoscale = new GridBagConstraints();
 		gbc_btnAutoscale.insets = new Insets(0, 5, 5, 5);
@@ -131,9 +132,10 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		gbc_btnAutoscale.gridx = 0;
 		gbc_btnAutoscale.gridy = 2;
 		panel_1.add(btnAutoscale, gbc_btnAutoscale);
-		
+
 		pnlDataSetsBorder = new JPanel();
-		pnlDataSetsBorder.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Sets", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		pnlDataSetsBorder.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Data Sets",
+				TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_pnlDataSetsBorder = new GridBagConstraints();
 		gbc_pnlDataSetsBorder.insets = new Insets(0, 0, 5, 0);
 		gbc_pnlDataSetsBorder.anchor = GridBagConstraints.NORTH;
@@ -142,12 +144,12 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		gbc_pnlDataSetsBorder.gridy = 3;
 		panel_1.add(pnlDataSetsBorder, gbc_pnlDataSetsBorder);
 		GridBagLayout gbl_pnlDataSetsBorder = new GridBagLayout();
-		gbl_pnlDataSetsBorder.columnWidths = new int[] {0};
-		gbl_pnlDataSetsBorder.rowHeights = new int[] {0};
-		gbl_pnlDataSetsBorder.columnWeights = new double[]{1.0};
-		gbl_pnlDataSetsBorder.rowWeights = new double[]{1.0};
+		gbl_pnlDataSetsBorder.columnWidths = new int[] { 0 };
+		gbl_pnlDataSetsBorder.rowHeights = new int[] { 0 };
+		gbl_pnlDataSetsBorder.columnWeights = new double[] { 1.0 };
+		gbl_pnlDataSetsBorder.rowWeights = new double[] { 1.0 };
 		pnlDataSetsBorder.setLayout(gbl_pnlDataSetsBorder);
-		
+
 		spDataSets = new JScrollPane();
 		spDataSets.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spDataSets.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -158,17 +160,17 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		gbc_spDataSets.gridy = 0;
 		pnlDataSetsBorder.add(spDataSets, gbc_spDataSets);
 		spDataSets.getVerticalScrollBar().setUnitIncrement(25);
-		
+
 		pnlDataSets = new JPanel();
 		spDataSets.setColumnHeaderView(pnlDataSets);
 		spDataSets.setViewportView(pnlDataSets);
 		gbl_pnlDataSets = new GridBagLayout();
-		gbl_pnlDataSets.columnWidths = new int[]{0};
-		gbl_pnlDataSets.rowHeights = new int[] {0};
-		gbl_pnlDataSets.columnWeights = new double[]{Double.MIN_VALUE};
-		gbl_pnlDataSets.rowWeights = new double[]{Double.MIN_VALUE};
+		gbl_pnlDataSets.columnWidths = new int[] { 0 };
+		gbl_pnlDataSets.rowHeights = new int[] { 0 };
+		gbl_pnlDataSets.columnWeights = new double[] { Double.MIN_VALUE };
+		gbl_pnlDataSets.rowWeights = new double[] { Double.MIN_VALUE };
 		pnlDataSets.setLayout(gbl_pnlDataSets);
-		
+
 		verticalGlue = Box.createVerticalGlue();
 		verticalGlue.setMaximumSize(new Dimension(0, 0));
 		GridBagConstraints gbc_verticalGlue = new GridBagConstraints();
@@ -178,7 +180,7 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		gbc_verticalGlue.gridx = 0;
 		gbc_verticalGlue.gridy = 99;
 		pnlDataSets.add(verticalGlue, gbc_verticalGlue);
-		
+
 		btnDeleteGraph = new JButton("Delete Graph");
 		GridBagConstraints gbc_btnDeleteGraph = new GridBagConstraints();
 		gbc_btnDeleteGraph.anchor = GridBagConstraints.SOUTH;
@@ -191,16 +193,16 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		btnAutoscale.addActionListener(this);
 	}
 
-	//================================================================================
-    // Getters
-    //================================================================================
-	public SmithChart getSmithChart () {
+	// ================================================================================
+	// Getters
+	// ================================================================================
+	public SmithChart getSmithChart() {
 		return this.smithChart;
 	}
-	
-	//================================================================================
-    // Public Functions
-    //================================================================================
+
+	// ================================================================================
+	// Public Functions
+	// ================================================================================
 	/**
 	 * Builds a Rectangular Plot inside the figure
 	 */
@@ -226,18 +228,18 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		gbc_btnSettings.gridy = 1;
 		panel_1.add(btnSettings, gbc_btnSettings);
 		btnSettings.addActionListener(this);
-		
+
 		// Settings Dialog
 		rectPlotSettingWindow = new RectPlotSettingsWindow(this.controller, this);
-		
+
 		// New Measurement dialog
 		newRectMeasurementWindow = new RectPlotAddMeasurementWindow(this.controller, this);
 	}
-	
+
 	/**
 	 * Builds a Smith Chart inside the figure
 	 */
-	public void buildSmithChart () {
+	public void buildSmithChart() {
 		plotType = ENPlotType.SMITH;
 		smithChart = new SmithChart();
 		smithChart.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -250,28 +252,32 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		gbc_plot.gridy = 1;
 		panel_1.remove(btnAutoscale);
 		add(smithChart, gbc_plot);
-		
+
 		// settings textfield
 		JPanel pnl_z0 = new JPanel(new GridBagLayout());
-		panel_1.add(pnl_z0, new GridBagConstraints(0,1,1,1,1.0,0.0,GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,new Insets(0, 5, 5, 5),0,0));
-		
+		panel_1.add(pnl_z0, new GridBagConstraints(0, 1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
+
 		JLabel lblZ0 = new JLabel("Z0 =");
-		pnl_z0.add(lblZ0, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0));
-		
+		pnl_z0.add(lblZ0, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE,
+				new Insets(0, 0, 0, 0), 0, 0));
+
 		tfZ0 = new JEngineerField(3, 20, "E24");
 		tfZ0.getDocument().addDocumentListener(this);
-		pnl_z0.add(tfZ0, new GridBagConstraints(1,0,1,1,1.0,0.0,GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,new Insets(0, 5, 5, 5),0,0));
-		
+		pnl_z0.add(tfZ0, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
+
 		JLabel lblOhm = new JLabel("\u2126");
-		pnl_z0.add(lblOhm, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,0,0,0), 0, 0));
-		
+		pnl_z0.add(lblOhm, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
 		// settings
 		smithChartSettings = smithChart.getSettings();
 		tfZ0.setValue(smithChartSettings.referenceResistance);
-		
+
 		// Settings dialog
 		smithChartSettingWindow = new SmithChartSettingsWindow(this.controller, this);
-		
+
 		// New Measurement window
 		newSmithMeasurementWindow = new SmithChartAddMeasurementWindow(this.controller, this);
 	}
@@ -279,31 +285,30 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 	/**
 	 * Updates the plot settings
 	 */
-	public void updatePlotSettings () {
-		if(plotType == ENPlotType.RECTANGULAR) {
+	public void updatePlotSettings() {
+		if (plotType == ENPlotType.RECTANGULAR) {
 			rectPlot.setSettings(rectPlotSettingWindow.getSettings());
 		} else if (plotType == ENPlotType.SMITH) {
 			smithChart.setSettings(smithChartSettingWindow.getSettings());
 		}
 	}
-	
+
 	/**
 	 * Adds a new Measurement to the Plot
 	 */
-	public void addNewMeasurement () {
+	public void addNewMeasurement() {
 		int id;
 		DataSetLabelPanel p = null;
-		if(plotType == ENPlotType.RECTANGULAR) {
+		if (plotType == ENPlotType.RECTANGULAR) {
 			// Create Dataset
 			id = controller.createDataset(this.newRectMeasurementWindow.getNewMeasurement());
-			// Save the data entry id in the list 
+			// Save the data entry id in the list
 			this.dataIDList.add(id);
 			rectPlot.addDataSet(id, this.newRectMeasurementWindow.getNewMeasurement());
 			controller.manualNotify();
-			rectPlot.repaint();		
-			p = new DataSetLabelPanel(this, rectPlot.getDataSetSettings(id).getLineColor(), id, 
-					rectPlot.getDataSetSettings(id).getLabelName(), 
-					rectPlot.getDataSetSettings(id).getLabelType());
+			rectPlot.repaint();
+			p = new DataSetLabelPanel(this, rectPlot.getDataSetSettings(id).getLineColor(), id,
+					rectPlot.getDataSetSettings(id).getLabelName(), rectPlot.getDataSetSettings(id).getLabelType());
 		} else if (plotType == ENPlotType.SMITH) {
 			id = controller.createDataset(this.newSmithMeasurementWindow.getNewMeasurement());
 			// Save the data entry in the list
@@ -311,44 +316,50 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 			smithChart.addDataSet(id, this.newSmithMeasurementWindow.getNewMeasurement());
 			controller.manualNotify();
 			smithChart.repaint();
-			p = new DataSetLabelPanel(this, smithChart.getDataSetSettings(id).getLineColor(), id, 
-					smithChart.getDataSetSettings(id).getLabelName(), 
-					smithChart.getDataSetSettings(id).getLabelType());
+			p = new DataSetLabelPanel(this, smithChart.getDataSetSettings(id).getLineColor(), id,
+					smithChart.getDataSetSettings(id).getLabelName(), smithChart.getDataSetSettings(id).getLabelType());
 		}
 
 		// Dataset list entry
 		dataSetLabelPanels.add(p);
-		pnlDataSets.add(p, new GridBagConstraints(0, dataSetPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,5,0), 0, 0));
-		// adjust pnlDataSets gridbaglayout so that row weights are zero except last one
-		double[] d = new double[dataSetPnlRowCnt+1];
-		for (int i = 0; i<d.length; i++) { d[i] = 0.0; }
+		pnlDataSets.add(p, new GridBagConstraints(0, dataSetPnlRowCnt++, 1, 1, 1.0, 0.0, GridBagConstraints.NORTH,
+				GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0));
+		// adjust pnlDataSets gridbaglayout so that row weights are zero except
+		// last one
+		double[] d = new double[dataSetPnlRowCnt + 1];
+		for (int i = 0; i < d.length; i++) {
+			d[i] = 0.0;
+		}
 		d[dataSetPnlRowCnt] = 1.0;
 		gbl_pnlDataSets.rowWeights = d;
 		pnlDataSets.setLayout(gbl_pnlDataSets);
 		super.updateUI();
-		
 
 	}
-	
+
 	/**
 	 * Removes a dataset by id
-	 * @param id dataset id
+	 * 
+	 * @param id
+	 *            dataset id
 	 */
 	public void removeDataset(int id) {
-		if(this.plotType == ENPlotType.RECTANGULAR) rectPlot.removeDataset(id);
-		if(this.plotType == ENPlotType.SMITH) smithChart.removeDataset(id);
+		if (this.plotType == ENPlotType.RECTANGULAR)
+			rectPlot.removeDataset(id);
+		if (this.plotType == ENPlotType.SMITH)
+			smithChart.removeDataset(id);
 		controller.removeDataset(this.plotType, id);
 	}
 
-	//================================================================================
-    // Interfaces
-    //================================================================================
-	
+	// ================================================================================
+	// Interfaces
+	// ================================================================================
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==btnSettings) {
-			if(plotType == ENPlotType.RECTANGULAR) {
+		if (e.getSource() == btnSettings) {
+			if (plotType == ENPlotType.RECTANGULAR) {
 				RectPlotSettings s = rectPlot.getSettings();
 				rectPlotSettingWindow.setSettings(s);
 				rectPlotSettingWindow.show();
@@ -358,8 +369,8 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 				smithChartSettingWindow.show();
 			}
 		}
-		if(e.getSource()==btnAddMeasurement) {
-			if(plotType == ENPlotType.RECTANGULAR) {
+		if (e.getSource() == btnAddMeasurement) {
+			if (plotType == ENPlotType.RECTANGULAR) {
 				newRectMeasurementWindow.setFilename(controller.getFilename());
 				newRectMeasurementWindow.setModels(controller.getModelIDs());
 				newRectMeasurementWindow.show();
@@ -370,26 +381,28 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 				newSmithMeasurementWindow.show();
 			}
 		}
-		if(e.getSource()==btnAutoscale) {
-			if(plotType == ENPlotType.RECTANGULAR) rectPlot.autoScaleKeepScale();
+		if (e.getSource() == btnAutoscale) {
+			if (plotType == ENPlotType.RECTANGULAR)
+				rectPlot.autoScaleKeepScale();
 		}
-		if(e.getSource()==btnDeleteGraph){
+		if (e.getSource() == btnDeleteGraph) {
 			controller.deleteFigure(this);
 		}
-			
+
 	}
 
-	
 	@Override
 	public void update(Observable o, Object arg) {
-		Model model = (Model)o;
+		Model model = (Model) o;
 		// update plots
-		if(plotType == ENPlotType.RECTANGULAR) rectPlot.update(o, arg);
-		else if(plotType == ENPlotType.SMITH) smithChart.update(o, arg);
+		if (plotType == ENPlotType.RECTANGULAR)
+			rectPlot.update(o, arg);
+		else if (plotType == ENPlotType.SMITH)
+			smithChart.update(o, arg);
 		// update data set labels
 		for (DataSetLabelPanel lbl : dataSetLabelPanels) {
 			// if data set doesnt exist remove panel
-			if(model.isDataset(this.plotType, lbl.getID()) == false) {
+			if (model.isDataset(this.plotType, lbl.getID()) == false) {
 				pnlDataSets.remove(lbl);
 				lbl = null;
 			}
@@ -413,7 +426,7 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
