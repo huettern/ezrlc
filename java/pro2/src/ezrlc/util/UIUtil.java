@@ -36,7 +36,6 @@ public class UIUtil {
 												// color to be used
 
 	public UIUtil() {
-		// TODO Auto-generated constructor stub
 	}
 
 	// ================================================================================
@@ -100,7 +99,6 @@ public class UIUtil {
 				String s = (String) tf.getValue();
 				d = Double.valueOf(s);
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
 		}
 		return d;

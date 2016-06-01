@@ -357,7 +357,6 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == btnSettings) {
 			if (plotType == ENPlotType.RECTANGULAR) {
 				RectPlotSettings s = rectPlot.getSettings();
@@ -425,7 +424,6 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 
 	@Override
 	public void changedUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

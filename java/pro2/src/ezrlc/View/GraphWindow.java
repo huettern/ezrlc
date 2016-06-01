@@ -159,7 +159,6 @@ public class GraphWindow implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == btnCreate) {
 			if (rdbtnRectangular.isSelected() == true) {
 				this.controller.getMainView().addGraph(ENPlotType.RECTANGULAR);

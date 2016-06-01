@@ -46,8 +46,6 @@ public class Model extends Observable {
 	MCWorker worker;
 
 	public Model() {
-		// TODO Auto-generated constructor stub
-
 	}
 
 	// ================================================================================
@@ -239,7 +237,6 @@ public class Model extends Observable {
 			rfDataFile = new RFData(file);
 			rfDataFile.parse();
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.err.println("FATAL: Error in file parsing");
 		}
 		// setChanged();
@@ -299,17 +296,14 @@ public class Model extends Observable {
 	}
 
 	public PlotDataSet getDataSet(int intValue) {
-		// TODO Auto-generated method stub
 		return this.plotDataSetList.get(intValue);
 	}
 
 	public SmithChartDataSet getSmithChartDataSet(int intValue) {
-		// TODO Auto-generated method stub
 		return this.smithPlotDataSetList.get(intValue);
 	}
 
 	public String getFilename() {
-		// TODO Auto-generated method stub
 		if (this.rfDataFile != null) {
 			return this.rfDataFile.getFileName();
 		} else

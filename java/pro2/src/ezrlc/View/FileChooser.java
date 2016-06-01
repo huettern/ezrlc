@@ -68,7 +68,6 @@ public class FileChooser extends JComponent implements Accessible {
 	 * @return
 	 */
 	public File getFile() {
-		// TODO Auto-generated method stub
 		return fileChooser.getSelectedFile();
 	}
 

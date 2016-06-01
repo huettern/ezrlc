@@ -18,7 +18,7 @@ import ezrlc.Plot.RectPlot.DataSetSettings;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;
 
-public class SmithChart extends JPanel implements Observer, MouseListener {
+public class SmithChart extends JPanel implements Observer {
 
 	/**
 	 * 
@@ -49,9 +49,6 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 
 		// Build SmithChartGrid
 		grid = new SmithChartGrid(this, settings.referenceResistance);
-
-		addMouseListener(this);
-
 	}
 
 	// ================================================================================
@@ -135,37 +132,7 @@ public class SmithChart extends JPanel implements Observer, MouseListener {
 				this.getHeight() - 10);
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public SmithChartSettings getSettings() {
-		// TODO Auto-generated method stub
 		return this.settings;
 	}
 

@@ -9,7 +9,6 @@ public class SmithChartNewMeasurement {
 	public int eqCircuitID;
 
 	public SmithChartNewMeasurement() {
-		// TODO Auto-generated constructor stub
 	}
 
 }

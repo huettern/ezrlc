@@ -136,7 +136,6 @@ public class MainView extends JFrame implements Observer {
 	 * @param type
 	 */
 	public void addGraph(ENPlotType type) {
-		// TODO Auto-generated method stub
 		workPanel.addGraph(type);
 		navPanel.setViewButtonStatus(ViewType.FIGURE);
 	}

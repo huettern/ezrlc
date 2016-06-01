@@ -11,7 +11,6 @@ public class SmithChartSettings {
 	// Constructors
 	// ================================================================================
 	public SmithChartSettings() {
-		// TODO Auto-generated constructor stub
 	}
 
 }

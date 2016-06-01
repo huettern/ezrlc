@@ -274,7 +274,6 @@ public class MCWorker extends Thread {
 				t2_0.join();
 				t2_1.join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// Calculate rank
@@ -295,7 +294,6 @@ public class MCWorker extends Thread {
 				t1_1.join();
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

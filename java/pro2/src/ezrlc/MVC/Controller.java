@@ -30,7 +30,6 @@ public class Controller {
 	// ================================================================================
 
 	public Controller(Model model, MainView view) {
-		// TODO Auto-generated constructor stub
 		this.model = model;
 		this.view = view;
 
@@ -51,7 +50,6 @@ public class Controller {
 	}
 
 	public MainView getMainView() {
-		// TODO Auto-generated method stub
 		return this.view;
 	}
 
@@ -94,7 +92,6 @@ public class Controller {
 	}
 
 	public String getFilename() {
-		// TODO Auto-generated method stub
 		return model.getFilename();
 	}
 

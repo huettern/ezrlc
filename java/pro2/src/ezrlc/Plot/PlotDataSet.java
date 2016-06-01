@@ -110,28 +110,13 @@ public class PlotDataSet {
 	 * @param g
 	 */
 	public void paint(Graphics g, Area clip) {
-		// TODO Auto-generated method stub
 		this.eval();
 		Graphics2D g2 = (Graphics2D) g.create();
 		g2.setClip(clip);
 
-		// for (Point point : this.data_pts) {
-		// this.drawPoint(g, point);
-		// }
-		//
-		// Color oldCol = g2.getColor();
-		// g2.setColor(this.settings.getLineColor());
-		// for(int i = 0; i<(this.points-1); i++) {
-		// this.drawPoint(g2, this.data_pts.get(i));
-		// this.connectPoints(g2, this.data_pts.get(i), this.data_pts.get(i+1));
-		// }
-
 		g2.setColor(this.settings.getLineColor());
 		g2.setStroke(data_stroke);
 		g2.draw(data_path);
-
-		// this.drawPoint(g2, this.data_pts.get(this.points-1));
-		// g2.setColor(oldCol);
 	}
 
 	/**

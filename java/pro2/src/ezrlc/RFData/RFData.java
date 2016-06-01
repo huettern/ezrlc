@@ -82,13 +82,11 @@ public class RFData {
 	// ================================================================================
 
 	public RFData(String fname) {
-		// TODO Auto-generated constructor stub
 		this.fname = fname;
 		this.uid = UUID.randomUUID();
 	}
 
 	public RFData(File file) {
-		// TODO Auto-generated constructor stub
 		this.fname = file.getAbsolutePath();
 		this.file = file;
 		this.uid = UUID.randomUUID();
@@ -112,7 +110,6 @@ public class RFData {
 		try {
 			file = new FileReader(this.fname);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			System.out.println("Input File not found!");
 			return;
@@ -163,7 +160,6 @@ public class RFData {
 						}
 						// next entry is constant 'R'
 						else if (i == 4) {
-							// TODO: Check if this can be ignored
 						}
 						// next entry is equivelant measurement resistance
 						else if (i == 5) {
@@ -395,7 +391,6 @@ public class RFData {
 	 * @return
 	 */
 	public String getFileName() {
-		// TODO Auto-generated method stub
 		return this.file.getName();
 	}
 

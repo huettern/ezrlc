@@ -15,7 +15,6 @@ public class DataSetSettings {
 	// Constructors
 	// ================================================================================
 	public DataSetSettings() {
-		// TODO Auto-generated constructor stub
 	}
 
 	// ================================================================================

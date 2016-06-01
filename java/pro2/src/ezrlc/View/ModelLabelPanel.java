@@ -363,7 +363,6 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	}
 
 	public int getID() {
-		// TODO Auto-generated method stub
 		return this.eqcID;
 	}
 

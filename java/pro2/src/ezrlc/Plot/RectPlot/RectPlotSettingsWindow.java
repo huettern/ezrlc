@@ -316,7 +316,6 @@ public class RectPlotSettingsWindow implements ActionListener {
 	// Public Functions
 	// ================================================================================
 	public void show() {
-		// TODO Auto-generated method stub
 		dialog.setVisible(true);
 	}
 

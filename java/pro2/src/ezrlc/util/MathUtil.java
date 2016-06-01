@@ -15,7 +15,6 @@ public class MathUtil {
 	private final static String[] PREFIX_ARRAY = { "f", "p", "n", "µ", "m", "", "k", "M", "G", "T" };
 
 	public MathUtil() {
-		// TODO Auto-generated constructor stub
 	}
 
 	// ================================================================================
