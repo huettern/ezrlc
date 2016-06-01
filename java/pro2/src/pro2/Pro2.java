@@ -68,7 +68,6 @@ public class Pro2 {
                 Controller controller = new Controller(model,view);
                 
                 view.setController(controller);
-                model.setController(controller);
                 
                 view.build();
                 view.setVisible(true);

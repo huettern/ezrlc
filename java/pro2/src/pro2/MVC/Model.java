@@ -30,8 +30,6 @@ public class Model extends Observable {
 	//================================================================================
     // Private Data
     //================================================================================
-	private Controller controller;
-	
 	private RFData rfDataFile;
 
 	private List<PlotDataSet> plotDataSetList = new ArrayList<PlotDataSet>();
@@ -201,16 +199,6 @@ public class Model extends Observable {
 	//================================================================================
     // Public Functions
     //================================================================================
-
-	
-	/**
-	 * Sets the controller object
-	 * @param controller
-	 */
-	public void setController (Controller controller) {
-		this.controller = controller;
-	}
-
 	/**
 	 * Parses the given Inputfile and adds a new RFData object
 	 * @param file

@@ -338,6 +338,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 
 	@Override
 	public void changedUpdate(DocumentEvent e) {
+		System.out.println("Thada");
 	}
 	
 }
