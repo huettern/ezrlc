@@ -15,6 +15,22 @@ FHNW 2nd Semester project working repository
 ------------
 
 ## Build
+
+### Build using ant
+```
+cd java/
+ant
+cp pro2/target/archive-tmp/pro2-.jar .
+```
+
+### Build javadoc
+```
+cd java/
+ant -buildfile pro2/javadoc.xml
+```
+To push javadoc to github pages, follow the following guide: https://vaadin.com/blog/-/blogs/host-your-javadoc-s-online-in-github
+
+### using maven (deprecated)
 ```
 mvn -f java/pro2/pom.xml clean compile assembly:single
 cp java/pro2/target/*.jar .
