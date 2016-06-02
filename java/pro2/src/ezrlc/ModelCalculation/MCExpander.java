@@ -73,6 +73,7 @@ public class MCExpander {
 		eqcExt.setParameter(4, l);
 		eqcExt.setParameter(5, c0);
 		eqcExt.setWVector(w);
+		eqcExt.setZ0(eqc.getZ0());
 
 		return eqcExt;
 	}

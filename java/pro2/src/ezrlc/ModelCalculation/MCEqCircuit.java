@@ -776,6 +776,10 @@ public class MCEqCircuit implements Runnable {
 		this.z0 = rref;
 	}
 
+	public double getZ0() {
+		return z0;
+	}
+
 	public void setOps(MCOptions ops) {
 		this.ops = ops;
 	}
@@ -783,5 +787,6 @@ public class MCEqCircuit implements Runnable {
 	public MCOptions getOps() {
 		return ops;
 	}
+
 
 }
