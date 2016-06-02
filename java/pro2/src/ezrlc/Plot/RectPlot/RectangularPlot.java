@@ -21,6 +21,7 @@ import ezrlc.Plot.Axis.Scale;
 import ezrlc.Plot.Grid;
 import ezrlc.Plot.Grid.Orientation;
 import ezrlc.Plot.PlotDataSet;
+import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;
 
@@ -190,6 +191,8 @@ public class RectangularPlot extends JPanel implements Observer {
 
 		if(rpnm.src == DataSource.COMPARE) 		
 			s = "<html>" + rpnm.type.name() + ": " + rpnm.cpxMod.name() + " " + rpnm.unit.name() +"</html>";
+		else if (rpnm.type == MeasurementType.S)
+			s = "<html>" + rpnm.type.name() + ": " + rpnm.cpxMod.name() + " " + MathUtil.num2eng(rpnm.zRef, 2) +"\u2126</html>";
 		else
 			s = "<html>" + rpnm.type.name() + ": " + rpnm.cpxMod.name() + "</html>";
 		

@@ -21,12 +21,15 @@ import javax.swing.MutableComboBoxModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import org.apache.commons.math3.ml.neuralnet.twod.NeuronSquareMesh2D.HorizontalDirection;
+
 import ezrlc.MVC.Controller;
 import ezrlc.MVC.Controller.DataSource;
 import ezrlc.Plot.Figure;
 import ezrlc.Plot.RectPlot.RectPlotNewMeasurement.Unit;
 import ezrlc.RFData.RFData.ComplexModifier;
 import ezrlc.RFData.RFData.MeasurementType;
+import ezrlc.View.JEngineerField;
 
 public class RectPlotAddMeasurementWindow implements ActionListener {
 
@@ -60,7 +63,8 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	private JRadioButton rdbtnLinear;
 	private JRadioButton rdbtnDB;
 	private ButtonGroup btngrpUnit;
-
+	private JEngineerField txtZref;
+	
 	// ================================================================================
 	// Constructors
 	// ================================================================================
@@ -205,7 +209,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbl_pnlMeasurementType.columnWidths = new int[] { 0, 0, 0, 0 };
 		gbl_pnlMeasurementType.rowHeights = new int[] { 0, 0 };
 		gbl_pnlMeasurementType.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		gbl_pnlMeasurementType.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_pnlMeasurementType.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		pnlMeasurementType.setLayout(gbl_pnlMeasurementType);
 
 		rdbtnZ = new JRadioButton("Z");
@@ -217,20 +221,38 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_rdbtnZ.gridy = 0;
 		pnlMeasurementType.add(rdbtnZ, gbc_rdbtnZ);
 
+		rdbtnY = new JRadioButton("Y");
+		GridBagConstraints gbc_rdbtnY = new GridBagConstraints();
+		gbc_rdbtnY.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnY.gridx = 1;
+		gbc_rdbtnY.gridy = 0;
+		pnlMeasurementType.add(rdbtnY, gbc_rdbtnY);
+
 		rdbtnS = new JRadioButton("S");
 		GridBagConstraints gbc_rdbtnS = new GridBagConstraints();
 		gbc_rdbtnS.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnS.insets = new Insets(0, 0, 0, 5);
-		gbc_rdbtnS.gridx = 1;
-		gbc_rdbtnS.gridy = 0;
+		gbc_rdbtnS.gridx = 0;
+		gbc_rdbtnS.gridy = 1;
 		pnlMeasurementType.add(rdbtnS, gbc_rdbtnS);
-
-		rdbtnY = new JRadioButton("Y");
-		GridBagConstraints gbc_rdbtnY = new GridBagConstraints();
-		gbc_rdbtnY.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnY.gridx = 2;
-		gbc_rdbtnY.gridy = 0;
-		pnlMeasurementType.add(rdbtnY, gbc_rdbtnY);
+		
+		txtZref = new JEngineerField(4, 3, "E24");
+		txtZref.setValue(50.0);
+		GridBagConstraints gbc_txtZref = new GridBagConstraints();
+		gbc_txtZref.anchor = GridBagConstraints.WEST;
+		gbc_txtZref.insets = new Insets(0, 0, 0, 5);
+		gbc_txtZref.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtZref.gridx = 1;
+		gbc_txtZref.gridy = 1;
+		pnlMeasurementType.add(txtZref, gbc_txtZref);
+		
+		JLabel lblOhm = new JLabel("Ohm");
+		GridBagConstraints gbc_lbllblOhm = new GridBagConstraints();
+		gbc_lbllblOhm.anchor = GridBagConstraints.WEST;
+		gbc_lbllblOhm.insets = new Insets(0, 0, 0, 5);
+		gbc_lbllblOhm.gridx = 2;
+		gbc_lbllblOhm.gridy = 1;
+		pnlMeasurementType.add(lblOhm, gbc_lbllblOhm);
 
 		btngrpMeasType = new ButtonGroup();
 		btngrpMeasType.add(rdbtnS);
@@ -442,6 +464,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		if( this.getSelectedButton(this.btngrpUnit) == rdbtnLinear) {
 			nm.unit = Unit.Linear;
 		}
+		nm.zRef = txtZref.getValue();
 		this.newMeas = nm;
 	}
 

@@ -148,6 +148,19 @@ public class MCEqCircuit implements Runnable {
 	}
 
 	/**
+	 * Returns the scattering parameters to the given freq parameters and given 
+	 * zref
+	 * @param zref reference resistance
+	 * @return Complex array with scattering parameters
+	 */
+	public final Complex[] getS(double zref) {
+		// convert to s parameter
+		Complex[] ys = RFData.z2s(zref, this.getZ());
+
+		return ys;
+	}
+
+	/**
 	 * Returns the admittance parameters to the given freq parameters
 	 * 
 	 * @return Complex array with admittance parameters

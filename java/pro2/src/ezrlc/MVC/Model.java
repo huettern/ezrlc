@@ -69,7 +69,7 @@ public class Model extends Observable {
 			outdata = new double[rfDataFile.size()];
 			switch (nm.type) {
 			case S:
-				data = this.rfDataFile.getsData();
+				data = this.rfDataFile.getSData(nm.zRef);
 				break;
 			case Z:
 				data = this.rfDataFile.getzData();
@@ -102,7 +102,7 @@ public class Model extends Observable {
 			outdata = new double[eqCircuits.get(nm.eqCircuitID).getWSize()];
 			switch (nm.type) {
 			case S:
-				data = eqCircuits.get(nm.eqCircuitID).getS();
+				data = eqCircuits.get(nm.eqCircuitID).getS(nm.zRef);
 				break;
 			case Y:
 				data = eqCircuits.get(nm.eqCircuitID).getY();
@@ -117,8 +117,8 @@ public class Model extends Observable {
 			outdata = new double[eqCircuits.get(nm.eqCircuitID).getWSize()];
 			switch (nm.type) {
 			case S:
-				data = eqCircuits.get(nm.eqCircuitID).getS();
-				datacomp = this.rfDataFile.getsData();
+				data = eqCircuits.get(nm.eqCircuitID).getS(nm.zRef);
+				datacomp = this.rfDataFile.getSData(nm.zRef);
 				break;
 			case Y:
 				data = eqCircuits.get(nm.eqCircuitID).getY();

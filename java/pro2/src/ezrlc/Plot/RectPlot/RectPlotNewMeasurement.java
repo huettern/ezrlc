@@ -16,6 +16,7 @@ public class RectPlotNewMeasurement {
 	public RFData.MeasurementType type;
 	public RFData.ComplexModifier cpxMod;
 	public Unit unit;
+	public double zRef;
 	
 
 	public RectPlotNewMeasurement() {
@@ -24,6 +25,7 @@ public class RectPlotNewMeasurement {
 		type = MeasurementType.Z;
 		cpxMod = ComplexModifier.REAL;
 		unit = Unit.dB;
+		zRef = 50.0;
 	}
 
 }
