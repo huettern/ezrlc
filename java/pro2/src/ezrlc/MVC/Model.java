@@ -15,6 +15,7 @@ import ezrlc.ModelCalculation.MCWorker.WorkerMode;
 import ezrlc.Plot.Figure.ENPlotType;
 import ezrlc.Plot.PlotDataSet;
 import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
+import ezrlc.Plot.RectPlot.RectPlotNewMeasurement.Unit;
 import ezrlc.Plot.SmithChart.SmithChartDataSet;
 import ezrlc.Plot.SmithChart.SmithChartNewMeasurement;
 import ezrlc.RFData.RFData;
@@ -60,6 +61,7 @@ public class Model extends Observable {
 	 */
 	private PlotDataSet buildDataSetRaw(RectPlotNewMeasurement nm) {
 		Complex[] data = null;
+		Complex[] datacomp = null;
 		double[] outdata = null;
 		// Get Data
 
@@ -111,6 +113,24 @@ public class Model extends Observable {
 			default:
 				break;
 			}
+		} else if (nm.src == DataSource.COMPARE) {
+			outdata = new double[eqCircuits.get(nm.eqCircuitID).getWSize()];
+			switch (nm.type) {
+			case S:
+				data = eqCircuits.get(nm.eqCircuitID).getS();
+				datacomp = this.rfDataFile.getsData();
+				break;
+			case Y:
+				data = eqCircuits.get(nm.eqCircuitID).getY();
+				datacomp = this.rfDataFile.getyData();
+				break;
+			case Z:
+				data = eqCircuits.get(nm.eqCircuitID).getZ();
+				datacomp = this.rfDataFile.getzData();
+				break;
+			default:
+				break;
+			}
 		}
 
 		// Convert to Complex Modifier
@@ -145,9 +165,55 @@ public class Model extends Observable {
 				break;
 			}
 		}
+		
+		// If compare
+		if(nm.src == DataSource.COMPARE) {
+			double[] outdatacompare = new double[datacomp.length];
+			switch (nm.cpxMod) {
+			case REAL:
+				// Extract real part
+				for (int i = 0; i < datacomp.length; i++) {
+					outdatacompare[i] = datacomp[i].re();
+				}
+				break;
+			case IMAG:
+				// Extract imaginary part
+				for (int i = 0; i < datacomp.length; i++) {
+					outdatacompare[i] = datacomp[i].im();
+				}
+				break;
+			case MAG:
+				// Extract magnitude
+				for (int i = 0; i < datacomp.length; i++) {
+					outdatacompare[i] = datacomp[i].abs();
+				}
+				break;
+			case ANGLE:
+				// Extract angle
+				for (int i = 0; i < datacomp.length; i++) {
+					outdatacompare[i] = datacomp[i].angle();
+				}
+				break;
+			default:
+				break;
+			}
+			// get larger data size
+			int size = outdata.length>outdatacompare.length?outdata.length:outdatacompare.length;
+			double[] diff = new double[size];
+			for(int i = 0; i < size; i++) {
+				diff[i] = Math.abs(outdata[i] - outdatacompare[i]);
+			} 
+			// convert to db
+			if (nm.unit == Unit.dB) {
+				for(int i = 0; i < size; i++) {
+					diff[i] = 20*Math.log10(diff[i] + Double.MIN_VALUE);
+				}
+			}
+			outdata = diff;
+		}
 
 		double[] xdata = null;
-		if (nm.src == DataSource.FILE)
+		if (nm.src == DataSource.FILE || nm.src == DataSource.COMPARE)
 			xdata = rfDataFile.getfData();
 		if (nm.src == DataSource.MODEL)
 			xdata = eqCircuits.get(nm.eqCircuitID).getF();
@@ -497,9 +563,12 @@ public class Model extends Observable {
 	public void updateEqcParams(int eqcID, double[] parameters) {
 		eqCircuits.get(eqcID).setParameters(parameters);
 		// update the associated plots
-		for (Integer i : eqCircuitRectPlotIDs.get(eqcID)) {
+		for(int i = 0; i < plotDataSetList.size(); i++) {
 			updateRectPlotDataset(i);
 		}
+//		for (Integer i : eqCircuitRectPlotIDs.get(eqcID)) {
+//			updateRectPlotDataset(i);
+//		}
 		for (Integer i : eqCircuitSmithPlotIDs.get(eqcID)) {
 			updateSmithPlotDataset(i);
 		}
@@ -508,8 +577,10 @@ public class Model extends Observable {
 	}
 
 	private void updateRectPlotDataset(Integer i) {
-		RectPlotNewMeasurement nm = plotDataSetList.get(i).getNM();
-		plotDataSetList.set(i, buildDataSetRaw(nm));
+		if(plotDataSetList.get(i) != null) {
+			RectPlotNewMeasurement nm = plotDataSetList.get(i).getNM();
+			plotDataSetList.set(i, buildDataSetRaw(nm));
+		}
 	}
 
 	private void updateSmithPlotDataset(Integer i) {

@@ -24,6 +24,7 @@ import javax.swing.border.TitledBorder;
 import ezrlc.MVC.Controller;
 import ezrlc.MVC.Controller.DataSource;
 import ezrlc.Plot.Figure;
+import ezrlc.Plot.RectPlot.RectPlotNewMeasurement.Unit;
 import ezrlc.RFData.RFData.ComplexModifier;
 import ezrlc.RFData.RFData.MeasurementType;
 
@@ -407,6 +408,11 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 			nm.eqCircuitID = Integer.parseInt(cbModelList.getSelectedItem().toString().split("( )")[1]);
 			nm.src_name = cbModelList.getSelectedItem().toString();
 		}
+		if (this.getSelectedButton(this.btngrpSource) == rdbtnCompare) {
+			nm.src = DataSource.COMPARE;
+			nm.eqCircuitID = Integer.parseInt(cbModelList.getSelectedItem().toString().split("( )")[1]);
+			nm.src_name = "Compare";
+		}
 		// Measurement Tyoe
 		if (this.getSelectedButton(this.btngrpMeasType) == rdbtnS) {
 			nm.type = MeasurementType.S;
@@ -429,6 +435,12 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		}
 		if (this.getSelectedButton(this.btngrpCpxMod) == rdbtnImag) {
 			nm.cpxMod = ComplexModifier.IMAG;
+		}
+		if( this.getSelectedButton(this.btngrpUnit) == rdbtnDB) {
+			nm.unit = Unit.dB;
+		}
+		if( this.getSelectedButton(this.btngrpUnit) == rdbtnLinear) {
+			nm.unit = Unit.Linear;
 		}
 		this.newMeas = nm;
 	}

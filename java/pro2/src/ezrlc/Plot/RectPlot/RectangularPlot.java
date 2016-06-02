@@ -14,6 +14,7 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import ezrlc.MVC.Controller.DataSource;
 import ezrlc.MVC.Model;
 import ezrlc.Plot.Axis;
 import ezrlc.Plot.Axis.Scale;
@@ -187,9 +188,11 @@ public class RectangularPlot extends JPanel implements Observer {
 	private String createLabelStringType(RectPlotNewMeasurement rpnm) {
 		String s;
 
-		// s = rpnm.src_name +" " +rpnm.type.name() +" " +rpnm.cpxMod.name();
-		s = "<html>" + rpnm.type.name() + ": " + rpnm.cpxMod.name() + "</html>";
-
+		if(rpnm.src == DataSource.COMPARE) 		
+			s = "<html>" + rpnm.type.name() + ": " + rpnm.cpxMod.name() + " " + rpnm.unit.name() +"</html>";
+		else
+			s = "<html>" + rpnm.type.name() + ": " + rpnm.cpxMod.name() + "</html>";
+		
 		return s;
 	}
 
