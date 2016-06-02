@@ -13,7 +13,7 @@ import ezrlc.ModelCalculation.MCOptions;
 import ezrlc.ModelCalculation.MCWorker;
 import ezrlc.ModelCalculation.MCWorker.WorkerMode;
 import ezrlc.Plot.Figure.ENPlotType;
-import ezrlc.Plot.PlotDataSet;
+import ezrlc.Plot.RectPlot.PlotDataSet;
 import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
 import ezrlc.Plot.RectPlot.RectPlotNewMeasurement.Unit;
 import ezrlc.Plot.SmithChart.SmithChartDataSet;
@@ -22,6 +22,12 @@ import ezrlc.RFData.RFData;
 import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.Complex;
 
+/**
+ * Implements top level model functionality of the MVC framework
+ * 
+ * @author noah
+ *
+ */
 public class Model extends Observable {
 
 	// ================================================================================
@@ -165,9 +171,9 @@ public class Model extends Observable {
 				break;
 			}
 		}
-		
+
 		// If compare
-		if(nm.src == DataSource.COMPARE) {
+		if (nm.src == DataSource.COMPARE) {
 			double[] outdatacompare = new double[datacomp.length];
 			switch (nm.cpxMod) {
 			case REAL:
@@ -198,15 +204,15 @@ public class Model extends Observable {
 				break;
 			}
 			// get larger data size
-			int size = outdata.length>outdatacompare.length?outdata.length:outdatacompare.length;
+			int size = outdata.length > outdatacompare.length ? outdata.length : outdatacompare.length;
 			double[] diff = new double[size];
-			for(int i = 0; i < size; i++) {
+			for (int i = 0; i < size; i++) {
 				diff[i] = Math.abs(outdata[i] - outdatacompare[i]);
-			} 
+			}
 			// convert to db
 			if (nm.unit == Unit.dB) {
-				for(int i = 0; i < size; i++) {
-					diff[i] = 20*Math.log10(diff[i] + Double.MIN_VALUE);
+				for (int i = 0; i < size; i++) {
+					diff[i] = 20 * Math.log10(diff[i] + Double.MIN_VALUE);
 				}
 			}
 			outdata = diff;
@@ -223,6 +229,13 @@ public class Model extends Observable {
 		return dataSet;
 	}
 
+	/**
+	 * Create a new dataset and store it in the dataset list
+	 * 
+	 * @param nm
+	 *            RectPlotNewMeasurement object with options
+	 * @return id to access the dataset
+	 */
 	private int buildDataSet(RectPlotNewMeasurement nm) {
 		PlotDataSet dataSet = buildDataSetRaw(nm);
 		this.plotDataSetList.add(dataSet);
@@ -243,7 +256,7 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * Builds a new dataset with the given settings
+	 * Builds a new smith chart dataset with the given settings
 	 * 
 	 * @param nm
 	 *            SmithChartNewMeasurement
@@ -355,20 +368,42 @@ public class Model extends Observable {
 		return this.buildDataSet(nm);
 	}
 
+	/**
+	 * Triggers a notify to the observers
+	 */
 	public void manualNotify() {
 		// mark as value changed
 		setChanged();
 		notifyObservers(UpdateEvent.MANUAL);
 	}
 
-	public PlotDataSet getDataSet(int intValue) {
-		return this.plotDataSetList.get(intValue);
+	/**
+	 * Get a dataset by its ID
+	 * 
+	 * @param id
+	 *            plot id
+	 * @return plot dataset
+	 */
+	public PlotDataSet getDataSet(int id) {
+		return this.plotDataSetList.get(id);
 	}
 
-	public SmithChartDataSet getSmithChartDataSet(int intValue) {
-		return this.smithPlotDataSetList.get(intValue);
+	/**
+	 * Get a dataset by its ID
+	 * 
+	 * @param id
+	 *            plot id
+	 * @return plot dataset
+	 */
+	public SmithChartDataSet getSmithChartDataSet(int id) {
+		return this.smithPlotDataSetList.get(id);
 	}
 
+	/**
+	 * Get filename of the currently loaded file
+	 * 
+	 * @return filename
+	 */
 	public String getFilename() {
 		if (this.rfDataFile != null) {
 			return this.rfDataFile.getFileName();
@@ -563,12 +598,12 @@ public class Model extends Observable {
 	public void updateEqcParams(int eqcID, double[] parameters) {
 		eqCircuits.get(eqcID).setParameters(parameters);
 		// update the associated plots
-		for(int i = 0; i < plotDataSetList.size(); i++) {
+		for (int i = 0; i < plotDataSetList.size(); i++) {
 			updateRectPlotDataset(i);
 		}
-//		for (Integer i : eqCircuitRectPlotIDs.get(eqcID)) {
-//			updateRectPlotDataset(i);
-//		}
+		// for (Integer i : eqCircuitRectPlotIDs.get(eqcID)) {
+		// updateRectPlotDataset(i);
+		// }
 		for (Integer i : eqCircuitSmithPlotIDs.get(eqcID)) {
 			updateSmithPlotDataset(i);
 		}
@@ -576,13 +611,25 @@ public class Model extends Observable {
 		notifyObservers(UpdateEvent.CHANGE_EQC);
 	}
 
+	/**
+	 * Update a plot dataset
+	 * 
+	 * @param i
+	 *            id to the dataset
+	 */
 	private void updateRectPlotDataset(Integer i) {
-		if(plotDataSetList.get(i) != null) {
+		if (plotDataSetList.get(i) != null) {
 			RectPlotNewMeasurement nm = plotDataSetList.get(i).getNM();
 			plotDataSetList.set(i, buildDataSetRaw(nm));
 		}
 	}
 
+	/**
+	 * Update a plot dataset
+	 * 
+	 * @param i
+	 *            id to the dataset
+	 */
 	private void updateSmithPlotDataset(Integer i) {
 		SmithChartNewMeasurement nm = smithPlotDataSetList.get(i).getNM();
 		smithPlotDataSetList.set(i, buildSmithChartDataSetRaw(nm));

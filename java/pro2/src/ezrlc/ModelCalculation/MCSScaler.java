@@ -7,7 +7,7 @@ import ezrlc.util.MathUtil;
 /**
  * Calculates the bes reference resistance for scattering parameters
  * 
- * @author noah
+ * @author sven
  *
  */
 public class MCSScaler {
@@ -28,8 +28,9 @@ public class MCSScaler {
 	// ================================================================================
 	/**
 	 * Scales the ys data to find the best reference resistance
+	 * @param ys scattering parameters
+	 * @return optimal reference resistance for optimizing and solving
 	 */
-
 	public static double scale(Complex[] ys) {
 		Complex[] yz = new Complex[ys.length];
 		double r0 = 0.00001; // start value

@@ -6,6 +6,11 @@ import ezrlc.RFData.RFData;
 import ezrlc.RFData.RFData.ComplexModifier;
 import ezrlc.RFData.RFData.MeasurementType;
 
+/**
+ * Stores the new measurement options
+ * @author noah
+ *
+ */
 public class RectPlotNewMeasurement {
 
 	public enum Unit {Linear, dB};

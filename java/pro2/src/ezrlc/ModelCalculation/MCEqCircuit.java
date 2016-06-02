@@ -64,6 +64,12 @@ public class MCEqCircuit implements Runnable {
 	// ================================================================================
 	// Constructor
 	// ================================================================================
+	/**
+	 * Creates a new Equivalent Circuit
+	 * 
+	 * @param circuitType
+	 *            circuit type of the circuit
+	 */
 	public MCEqCircuit(CircuitType circuitType) {
 		this.circuitType = circuitType;
 		initOptimizer();
@@ -73,6 +79,14 @@ public class MCEqCircuit implements Runnable {
 		}
 	}
 
+	/**
+	 * Creates a new Equivalent Circuit and assigns parameters
+	 * 
+	 * @param circuitType
+	 *            circuit type of the circuit
+	 * @param params
+	 *            parameter array
+	 */
 	public MCEqCircuit(CircuitType circuitType, double[] params) {
 		this.circuitType = circuitType;
 		initOptimizer();
@@ -86,7 +100,7 @@ public class MCEqCircuit implements Runnable {
 	 * Set the frequency vector in omega
 	 * 
 	 * @param w
-	 *            f vecotr
+	 *            w vecotr
 	 */
 	public final void setWVector(double[] w) {
 		this.wvector = new double[w.length];
@@ -112,15 +126,13 @@ public class MCEqCircuit implements Runnable {
 	 *            parameter value
 	 */
 	public void setParameter(int i, double d) {
-		// this.parameters[MCUtil.parameter2TopoIdx[this.circuitType.ordinal()][i]]
-		// = d;
 		parameters[i] = d;
 	}
 
 	/**
 	 * Returns a copy of the circuit parameters
 	 * 
-	 * @return
+	 * @return parameter array
 	 */
 	public double[] getParameters() {
 		double[] res = new double[7];
@@ -131,12 +143,43 @@ public class MCEqCircuit implements Runnable {
 	public CircuitType getCircuitType() {
 		return this.circuitType;
 	}
+
+
+	public void setZ0(double rref) {
+		this.z0 = rref;
+	}
+
+	public double getZ0() {
+		return z0;
+	}
+
+	public void setOps(MCOptions ops) {
+		this.ops = ops;
+	}
+
+	public MCOptions getOps() {
+		return ops;
+	}
+
 	// ================================================================================
 	// Public Functions
 	// ================================================================================
 
 	/**
-	 * Returns the scattering parameters to the given freq parameters
+	 * Returns a copy of the stored frequency vector
+	 * 
+	 * @return frequency vector
+	 */
+	public double[] getF() {
+		double[] res = new double[wvector.length];
+		for (int i = 0; i < wvector.length; i++) {
+			res[i] = wvector[i] / (2.0 * Math.PI);
+		}
+		return res;
+	}
+
+	/**
+	 * Returns the scattering parameters to the stored freq parameters
 	 * 
 	 * @return Complex array with scattering parameters
 	 */
@@ -148,9 +191,11 @@ public class MCEqCircuit implements Runnable {
 	}
 
 	/**
-	 * Returns the scattering parameters to the given freq parameters and given 
+	 * Returns the scattering parameters to the given freq parameters and given
 	 * zref
-	 * @param zref reference resistance
+	 * 
+	 * @param zref
+	 *            reference resistance
 	 * @return Complex array with scattering parameters
 	 */
 	public final Complex[] getS(double zref) {
@@ -377,22 +422,12 @@ public class MCEqCircuit implements Runnable {
 		this.ys = ys;
 	}
 
+	/**
+	 * Run threaded optimizing
+	 */
 	@Override
 	public void run() {
 		optimize(ys);
-	}
-
-	/**
-	 * Returns a copy of the stored frequency vector
-	 * 
-	 * @return frequency vector
-	 */
-	public double[] getF() {
-		double[] res = new double[wvector.length];
-		for (int i = 0; i < wvector.length; i++) {
-			res[i] = wvector[i] / (2.0 * Math.PI);
-		}
-		return res;
 	}
 
 	// ================================================================================
@@ -413,7 +448,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 0
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model0() {
 		double[] p = this.parameters;
@@ -427,7 +462,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model1
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model1() {
 		double[] p = this.parameters;
@@ -441,7 +476,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 2
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model2() {
 		double[] p = this.parameters;
@@ -455,7 +490,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 3
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model3() {
 		double[] p = this.parameters;
@@ -469,7 +504,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 4
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model4() {
 		double[] p = this.parameters;
@@ -483,7 +518,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 5
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model5() {
 		double[] p = this.parameters;
@@ -497,7 +532,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 6
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model6() {
 		double[] p = this.parameters;
@@ -511,7 +546,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 7
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model7() {
 		double[] p = this.parameters;
@@ -525,7 +560,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 8
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model8() {
 		double[] p = this.parameters;
@@ -539,7 +574,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 9
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model9() {
 		double[] p = this.parameters;
@@ -553,7 +588,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 10
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model10() {
 		double[] p = this.parameters;
@@ -567,7 +602,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 11
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model11() {
 		double[] p = this.parameters;
@@ -581,7 +616,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 12
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
 	private Complex[] model12() {
 		double[] p = this.parameters;
@@ -595,20 +630,20 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 13
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
-	private Complex[] model13 () {
-		double r0=this.parameters[0];
-		double w0=this.parameters[1]*2*Math.PI;
-		double a=this.parameters[2];
-		double l=this.parameters[4];
-		double c0=this.parameters[5];
+	private Complex[] model13() {
+		double r0 = this.parameters[0];
+		double w0 = this.parameters[1] * 2 * Math.PI;
+		double a = this.parameters[2];
+		double l = this.parameters[4];
+		double c0 = this.parameters[5];
 		Complex[] res = new Complex[wvector.length];
-		for (int i=0;i<wvector.length;i++){
-			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
-			Complex Zl 		= new Complex(0, wvector[i]*l);
-			Complex Zr0 	= new Complex(r0*(1+Math.pow(wvector[i]/w0, a)), 0);	
-			res[i]=Complex.add(Zr0, Complex.add(Zc0, Zl));
+		for (int i = 0; i < wvector.length; i++) {
+			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Zl = new Complex(0, wvector[i] * l);
+			Complex Zr0 = new Complex(r0 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+			res[i] = Complex.add(Zr0, Complex.add(Zc0, Zl));
 		}
 		return res;
 	}
@@ -616,22 +651,23 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 14
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
-	private Complex[] model14 () {
-		double r0=this.parameters[0];
-		double w0=this.parameters[1]*2*Math.PI;
-		double a=this.parameters[2];
-		double l=this.parameters[4];
-		double c0=this.parameters[5];
+	private Complex[] model14() {
+		double r0 = this.parameters[0];
+		double w0 = this.parameters[1] * 2 * Math.PI;
+		double a = this.parameters[2];
+		double l = this.parameters[4];
+		double c0 = this.parameters[5];
 		Complex[] res = new Complex[wvector.length];
-		for (int i=0;i<wvector.length;i++){
-			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
-			Complex Zl 		= new Complex(0, wvector[i]*l);
-			Complex Zr0 	= new Complex(r0*(1+Math.pow(wvector[i]/w0, a)), 0);
-			
+		for (int i = 0; i < wvector.length; i++) {
+			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Zl = new Complex(0, wvector[i] * l);
+			Complex Zr0 = new Complex(r0 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+
 			Complex Yc0 = Zc0.reciprocal();
-			res[i]=Complex.div(new Complex(1, 0), Complex.add(Complex.div(new Complex(1,0),Complex.add(Zl, Zr0)),Yc0));
+			res[i] = Complex.div(new Complex(1, 0),
+					Complex.add(Complex.div(new Complex(1, 0), Complex.add(Zl, Zr0)), Yc0));
 		}
 		return res;
 	}
@@ -639,20 +675,21 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 15
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
-	private Complex[] model15 () {
-		double r0=this.parameters[0];
-		double w0=this.parameters[1]*2*Math.PI;
-		double a=this.parameters[2];
-		double l=this.parameters[4];
-		double c0=this.parameters[5];
+	private Complex[] model15() {
+		double r0 = this.parameters[0];
+		double w0 = this.parameters[1] * 2 * Math.PI;
+		double a = this.parameters[2];
+		double l = this.parameters[4];
+		double c0 = this.parameters[5];
 		Complex[] res = new Complex[wvector.length];
-		for (int i=0;i<wvector.length;i++){
-			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
-			Complex Zl 		= new Complex(0, wvector[i]*l);
-			Complex Zr0 	= new Complex(r0*(1+Math.pow(wvector[i]/w0, a)), 0);	
-			res[i]=Complex.add(Complex.div(new Complex(1, 0),Complex.add(Zc0, Complex.div(new Complex(1,0), Zr0)) ),Zl);
+		for (int i = 0; i < wvector.length; i++) {
+			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Zl = new Complex(0, wvector[i] * l);
+			Complex Zr0 = new Complex(r0 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+			res[i] = Complex.add(Complex.div(new Complex(1, 0), Complex.add(Zc0, Complex.div(new Complex(1, 0), Zr0))),
+					Zl);
 		}
 		return res;
 	}
@@ -660,19 +697,19 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 16
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
-	private Complex[] model16 () {
-		double r0=this.parameters[0];
-		double w0=this.parameters[1]*2*Math.PI;
-		double a=this.parameters[2];
-		double r1=this.parameters[3];
-		double c0=this.parameters[5];
+	private Complex[] model16() {
+		double r0 = this.parameters[0];
+		double w0 = this.parameters[1] * 2 * Math.PI;
+		double a = this.parameters[2];
+		double r1 = this.parameters[3];
+		double c0 = this.parameters[5];
 		Complex[] res = new Complex[wvector.length];
-		for (int i=0;i<wvector.length;i++){
-			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
-			Complex Zr1 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);	
-			res[i]=Complex.add(Complex.div(new Complex(1,0), Complex.add(Zc0, new Complex(1/r0,0))),Zr1);
+		for (int i = 0; i < wvector.length; i++) {
+			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Zr1 = new Complex(r1 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+			res[i] = Complex.add(Complex.div(new Complex(1, 0), Complex.add(Zc0, new Complex(1 / r0, 0))), Zr1);
 		}
 		return res;
 	}
@@ -680,21 +717,22 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 17
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
-	private Complex[] model17 () {
-		double r0=this.parameters[0];
-		double w0=this.parameters[1]*2*Math.PI;
-		double a=this.parameters[2];
-		double r1=this.parameters[3];
-		double l=this.parameters[4];
-		double c0=this.parameters[5];
+	private Complex[] model17() {
+		double r0 = this.parameters[0];
+		double w0 = this.parameters[1] * 2 * Math.PI;
+		double a = this.parameters[2];
+		double r1 = this.parameters[3];
+		double l = this.parameters[4];
+		double c0 = this.parameters[5];
 		Complex[] res = new Complex[wvector.length];
-		for (int i=0;i<wvector.length;i++){
-			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
-			Complex Zl 		= new Complex(0, wvector[i]*l);
-			Complex Zr1 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);	
-			res[i]=Complex.add(Complex.add(Complex.div(new Complex(1,0), Complex.add(Zc0, new Complex(1/r0,0))),Zr1),Zl);
+		for (int i = 0; i < wvector.length; i++) {
+			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Zl = new Complex(0, wvector[i] * l);
+			Complex Zr1 = new Complex(r1 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+			res[i] = Complex.add(
+					Complex.add(Complex.div(new Complex(1, 0), Complex.add(Zc0, new Complex(1 / r0, 0))), Zr1), Zl);
 		}
 		return res;
 	}
@@ -702,24 +740,25 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 18
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
-	private Complex[] model18 () {
-		double r0=this.parameters[0];
-		double w0=this.parameters[1]*2*Math.PI;
-		double a=this.parameters[2];
-		double r1=this.parameters[3];
-		double l=this.parameters[4];
-		double c0=this.parameters[5];
+	private Complex[] model18() {
+		double r0 = this.parameters[0];
+		double w0 = this.parameters[1] * 2 * Math.PI;
+		double a = this.parameters[2];
+		double r1 = this.parameters[3];
+		double l = this.parameters[4];
+		double c0 = this.parameters[5];
 		Complex[] res = new Complex[wvector.length];
-		for (int i=0;i<wvector.length;i++){
-			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
-			Complex Zl 		= new Complex(0, wvector[i]*l);
-			Complex Zr1 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);
-			
-			Complex Yc0		= Zc0.reciprocal();
-			Complex Yl		= Zl.reciprocal();
-			res[i]=Complex.add(Complex.div(new Complex(1,0), Complex.add(Complex.add(new Complex(1/r0,0), Yl), Yc0)),Zr1);
+		for (int i = 0; i < wvector.length; i++) {
+			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Zl = new Complex(0, wvector[i] * l);
+			Complex Zr1 = new Complex(r1 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+
+			Complex Yc0 = Zc0.reciprocal();
+			Complex Yl = Zl.reciprocal();
+			res[i] = Complex.add(
+					Complex.div(new Complex(1, 0), Complex.add(Complex.add(new Complex(1 / r0, 0), Yl), Yc0)), Zr1);
 		}
 		return res;
 	}
@@ -727,23 +766,24 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 19
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
-	private Complex[] model19 () {
-		double r0=this.parameters[0];
-		double w0=this.parameters[1]*2*Math.PI;
-		double a=this.parameters[2];
-		double r1=this.parameters[3];
-		double l=this.parameters[4];
-		double c0=this.parameters[5];
+	private Complex[] model19() {
+		double r0 = this.parameters[0];
+		double w0 = this.parameters[1] * 2 * Math.PI;
+		double a = this.parameters[2];
+		double r1 = this.parameters[3];
+		double l = this.parameters[4];
+		double c0 = this.parameters[5];
 		Complex[] res = new Complex[wvector.length];
-		for (int i=0;i<wvector.length;i++){
-			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
-			Complex Zl 		= new Complex(0, wvector[i]*l);
-			Complex Zr1 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);
-			
-			Complex Yc0		= Zc0.reciprocal();
-			res[i]=Complex.div(new Complex(1,0), Complex.add(Complex.add(new Complex(r0, 0), Complex.div(new Complex(1,0), Complex.add(Zl, Zr1))), Yc0));
+		for (int i = 0; i < wvector.length; i++) {
+			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Zl = new Complex(0, wvector[i] * l);
+			Complex Zr1 = new Complex(r1 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+
+			Complex Yc0 = Zc0.reciprocal();
+			res[i] = Complex.div(new Complex(1, 0), Complex
+					.add(Complex.add(new Complex(r0, 0), Complex.div(new Complex(1, 0), Complex.add(Zl, Zr1))), Yc0));
 		}
 		return res;
 	}
@@ -751,42 +791,25 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Calculates the impedance parameters of the model 20
 	 * 
-	 * @return
+	 * @return impedance parameters
 	 */
-	private Complex[] model20 () {
-		double w0=this.parameters[1]*2*Math.PI;
-		double a=this.parameters[2];
-		double r1=this.parameters[3];
-		double l=this.parameters[4];
-		double c0=this.parameters[5];
-		double c1=this.parameters[6];
+	private Complex[] model20() {
+		double w0 = this.parameters[1] * 2 * Math.PI;
+		double a = this.parameters[2];
+		double r1 = this.parameters[3];
+		double l = this.parameters[4];
+		double c0 = this.parameters[5];
+		double c1 = this.parameters[6];
 		Complex[] res = new Complex[wvector.length];
-		for (int i=0;i<wvector.length;i++){
-			Complex Zc0 	= new Complex(0, -1/(wvector[i]*c0));
-			Complex Zc1 	= new Complex(0, -1/(wvector[i]*c1));
-			Complex Zl 		= new Complex(0, wvector[i]*l);
-			Complex Zr0 	= new Complex(r1*(1+Math.pow(wvector[i]/w0, a)), 0);
-			res[i]=Complex.div(new Complex(1,0),Complex.add(Complex.div(new Complex(1,0), Complex.add(Complex.add(Zr0, Zc0), Zl)), Zc1));
+		for (int i = 0; i < wvector.length; i++) {
+			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Zc1 = new Complex(0, -1 / (wvector[i] * c1));
+			Complex Zl = new Complex(0, wvector[i] * l);
+			Complex Zr0 = new Complex(r1 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+			res[i] = Complex.div(new Complex(1, 0),
+					Complex.add(Complex.div(new Complex(1, 0), Complex.add(Complex.add(Zr0, Zc0), Zl)), Zc1));
 		}
 		return res;
 	}
-	
-
-	public void setZ0(double rref) {
-		this.z0 = rref;
-	}
-
-	public double getZ0() {
-		return z0;
-	}
-
-	public void setOps(MCOptions ops) {
-		this.ops = ops;
-	}
-
-	public MCOptions getOps() {
-		return ops;
-	}
-
 
 }

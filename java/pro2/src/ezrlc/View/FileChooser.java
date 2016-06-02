@@ -9,11 +9,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import ezrlc.MVC.Controller;
 
+/**
+ * File chooser dialug
+ * 
+ * @author noah
+ *
+ */
 public class FileChooser extends JComponent implements Accessible {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	// ================================================================================
 	// Local Variables
@@ -25,6 +27,12 @@ public class FileChooser extends JComponent implements Accessible {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * Create new filechooser dialog
+	 * 
+	 * @param controller
+	 *            controller object
+	 */
 	public FileChooser(Controller controller) {
 		this.controller = controller;
 	}
@@ -35,7 +43,7 @@ public class FileChooser extends JComponent implements Accessible {
 	/**
 	 * open the file chooser and read file name
 	 * 
-	 * @return
+	 * @return string of the choosen filename
 	 */
 	public String showFileChooser() {
 		int returnVal = fileChooser.showDialog(this.controller.getMainView(), "Open File");
@@ -65,7 +73,7 @@ public class FileChooser extends JComponent implements Accessible {
 	/**
 	 * get selected file by the JFileChooser
 	 * 
-	 * @return
+	 * @return file
 	 */
 	public File getFile() {
 		return fileChooser.getSelectedFile();

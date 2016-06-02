@@ -3,8 +3,6 @@ package ezrlc.Plot.SmithChart;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,24 +12,22 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import ezrlc.MVC.Model;
-import ezrlc.Plot.RectPlot.DataSetSettings;
+import ezrlc.Plot.DataSetSettings;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;
 
+/**
+ * A simple smith chart
+ * @author noah
+ *
+ */
 public class SmithChart extends JPanel implements Observer {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	// ================================================================================
 	// Private Data
 	// ================================================================================
 	private SmithChartGrid grid;
-
-	// private List<SmithChartDataSet> data_sets = new
-	// ArrayList<SmithChartDataSet>();
 
 	private SmithChartSettings settings = new SmithChartSettings();
 
@@ -42,6 +38,9 @@ public class SmithChart extends JPanel implements Observer {
 	// ================================================================================
 	// Constructor
 	// ================================================================================
+	/**
+	 * Create new smithchart
+	 */
 	public SmithChart() {
 		super.setBackground(Color.WHITE);
 
@@ -74,17 +73,6 @@ public class SmithChart extends JPanel implements Observer {
 	// ================================================================================
 	// Public Functions
 	// ================================================================================
-
-	// /**
-	// * Adds a new Dataset to the plot
-	// * @param data Complex List of data
-	// * @param freq Double List of freq data
-	// */
-	// public void addDataSet (Complex[] data, double[] freq) {
-	// SmithChartDataSet set = new SmithChartDataSet(grid, data, freq, null);
-	// dataSets.add(set);
-	// }
-
 	/**
 	 * Add dataset in model by ID
 	 * 

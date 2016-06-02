@@ -8,10 +8,15 @@ import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
 
-import ezrlc.Plot.RectPlot.DataSetSettings;
+import ezrlc.Plot.DataSetSettings;
 import ezrlc.util.Complex;
 import ezrlc.util.PointD;
 
+/**
+ * Data set that contains the data to be painted on the smithchart
+ * @author noah
+ *
+ */
 public class SmithChartDataSet {
 
 	// ================================================================================

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ezrlc;
 
 import java.awt.EventQueue;
@@ -10,19 +7,16 @@ import ezrlc.MVC.Model;
 import ezrlc.View.MainView;
 
 /**
+ * EzRLC, contains main routine
  * @author noah
- *
  */
 public class EzRLC {
 
 	/**
-	 * @param args
+	 * Main routine, gets called at program start
+	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
-		/*
-		 * MVC stuff
-		 * 
-		 */
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {

@@ -10,6 +10,11 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 
+/**
+ * Renderer for comboboxes containing images
+ * @author noah
+ *
+ */
 class ComboBoxRenderer extends JLabel implements ListCellRenderer<Object> {
 	private static final long serialVersionUID = 1L;
 	// ================================================================================
@@ -22,6 +27,11 @@ class ComboBoxRenderer extends JLabel implements ListCellRenderer<Object> {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * Create new rederer
+	 * @param image array of images
+	 * @param text text to the iamges
+	 */
 	public ComboBoxRenderer(ImageIcon[] image, String[] text) {
 		this.image = new ImageIcon[image.length];
 		this.text = new String[text.length];
@@ -38,6 +48,13 @@ class ComboBoxRenderer extends JLabel implements ListCellRenderer<Object> {
 	/**
 	 * This method finds the image and text corresponding to the selected value
 	 * and returns the label, set up to display the text and image.
+	 * 
+	 * @param list list
+	 * @param value value
+	 * @param index index
+	 * @param isSelected selected status
+	 * @param cellHasFocus focus
+	 * @return component
 	 */
 	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 			boolean cellHasFocus) {
@@ -68,7 +85,11 @@ class ComboBoxRenderer extends JLabel implements ListCellRenderer<Object> {
 		return this;
 	}
 
-	// Set the font and text when no image was found.
+	/**
+	 * Set the font and text when no image was found
+	 * @param uhOhText special text
+	 * @param normalFont text
+	 */
 	protected void setUhOhText(String uhOhText, Font normalFont) {
 		if (uhOhFont == null) { // lazily create this font
 			uhOhFont = normalFont.deriveFont(Font.ITALIC);

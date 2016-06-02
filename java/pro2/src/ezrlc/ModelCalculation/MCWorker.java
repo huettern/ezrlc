@@ -318,9 +318,13 @@ public class MCWorker extends Thread {
 		success(rank.get(0));
 	}
 
+	/**
+	 * Creates an equivalent circuit without optimizing. adds default parameters
+	 * @return
+	 */
 	private MCEqCircuit createManualCircuit() {
 		MCEqCircuit eqc = new MCEqCircuit(CircuitType.values()[ops.modelID]);
-		// Copy parameters
+		// Copy default parameters
 		double[] p = { 1e-3, 1e3, 0, 1e-3, 1e-9, 1e-12, 1e-12 };
 		if (ops.params[0] != 0.0)
 			p[0] = ops.params[0];

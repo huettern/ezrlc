@@ -5,6 +5,12 @@ import java.awt.Point;
 import ezrlc.util.Complex;
 import ezrlc.util.PointD;
 
+/**
+ * Handles smith chart mathematical calculations
+ * 
+ * @author noah
+ *
+ */
 public class SmithChartMath {
 
 	// ================================================================================
@@ -170,31 +176,6 @@ public class SmithChartMath {
 		// scale re and im from -1 to +1 on both axis
 		p.x = (this.center.x - rad) + (diameter * (re + 1.0) / 2.0);
 		p.y = (this.center.y - rad) + (diameter * (-im + 1.0) / 2.0);
-
-		// // real axis radius
-		// double rr = center.x + (diameter/2) -
-		// this.getRealGridCenterPoint(val.re()).x;
-		// // imag axis radius
-		// double ri = center.y - this.getImagGridCenterPoint(val.im()).y;
-		// // hypotenuse of rr and ri
-		// double s = MathUtil.pythagoras(rr, ri);
-		// // angle s - rr
-		// double alpha = Math.atan(ri/rr);
-		// // angle ri - s
-		// //double epsilon = Math.acos( (Math.pow(s, 2) - Math.pow(rr, 2) -
-		// Math.pow(ri, 2)) / (-2.0*rr*ri) );
-		// double epsilon = alpha;
-		// // y length
-		// double ys = rr* Math.sin(Math.PI - (alpha + epsilon));
-		// // x length
-		// double xs = rr* Math.cos(Math.PI - (alpha + epsilon));
-		//
-		// p = new PointD(0,0);
-		// p.x = ((center.x + (diameter/2)))-xs-rr;
-		// p.y = center.y - ys;
-		//
-		// //System.out.println("rr="+rr+"ri="+ri+"s="+s+"alpha="+alpha+"epsilon="+epsilon+"ys="+ys+"xs"+xs);
-
 		return p;
 	}
 

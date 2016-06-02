@@ -1,5 +1,10 @@
 package ezrlc.Plot.SmithChart;
 
+/**
+ * Holds the smith chart settings
+ * @author noah
+ *
+ */
 public class SmithChartSettings {
 
 	// ================================================================================

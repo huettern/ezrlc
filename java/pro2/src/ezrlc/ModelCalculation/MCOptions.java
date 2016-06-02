@@ -30,6 +30,9 @@ public class MCOptions {
 	// ================================================================================
 	// Constructor
 	// ================================================================================
+	/**
+	 * Creates new option object with default values
+	 */
 	public MCOptions() {
 		// Set all to auto
 		fMaxAuto = true;

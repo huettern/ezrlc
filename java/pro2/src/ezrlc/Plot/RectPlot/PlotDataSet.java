@@ -1,4 +1,4 @@
-package ezrlc.Plot;
+package ezrlc.Plot.RectPlot;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics;
@@ -7,10 +7,14 @@ import java.awt.Point;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 
-import ezrlc.Plot.RectPlot.DataSetSettings;
-import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
+import ezrlc.Plot.DataSetSettings;
 import ezrlc.util.MathUtil;
 
+/**
+ * Plot data set for a standard rectangular plot
+ * @author noah
+ *
+ */
 public class PlotDataSet {
 
 	// ================================================================================

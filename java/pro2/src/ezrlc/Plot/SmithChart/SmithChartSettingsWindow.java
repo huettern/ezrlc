@@ -22,6 +22,11 @@ import ezrlc.MVC.Controller;
 import ezrlc.Plot.Figure;
 import ezrlc.util.UIUtil;
 
+/**
+ * Window to change smith chart settings
+ * @author noah
+ *
+ */
 public class SmithChartSettingsWindow implements ActionListener {
 
 	// ================================================================================
@@ -40,6 +45,11 @@ public class SmithChartSettingsWindow implements ActionListener {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * New smith chart settings window
+	 * @param controller controller object
+	 * @param fig figure object
+	 */
 	public SmithChartSettingsWindow(Controller controller, Figure fig) {
 		this.figure = fig;
 		dialog = new JDialog(controller.getMainView());
@@ -162,6 +172,9 @@ public class SmithChartSettingsWindow implements ActionListener {
 	// ================================================================================
 	// Public Functions
 	// ================================================================================
+	/**
+	 * show the dialog
+	 */
 	public void show() {
 		dialog.setVisible(true);
 	}

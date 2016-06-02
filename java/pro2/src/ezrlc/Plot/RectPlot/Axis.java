@@ -1,4 +1,4 @@
-package ezrlc.Plot;
+package ezrlc.Plot.RectPlot;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import ezrlc.Plot.RectPlot.RectangularPlot;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;
 
+/**
+ * Axis of a rectangular plot
+ * 
+ * @author noah
+ *
+ */
 public class Axis {
 
 	// ================================================================================
@@ -139,6 +144,12 @@ public class Axis {
 		}
 	}
 
+	/**
+	 * Set minimum value of the axis
+	 * 
+	 * @param min
+	 *            minimum value
+	 */
 	public void setMinimum(double min) {
 		if (this.scale == Scale.LOG && min == 0)
 			min = Double.MIN_VALUE;
@@ -149,6 +160,12 @@ public class Axis {
 			this.min = Math.signum(min) * Math.pow(10, logLowerBound);
 	}
 
+	/**
+	 * Set maximum value of the axis
+	 * 
+	 * @param max
+	 *            maximum value
+	 */
 	public void setMaximum(double max) {
 		this.max = max;
 		// if scale is log, roun to next even number
@@ -157,14 +174,32 @@ public class Axis {
 			this.max = Math.signum(max) * Math.pow(10, logUpperBound);
 	}
 
+	/**
+	 * Set number of steps
+	 * 
+	 * @param step
+	 *            steps
+	 */
 	public void setStep(int step) {
 		this.step = step;
 	}
 
+	/**
+	 * Set label offset
+	 * 
+	 * @param off
+	 *            offset
+	 */
 	public void setLabelOffset(int off) {
 		this.label_offset = off;
 	}
 
+	/**
+	 * Set scale, log or linear
+	 * 
+	 * @param scale
+	 *            scale
+	 */
 	public void setScale(Scale scale) {
 		this.scale = scale;
 		for (int i = 0; i < MAX_NUM_POINTS; i++) {
@@ -496,14 +531,8 @@ public class Axis {
 		// Determine the X coordinate for the text
 		int x = point.x - (metrics.stringWidth(text) / 2);
 		// Determine the Y coordinate for the text
-		int y = point.y + (int) (metrics.getHeight() / 3);// +
-															// metrics.getAscent();
-		// Set the font
-		// g.setFont(font);
-		// Draw the String
+		int y = point.y + (int) (metrics.getHeight() / 3);
 		g.drawString(text, x, y);
-		// Dispose the Graphics
-		// g.dispose();
 	}
 
 	/**

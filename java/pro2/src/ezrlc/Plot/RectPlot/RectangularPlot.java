@@ -15,16 +15,19 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import ezrlc.MVC.Controller.DataSource;
+import ezrlc.Plot.DataSetSettings;
+import ezrlc.Plot.RectPlot.Axis.Scale;
+import ezrlc.Plot.RectPlot.Grid.Orientation;
 import ezrlc.MVC.Model;
-import ezrlc.Plot.Axis;
-import ezrlc.Plot.Axis.Scale;
-import ezrlc.Plot.Grid;
-import ezrlc.Plot.Grid.Orientation;
-import ezrlc.Plot.PlotDataSet;
 import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;
 
+/**
+ * A standard rectangular plot
+ * @author noah
+ *
+ */
 public class RectangularPlot extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	// ================================================================================
@@ -57,6 +60,9 @@ public class RectangularPlot extends JPanel implements Observer {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * Create a default rectangular with axis linear
+	 */
 	public RectangularPlot() {
 		this(Scale.LINEAR, Scale.LINEAR);
 	}
@@ -72,8 +78,6 @@ public class RectangularPlot extends JPanel implements Observer {
 	public RectangularPlot(Scale x, Scale y) {
 		super.setBackground(Color.WHITE);
 
-		// Origin of the plot
-
 		// Init settings
 		settings.xAxisMinimum = 0.1;
 		settings.xAxisMaximum = 1;
@@ -85,23 +89,10 @@ public class RectangularPlot extends JPanel implements Observer {
 		settings.yScale = y;
 
 		// Add Axis
-		// horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin);
-		// this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin,
-		// 40, 0, 100, 10, 20); // Use for test data
-		// this.horAxis = new Axis(this, Axis.Orientation.HORIZONTAL, origin,
-		// 40, 1e6, 1e9, 10, 20); // Use for r100l10uZRI
 		this.horAxis = new Axis(this, x, Axis.Orientation.HORIZONTAL, origin, rightMargin, settings.xAxisMinimum,
-				settings.xAxisMaximum, settings.xAxisSteps, 20); // Use for
-																	// bsp11
-		// verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin);
-		// this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40,
-		// 0, 1, 20, -20); // Use for test data
-		// this.verAxis = new Axis(this, Axis.Orientation.VERTICAL, origin, 40,
-		// 0, 70e3, 20, -20); // Use for r100l10uZRI
+				settings.xAxisMaximum, settings.xAxisSteps, 20);		
 		this.verAxis = new Axis(this, y, Axis.Orientation.VERTICAL, origin, topMargin, settings.yAxisMinimum,
-				settings.yAxisMaximum, settings.xAxisSteps, -30); // Use for
-																	// bsp11
-
+				settings.yAxisMaximum, settings.xAxisSteps, -30);
 		// Add Grid
 		this.verGrid = new Grid(this, Orientation.VERTICAL, Color.LIGHT_GRAY, horAxis, 40);
 		this.horGrid = new Grid(this, Orientation.HORIZONTAL, Color.LIGHT_GRAY, verAxis, 40);
@@ -199,6 +190,9 @@ public class RectangularPlot extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * evaluate the size of the panel
+	 */
 	private void evalSize() {
 		this.plotWidth = this.getWidth() - this.rightMargin - origin.x;
 		this.plotHeight = this.getHeight() - this.topMargin - origin.y;
@@ -280,6 +274,10 @@ public class RectangularPlot extends JPanel implements Observer {
 		return settings;
 	}
 
+	/**
+	 * Set settings and update plot
+	 * @param s settings
+	 */
 	public void setSettings(RectPlotSettings s) {
 		this.settings = s;
 		this.enableAutoAutoscale = false;
@@ -419,35 +417,15 @@ public class RectangularPlot extends JPanel implements Observer {
 						ymin = d;
 					}
 				}
-				// if(dataset.getYMin() <= 0) {ymin = dataset.}
 			}
 		}
-
-		// int yexp = 0;
-		// // check for delta smaller 1
-		// if((ymax-ymin) < 1) {
-		// int expmax = (int)(Math.floor(Math.log10(Math.abs(ymax))));
-		// //exponent
-		// int expmin = (int)(Math.floor(Math.log10(Math.abs(ymin))));
-		// //exponent
-		// // get smaller exponent
-		// if(expmax > expmin) yexp = expmax; else yexp = expmin;
-		// // divide out the exponent
-		// ymin = ymin / (Math.pow(10, yexp));
-		// ymax = ymax / (Math.pow(10, yexp));
-		// }
-		// verAxis.setExp(yexp);
 
 		// round the values
 		xmin = MathUtil.roundNice(xmin);
 		xmax = MathUtil.roundNice(xmax);
 		ymin = MathUtil.roundNice(ymin);
 		ymax = MathUtil.roundNice(ymax);
-
-		// reapply exponent
-		// ymin = ymin * (Math.pow(10, yexp));
-		// ymax = ymax * (Math.pow(10, yexp));
-
+		
 		settings.xAxisMaximum = xmax;
 		settings.xAxisMinimum = xmin;
 		settings.yAxisMaximum = ymax;
@@ -462,7 +440,6 @@ public class RectangularPlot extends JPanel implements Observer {
 			settings.yAxisSteps = 10;
 
 		updateSettings();
-
 		repaint();
 	}
 

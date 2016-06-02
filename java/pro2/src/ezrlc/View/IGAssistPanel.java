@@ -15,13 +15,19 @@ import ezrlc.MVC.Controller;
 import ezrlc.MVC.Controller.DataSource;
 import ezrlc.MVC.Model;
 import ezrlc.MVC.Model.UpdateEvent;
-import ezrlc.Plot.Axis.Scale;
 import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
 import ezrlc.Plot.RectPlot.RectPlotSettings;
 import ezrlc.Plot.RectPlot.RectangularPlot;
+import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.UIUtil;
 
+/**
+ * Panel that holds the plots for the initial guess
+ * 
+ * @author noah
+ *
+ */
 public class IGAssistPanel extends JPanel {
 
 	// ================================================================================
@@ -49,6 +55,12 @@ public class IGAssistPanel extends JPanel {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * Create new ig assist panel
+	 * 
+	 * @param c
+	 *            controller object
+	 */
 	public IGAssistPanel(Controller c) {
 		controller = c;
 		GridBagLayout layout = new GridBagLayout();
@@ -61,8 +73,6 @@ public class IGAssistPanel extends JPanel {
 	// ================================================================================
 	/**
 	 * Creates the 8 datasets
-	 * 
-	 * @param m
 	 */
 	public void createDatasets() {
 		int id;
@@ -81,7 +91,7 @@ public class IGAssistPanel extends JPanel {
 	/**
 	 * Sets the plot settings of the plots
 	 * 
-	 * @param o
+	 * @param o model object
 	 */
 	private void setPlotSettings(Model o) {
 		RectPlotSettings s = new RectPlotSettings();
@@ -136,26 +146,6 @@ public class IGAssistPanel extends JPanel {
 			this.add(plots[i], new GridBagConstraints(plotXLoc[i], plotYLoc[i], 1, 1, 1.0, 1.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(3, 0, 3, 3), 0, 0));
 		}
-
-		// // Init 4 top panels
-		// for(int i = 0; i < 4; i++) {
-		// topoPanels[i] = new JPanel();
-		// topoPanels[i].setLayout(new GridLayout(2, 1, subVGap, subHGap));
-		// plots[i*2] = new RectangularPlot();
-		// plots[i*2].setBorder(new LineBorder(new Color(0, 0, 0)));
-		// plots[i*2+1] = new RectangularPlot();
-		// plots[i*2+1].setBorder(new LineBorder(new Color(0, 0, 0)));
-		// topoPanels[i].add(plots[i*2], 0);
-		// topoPanels[i].add(plots[i*2+1], 1);
-		//
-		// // set border
-		//// topoPanels[i].setBorder(new LineBorder(Color.BLACK));
-		// topoPanels[i].setBorder(new TitledBorder(new LineBorder(new Color(0,
-		// 0, 0), 1, true), topTitles[i], TitledBorder.CENTER, TitledBorder.TOP,
-		// null, null) );
-		// this.add(topoPanels[i], i);
-		// }
-		//
 		this.updateUI();
 	}
 

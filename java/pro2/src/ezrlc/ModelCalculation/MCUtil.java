@@ -33,6 +33,10 @@ public class MCUtil {
 		HZ, OMEGA
 	}
 
+	/**
+	 * LUT to convert full parameter list to short parameter list for optimizing and
+	 * vice versa
+	 */
 	public final static int[][] parameter2TopoIdx = { { 0, 99, 99, 99, 1, 99, 99 }, { 0, 99, 99, 99, 1, 99, 99 },
 			{ 0, 99, 99, 99, 99, 1, 99 }, { 0, 99, 99, 99, 99, 1, 99 }, { 0, 99, 99, 99, 1, 2, 99 },
 			{ 0, 99, 99, 99, 1, 2, 99 }, { 0, 99, 99, 99, 1, 2, 99 }, { 0, 99, 99, 99, 1, 2, 99 },
@@ -232,13 +236,6 @@ public class MCUtil {
 		}
 		// count how many there are without skin effect
 		int num_models_skin = 0;
-		// if(opt.skinEffectEnabled == true) {
-		// for(int ctr = MCUtil.nModelSkinStart; ctr < MCUtil.nModels; ctr++) {
-		// if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <=
-		// opt.nElementsMax)
-		// num_models_skin++;
-		// }
-		// }
 
 		// save the indexes in a array
 		int[] modelIdx = new int[num_models + num_models_skin];
@@ -247,14 +244,7 @@ public class MCUtil {
 			if (modelNParameters[ctr] >= ops.nElementsMin && modelNParameters[ctr] <= ops.nElementsMax)
 				modelIdx[modelIdxCtr++] = ctr;
 		}
-		// if(opt.skinEffectEnabled == true) {
-		// for(int ctr = MCUtil.nModelSkinStart; ctr < MCUtil.nModels; ctr++) {
-		// if(modelNElements[ctr] >= opt.nElementsMin && modelNElements[ctr] <=
-		// opt.nElementsMax)
-		// modelIdx[modelIdxCtr++]=ctr;
-		// }
-		// }
-
+		
 		circuitList = new CircuitType[modelIdx.length];
 		for (int i = 0; i < modelIdx.length; i++) {
 			circuitList[i] = modelIdxToCircuitType(modelIdx[i]);

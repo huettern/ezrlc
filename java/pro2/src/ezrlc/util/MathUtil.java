@@ -6,6 +6,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Static math functions
+ * 
+ * @author noah
+ *
+ */
 public class MathUtil {
 
 	// ================================================================================
@@ -24,7 +30,8 @@ public class MathUtil {
 	 * Returns the maximum value of an Arraylist with doubles
 	 * 
 	 * @param d
-	 * @return
+	 *            array list
+	 * @return maxima
 	 */
 	public static double getMax(List<Double> d) {
 		double res = -Double.MAX_VALUE;
@@ -39,7 +46,8 @@ public class MathUtil {
 	 * Returns the maximum value of an Arraylist with doubles
 	 * 
 	 * @param d
-	 * @return
+	 *            array list
+	 * @return maxima
 	 */
 	public static double getMax(double[] d) {
 		double res = -Double.MAX_VALUE;
@@ -54,7 +62,8 @@ public class MathUtil {
 	 * Returns the maximum value of an Arraylist with doubles
 	 * 
 	 * @param d
-	 * @return
+	 *            list
+	 * @return minima
 	 */
 	public static double getMin(List<Double> d) {
 		double res = Double.MAX_VALUE;
@@ -69,7 +78,8 @@ public class MathUtil {
 	 * Returns the maximum value of an Arraylist with doubles
 	 * 
 	 * @param d
-	 * @return
+	 *            array
+	 * @return minima
 	 */
 	public static double getMin(double[] d) {
 		double res = Double.MAX_VALUE;
@@ -84,7 +94,9 @@ public class MathUtil {
 	 * Calculates the hypothenuse
 	 * 
 	 * @param a
+	 *            number a
 	 * @param b
+	 *            number b
 	 * @return sqrt(a^2+b^2)
 	 */
 	public static double pythagoras(double a, double b) {
@@ -269,7 +281,7 @@ public class MathUtil {
 		// check if decimal point reached
 		if (s.charAt(i) == '.')
 			s = s.substring(0, i);
-		
+
 		return s;
 	}
 
@@ -318,7 +330,8 @@ public class MathUtil {
 	 * returns index of maximum value of an Array with doubles
 	 * 
 	 * @param d
-	 * @return
+	 *            array
+	 * @return index
 	 */
 	public static int getMaxIndex(double[] d) {
 		int res = 0;
@@ -336,7 +349,8 @@ public class MathUtil {
 	 * returns index of minimum value of an Array with doubles
 	 * 
 	 * @param d
-	 * @return
+	 *            array
+	 * @return index
 	 */
 	public static int getMinIndex(double[] d) {
 		int res = 0;
@@ -354,7 +368,8 @@ public class MathUtil {
 	 * returns differences of all elements in a double array
 	 * 
 	 * @param d
-	 * @return
+	 *            array
+	 * @return differences
 	 */
 	public static double[] diff(double[] d) {
 		double[] diff = new double[d.length - 1];
@@ -406,7 +421,8 @@ public class MathUtil {
 	 * returns Magnitudes of an Array of Complex
 	 * 
 	 * @param d
-	 * @return dabs
+	 *            complex array
+	 * @return abs
 	 */
 	public static double[] abs(Complex[] d) {
 		double[] dabs = new double[d.length];
@@ -421,7 +437,7 @@ public class MathUtil {
 	 * 
 	 * @param d
 	 *            array of doubles
-	 * @return dabs absolutes
+	 * @return absolutes
 	 */
 	public static double[] abs(double[] d) {
 		double[] dabs = new double[d.length];

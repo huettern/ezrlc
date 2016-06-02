@@ -21,10 +21,15 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import ezrlc.MVC.Controller;
-import ezrlc.Plot.Axis.Scale;
 import ezrlc.Plot.Figure;
+import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.View.JEngineerField;
 
+/**
+ * Settings window for the rectangular plot
+ * @author noah
+ *
+ */
 public class RectPlotSettingsWindow implements ActionListener {
 
 	private Controller controller;
@@ -45,7 +50,12 @@ public class RectPlotSettingsWindow implements ActionListener {
 	// ================================================================================
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * Create new rectangular plot settings window
+	 * 
+	 * @param controller
+	 *            controller object
+	 * @param fig
+	 *            figure object
 	 */
 	public RectPlotSettingsWindow(Controller controller, Figure fig) {
 		this.controller = controller;
@@ -315,6 +325,9 @@ public class RectPlotSettingsWindow implements ActionListener {
 	// ================================================================================
 	// Public Functions
 	// ================================================================================
+	/**
+	 * show the dialog
+	 */
 	public void show() {
 		dialog.setVisible(true);
 	}

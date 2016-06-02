@@ -21,6 +21,11 @@ import javax.swing.border.TitledBorder;
 import ezrlc.MVC.Controller;
 import ezrlc.ModelCalculation.MCOptions;
 
+/**
+ * Dialog to create a new equivalent circuit
+ * @author noah
+ *
+ */
 public class NewModelWindow implements ActionListener {
 
 	// ================================================================================

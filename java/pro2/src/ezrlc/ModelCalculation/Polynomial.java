@@ -1,6 +1,5 @@
 package ezrlc.ModelCalculation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ezrlc.util.Complex;
@@ -27,7 +26,7 @@ public class Polynomial {
 	 */
 	private boolean skinEnabled = false;
 
-	private double r0, f0, w0, alpha;
+	private double r0, w0, alpha;
 	private List<Integer> skinIdx;
 
 	// ================================================================================
@@ -68,29 +67,6 @@ public class Polynomial {
 	// Public setters and getters
 	// ================================================================================
 	/**
-	 * Adds a skin effect to the polynomial
-	 * 
-	 * @param r0
-	 * @param f0
-	 * @param alpha
-	 * @param idx
-	 *            where the skin effect takes place, where idx = 0 is the
-	 *            highest exponent and idx = coeffs.lnegth-1 is exponent 0
-	 */
-	public final void setVarRes(double r0, double f0, double alpha, int[] idx) {
-		this.r0 = r0;
-		this.f0 = f0;
-		this.w0 = f0 * Math.PI * 2.0;
-		this.alpha = alpha;
-		// copy index list
-		skinIdx = new ArrayList<Integer>(idx.length);
-		for (int i = 0; i < idx.length; i++) {
-			skinIdx.add(idx[i]);
-		}
-		skinEnabled = true;
-	}
-
-	/**
 	 * Sets the skin effect enabled flag
 	 * 
 	 * @param b
@@ -111,7 +87,11 @@ public class Polynomial {
 	public double[] getCoeffs() {
 		return coeffs;
 	}
-
+	
+	/**
+	 * store coefficients
+	 * @param coeff coefficients
+	 */
 	public void setCoeffs(double... coeff) {
 		// store coefficients
 		coeffs = new double[coeff.length];

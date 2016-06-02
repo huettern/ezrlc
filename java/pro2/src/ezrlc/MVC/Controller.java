@@ -10,6 +10,12 @@ import ezrlc.Plot.SmithChart.SmithChartNewMeasurement;
 import ezrlc.View.MainView;
 import ezrlc.View.WorkPanel.ViewType;
 
+/**
+ * Implements controller functionality of the MVC framework
+ * 
+ * @author noah
+ *
+ */
 public class Controller {
 
 	// ================================================================================
@@ -28,13 +34,23 @@ public class Controller {
 	// ================================================================================
 	// Public Functions
 	// ================================================================================
-
+	/**
+	 * Create new controller
+	 * 
+	 * @param model
+	 *            model object
+	 * @param view
+	 *            main view object
+	 */
 	public Controller(Model model, MainView view) {
 		this.model = model;
 		this.view = view;
 
 	}
 
+	/**
+	 * Control
+	 */
 	public void contol() {
 	}
 
@@ -53,22 +69,13 @@ public class Controller {
 		return this.view;
 	}
 
+	/**
+	 * Forces the model to trigger a notify to the observers
+	 */
 	public void manualNotify() {
 		model.manualNotify();
 	}
 
-	// /**
-	// * Adds a new Dataset in the model
-	// * @param src Datasource (File or Model)
-	// * @param ec MCEqCircuit
-	// * @param measType RFData.MeasurementType
-	// * @param cpxMod RFData.ComplexModifier
-	// * @return unique data identifier of the plotdataset
-	// */
-	// public int createDataset(DataSource src, MCEqCircuit ec,
-	// RFData.MeasurementType measType, RFData.ComplexModifier cpxMod) {
-	// return model.createDataset(src,ec,measType,cpxMod);
-	// }
 	/**
 	 * Adds a new Dataset in the model
 	 * 
@@ -91,10 +98,18 @@ public class Controller {
 		return model.createDataset(nm);
 	}
 
+	/**
+	 * Returns the currently loaded filename
+	 * @return
+	 */
 	public String getFilename() {
 		return model.getFilename();
 	}
 
+	/**
+	 * Delete a figure in the view
+	 * @param figure object of the figure
+	 */
 	public void deleteFigure(Figure figure) {
 		view.deleteFigure(figure);
 		// notify view to enable new graph button
@@ -140,6 +155,9 @@ public class Controller {
 		view.setWorkPanelView(t);
 	}
 
+	/**
+	 * Builds datasets for IGAssist panel
+	 */
 	public void buildIGAssistDataSet() {
 		view.buildIGAssistDataSet();
 	}

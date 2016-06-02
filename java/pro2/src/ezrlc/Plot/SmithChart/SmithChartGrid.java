@@ -15,6 +15,11 @@ import java.util.List;
 import ezrlc.util.Complex;
 import ezrlc.util.UIUtil;
 
+/**
+ * Grid for the smith chart
+ * @author noah
+ *
+ */
 public class SmithChartGrid {
 
 	// ================================================================================
@@ -74,6 +79,11 @@ public class SmithChartGrid {
 	// ================================================================================
 	// Constructor
 	// ================================================================================
+	/**
+	 * Creates a new grid
+	 * @param parent smith chart object
+	 * @param zo reference resistance
+	 */
 	public SmithChartGrid(SmithChart parent, double zo) {
 		this.parent = parent;
 		this.zo = zo;
@@ -127,6 +137,10 @@ public class SmithChartGrid {
 	// ================================================================================
 	// Public Functions
 	// ================================================================================
+	/**
+	 * Paint the grid
+	 * @param g graphics object
+	 */
 	public void paint(Graphics g) {
 		int rad;
 		this.evalSize();
@@ -193,7 +207,7 @@ public class SmithChartGrid {
 	// ================================================================================
 	// Private Functions
 	// ================================================================================
-	public void evalSize() {
+	private void evalSize() {
 		Point p;
 		Double rad;
 		this.parentHeight = parent.getHeight();

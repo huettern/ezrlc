@@ -24,9 +24,15 @@ import javax.swing.border.TitledBorder;
 
 import ezrlc.MVC.Controller;
 import ezrlc.MVC.Controller.DataSource;
+import ezrlc.Plot.DataSetSettings;
 import ezrlc.Plot.Figure;
-import ezrlc.Plot.RectPlot.DataSetSettings;
 
+/**
+ * Window to add a new measurement to the smithchart
+ * 
+ * @author noah
+ *
+ */
 public class SmithChartAddMeasurementWindow implements ActionListener {
 
 	private Figure figure;
@@ -47,7 +53,12 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 	// ================================================================================
 
 	/**
+	 * Build window
 	 * 
+	 * @param controller
+	 *            controller object
+	 * @param fig
+	 *            figure object
 	 */
 	public SmithChartAddMeasurementWindow(Controller controller, Figure fig) {
 		this.figure = fig;
@@ -222,6 +233,9 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		}
 	}
 
+	/**
+	 * Show the dialog
+	 */
 	public void show() {
 		newMeas = new SmithChartNewMeasurement();
 		dialog.setVisible(true);

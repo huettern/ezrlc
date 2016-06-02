@@ -13,11 +13,13 @@ import ezrlc.MVC.Controller;
 import ezrlc.Plot.Figure;
 import ezrlc.Plot.Figure.ENPlotType;
 
+/**
+ * Work panel on the right side of the frame
+ * 
+ * @author noah
+ *
+ */
 public class WorkPanel extends JPanel implements Observer {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	// ================================================================================
@@ -46,6 +48,12 @@ public class WorkPanel extends JPanel implements Observer {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * Create new work panel
+	 * 
+	 * @param controller
+	 *            controller object
+	 */
 	public WorkPanel(Controller controller) {
 		this.controller = controller;
 
@@ -75,7 +83,7 @@ public class WorkPanel extends JPanel implements Observer {
 	/**
 	 * Adds a new Figure to the figure panel
 	 * 
-	 * @param type
+	 * @param type plot type
 	 */
 	public void addGraph(ENPlotType type) {
 		Figure f = new Figure(this.controller);

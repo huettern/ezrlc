@@ -10,11 +10,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import ezrlc.util.Complex;
 
 /**
+ * Handels touchstone parsing and data conversion
+ * 
  * @author noah
  *
  */
@@ -39,6 +40,9 @@ public class RFData {
 		MA, DB, RI
 	}
 
+	/**
+	 * Complex modifier of a complex value
+	 */
 	public enum ComplexModifier {
 		REAL, IMAG, MAG, ANGLE
 	}
@@ -46,12 +50,6 @@ public class RFData {
 	// ================================================================================
 	// Private Data
 	// ================================================================================
-
-	/**
-	 * 
-	 */
-	private UUID uid;
-
 	private String fname = "";
 	private File file;
 
@@ -80,26 +78,35 @@ public class RFData {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
-
+	/**
+	 * create new rf data object by filename
+	 * 
+	 * @param fname
+	 *            filename
+	 */
 	public RFData(String fname) {
 		this.fname = fname;
-		this.uid = UUID.randomUUID();
 	}
 
+	/**
+	 * create new rf data object by file
+	 * 
+	 * @param file
+	 *            file
+	 */
 	public RFData(File file) {
 		this.fname = file.getAbsolutePath();
 		this.file = file;
-		this.uid = UUID.randomUUID();
 	}
 
 	// ================================================================================
 	// Non static Functions
 	// ================================================================================
-
-	public UUID getUID() {
-		return this.uid;
-	}
-
+	/**
+	 * Parse the file
+	 * 
+	 * @throws IOException
+	 */
 	public void parse() throws IOException {
 		FileReader file;
 		String line;
@@ -208,7 +215,6 @@ public class RFData {
 		switch (this.dataUnit) {
 		case RI:
 			// convert raw data to complex number
-
 			for (int i = 0; i < this.rawData.size(); i++) {
 				normalizedData[i] = new Complex(this.rawData.get(i).getData1(), this.rawData.get(i).getData2());
 			}
@@ -216,9 +222,6 @@ public class RFData {
 			break;
 		case MA:
 			// convert raw data from absolute and angle to complex
-			// angle = (d2*pi)/180
-			// real = d1*cos(angle)
-			// imag = d1*sin(angle)
 			for (int i = 0; i < this.rawData.size(); i++) {
 				angle = (rawData.get(i).getData2() * Math.PI) / 180.0;
 				mag = rawData.get(i).getData1();
@@ -228,10 +231,6 @@ public class RFData {
 			break;
 		case DB:
 			// Convert raw data from DB absolute and angle to complex
-			// angle = (d2*pi)/180
-			// mag = 10^(d1/20)
-			// real = mag*cos(angle)
-			// imag = mag*sin(angle)
 			for (int i = 0; i < this.rawData.size(); i++) {
 				angle = (rawData.get(i).getData2() * Math.PI) / 180.0;
 				mag = Math.pow(10, rawData.get(i).getData1() / 20.0);
@@ -545,8 +544,6 @@ public class RFData {
 		for (int i = 0; i < z.length; i++) {
 			res[i] = z[i].im() / w[i];
 		}
-		// MathUtil.dumpListDouble("tmp.txt", res);
-		// MathUtil.dumpListDouble("tmp.txt", w);
 		return res;
 	}
 
@@ -623,7 +620,9 @@ public class RFData {
 	 * converts s Data to z data z=zo*(1+s)/(1-s)
 	 * 
 	 * @param zo
+	 *            reference resistance
 	 * @param s
+	 *            scattering parameter
 	 * @return z
 	 */
 	public static Complex[] s2z(double zo, Complex[] s) {

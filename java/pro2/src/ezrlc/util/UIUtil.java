@@ -21,6 +21,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 
+/**
+ * GUI utility funtcions
+ * 
+ * @author noah
+ *
+ */
 public class UIUtil {
 
 	// ================================================================================
@@ -35,6 +41,9 @@ public class UIUtil {
 	private static int PlotSetColorsCtr = 0; // Holds the index of the next
 												// color to be used
 
+	// ================================================================================
+	// Contructor
+	// ================================================================================
 	public UIUtil() {
 	}
 
@@ -108,7 +117,8 @@ public class UIUtil {
 	 * normal number to scientific notation
 	 * 
 	 * @param d
-	 * @return
+	 *            double number
+	 * @return string
 	 */
 	public static String num2Scientific(double d) {
 		NumberFormat formatter = new DecimalFormat();
@@ -159,6 +169,7 @@ public class UIUtil {
 	 * Returns an image given from the path in the project img folder
 	 * 
 	 * @param strBild
+	 *            string to image
 	 * @return Image
 	 */
 	public static Image loadResourceImage(String strBild) {
@@ -180,8 +191,11 @@ public class UIUtil {
 	 * transformed to width and height
 	 * 
 	 * @param strBild
+	 *            string to image
 	 * @param width
+	 *            image width
 	 * @param height
+	 *            image height
 	 * @return Image
 	 */
 	public static Image loadResourceImage(String strBild, int width, int height) {
@@ -206,8 +220,11 @@ public class UIUtil {
 	 * transformed to width and height
 	 * 
 	 * @param strBild
+	 *            string to image
 	 * @param width
+	 *            image width
 	 * @param height
+	 *            image height
 	 * @return Icon
 	 */
 	public static ImageIcon loadResourceIcon(String strBild, int width, int height) {
@@ -224,7 +241,7 @@ public class UIUtil {
 	/**
 	 * Returns an icon given from the path in the project img folder
 	 * 
-	 * @param strBild
+	 * @param strBild string to file
 	 * @return Icon
 	 */
 	public static ImageIcon loadResourceIcon(String strBild) {
@@ -241,7 +258,7 @@ public class UIUtil {
 	/**
 	 * Gets the next color in the color palette and increments counter
 	 * 
-	 * @return
+	 * @return color
 	 */
 	public static Color getNextColor() {
 		Color c = plotSetColors.get(PlotSetColorsCtr);

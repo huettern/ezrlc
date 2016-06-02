@@ -14,9 +14,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+/**
+ * Data Set label panel displays the dataset info in the figure
+ * 
+ * @author noah
+ *
+ */
 public class DataSetLabelPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id = 0;
 	private JLabel lblTraceName;
 	private JLabel lblTraceType;
@@ -24,6 +30,20 @@ public class DataSetLabelPanel extends JPanel implements ActionListener {
 	private JButton btnRemove;
 	private Figure figure;
 
+	/**
+	 * Create new data set label panel
+	 * 
+	 * @param fig
+	 *            figure object
+	 * @param c
+	 *            color of the dataset
+	 * @param id
+	 *            id of the associated data set, used to delete it
+	 * @param name
+	 *            name of the dataset, printed bold
+	 * @param type
+	 *            type of the dataset, printed regular
+	 */
 	public DataSetLabelPanel(Figure fig, Color c, int id, String name, String type) {
 		this.id = id;
 		this.figure = fig;
@@ -34,11 +54,6 @@ public class DataSetLabelPanel extends JPanel implements ActionListener {
 		setBorder(new LineBorder(Color.BLACK));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWeights = new double[] { 1.0 };
-		// gridBagLayout.columnWidths = new int[] {80, 0};
-		// gridBagLayout.rowHeights = new int[]{30, 30, 0, 0};
-		// gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		// gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0,
-		// Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 
 		pnlDrawing = new JPanel();

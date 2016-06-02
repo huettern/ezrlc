@@ -6,19 +6,48 @@ package ezrlc.util;
 
 import java.awt.Point;
 
+/**
+ * Point with oduble precision
+ * 
+ * @author noah
+ *
+ */
 public class PointD {
 
+	// ================================================================================
+	// Private data
+	// ================================================================================
 	public double x;
 	public double y;
 
+	// ================================================================================
+	// Constructors
+	// ================================================================================
+	/**
+	 * Create new pointd
+	 */
 	public PointD() {
 	}
 
+	/**
+	 * Create new Point with given old point
+	 * 
+	 * @param p
+	 *            point
+	 */
 	public PointD(PointD p) {
 		this.x = p.x;
 		this.y = p.y;
 	}
 
+	/**
+	 * Create point with values
+	 * 
+	 * @param x
+	 *            x value
+	 * @param y
+	 *            y value
+	 */
 	public PointD(double x, double y) {
 		this.x = x;
 		this.y = y;

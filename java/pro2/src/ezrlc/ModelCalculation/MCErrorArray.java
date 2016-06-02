@@ -1,27 +1,20 @@
 package ezrlc.ModelCalculation;
 
-import ezrlc.util.Complex;
-
+/**
+ * Calculates element wise Error of two arrays
+ * 
+ * @author noah
+ *
+ */
 public class MCErrorArray {
 	// ================================================================================
 	// Private Data
 	// ================================================================================
-	private Complex[] measured;
 
 	// ================================================================================
 	// Constructors
 	// ================================================================================
-	/**
-	 * Create new error array object
-	 * 
-	 * @param measured
-	 *            measured data
-	 * @param circuit
-	 *            equivalent circuit object
-	 */
-	public MCErrorArray(Complex[] measured) {
-		this.measured = new Complex[measured.length];
-		System.arraycopy(measured, 0, this.measured, 0, measured.length);
+	public MCErrorArray() {
 	}
 
 	// ================================================================================

@@ -1,9 +1,14 @@
-package ezrlc.Plot;
+package ezrlc.Plot.RectPlot;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
+/**
+ * Single grid line
+ * @author noah
+ *
+ */
 public class GridLine {
 
 	// ================================================================================

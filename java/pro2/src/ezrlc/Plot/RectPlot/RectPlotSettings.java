@@ -1,7 +1,12 @@
 package ezrlc.Plot.RectPlot;
 
-import ezrlc.Plot.Axis.Scale;
+import ezrlc.Plot.RectPlot.Axis.Scale;
 
+/**
+ * Stores the plot settings
+ * @author noah
+ *
+ */
 public class RectPlotSettings {
 
 	// ================================================================================

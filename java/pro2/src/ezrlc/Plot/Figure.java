@@ -27,22 +27,23 @@ import javax.swing.event.DocumentListener;
 
 import ezrlc.MVC.Controller;
 import ezrlc.MVC.Model;
-import ezrlc.Plot.Axis.Scale;
 import ezrlc.Plot.RectPlot.RectPlotAddMeasurementWindow;
 import ezrlc.Plot.RectPlot.RectPlotSettings;
 import ezrlc.Plot.RectPlot.RectPlotSettingsWindow;
 import ezrlc.Plot.RectPlot.RectangularPlot;
+import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.Plot.SmithChart.SmithChart;
 import ezrlc.Plot.SmithChart.SmithChartAddMeasurementWindow;
 import ezrlc.Plot.SmithChart.SmithChartSettings;
 import ezrlc.Plot.SmithChart.SmithChartSettingsWindow;
 import ezrlc.View.JEngineerField;
 
+/**
+ * Hods a plot and some user elemets to access settings
+ * @author noah
+ *
+ */
 public class Figure extends JPanel implements ActionListener, Observer, DocumentListener {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	// ================================================================================
@@ -86,6 +87,10 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * Create new figure
+	 * @param controller controller object
+	 */
 	public Figure(Controller controller) {
 		super.setBackground(new Color(238, 238, 238));
 
@@ -93,11 +98,6 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 
 		setBackground(UIManager.getColor("ToggleButton.background"));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		// gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		// gridBagLayout.rowHeights = new int[]{0, 0};
-		// gridBagLayout.columnWeights = new double[]{1.0, 0.0,
-		// Double.MIN_VALUE};
-		// gridBagLayout.rowWeights = new double[]{0.0, 1.0};
 		setLayout(gridBagLayout);
 
 		panel_1 = new JPanel();
@@ -196,10 +196,7 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 	// ================================================================================
 	// Getters
 	// ================================================================================
-	public SmithChart getSmithChart() {
-		return this.smithChart;
-	}
-
+	
 	// ================================================================================
 	// Public Functions
 	// ================================================================================

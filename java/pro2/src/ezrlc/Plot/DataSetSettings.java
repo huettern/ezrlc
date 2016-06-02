@@ -1,7 +1,12 @@
-package ezrlc.Plot.RectPlot;
+package ezrlc.Plot;
 
 import java.awt.Color;
 
+/**
+ * Data set settings
+ * @author noah
+ *
+ */
 public class DataSetSettings {
 
 	// ================================================================================

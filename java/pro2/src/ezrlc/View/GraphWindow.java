@@ -20,6 +20,11 @@ import javax.swing.border.TitledBorder;
 import ezrlc.MVC.Controller;
 import ezrlc.Plot.Figure.ENPlotType;
 
+/**
+ * New Graph dialog to choose between rectangular or smith plot
+ * @author noah
+ *
+ */
 public class GraphWindow implements ActionListener {
 
 	// ================================================================================
@@ -38,6 +43,10 @@ public class GraphWindow implements ActionListener {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * New Graph window
+	 * @param controller
+	 */
 	public GraphWindow(Controller controller) {
 		this.controller = controller;
 	}
@@ -48,7 +57,6 @@ public class GraphWindow implements ActionListener {
 	/**
 	 * Builds the Graph Panel
 	 * 
-	 * @wbp.parser.entryPoint
 	 */
 	public void buildDialog() {
 		graphDialog = new JDialog(controller.getMainView());

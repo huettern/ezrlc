@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
@@ -18,12 +19,15 @@ import ezrlc.MVC.Controller;
 import ezrlc.Plot.Figure;
 import ezrlc.Plot.Figure.ENPlotType;
 import ezrlc.View.WorkPanel.ViewType;
+import ezrlc.util.UIUtil;
 
+/**
+ * Implements the view functionality of the MVC framework
+ * 
+ * @author noah
+ *
+ */
 public class MainView extends JFrame implements Observer {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	// ================================================================================
 	// Local Variables
@@ -44,7 +48,6 @@ public class MainView extends JFrame implements Observer {
 	// Constructors
 	// ================================================================================
 	public MainView() {
-
 	}
 
 	// ================================================================================
@@ -52,8 +55,6 @@ public class MainView extends JFrame implements Observer {
 	// ================================================================================
 	/**
 	 * Create the frame from NanPanel and WorkPanel.
-	 * 
-	 * @wbp.parser.entryPoint
 	 */
 	public void build() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,13 +86,11 @@ public class MainView extends JFrame implements Observer {
 
 		// Window properties
 		setTitle("EZRLC");
-		// ImageIcon icon = new
-		// ImageIcon(MainView.class.getResource("pro2LogoTransparent.png"));
-		// setIconImage(icon.getImage());
+		ImageIcon icon = UIUtil.loadResourceIcon("pro2LogoTransparent.png");
+		this.setIconImage(icon.getImage());
 
 		pack();
 		setMinimumSize(getPreferredSize());
-		// setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		// Look and feel
 		try {

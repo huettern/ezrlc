@@ -15,6 +15,11 @@ import javax.swing.plaf.metal.MetalComboBoxUI;
 
 import ezrlc.util.UIUtil;
 
+/**
+ * Custom combo box containing images
+ * @author noah
+ *
+ */
 public class ImageComboBox extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	// ================================================================================
@@ -27,6 +32,12 @@ public class ImageComboBox extends JPanel implements ActionListener {
 	// ================================================================================
 	// Constructor
 	// ================================================================================
+	/**
+	 * Create new image combo box
+	 * @param parent newmodelwindow pare t
+	 * @param imagesName names of the imates
+	 * @param imagesText texts of the imates
+	 */
 	public ImageComboBox(NewModelWindow parent, String[] imagesName, String[] imagesText) {
 		super(new BorderLayout());
 		this.parent = parent;

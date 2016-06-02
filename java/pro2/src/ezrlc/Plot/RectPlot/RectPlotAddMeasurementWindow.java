@@ -21,8 +21,6 @@ import javax.swing.MutableComboBoxModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import org.apache.commons.math3.ml.neuralnet.twod.NeuronSquareMesh2D.HorizontalDirection;
-
 import ezrlc.MVC.Controller;
 import ezrlc.MVC.Controller.DataSource;
 import ezrlc.Plot.Figure;
@@ -31,6 +29,12 @@ import ezrlc.RFData.RFData.ComplexModifier;
 import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.View.JEngineerField;
 
+/**
+ * Window to add a new measurement
+ * 
+ * @author noah
+ *
+ */
 public class RectPlotAddMeasurementWindow implements ActionListener {
 
 	// ================================================================================
@@ -64,11 +68,18 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	private JRadioButton rdbtnDB;
 	private ButtonGroup btngrpUnit;
 	private JEngineerField txtZref;
-	
+
 	// ================================================================================
 	// Constructors
 	// ================================================================================
-
+	/**
+	 * Add new new measurement window
+	 * 
+	 * @param controller
+	 *            controller object
+	 * @param fig
+	 *            figure object
+	 */
 	public RectPlotAddMeasurementWindow(Controller controller, Figure fig) {
 		this.controller = controller;
 		this.figure = fig;
@@ -189,7 +200,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_rdbtnCompare.gridx = 0;
 		gbc_rdbtnCompare.gridy = 2;
 		pnlDataSource.add(rdbtnCompare, gbc_rdbtnCompare);
-		
+
 		btngrpSource = new ButtonGroup();
 		btngrpSource.add(rdbtnModel);
 		btngrpSource.add(rdbtnFile);
@@ -235,7 +246,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_rdbtnS.gridx = 0;
 		gbc_rdbtnS.gridy = 1;
 		pnlMeasurementType.add(rdbtnS, gbc_rdbtnS);
-		
+
 		txtZref = new JEngineerField(4, 3, "E24");
 		txtZref.setValue(50.0);
 		GridBagConstraints gbc_txtZref = new GridBagConstraints();
@@ -245,7 +256,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_txtZref.gridx = 1;
 		gbc_txtZref.gridy = 1;
 		pnlMeasurementType.add(txtZref, gbc_txtZref);
-		
+
 		JLabel lblOhm = new JLabel("Ohm");
 		GridBagConstraints gbc_lbllblOhm = new GridBagConstraints();
 		gbc_lbllblOhm.anchor = GridBagConstraints.WEST;
@@ -314,10 +325,10 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpCpxMod.add(rdbtnMag);
 		btngrpCpxMod.add(rdbtnImag);
 		btngrpCpxMod.add(rdbtnReal);
-		
+
 		pnlUnit = new JPanel();
-		pnlUnit.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Measurement Unit",
-				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlUnit.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Measurement Unit", TitledBorder.CENTER,
+				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlUnit = new GridBagConstraints();
 		gbc_pnlUnit.insets = new Insets(0, 5, 5, 0);
 		gbc_pnlUnit.fill = GridBagConstraints.BOTH;
@@ -325,12 +336,11 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_pnlUnit.gridy = 3;
 		dialog.getContentPane().add(pnlUnit, gbc_pnlUnit);
 		GridBagLayout gbl_pnlUnit = new GridBagLayout();
-		gbl_pnlUnit.columnWidths = new int[]{0};
-		gbl_pnlUnit.rowHeights = new int[]{0};
+		gbl_pnlUnit.columnWidths = new int[] { 0 };
+		gbl_pnlUnit.rowHeights = new int[] { 0 };
 		gbl_pnlUnit.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		gbl_pnlUnit.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		pnlUnit.setLayout(gbl_pnlUnit);
-
 
 		rdbtnLinear = new JRadioButton("Linear");
 		rdbtnLinear.setEnabled(false);
@@ -353,7 +363,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btngrpUnit = new ButtonGroup();
 		btngrpUnit.add(rdbtnDB);
 		btngrpUnit.add(rdbtnLinear);
-		
+
 		// buttons
 		JPanel pnlButtons = new JPanel();
 		GridBagConstraints gbc_pnlButtons = new GridBagConstraints();
@@ -458,10 +468,10 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		if (this.getSelectedButton(this.btngrpCpxMod) == rdbtnImag) {
 			nm.cpxMod = ComplexModifier.IMAG;
 		}
-		if( this.getSelectedButton(this.btngrpUnit) == rdbtnDB) {
+		if (this.getSelectedButton(this.btngrpUnit) == rdbtnDB) {
 			nm.unit = Unit.dB;
 		}
-		if( this.getSelectedButton(this.btngrpUnit) == rdbtnLinear) {
+		if (this.getSelectedButton(this.btngrpUnit) == rdbtnLinear) {
 			nm.unit = Unit.Linear;
 		}
 		nm.zRef = txtZref.getValue();
@@ -489,6 +499,10 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	// ================================================================================
 	// Public Functions
 	// ================================================================================
+	/**
+	 * Set the filename
+	 * @param s filename
+	 */
 	public void setFilename(String s) {
 		if (s != null) {
 			this.lblFileName.setText(s);
@@ -503,6 +517,9 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		}
 	}
 
+	/**
+	 * show the dialog
+	 */
 	public void show() {
 		newMeas = new RectPlotNewMeasurement();
 		dialog.setVisible(true);

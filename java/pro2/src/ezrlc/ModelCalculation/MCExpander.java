@@ -4,6 +4,11 @@ import ezrlc.ModelCalculation.MCEqCircuit.CircuitType;
 import ezrlc.util.Complex;
 import ezrlc.util.MathUtil;
 
+/**
+ * extends 2 Element EQCircuits to a 3 Element EQCircuit
+ * @author sven
+ *
+ */
 public class MCExpander {
 
 	// ================================================================================
@@ -14,7 +19,6 @@ public class MCExpander {
 	// Constructors
 	// ================================================================================
 	public MCExpander() {
-
 	}
 
 	// ================================================================================
@@ -22,8 +26,11 @@ public class MCExpander {
 	// ================================================================================
 	/**
 	 * extends 2 Element EQCircuits to a 3 Element EQCircuit
+	 * @param eqc quivalent circuit as template
+	 * @param yz impedance data
+	 * @param w frequency vector
+	 * @return new expanded quivalent circuit
 	 */
-
 	public static MCEqCircuit expand(MCEqCircuit eqc, Complex[] yz, double[] w) {
 
 		// EQCircuits

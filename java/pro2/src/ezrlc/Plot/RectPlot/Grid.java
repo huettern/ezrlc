@@ -1,4 +1,4 @@
-package ezrlc.Plot;
+package ezrlc.Plot.RectPlot;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,8 +6,11 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import ezrlc.Plot.RectPlot.RectangularPlot;
-
+/**
+ * Grid of a rectangular plot
+ * @author noah
+ *
+ */
 public class Grid {
 	// ================================================================================
 	// Public Data

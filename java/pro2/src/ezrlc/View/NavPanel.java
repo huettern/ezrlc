@@ -29,11 +29,13 @@ import ezrlc.MVC.Model;
 import ezrlc.MVC.Model.UpdateEvent;
 import ezrlc.View.WorkPanel.ViewType;
 
+/**
+ * Navigation panel on the left side of the frame
+ * 
+ * @author noah
+ *
+ */
 public class NavPanel extends JPanel implements ActionListener, Observer {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	// ================================================================================
@@ -56,6 +58,12 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	// ================================================================================
 	// Constructors
 	// ================================================================================
+	/**
+	 * Create new navpanel
+	 * 
+	 * @param controller
+	 *            controller object
+	 */
 	public NavPanel(Controller controller) {
 		this.controller = controller;
 		this.fileChooser = new FileChooser(controller);
@@ -138,7 +146,6 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	/**
 	 * Build the panel with the view type switch
 	 * 
-	 * @wbp.parser.entryPoint
 	 */
 	private void buildViewTypePanel() {
 		JPanel pnlPanel = new JPanel();
@@ -313,7 +320,8 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	 * Adds a new Model label panel based on the new generated Equivalent
 	 * circuit
 	 * 
-	 * @param o
+	 * @param m
+	 *            Model object
 	 */
 	private void updateNewModelLabel(Model m) {
 		modelLabelPanels.get(modelLabelPanels.size() - 1).build(m.getEquivalentCircuit(m.getEQCID()).getCircuitType(),
@@ -384,6 +392,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 	 * Sets the file name label
 	 * 
 	 * @param name
+	 *            filename
 	 */
 	public void setFileName(String name) {
 		lblInputFile.setText(name);

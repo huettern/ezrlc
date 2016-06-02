@@ -24,11 +24,12 @@ import ezrlc.ModelCalculation.MCEqCircuit;
 import ezrlc.ModelCalculation.MCEqCircuit.CircuitType;
 import ezrlc.util.UIUtil;
 
+/**
+ * Contains GUI elements for the model label panel that displays model parameters
+ * @author noah
+ *
+ */
 public class ModelLabelPanel extends JPanel implements ActionListener, DocumentListener {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	// ================================================================================
 	// Local Variables

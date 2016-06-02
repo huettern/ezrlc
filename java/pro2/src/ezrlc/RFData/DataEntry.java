@@ -1,18 +1,20 @@
 package ezrlc.RFData;
 
+/**
+ * Single data entry of a touchstone file
+ * @author noah
+ *
+ */
 public class DataEntry {
 	private double freq;
 	private double data1;
 	private double data2;
 
 	/**
-	 * Saves intput values
-	 * 
-	 * @param type
-	 * @param unit
-	 * @param freq
-	 * @param data1
-	 * @param data2
+	 * New data entry
+	 * @param freq frequency
+	 * @param data1 data entry one
+	 * @param data2 data entry two
 	 */
 	public DataEntry(double freq, double data1, double data2) {
 		this.freq = freq;
