@@ -127,7 +127,7 @@ public class MCUtil {
 	 *            MCOptions given by user
 	 * @param f
 	 *            frequency data in Hertz
-	 * @param data
+	 * @param data data
 	 * @return data array out, cut to the f-range
 	 */
 	public static final double[] applyMCOpsToData(MCOptions ops, double[] f, double[] data) {
@@ -271,7 +271,7 @@ public class MCUtil {
 	 *            topology
 	 * @param p
 	 *            short form parameters
-	 * @return
+	 * @return parameter list
 	 */
 	public static final double[] topo2Param(CircuitType t, double[] p) {
 		double[] res = { 0, 0, 0, 0, 0, 0, 0 };

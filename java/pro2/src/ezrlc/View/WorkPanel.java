@@ -152,7 +152,7 @@ public class WorkPanel extends JPanel implements Observer {
 	/**
 	 * Delete a figure
 	 * 
-	 * @param figure
+	 * @param figure figure object
 	 */
 	public void deleteFigure(Figure figure) {
 		this.remove(figure);
@@ -187,7 +187,7 @@ public class WorkPanel extends JPanel implements Observer {
 	/**
 	 * Set View Type of the WorkPanel
 	 * 
-	 * @param t
+	 * @param t view type
 	 */
 	public void setView(ViewType t) {
 		if (t == ViewType.FIGURE) {

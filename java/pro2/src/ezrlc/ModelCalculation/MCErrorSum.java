@@ -68,7 +68,7 @@ public class MCErrorSum implements MultivariateFunction {
 	 *            measured data
 	 * @param simulated
 	 *            simulated data
-	 * @return
+	 * @return error
 	 */
 	public static final double getError(double[] measured, double[] simulated) {
 		return leastSquare(measured, simulated);

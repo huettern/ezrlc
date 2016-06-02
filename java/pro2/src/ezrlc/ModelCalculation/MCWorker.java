@@ -52,7 +52,7 @@ public class MCWorker extends Thread {
 	/**
 	 * Set the data set to which the model should be created
 	 * 
-	 * @param set
+	 * @param set data set
 	 */
 	public void setRFDataSet(RFData set) {
 		rfData = set;
@@ -61,7 +61,7 @@ public class MCWorker extends Thread {
 	/**
 	 * Sets the model creation options
 	 * 
-	 * @param options
+	 * @param options options
 	 */
 	public void setMCOptions(MCOptions options) {
 		ops = options;

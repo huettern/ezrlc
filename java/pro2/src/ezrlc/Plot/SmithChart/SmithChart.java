@@ -135,7 +135,7 @@ public class SmithChart extends JPanel implements Observer {
 	 * 
 	 * @param id
 	 *            data set id
-	 * @return
+	 * @return settings
 	 */
 	public DataSetSettings getDataSetSettings(int id) {
 		// search id
@@ -150,7 +150,7 @@ public class SmithChart extends JPanel implements Observer {
 	/**
 	 * Returns a copy list of data set settings
 	 * 
-	 * @return
+	 * @return list
 	 */
 	public List<DataSetSettings> getDataSetSettings() {
 		return new ArrayList<DataSetSettings>(dataSetSettings);

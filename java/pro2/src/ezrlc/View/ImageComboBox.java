@@ -78,7 +78,7 @@ public class ImageComboBox extends JPanel implements ActionListener {
 	/**
 	 * Returns the combobox
 	 * 
-	 * @return
+	 * @return list
 	 */
 	public JComboBox<Integer> getList() {
 		return this.list;

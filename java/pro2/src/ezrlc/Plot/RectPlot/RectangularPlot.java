@@ -237,8 +237,8 @@ public class RectangularPlot extends JPanel implements Observer {
 	/**
 	 * Add a new Dataset to the plot by ID
 	 * 
-	 * @param rectPlotNewMeasurement
-	 * @param id
+	 * @param rectPlotNewMeasurement rectPlotNewMeasurement
+	 * @param id id
 	 */
 	public void addDataSet(int id, RectPlotNewMeasurement rectPlotNewMeasurement) {
 		DataSetSettings set = new DataSetSettings();
@@ -254,8 +254,8 @@ public class RectangularPlot extends JPanel implements Observer {
 	/**
 	 * Add a new Dataset to the plot by ID
 	 * 
-	 * @param rectPlotNewMeasurement
-	 * @param id
+	 * @param rectPlotNewMeasurement rectPlotNewMeasurement
+	 * @param id id
 	 * @param color
 	 *            Color index
 	 */
@@ -334,7 +334,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	 * 
 	 * @param id
 	 *            data set id
-	 * @return
+	 * @return data set settings
 	 */
 	public DataSetSettings getDataSetSettings(int id) {
 		// search id
@@ -446,7 +446,7 @@ public class RectangularPlot extends JPanel implements Observer {
 	/**
 	 * Sets the title string
 	 * 
-	 * @param s
+	 * @param s title string
 	 */
 	public void setTitle(String s) {
 		title = s;

@@ -96,8 +96,6 @@ public class NewModelWindow implements ActionListener {
 	// ================================================================================
 	/**
 	 * Builds the Graph Panel
-	 * 
-	 * @wbp.parser.entryPoint
 	 */
 	public void buildNewModelWindow() {
 		dialog = new JDialog(controller.getMainView());
@@ -654,7 +652,8 @@ public class NewModelWindow implements ActionListener {
 	}
 
 	/**
-	 * Parameter match by change the model
+	 * combo box gets selected
+	 * @param e action event
 	 */
 	public void comboBoxSelected(ActionEvent e) {
 		lblCompMin.setForeground(Color.LIGHT_GRAY);

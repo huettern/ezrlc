@@ -48,7 +48,7 @@ public class MCErrorArray {
 	 *            measured data
 	 * @param simulated
 	 *            simulated data
-	 * @return
+	 * @return error sum
 	 */
 	public static final double[] getErrorArray(double[] measured, double[] simulated) {
 		return deltaArray(measured, simulated);

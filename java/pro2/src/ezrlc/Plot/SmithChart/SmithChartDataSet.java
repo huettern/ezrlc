@@ -14,6 +14,7 @@ import ezrlc.util.PointD;
 
 /**
  * Data set that contains the data to be painted on the smithchart
+ * 
  * @author noah
  *
  */
@@ -48,6 +49,19 @@ public class SmithChartDataSet {
 	 *            List of complex data
 	 * @param freq
 	 *            frequency points
+	 */
+
+	/**
+	 * * Creates a new SmithChart Dataset
+	 * 
+	 * @param data
+	 *            List of complex data
+	 * @param freq
+	 *            frequency points
+	 * @param grid
+	 *            grid
+	 * @param nm
+	 *            new measurement
 	 */
 	public SmithChartDataSet(SmithChartGrid grid, Complex[] data, double[] freq, SmithChartNewMeasurement nm) {
 		if (data.length != freq.length) {

@@ -123,7 +123,7 @@ public class MainView extends JFrame implements Observer {
 	/**
 	 * Sets the controller object
 	 * 
-	 * @param controller
+	 * @param controller controller object
 	 */
 	public void setController(Controller controller) {
 		this.controller = controller;
@@ -132,7 +132,7 @@ public class MainView extends JFrame implements Observer {
 	/**
 	 * added Graph to WorkPanel
 	 * 
-	 * @param type
+	 * @param type plot type
 	 */
 	public void addGraph(ENPlotType type) {
 		workPanel.addGraph(type);
@@ -142,7 +142,7 @@ public class MainView extends JFrame implements Observer {
 	/**
 	 * Set name of the file
 	 * 
-	 * @param name
+	 * @param name name
 	 */
 	public void setFileName(String name) {
 		navPanel.setFileName(name);
@@ -152,8 +152,8 @@ public class MainView extends JFrame implements Observer {
 	/**
 	 * Gets called if model notifies Observers
 	 * 
-	 * @param o
-	 * @param arg
+	 * @param o model object
+	 * @param arg arguments
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
@@ -165,7 +165,7 @@ public class MainView extends JFrame implements Observer {
 	/**
 	 * delete Figure at WorkPanel
 	 * 
-	 * @param figure
+	 * @param figure figure object
 	 */
 	public void deleteFigure(Figure figure) {
 		workPanel.deleteFigure(figure);

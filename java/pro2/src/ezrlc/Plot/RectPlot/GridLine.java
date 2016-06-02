@@ -31,8 +31,6 @@ public class GridLine {
 	/**
 	 * Create a gridline
 	 * 
-	 * @param style:
-	 *            Style of the line
 	 * @param color:
 	 *            Color of the line
 	 * @param start:
@@ -52,7 +50,7 @@ public class GridLine {
 	/**
 	 * Paints the gridline
 	 * 
-	 * @param g
+	 * @param g graphics object
 	 */
 	public void paint(Graphics g) {
 		Color col = g.getColor();

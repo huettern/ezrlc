@@ -88,6 +88,8 @@ public class Axis {
 	 *            Number of steps
 	 * @param labelOffset:
 	 *            Location of the Value labels, relative to the axis
+	 * @param scale
+	 *            axis scale
 	 */
 	public Axis(RectangularPlot parent, Scale scale, Orientation or, Point origin, int size, double min, double max,
 			int step, int labelOffset) {
@@ -118,6 +120,7 @@ public class Axis {
 	 * Paints the Axis
 	 * 
 	 * @param g
+	 *            graphics object
 	 */
 	public void paint(Graphics g) {
 		this.evalSize();
@@ -216,7 +219,8 @@ public class Axis {
 	 * Returns the pixel location of the given value
 	 * 
 	 * @param d
-	 * @return
+	 *            value
+	 * @return pixel location
 	 */
 	public int getPixelValue(double d) {
 		this.evalSize();
@@ -229,7 +233,7 @@ public class Axis {
 	/**
 	 * Returns the location of the axis tics
 	 * 
-	 * @return
+	 * @return points
 	 */
 	public List<Point> getTicPoints() {
 		List<Point> points = new ArrayList<Point>(label_count);
@@ -256,7 +260,7 @@ public class Axis {
 	/**
 	 * Returns the Origin of the axis
 	 * 
-	 * @return
+	 * @return origin point
 	 */
 	public Point getOrigin() {
 		return new Point(this.origin_x, this.origin_y);
@@ -265,7 +269,7 @@ public class Axis {
 	/**
 	 * Retursn the startpoint of the axis
 	 * 
-	 * @return
+	 * @return start point
 	 */
 	public Point getStart() {
 		return new Point(this.start_x, this.start_y);
@@ -274,7 +278,7 @@ public class Axis {
 	/**
 	 * Returns the endpoint of the axis
 	 * 
-	 * @return
+	 * @return end point
 	 */
 	public Point getEnd() {
 		return new Point(this.end_x, this.end_y);
@@ -283,7 +287,7 @@ public class Axis {
 	/**
 	 * Returns the axis minimum value
 	 * 
-	 * @return
+	 * @return min
 	 */
 	public double getMin() {
 		return this.min;
@@ -292,7 +296,7 @@ public class Axis {
 	/**
 	 * returns the axis maximum value
 	 * 
-	 * @return
+	 * @return max
 	 */
 	public double getMax() {
 		return this.max;

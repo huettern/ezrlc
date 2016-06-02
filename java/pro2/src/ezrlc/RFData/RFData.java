@@ -105,7 +105,7 @@ public class RFData {
 	/**
 	 * Parse the file
 	 * 
-	 * @throws IOException
+	 * @throws IOException exception if file error
 	 */
 	public void parse() throws IOException {
 		FileReader file;
@@ -387,7 +387,7 @@ public class RFData {
 	/**
 	 * Returns the filename of the dataset source
 	 * 
-	 * @return
+	 * @return file name
 	 */
 	public String getFileName() {
 		return this.file.getName();
@@ -396,7 +396,7 @@ public class RFData {
 	/**
 	 * Returns the number of datapoints in the RFData set
 	 * 
-	 * @return
+	 * @return size
 	 */
 	public int size() {
 		return this.dataEntries;
@@ -405,7 +405,7 @@ public class RFData {
 	/**
 	 * Returns the Frequency list of the datapoints
 	 * 
-	 * @return
+	 * @return f data
 	 */
 	public double[] getfData() {
 		double[] res = new double[fData.length];
@@ -416,7 +416,7 @@ public class RFData {
 	/**
 	 * Returns a list of Z Data
 	 * 
-	 * @return
+	 * @return z data
 	 */
 	public Complex[] getzData() {
 		Complex[] res = new Complex[zData.length];
@@ -427,7 +427,7 @@ public class RFData {
 	/**
 	 * Returns a list of S Data
 	 * 
-	 * @return
+	 * @return S Data
 	 */
 	public Complex[] getsData() {
 		Complex[] res = new Complex[sData.length];
@@ -440,7 +440,7 @@ public class RFData {
 	 * 
 	 * @param zo
 	 *            reference resistance
-	 * @return
+	 * @return s data
 	 */
 	public Complex[] getSData(double zo) {
 		return RFData.z2s(zo, zData);
@@ -449,7 +449,7 @@ public class RFData {
 	/**
 	 * Returns a list of Y Data
 	 * 
-	 * @return
+	 * @return y data
 	 */
 	public Complex[] getyData() {
 		Complex[] res = new Complex[yData.length];
@@ -500,8 +500,6 @@ public class RFData {
 	 * 
 	 * @param z
 	 *            impedance array in ohms
-	 * @param f
-	 *            freq data
 	 * @return resistance array in ohms
 	 */
 	public static double[] z2Rs(Complex[] z) {
@@ -517,8 +515,6 @@ public class RFData {
 	 * 
 	 * @param y
 	 *            admittance data
-	 * @param f
-	 *            freq data
 	 * @return resistance array in ohms
 	 */
 	public static double[] y2Rp(Complex[] y) {

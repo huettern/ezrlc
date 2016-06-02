@@ -12,6 +12,7 @@ import ezrlc.util.MathUtil;
 
 /**
  * Plot data set for a standard rectangular plot
+ * 
  * @author noah
  *
  */
@@ -51,6 +52,8 @@ public class PlotDataSet {
 	 *            X Data
 	 * @param y:
 	 *            Y Data
+	 * @param nm
+	 *            nm
 	 */
 	public PlotDataSet(double[] x, double[] y, RectPlotNewMeasurement nm) {
 		if (x.length != y.length) {
@@ -112,6 +115,9 @@ public class PlotDataSet {
 	 * Paint the Dataset
 	 * 
 	 * @param g
+	 *            graphics object
+	 * @param clip
+	 *            clipping area
 	 */
 	public void paint(Graphics g, Area clip) {
 		this.eval();

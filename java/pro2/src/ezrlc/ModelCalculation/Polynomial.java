@@ -69,7 +69,7 @@ public class Polynomial {
 	/**
 	 * Sets the skin effect enabled flag
 	 * 
-	 * @param b
+	 * @param b enabled
 	 */
 	public final void setSkinEnabled(boolean b) {
 		this.skinEnabled = b;
@@ -78,7 +78,7 @@ public class Polynomial {
 	/**
 	 * Returns skinEnabled
 	 * 
-	 * @return
+	 * @return skinEnabled
 	 */
 	public final boolean getSkinEnabled() {
 		return this.skinEnabled;
@@ -111,7 +111,7 @@ public class Polynomial {
 	/**
 	 * Evaluates the polynomial at the given x WITHOUT skin
 	 * 
-	 * @param x
+	 * @param x eval location
 	 * @return complex result
 	 */
 	public final Complex polyval(Complex x) {
@@ -128,7 +128,7 @@ public class Polynomial {
 	 * 
 	 * @param w
 	 *            frequencz in omega = 2*pi*f
-	 * @return
+	 * @return value
 	 */
 	public final Complex[] polyval(double[] w) {
 		double d = 1;
@@ -161,7 +161,7 @@ public class Polynomial {
 	 * 
 	 * @param p
 	 *            divide this by p
-	 * @param x
+	 * @param x location
 	 * @return complex result this/p at x
 	 */
 	public final Complex polydiv(Polynomial p, Complex x) {

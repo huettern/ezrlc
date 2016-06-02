@@ -25,7 +25,7 @@ public class DataEntry {
 	/**
 	 * Returns the first data entry
 	 * 
-	 * @return
+	 * @return return data entry 1
 	 */
 	public double getData1() {
 		return this.data1;
@@ -34,7 +34,7 @@ public class DataEntry {
 	/**
 	 * Returns the second data entry
 	 * 
-	 * @return
+	 * @return return data entry 1
 	 */
 	public double getData2() {
 		return this.data2;

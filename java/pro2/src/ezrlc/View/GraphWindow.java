@@ -45,7 +45,7 @@ public class GraphWindow implements ActionListener {
 	// ================================================================================
 	/**
 	 * New Graph window
-	 * @param controller
+	 * @param controller controller object
 	 */
 	public GraphWindow(Controller controller) {
 		this.controller = controller;

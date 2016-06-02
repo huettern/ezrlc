@@ -58,6 +58,7 @@ public class Controller {
 	 * Reads the inputfile given by the user
 	 * 
 	 * @param file
+	 *            input file
 	 */
 	public void loadFile(File file) {
 		// Read the file
@@ -100,7 +101,8 @@ public class Controller {
 
 	/**
 	 * Returns the currently loaded filename
-	 * @return
+	 * 
+	 * @return filename
 	 */
 	public String getFilename() {
 		return model.getFilename();
@@ -108,7 +110,9 @@ public class Controller {
 
 	/**
 	 * Delete a figure in the view
-	 * @param figure object of the figure
+	 * 
+	 * @param figure
+	 *            object of the figure
 	 */
 	public void deleteFigure(Figure figure) {
 		view.deleteFigure(figure);
@@ -119,7 +123,10 @@ public class Controller {
 	/**
 	 * removes a dataset in the model
 	 * 
+	 * @param plottype
+	 *            plottype
 	 * @param id
+	 *            id
 	 */
 	public void removeDataset(ENPlotType plottype, int id) {
 		model.removeDataset(plottype, id);
@@ -138,7 +145,7 @@ public class Controller {
 	/**
 	 * Creates a new equivalent circuit based on the given options
 	 * 
-	 * @param ops
+	 * @param ops options
 	 */
 	public void createEqCircuit(MCOptions ops) {
 		view.setupEqCircuitView();
@@ -175,7 +182,7 @@ public class Controller {
 	/**
 	 * Removes an equivalent circuit from the model
 	 * 
-	 * @param eqcID
+	 * @param eqcID eqcID
 	 */
 	public void removeEqCircuit(int eqcID) {
 		model.removeEqCircuit(eqcID);
@@ -196,7 +203,7 @@ public class Controller {
 	/**
 	 * Starts the optimizer of the eqcircuit
 	 * 
-	 * @param eqcID
+	 * @param eqcID eqcID
 	 */
 	public void optimizeEqCircuit(int eqcID) {
 		model.optimizeEqCircuit(eqcID);

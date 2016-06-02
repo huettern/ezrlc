@@ -64,7 +64,7 @@ public class Grid {
 	/**
 	 * Paints the Grid
 	 * 
-	 * @param g
+	 * @param g graphics object
 	 */
 	public void paint(Graphics g) {
 		this.evalSize();

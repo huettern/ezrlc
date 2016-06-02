@@ -278,7 +278,7 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 	/**
 	 * Sets the drop combo box items of the model list
 	 * 
-	 * @param modelIDs
+	 * @param modelIDs ids
 	 */
 	public void setModels(int[] modelIDs) {
 		String[] modelNames = new String[modelIDs.length];

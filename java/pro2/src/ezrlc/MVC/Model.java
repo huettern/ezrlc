@@ -310,17 +310,15 @@ public class Model extends Observable {
 	 * Parses the given Inputfile and adds a new RFData object
 	 * 
 	 * @param file
+	 *            file
 	 */
-	public UUID newInputFile(File file) {
+	public void newInputFile(File file) {
 		try {
 			rfDataFile = new RFData(file);
 			rfDataFile.parse();
 		} catch (Exception e) {
 			System.err.println("FATAL: Error in file parsing");
 		}
-		// setChanged();
-		// notifyObservers(UpdateEvent.FILE);
-		return null;
 	}
 
 	/**
@@ -350,7 +348,7 @@ public class Model extends Observable {
 	 * 
 	 * @param src
 	 *            Datasource (File or Model)
-	 * @param ec
+	 * @param ecID
 	 *            MCEqCircuit
 	 * @param measType
 	 *            RFData.MeasurementType
@@ -446,7 +444,10 @@ public class Model extends Observable {
 	/**
 	 * Removes a dataset by ID
 	 * 
+	 * @param plottype
+	 *            plottype
 	 * @param id
+	 *            id
 	 */
 	public void removeDataset(ENPlotType plottype, int id) {
 		if (plottype == ENPlotType.RECTANGULAR) {
@@ -463,6 +464,7 @@ public class Model extends Observable {
 	 * Creates a new equivalent circuit based on the given options
 	 * 
 	 * @param ops
+	 *            ops
 	 */
 	public void createEqCircuit(MCOptions ops) {
 		// Create worker, set data and start it
@@ -475,7 +477,7 @@ public class Model extends Observable {
 	/**
 	 * Returns the ID of the last created Model
 	 * 
-	 * @return
+	 * @return id
 	 */
 	public int getEQCID() {
 		return eqCircuits.size() - 1;
@@ -484,7 +486,7 @@ public class Model extends Observable {
 	/**
 	 * Returns the current state of the worker
 	 * 
-	 * @return
+	 * @return status
 	 */
 	public State getWorkerStatus() {
 		return worker.getState();
@@ -493,7 +495,7 @@ public class Model extends Observable {
 	/**
 	 * Returns the calculation worker
 	 * 
-	 * @return
+	 * @return worker
 	 */
 	public MCWorker getWorker() {
 		return worker;
@@ -504,6 +506,8 @@ public class Model extends Observable {
 	 * 
 	 * @param eqc
 	 *            Equivalent circuit that was generated
+	 * @param mode
+	 *            mode
 	 */
 	public void mcWorkerSuccess(MCEqCircuit eqc, MCWorker.WorkerMode mode) {
 		if (mode == WorkerMode.NORMAL) {
@@ -639,6 +643,7 @@ public class Model extends Observable {
 	 * Starts the optimizer of the eqcircuit
 	 * 
 	 * @param eqcID
+	 *            id
 	 */
 	public void optimizeEqCircuit(int eqcID) {
 		// Create worker, set data and start it

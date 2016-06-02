@@ -546,7 +546,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	/**
 	 * Sets the drop combo box items of the model list
 	 * 
-	 * @param modelIDs
+	 * @param modelIDs id array
 	 */
 	public void setModels(int[] modelIDs) {
 		String[] modelNames = new String[modelIDs.length];
