@@ -204,7 +204,7 @@ public class Model extends Observable {
 				break;
 			}
 			// get larger data size
-			int size = outdata.length > outdatacompare.length ? outdata.length : outdatacompare.length;
+			int size = outdata.length > outdatacompare.length ? outdatacompare.length : outdata.length;
 			double[] diff = new double[size];
 			for (int i = 0; i < size; i++) {
 				diff[i] = Math.abs(outdata[i] - outdatacompare[i]);
@@ -219,9 +219,9 @@ public class Model extends Observable {
 		}
 
 		double[] xdata = null;
-		if (nm.src == DataSource.FILE || nm.src == DataSource.COMPARE)
+		if (nm.src == DataSource.FILE)
 			xdata = rfDataFile.getfData();
-		if (nm.src == DataSource.MODEL)
+		if (nm.src == DataSource.MODEL || nm.src == DataSource.COMPARE)
 			xdata = eqCircuits.get(nm.eqCircuitID).getF();
 
 		// Now create the dataset and add it to the dataset list

@@ -443,7 +443,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		if (this.getSelectedButton(this.btngrpSource) == rdbtnCompare) {
 			nm.src = DataSource.COMPARE;
 			nm.eqCircuitID = Integer.parseInt(cbModelList.getSelectedItem().toString().split("( )")[1]);
-			nm.src_name = "Compare";
+			nm.src_name = "Compare " +cbModelList.getSelectedItem().toString();
 		}
 		// Measurement Tyoe
 		if (this.getSelectedButton(this.btngrpMeasType) == rdbtnS) {
