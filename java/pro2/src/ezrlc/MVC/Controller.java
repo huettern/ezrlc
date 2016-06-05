@@ -209,4 +209,12 @@ public class Controller {
 		model.optimizeEqCircuit(eqcID);
 	}
 
+	/**
+	 * Stops the worker and deletes all eqc related data
+	 */
+	public void killWorker(int eqcID) {
+		model.killWorker();
+		removeEqCircuit(eqcID);
+	}
+
 }

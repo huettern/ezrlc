@@ -142,7 +142,6 @@ public class RectangularPlot extends JPanel implements Observer {
 		// }
 		// fill datasets
 		for (Integer integer : dataSetIDs) {
-			System.out.println("Get set ID="+integer.intValue());
 			dataSet = model.getDataSet(integer.intValue());
 			dataSet.setAxis(this.horAxis, this.verAxis);
 			dataSet.setDataSetSettings(this.dataSetSettings.get(i));

@@ -21,6 +21,7 @@ import ezrlc.Plot.SmithChart.SmithChartNewMeasurement;
 import ezrlc.RFData.RFData;
 import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.Complex;
+import ezrlc.util.MathUtil;
 
 /**
  * Implements top level model functionality of the MVC framework
@@ -138,6 +139,7 @@ public class Model extends Observable {
 				break;
 			}
 		}
+		MathUtil.sanitize(outdata);
 
 		// Convert to Complex Modifier
 		if (nm.type == MeasurementType.S || nm.type == MeasurementType.Y || nm.type == MeasurementType.Z) {
@@ -568,7 +570,7 @@ public class Model extends Observable {
 	 *            ID to the circuit
 	 */
 	public void removeEqCircuit(int eqcID) {
-		this.eqCircuits.set(eqcID, null);
+		if(eqcID < eqCircuits.size()) this.eqCircuits.set(eqcID, null);
 		setChanged();
 		notifyObservers(UpdateEvent.REMOVE_EQC);
 	}
@@ -653,5 +655,13 @@ public class Model extends Observable {
 		worker.setRFDataSet(rfDataFile);
 		worker.setEQCircuit(eqCircuits.get(eqcID));
 		worker.start();
+	}
+
+	/**
+	 * Stops the worker and deletes all eqc related data
+	 */
+	public void killWorker() {
+		worker.stopWork();
+		worker = null;
 	}
 }

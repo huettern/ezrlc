@@ -38,6 +38,8 @@ public class MCWorker extends Thread {
 
 	private WorkerMode workerMode;
 
+	private boolean stopWorker = false;
+	
 	// ================================================================================
 	// Constructor
 	// ================================================================================
@@ -348,8 +350,10 @@ public class MCWorker extends Thread {
 	// Private methods
 	// ================================================================================
 	private void success(MCEqCircuit eqc) {
-		System.out.println("MCWorker " + workerName + " has successfully completed");
-		parentModel.mcWorkerSuccess(eqc, this.workerMode);
+		if(stopWorker == false) {
+			System.out.println("MCWorker " + workerName + " has successfully completed");
+			parentModel.mcWorkerSuccess(eqc, this.workerMode);
+		}
 	}
 
 	/**
@@ -460,6 +464,13 @@ public class MCWorker extends Thread {
 		circuits.get(7).setParameter(0, R); // R
 		circuits.get(7).setParameter(5, C); // C
 		circuits.get(7).setParameter(4, L); // L
+	}
+
+	/**
+	 * Stops the worker
+	 */
+	public void stopWork() {
+		this.stopWorker = true;
 	}
 
 }

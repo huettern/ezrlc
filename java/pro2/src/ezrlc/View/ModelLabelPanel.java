@@ -149,7 +149,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		pnlBtn.add(btnOptimize, 1);
 
 		btnOptimize.setEnabled(false);
-		btnDelete.setEnabled(false);
+		btnDelete.setEnabled(true);
 	}
 
 	/**
@@ -341,14 +341,16 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnDelete) {
-			controller.removeEqCircuit(eqcID);
+			if(modelPanelBuilt == true)
+				controller.removeEqCircuit(eqcID);
+			else
+				controller.killWorker(this.eqcID);
 		} else if (e.getSource() == btnOptimize) {
 			btnOptimize.setEnabled(false);
 			btnDelete.setEnabled(false);
 			title.setText("Optimizing Model...");
 			controller.optimizeEqCircuit(eqcID);
 		} else {
-			System.out.println("action");
 			tuner();
 		}
 	}

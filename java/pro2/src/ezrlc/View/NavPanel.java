@@ -416,6 +416,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 					iter.remove();
 				}
 			}
+			btnNewModel.setEnabled(true);
 			updateUI();
 		}
 		for (ModelLabelPanel modelLabelPanel : modelLabelPanels) {

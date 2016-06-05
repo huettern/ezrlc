@@ -465,4 +465,19 @@ public class MathUtil {
 			return false;
 	}
 
+	/**
+	 * Sanitizes a double array, meaning
+	 * - replace NaN by zero
+	 * - replace -infinity by -Double.MAX_VALUE
+	 * - replace infinity by Double.MAX_VALUE
+	 * @param outdata
+	 */
+	public static void sanitize(double[] outdata) {
+		for(int i = 0; i < outdata.length; i++) {
+			outdata[i] = outdata[i]==Double.NaN?0.0:outdata[i];
+			outdata[i] = outdata[i]==Double.NEGATIVE_INFINITY?(0.0):outdata[i];
+			outdata[i] = outdata[i]==Double.POSITIVE_INFINITY?(0.0):outdata[i];
+		}
+	}
+
 }
