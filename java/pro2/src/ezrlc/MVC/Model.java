@@ -622,7 +622,7 @@ public class Model extends Observable {
 	 *            id to the dataset
 	 */
 	private void updateRectPlotDataset(Integer i) {
-		if (plotDataSetList.get(i) != null) {
+		if (plotDataSetList.get(i) != null && plotDataSetList.get(i).getNM().src != DataSource.FILE) {
 			RectPlotNewMeasurement nm = plotDataSetList.get(i).getNM();
 			plotDataSetList.set(i, buildDataSetRaw(nm));
 		}
@@ -635,8 +635,10 @@ public class Model extends Observable {
 	 *            id to the dataset
 	 */
 	private void updateSmithPlotDataset(Integer i) {
-		SmithChartNewMeasurement nm = smithPlotDataSetList.get(i).getNM();
-		smithPlotDataSetList.set(i, buildSmithChartDataSetRaw(nm));
+		if (smithPlotDataSetList.get(i) != null && smithPlotDataSetList.get(i).getNM().src != DataSource.FILE) {
+			SmithChartNewMeasurement nm = smithPlotDataSetList.get(i).getNM();
+			smithPlotDataSetList.set(i, buildSmithChartDataSetRaw(nm));
+		}
 	}
 
 	/**
