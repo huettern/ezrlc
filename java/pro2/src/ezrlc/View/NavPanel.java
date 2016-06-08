@@ -167,11 +167,11 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		pnlPanel.setLayout(gbl_pnlPanel);
 
 		// IGAssist Button
-		btnIGAssist = new JButton("IGAssist");
+		btnIGAssist = new JButton("Overview");
 		btnIGAssist.setSelected(true);
 		GridBagConstraints gbc_btnIGAssist = new GridBagConstraints();
 		gbc_btnIGAssist.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnIGAssist.insets = new Insets(4, 4, 4, 5);
+		gbc_btnIGAssist.insets = new Insets(4, 4, 4, 0);
 		gbc_btnIGAssist.gridx = 0;
 		gbc_btnIGAssist.gridy = 0;
 		pnlPanel.add(btnIGAssist, gbc_btnIGAssist);
@@ -181,7 +181,7 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		btnFigure = new JButton("Figure");
 		btnFigure.setSelected(false);
 		GridBagConstraints gbc_btnFigure = new GridBagConstraints();
-		gbc_btnFigure.insets = new Insets(4, 2, 4, 4);
+		gbc_btnFigure.insets = new Insets(4, 0, 4, 4);
 		gbc_btnFigure.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnFigure.gridx = 1;
 		gbc_btnFigure.gridy = 0;
