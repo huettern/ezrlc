@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 
+import ezrlc.Model.DataSet;
+import ezrlc.Model.RectPlotNewMeasurement;
 import ezrlc.Plot.DataSetSettings;
 import ezrlc.util.MathUtil;
 
@@ -83,6 +85,14 @@ public class PlotDataSet {
 		this.y_span = this.y_max - this.y_min;
 		if (this.y_span == 0)
 			this.y_span = Double.MIN_VALUE;
+	}
+	
+	/**
+	 * Builds a new Rect plot data set based on a data set object
+	 * @param dataSet data set containing data and settings
+	 */
+	public PlotDataSet (DataSet dataSet) {
+		this(dataSet.getXData(), dataSet.getYData(), dataSet.getRNM());
 	}
 
 	// ================================================================================

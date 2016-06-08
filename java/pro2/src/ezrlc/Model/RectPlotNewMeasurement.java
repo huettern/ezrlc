@@ -1,10 +1,9 @@
-package ezrlc.Plot.RectPlot;
+package ezrlc.Model;
 
-import ezrlc.Controller.Controller;
-import ezrlc.Controller.Controller.DataSource;
 import ezrlc.RFData.RFData;
 import ezrlc.RFData.RFData.ComplexModifier;
 import ezrlc.RFData.RFData.MeasurementType;
+import ezrlc.util.DataSource;
 
 /**
  * Stores the new measurement options
@@ -15,7 +14,7 @@ public class RectPlotNewMeasurement {
 
 	public enum Unit {Linear, dB};
 	
-	public Controller.DataSource src;
+	public DataSource src;
 	public String src_name;
 	public int eqCircuitID;
 	public RFData.MeasurementType type;

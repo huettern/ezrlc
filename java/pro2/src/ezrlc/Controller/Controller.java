@@ -3,11 +3,10 @@ package ezrlc.Controller;
 import java.io.File;
 
 import ezrlc.Model.Model;
+import ezrlc.Model.RectPlotNewMeasurement;
+import ezrlc.Model.SmithChartNewMeasurement;
 import ezrlc.ModelCalculation.MCOptions;
 import ezrlc.Plot.Figure;
-import ezrlc.Plot.Figure.ENPlotType;
-import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
-import ezrlc.Plot.SmithChart.SmithChartNewMeasurement;
 import ezrlc.View.MainView;
 import ezrlc.View.WorkPanel.ViewType;
 
@@ -22,9 +21,7 @@ public class Controller {
 	// ================================================================================
 	// Public Data
 	// ================================================================================
-	public enum DataSource {
-		FILE, MODEL, COMPARE
-	};
+	
 
 	// ================================================================================
 	// Private Data
@@ -129,8 +126,8 @@ public class Controller {
 	 * @param id
 	 *            id
 	 */
-	public void removeDataset(ENPlotType plottype, int id) {
-		model.removeDataset(plottype, id);
+	public void removeDataset(int id) {
+		model.removeDataset(id);
 	}
 
 	/**

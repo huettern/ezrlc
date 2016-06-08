@@ -23,9 +23,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import ezrlc.Controller.Controller;
-import ezrlc.Controller.Controller.DataSource;
+import ezrlc.Model.SmithChartNewMeasurement;
 import ezrlc.Plot.DataSetSettings;
 import ezrlc.Plot.Figure;
+import ezrlc.util.DataSource;
 
 /**
  * Window to add a new measurement to the smithchart

@@ -27,11 +27,11 @@ import javax.swing.event.DocumentListener;
 
 import ezrlc.Controller.Controller;
 import ezrlc.Model.Model;
+import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.Plot.RectPlot.RectPlotAddMeasurementWindow;
 import ezrlc.Plot.RectPlot.RectPlotSettings;
 import ezrlc.Plot.RectPlot.RectPlotSettingsWindow;
 import ezrlc.Plot.RectPlot.RectangularPlot;
-import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.Plot.SmithChart.SmithChart;
 import ezrlc.Plot.SmithChart.SmithChartAddMeasurementWindow;
 import ezrlc.Plot.SmithChart.SmithChartSettings;
@@ -345,7 +345,7 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 			rectPlot.removeDataset(id);
 		if (this.plotType == ENPlotType.SMITH)
 			smithChart.removeDataset(id);
-		controller.removeDataset(this.plotType, id);
+		controller.removeDataset(id);
 	}
 
 	// ================================================================================
@@ -398,7 +398,7 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		// update data set labels
 		for (DataSetLabelPanel lbl : dataSetLabelPanels) {
 			// if data set doesnt exist remove panel
-			if (model.isDataset(this.plotType, lbl.getID()) == false) {
+			if (model.isDataset(lbl.getID()) == false) {
 				pnlDataSets.remove(lbl);
 				lbl = null;
 			}

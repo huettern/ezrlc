@@ -8,6 +8,8 @@ import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
 
+import ezrlc.Model.DataSet;
+import ezrlc.Model.SmithChartNewMeasurement;
 import ezrlc.Plot.DataSetSettings;
 import ezrlc.util.Complex;
 import ezrlc.util.PointD;
@@ -43,15 +45,6 @@ public class SmithChartDataSet {
 	// Constructors
 	// ================================================================================
 	/**
-	 * Creates a new SmithChart Dataset
-	 * 
-	 * @param data
-	 *            List of complex data
-	 * @param freq
-	 *            frequency points
-	 */
-
-	/**
 	 * * Creates a new SmithChart Dataset
 	 * 
 	 * @param data
@@ -63,7 +56,7 @@ public class SmithChartDataSet {
 	 * @param nm
 	 *            new measurement
 	 */
-	public SmithChartDataSet(SmithChartGrid grid, Complex[] data, double[] freq, SmithChartNewMeasurement nm) {
+	public SmithChartDataSet(double[] freq, Complex[] data,  SmithChartNewMeasurement nm) {
 		if (data.length != freq.length) {
 			System.out.println("FATAL(SmithChartDataSet): data size not equal freq size");
 			return;
@@ -75,9 +68,10 @@ public class SmithChartDataSet {
 		this.freq = new double[freq.length];
 		System.arraycopy(freq, 0, this.freq, 0, freq.length);
 		this.points = data.length;
-
-		// Save grid
-		this.grid = grid;
+	}
+	
+	public SmithChartDataSet (DataSet dataSet) {
+		this(dataSet.getXData(), dataSet.getYDataComplex(), dataSet.getSNM());
 	}
 
 	// ================================================================================

@@ -1,6 +1,6 @@
-package ezrlc.Plot.SmithChart;
+package ezrlc.Model;
 
-import ezrlc.Controller.Controller;
+import ezrlc.util.DataSource;
 
 /**
  * Holds The smith chart new measurement settings
@@ -9,7 +9,7 @@ import ezrlc.Controller.Controller;
  */
 public class SmithChartNewMeasurement {
 
-	public Controller.DataSource src;
+	public DataSource src;
 	public String src_name;
 	public int eqCircuitID;
 

@@ -22,12 +22,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import ezrlc.Controller.Controller;
-import ezrlc.Controller.Controller.DataSource;
+import ezrlc.Model.RectPlotNewMeasurement;
+import ezrlc.Model.RectPlotNewMeasurement.Unit;
 import ezrlc.Plot.Figure;
-import ezrlc.Plot.RectPlot.RectPlotNewMeasurement.Unit;
 import ezrlc.RFData.RFData.ComplexModifier;
 import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.View.JEngineerField;
+import ezrlc.util.DataSource;
 
 /**
  * Window to add a new measurement

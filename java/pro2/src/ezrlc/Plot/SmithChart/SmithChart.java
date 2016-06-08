@@ -12,6 +12,7 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import ezrlc.Model.Model;
+import ezrlc.Model.SmithChartNewMeasurement;
 import ezrlc.Plot.DataSetSettings;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;
@@ -62,7 +63,7 @@ public class SmithChart extends JPanel implements Observer {
 		int i = 0;
 		SmithChartDataSet set;
 		for (Integer id : dataSetIDs) {
-			set = model.getSmithChartDataSet(id);
+			set = new SmithChartDataSet(model.getDataSet(id));
 			set.setGrid(this.grid);
 			set.setDataSetSettings(this.dataSetSettings.get(i));
 			this.dataSets.set(i, set);

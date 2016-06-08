@@ -14,12 +14,13 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import ezrlc.Controller.Controller.DataSource;
 import ezrlc.Model.Model;
+import ezrlc.Model.RectPlotNewMeasurement;
 import ezrlc.Plot.DataSetSettings;
 import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.Plot.RectPlot.Grid.Orientation;
 import ezrlc.RFData.RFData.MeasurementType;
+import ezrlc.util.DataSource;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;
 
@@ -142,7 +143,7 @@ public class RectangularPlot extends JPanel implements Observer {
 		// }
 		// fill datasets
 		for (Integer integer : dataSetIDs) {
-			dataSet = model.getDataSet(integer.intValue());
+			dataSet = new PlotDataSet(model.getDataSet(integer.intValue()));
 			dataSet.setAxis(this.horAxis, this.verAxis);
 			dataSet.setDataSetSettings(this.dataSetSettings.get(i));
 			this.dataSets.set(i, dataSet);

@@ -12,14 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import ezrlc.Controller.Controller;
-import ezrlc.Controller.Controller.DataSource;
 import ezrlc.Model.Model;
 import ezrlc.Model.Model.UpdateEvent;
-import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
+import ezrlc.Model.RectPlotNewMeasurement;
+import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.Plot.RectPlot.RectPlotSettings;
 import ezrlc.Plot.RectPlot.RectangularPlot;
-import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.RFData.RFData.MeasurementType;
+import ezrlc.util.DataSource;
 import ezrlc.util.UIUtil;
 
 /**
