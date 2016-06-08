@@ -606,8 +606,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model11() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, p[4], p[3]);
-		Polynomial pd = new Polynomial(0, p[5] * p[4], p[5] * p[3] + p[4] * p[0], p[3] * p[0] + 1);
+		Polynomial pn = new Polynomial(0, 0, p[4]*p[0], p[3]*p[0]);
+		Polynomial pd = new Polynomial(0, p[5] * p[4]*p[0], p[5] * p[3]*p[0] + p[4], p[3] + p[0]);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
