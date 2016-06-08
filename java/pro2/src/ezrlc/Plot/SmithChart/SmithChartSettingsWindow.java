@@ -18,7 +18,7 @@ import javax.swing.JTabbedPane;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
-import ezrlc.MVC.Controller;
+import ezrlc.Controller.Controller;
 import ezrlc.Plot.Figure;
 import ezrlc.util.UIUtil;
 

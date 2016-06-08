@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import ezrlc.MVC.Controller;
+import ezrlc.Controller.Controller;
 import ezrlc.ModelCalculation.MCOptions;
 
 /**

@@ -24,9 +24,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import ezrlc.MVC.Controller;
-import ezrlc.MVC.Model;
-import ezrlc.MVC.Model.UpdateEvent;
+import ezrlc.Controller.Controller;
+import ezrlc.Model.Model;
+import ezrlc.Model.Model.UpdateEvent;
 import ezrlc.View.WorkPanel.ViewType;
 
 /**

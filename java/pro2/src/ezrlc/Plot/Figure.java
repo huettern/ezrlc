@@ -25,8 +25,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import ezrlc.MVC.Controller;
-import ezrlc.MVC.Model;
+import ezrlc.Controller.Controller;
+import ezrlc.Model.Model;
 import ezrlc.Plot.RectPlot.RectPlotAddMeasurementWindow;
 import ezrlc.Plot.RectPlot.RectPlotSettings;
 import ezrlc.Plot.RectPlot.RectPlotSettingsWindow;

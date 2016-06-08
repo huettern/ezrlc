@@ -11,7 +11,7 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import ezrlc.MVC.Model;
+import ezrlc.Model.Model;
 import ezrlc.Plot.DataSetSettings;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;

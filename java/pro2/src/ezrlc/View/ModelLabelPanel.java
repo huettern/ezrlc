@@ -18,8 +18,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import ezrlc.MVC.Controller;
-import ezrlc.MVC.Model;
+import ezrlc.Controller.Controller;
+import ezrlc.Model.Model;
 import ezrlc.ModelCalculation.MCEqCircuit;
 import ezrlc.ModelCalculation.MCEqCircuit.CircuitType;
 import ezrlc.util.UIUtil;

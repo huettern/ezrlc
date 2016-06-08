@@ -2,8 +2,8 @@ package ezrlc;
 
 import java.awt.EventQueue;
 
-import ezrlc.MVC.Controller;
-import ezrlc.MVC.Model;
+import ezrlc.Controller.Controller;
+import ezrlc.Model.Model;
 import ezrlc.View.MainView;
 
 /**

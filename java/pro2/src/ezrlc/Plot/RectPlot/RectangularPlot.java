@@ -14,11 +14,11 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import ezrlc.MVC.Controller.DataSource;
+import ezrlc.Controller.Controller.DataSource;
+import ezrlc.Model.Model;
 import ezrlc.Plot.DataSetSettings;
 import ezrlc.Plot.RectPlot.Axis.Scale;
 import ezrlc.Plot.RectPlot.Grid.Orientation;
-import ezrlc.MVC.Model;
 import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.MathUtil;
 import ezrlc.util.UIUtil;

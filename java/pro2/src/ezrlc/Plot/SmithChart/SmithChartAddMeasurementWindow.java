@@ -22,8 +22,8 @@ import javax.swing.MutableComboBoxModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import ezrlc.MVC.Controller;
-import ezrlc.MVC.Controller.DataSource;
+import ezrlc.Controller.Controller;
+import ezrlc.Controller.Controller.DataSource;
 import ezrlc.Plot.DataSetSettings;
 import ezrlc.Plot.Figure;
 

@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import ezrlc.MVC.Controller;
+import ezrlc.Controller.Controller;
 
 /**
  * File chooser dialug

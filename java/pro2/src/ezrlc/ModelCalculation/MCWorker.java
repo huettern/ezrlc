@@ -3,7 +3,7 @@ package ezrlc.ModelCalculation;
 import java.util.ArrayList;
 import java.util.List;
 
-import ezrlc.MVC.Model;
+import ezrlc.Model.Model;
 import ezrlc.ModelCalculation.MCEqCircuit.CircuitType;
 import ezrlc.RFData.RFData;
 import ezrlc.util.Complex;

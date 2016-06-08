@@ -1,7 +1,8 @@
-package ezrlc.MVC;
+package ezrlc.Controller;
 
 import java.io.File;
 
+import ezrlc.Model.Model;
 import ezrlc.ModelCalculation.MCOptions;
 import ezrlc.Plot.Figure;
 import ezrlc.Plot.Figure.ENPlotType;

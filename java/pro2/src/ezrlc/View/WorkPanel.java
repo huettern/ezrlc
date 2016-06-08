@@ -9,7 +9,7 @@ import java.util.Observer;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import ezrlc.MVC.Controller;
+import ezrlc.Controller.Controller;
 import ezrlc.Plot.Figure;
 import ezrlc.Plot.Figure.ENPlotType;
 

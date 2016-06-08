@@ -1,7 +1,7 @@
 package ezrlc.Plot.RectPlot;
 
-import ezrlc.MVC.Controller;
-import ezrlc.MVC.Controller.DataSource;
+import ezrlc.Controller.Controller;
+import ezrlc.Controller.Controller.DataSource;
 import ezrlc.RFData.RFData;
 import ezrlc.RFData.RFData.ComplexModifier;
 import ezrlc.RFData.RFData.MeasurementType;

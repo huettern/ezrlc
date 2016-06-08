@@ -15,7 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
-import ezrlc.MVC.Controller;
+import ezrlc.Controller.Controller;
 import ezrlc.Plot.Figure;
 import ezrlc.Plot.Figure.ENPlotType;
 import ezrlc.View.WorkPanel.ViewType;

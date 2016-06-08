@@ -1,6 +1,6 @@
 package ezrlc.Plot.SmithChart;
 
-import ezrlc.MVC.Controller;
+import ezrlc.Controller.Controller;
 
 /**
  * Holds The smith chart new measurement settings

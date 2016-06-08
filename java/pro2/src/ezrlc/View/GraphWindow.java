@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import ezrlc.MVC.Controller;
+import ezrlc.Controller.Controller;
 import ezrlc.Plot.Figure.ENPlotType;
 
 /**

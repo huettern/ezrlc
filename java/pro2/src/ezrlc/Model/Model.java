@@ -1,4 +1,4 @@
-package ezrlc.MVC;
+package ezrlc.Model;
 
 import java.io.File;
 import java.lang.Thread.State;
@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
 
-import ezrlc.MVC.Controller.DataSource;
+import ezrlc.Controller.Controller;
+import ezrlc.Controller.Controller.DataSource;
 import ezrlc.ModelCalculation.MCEqCircuit;
 import ezrlc.ModelCalculation.MCOptions;
 import ezrlc.ModelCalculation.MCWorker;

@@ -11,10 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import ezrlc.MVC.Controller;
-import ezrlc.MVC.Controller.DataSource;
-import ezrlc.MVC.Model;
-import ezrlc.MVC.Model.UpdateEvent;
+import ezrlc.Controller.Controller;
+import ezrlc.Controller.Controller.DataSource;
+import ezrlc.Model.Model;
+import ezrlc.Model.Model.UpdateEvent;
 import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
 import ezrlc.Plot.RectPlot.RectPlotSettings;
 import ezrlc.Plot.RectPlot.RectangularPlot;
