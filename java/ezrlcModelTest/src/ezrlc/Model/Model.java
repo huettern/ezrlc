@@ -5,23 +5,16 @@ import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.UUID;
 
-import ezrlc.Controller.Controller;
-import ezrlc.Controller.Controller.DataSource;
+import ezrlc.Model.RectPlotNewMeasurement.Unit;
 import ezrlc.ModelCalculation.MCEqCircuit;
 import ezrlc.ModelCalculation.MCOptions;
 import ezrlc.ModelCalculation.MCWorker;
 import ezrlc.ModelCalculation.MCWorker.WorkerMode;
-import ezrlc.Plot.Figure.ENPlotType;
-import ezrlc.Plot.RectPlot.PlotDataSet;
-import ezrlc.Plot.RectPlot.RectPlotNewMeasurement;
-import ezrlc.Plot.RectPlot.RectPlotNewMeasurement.Unit;
-import ezrlc.Plot.SmithChart.SmithChartDataSet;
-import ezrlc.Plot.SmithChart.SmithChartNewMeasurement;
 import ezrlc.RFData.RFData;
 import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.Complex;
+import ezrlc.util.DataSource;
 import ezrlc.util.MathUtil;
 
 /**
@@ -44,8 +37,8 @@ public class Model extends Observable {
 	// ================================================================================
 	private RFData rfDataFile;
 
-	private List<PlotDataSet> plotDataSetList = new ArrayList<PlotDataSet>();
-	private List<SmithChartDataSet> smithPlotDataSetList = new ArrayList<SmithChartDataSet>();
+	private List<DataSet> dataSets = new ArrayList<DataSet>();
+
 	private List<MCEqCircuit> eqCircuits = new ArrayList<MCEqCircuit>();
 
 	// Stores the plotDataSetList ids to the corresponding model id
@@ -65,9 +58,9 @@ public class Model extends Observable {
 	 * 
 	 * @param nm
 	 *            RectPlotNewMeasurement
-	 * @return PlotDataSet
+	 * @return DataSet
 	 */
-	private PlotDataSet buildDataSetRaw(RectPlotNewMeasurement nm) {
+	private DataSet buildDataSetRaw(RectPlotNewMeasurement nm) {
 		Complex[] data = null;
 		Complex[] datacomp = null;
 		double[] outdata = null;
@@ -228,7 +221,7 @@ public class Model extends Observable {
 			xdata = eqCircuits.get(nm.eqCircuitID).getF();
 
 		// Now create the dataset and add it to the dataset list
-		PlotDataSet dataSet = new PlotDataSet(xdata, outdata, nm);
+		DataSet dataSet = new DataSet(xdata, outdata, nm);
 		return dataSet;
 	}
 
@@ -240,11 +233,11 @@ public class Model extends Observable {
 	 * @return id to access the dataset
 	 */
 	private int buildDataSet(RectPlotNewMeasurement nm) {
-		PlotDataSet dataSet = buildDataSetRaw(nm);
-		this.plotDataSetList.add(dataSet);
+		DataSet dataSet = buildDataSetRaw(nm);
+		this.dataSets.add(dataSet);
 
 		// Return the number in the list
-		int id = this.plotDataSetList.size() - 1;
+		int id = this.dataSets.size() - 1;
 
 		// save id in list to associate it to its source
 		if (nm.src == DataSource.MODEL) {
@@ -259,22 +252,22 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * Builds a new smith chart dataset with the given settings
+	 * Builds a new dataset with the given settings for smith chart use
 	 * 
 	 * @param nm
 	 *            SmithChartNewMeasurement
-	 * @return SmithChartDataSet
+	 * @return DataSet
 	 */
-	private SmithChartDataSet buildSmithChartDataSetRaw(SmithChartNewMeasurement nm) {
+	private DataSet buildSmithChartDataSetRaw(SmithChartNewMeasurement nm) {
 		Complex[] data = null;
-		SmithChartDataSet set = null;
+		DataSet set = null;
 		// Get Data
 		if (nm.src == DataSource.FILE) {
 			data = rfDataFile.getzData();
-			set = new SmithChartDataSet(null, data, rfDataFile.getfData(), nm);
+			set = new DataSet(rfDataFile.getfData(), data, nm);
 		} else if (nm.src == DataSource.MODEL) {
 			data = eqCircuits.get(nm.eqCircuitID).getZ();
-			set = new SmithChartDataSet(null, data, eqCircuits.get(nm.eqCircuitID).getF(), nm);
+			set = new DataSet(eqCircuits.get(nm.eqCircuitID).getF(), data, nm);
 		}
 		return set;
 	}
@@ -287,12 +280,12 @@ public class Model extends Observable {
 	 * @return ID in the list of smith chart datasets
 	 */
 	private int buildSmithChartDataSet(SmithChartNewMeasurement nm) {
-		SmithChartDataSet set = buildSmithChartDataSetRaw(nm);
+		DataSet set = buildSmithChartDataSetRaw(nm);
 
 		// Create set
-		this.smithPlotDataSetList.add(set);
+		this.dataSets.add(set);
 
-		int id = this.smithPlotDataSetList.size() - 1;
+		int id = this.dataSets.size() - 1;
 
 		if (nm.src == DataSource.MODEL) {
 			// save id in list to associate it to its source
@@ -336,37 +329,14 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * Adds a new Smithchart dataset in the model
+	 * Adds a new dataset in the model to be used in a smithchart
 	 * 
 	 * @param nm
 	 *            SmithChartNewMeasurement
-	 * @return unique data identifier of the plotdataset
+	 * @return unique data identifier of the dataset
 	 */
 	public int createDataset(SmithChartNewMeasurement nm) {
 		return this.buildSmithChartDataSet(nm);
-	}
-
-	/**
-	 * Adds a new Dataset in the model
-	 * 
-	 * @param src
-	 *            Datasource (File or Model)
-	 * @param ecID
-	 *            MCEqCircuit
-	 * @param measType
-	 *            RFData.MeasurementType
-	 * @param cpxMod
-	 *            RFData.ComplexModifier
-	 * @return unique data identifier of the plotdataset
-	 */
-	public int createDataset(Controller.DataSource src, int ecID, RFData.MeasurementType measType,
-			RFData.ComplexModifier cpxMod) {
-		RectPlotNewMeasurement nm = new RectPlotNewMeasurement();
-		nm.src = src;
-		nm.eqCircuitID = ecID;
-		nm.type = measType;
-		nm.cpxMod = cpxMod;
-		return this.buildDataSet(nm);
 	}
 
 	/**
@@ -385,19 +355,8 @@ public class Model extends Observable {
 	 *            plot id
 	 * @return plot dataset
 	 */
-	public PlotDataSet getDataSet(int id) {
-		return this.plotDataSetList.get(id);
-	}
-
-	/**
-	 * Get a dataset by its ID
-	 * 
-	 * @param id
-	 *            plot id
-	 * @return plot dataset
-	 */
-	public SmithChartDataSet getSmithChartDataSet(int id) {
-		return this.smithPlotDataSetList.get(id);
+	public DataSet getDataSet(int id) {
+		return this.dataSets.get(id);
 	}
 
 	/**
@@ -415,50 +374,29 @@ public class Model extends Observable {
 	/**
 	 * Checks if the given id is a dataset
 	 * 
-	 * @param plottype
-	 *            ploy type
 	 * @param id
 	 *            plot data set id
 	 * @return true, if id exists, false if not
 	 */
-	public Boolean isDataset(ENPlotType plottype, int id) {
-		if (plottype == ENPlotType.RECTANGULAR) {
-			try {
-				if (this.plotDataSetList.get(id) != null)
-					return true;
-				else
-					return false;
-			} catch (Exception e) {
+	public Boolean isDataset(int id) {
+		try {
+			if (dataSets.get(id) != null)
+				return true;
+			else
 				return false;
-			}
-		} else if (plottype == ENPlotType.SMITH) {
-			try {
-				if (this.smithPlotDataSetList.get(id) != null)
-					return true;
-				else
-					return false;
-			} catch (Exception e) {
-				return false;
-			}
+		} catch (Exception e) {
+			return false;
 		}
-		return false;
 	}
 
 	/**
 	 * Removes a dataset by ID
 	 * 
-	 * @param plottype
-	 *            plottype
 	 * @param id
 	 *            id
 	 */
-	public void removeDataset(ENPlotType plottype, int id) {
-		if (plottype == ENPlotType.RECTANGULAR) {
-			// remove set from list
-			this.plotDataSetList.set(id, null);
-		} else if (plottype == ENPlotType.SMITH) {
-			this.smithPlotDataSetList.set(id, null);
-		}
+	public void removeDataset(int id) {
+		dataSets.set(id, null);
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -521,13 +459,9 @@ public class Model extends Observable {
 			notifyObservers(UpdateEvent.NEW_EQC);
 		} else if (mode == WorkerMode.OPT_ONLY) {
 			// update plots
-			for (int i = 0; i < plotDataSetList.size(); i++) {
-				if (plotDataSetList.get(i) != null)
-					updateRectPlotDataset(i);
-			}
-			for (int i = 0; i < smithPlotDataSetList.size(); i++) {
-				if (smithPlotDataSetList.get(i) != null)
-					updateSmithPlotDataset(i);
+			for (int i = 0; i < dataSets.size(); i++) {
+				if (dataSets.get(i) != null)
+					updateDataset(i);
 			}
 			setChanged();
 			notifyObservers(UpdateEvent.CHANGE_EQC);
@@ -571,7 +505,8 @@ public class Model extends Observable {
 	 *            ID to the circuit
 	 */
 	public void removeEqCircuit(int eqcID) {
-		if(eqcID < eqCircuits.size()) this.eqCircuits.set(eqcID, null);
+		if (eqcID < eqCircuits.size())
+			this.eqCircuits.set(eqcID, null);
 		setChanged();
 		notifyObservers(UpdateEvent.REMOVE_EQC);
 	}
@@ -605,42 +540,30 @@ public class Model extends Observable {
 	public void updateEqcParams(int eqcID, double[] parameters) {
 		eqCircuits.get(eqcID).setParameters(parameters);
 		// update the associated plots
-		for (int i = 0; i < plotDataSetList.size(); i++) {
-			updateRectPlotDataset(i);
-		}
-		// for (Integer i : eqCircuitRectPlotIDs.get(eqcID)) {
-		// updateRectPlotDataset(i);
-		// }
-		for (Integer i : eqCircuitSmithPlotIDs.get(eqcID)) {
-			updateSmithPlotDataset(i);
+		for (int i = 0; i < dataSets.size(); i++) {
+			updateDataset(i);
 		}
 		setChanged();
 		notifyObservers(UpdateEvent.CHANGE_EQC);
 	}
 
 	/**
-	 * Update a plot dataset
+	 * Update a dataset
 	 * 
 	 * @param i
 	 *            id to the dataset
 	 */
-	private void updateRectPlotDataset(Integer i) {
-		if (plotDataSetList.get(i) != null && plotDataSetList.get(i).getNM().src != DataSource.FILE) {
-			RectPlotNewMeasurement nm = plotDataSetList.get(i).getNM();
-			plotDataSetList.set(i, buildDataSetRaw(nm));
-		}
-	}
-
-	/**
-	 * Update a plot dataset
-	 * 
-	 * @param i
-	 *            id to the dataset
-	 */
-	private void updateSmithPlotDataset(Integer i) {
-		if (smithPlotDataSetList.get(i) != null && smithPlotDataSetList.get(i).getNM().src != DataSource.FILE) {
-			SmithChartNewMeasurement nm = smithPlotDataSetList.get(i).getNM();
-			smithPlotDataSetList.set(i, buildSmithChartDataSetRaw(nm));
+	private void updateDataset(Integer i) {
+		if(dataSets.get(i).isRectPlotDataSet()) {
+			if (dataSets.get(i) != null && dataSets.get(i).getRNM().src != DataSource.FILE) {
+				RectPlotNewMeasurement nm = dataSets.get(i).getRNM();
+				dataSets.set(i, buildDataSetRaw(nm));
+			}
+		} else {
+			if (dataSets.get(i) != null && dataSets.get(i).getSNM().src != DataSource.FILE) {
+				SmithChartNewMeasurement nm = dataSets.get(i).getSNM();
+				dataSets.set(i, buildSmithChartDataSetRaw(nm));
+			}
 		}
 	}
 
