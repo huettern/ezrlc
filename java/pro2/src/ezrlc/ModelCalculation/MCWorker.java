@@ -32,7 +32,6 @@ public class MCWorker extends Thread {
 	private Thread t;
 	private String workerName;
 
-	private RFData rfData;
 	private MCOptions ops;
 	private MCEqCircuit eqCircuit;
 
@@ -51,15 +50,6 @@ public class MCWorker extends Thread {
 	// ================================================================================
 	// Public methods
 	// ================================================================================
-	/**
-	 * Set the data set to which the model should be created
-	 * 
-	 * @param set data set
-	 */
-	public void setRFDataSet(RFData set) {
-		rfData = set;
-	}
-
 	/**
 	 * Sets the model creation options
 	 * 
@@ -105,6 +95,7 @@ public class MCWorker extends Thread {
 	 */
 	public void run() {
 		// Data
+		RFData rfData = parentModel.getRFData();
 		// Results of analytical solver
 		List<MCEqCircuit> solverCircuits;
 		// Results of the three branches

@@ -410,7 +410,6 @@ public class Model extends Observable {
 	public void createEqCircuit(MCOptions ops) {
 		// Create worker, set data and start it
 		worker = new MCWorker(this, "MCWorker-1");
-		worker.setRFDataSet(rfDataFile);
 		worker.setMCOptions(ops);
 		worker.start();
 	}
@@ -576,7 +575,6 @@ public class Model extends Observable {
 	public void optimizeEqCircuit(int eqcID) {
 		// Create worker, set data and start it
 		worker = new MCWorker(this, "MCWorker-EQCOptimizer-" + eqcID);
-		worker.setRFDataSet(rfDataFile);
 		worker.setEQCircuit(eqCircuits.get(eqcID));
 		worker.start();
 	}
@@ -587,5 +585,9 @@ public class Model extends Observable {
 	public void killWorker() {
 		worker.stopWork();
 		worker = null;
+	}
+	
+	public RFData getRFData() {
+		return this.rfDataFile;
 	}
 }
