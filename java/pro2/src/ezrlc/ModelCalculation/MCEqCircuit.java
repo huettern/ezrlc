@@ -606,8 +606,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model11() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, p[4], p[3]);
-		Polynomial pd = new Polynomial(0, p[5] * p[4], p[5] * p[3] + p[4] * p[0], p[3] * p[0] + 1);
+		Polynomial pn = new Polynomial(0, 0, p[4]*p[0], p[3]*p[0]);
+		Polynomial pd = new Polynomial(0, p[5] * p[4]*p[0], p[5] * p[3]*p[0] + p[4], p[3] + p[0]);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -686,9 +686,10 @@ public class MCEqCircuit implements Runnable {
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
+			Complex Yc0 = Zc0.reciprocal();
 			Complex Zl = new Complex(0, wvector[i] * l);
 			Complex Zr0 = new Complex(r0 * (1 + Math.pow(wvector[i] / w0, a)), 0);
-			res[i] = Complex.add(Complex.div(new Complex(1, 0), Complex.add(Zc0, Complex.div(new Complex(1, 0), Zr0))),
+			res[i] = Complex.add(Complex.div(new Complex(1, 0), Complex.add(Yc0, Complex.div(new Complex(1, 0), Zr0))),
 					Zl);
 		}
 		return res;
