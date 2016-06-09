@@ -709,8 +709,9 @@ public class MCEqCircuit implements Runnable {
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
-			Complex Zr1 = new Complex(r1 * (1 + Math.pow(wvector[i] / w0, a)), 0);
-			res[i] = Complex.add(Complex.div(new Complex(1, 0), Complex.add(Zc0, new Complex(1 / r0, 0))), Zr1);
+			Complex Zr0 = new Complex(r0 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+			Complex Yc0 = Zc0.reciprocal(); 
+			res[i] = Complex.add(Complex.div(new Complex(1, 0), Complex.add(Yc0, new Complex(1 / r0, 0))), Zr0);
 		}
 		return res;
 	}
@@ -797,7 +798,7 @@ public class MCEqCircuit implements Runnable {
 	private Complex[] model20() {
 		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
 		double a = this.parameters[2]+Double.MIN_VALUE;
-		double r1 = this.parameters[3]+Double.MIN_VALUE;
+		double r0 = this.parameters[0]+Double.MIN_VALUE;
 		double l = this.parameters[4]+Double.MIN_VALUE;
 		double c0 = this.parameters[5]+Double.MIN_VALUE;
 		double c1 = this.parameters[6]+Double.MIN_VALUE;
@@ -806,9 +807,10 @@ public class MCEqCircuit implements Runnable {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
 			Complex Zc1 = new Complex(0, -1 / (wvector[i] * c1));
 			Complex Zl = new Complex(0, wvector[i] * l);
-			Complex Zr0 = new Complex(r1 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+			Complex Zr0 = new Complex(r0 * (1 + Math.pow(wvector[i] / w0, a)), 0);
+			Complex Yc0=Zc0.reciprocal();
 			res[i] = Complex.div(new Complex(1, 0),
-					Complex.add(Complex.div(new Complex(1, 0), Complex.add(Complex.add(Zr0, Zc0), Zl)), Zc1));
+					Complex.add(Complex.div(new Complex(1, 0), Complex.add(Complex.add(Zr0, Zc1), Zl)), Yc0));
 		}
 		return res;
 	}
