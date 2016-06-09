@@ -315,7 +315,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		if (c0EditableLUT[ordinal])
 			p[5] = txtC0.getValue();
 		if (c1EditableLUT[ordinal])
-			p[6] = txtC0.getValue();
+			p[6] = txtC1.getValue();
 		parameters = p;
 	}
 
