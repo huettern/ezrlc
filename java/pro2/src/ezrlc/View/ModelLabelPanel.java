@@ -58,20 +58,27 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	private int eqcID;
 	private CircuitType circuitType;
 
-	private final boolean[] r0EditableLUT = { true, true, true, true, true, true, true, true, true, true, true, true,
-			true, true, true, true, true, true, true, true, };
-	private final boolean[] f0EditableLUT = { false, false, false, false, false, false, false, false, false, false,
-			false, false, false, true, true, true, true, true, true, true, true };
-	private final boolean[] alphaEditableLUT = { false, false, false, false, false, false, false, false, false, false,
-			false, false, false, true, true, true, true, true, true, true, true };
-	private final boolean[] r1EditableLUT = { false, false, false, false, false, false, false, false, true, true, true,
-			true, false, false, false, false, true, true, true, true, false };
-	private final boolean[] lEditableLUT = { true, true, false, false, true, true, true, true, false, true, true, true,
-			true, true, true, true, false, true, true, true, true };
-	private final boolean[] c0EditableLUT = { false, false, true, true, true, true, true, true, true, true, true, true,
-			true, true, true, true, true, true, true, true, true, };
-	private final boolean[] c1EditableLUT = { false, false, false, false, false, false, false, false, false, false,
-			false, false, true, false, false, false, false, false, false, false, true };
+	private final boolean[] r0EditableLUT = 	
+		{ true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  
+		  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true  };
+	private final boolean[] f0EditableLUT = 	
+		{ false, false, false, false, false, false, false, false, false, false, 
+		  false, false, false, true,  true,  true,  true,  true,  true,  true,  true  };
+	private final boolean[] alphaEditableLUT = 	
+		{ false, false, false, false, false, false, false, false, false,  false, 
+		  false, false, false, true,  true,  true,  true,  true,  true,  true,  true  };
+	private final boolean[] r1EditableLUT = 	
+		{ false, false, false, false, false, false, false, false, true,  true,
+		  true,  true,  false, false, false, false, true,  true,  true,  true,  false };
+	private final boolean[] lEditableLUT = 		
+		{ true,  true,  false, false, true,  true,  true,  true,  false, true, 
+		  true,  true,  true,  true,  true,  true,  false, true,  true,  true,  true  };
+	private final boolean[] c0EditableLUT = 	
+		{ false, false, true,  true,  true,  true,  true,  true,  true,  true, 
+		  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true  };
+	private final boolean[] c1EditableLUT = 	
+		{ false, false, false, false, false, false, false, false, false, false, 
+		  false, false, true,  false, false, false, false, false, false, false, true  };
 
 	// ================================================================================
 	// Constructors
@@ -192,7 +199,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		add(paramPanel, gbc);
-
+		
 		// Create Parameters
 		int yctr = 1;
 		if (r0EditableLUT[ordinal]) {
@@ -315,7 +322,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		if (c0EditableLUT[ordinal])
 			p[5] = txtC0.getValue();
 		if (c1EditableLUT[ordinal])
-			p[6] = txtC0.getValue();
+			p[6] = txtC1.getValue();
 		parameters = p;
 	}
 
