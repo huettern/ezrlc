@@ -553,6 +553,7 @@ public class Model extends Observable {
 	 *            id to the dataset
 	 */
 	private void updateDataset(Integer i) {
+		if(dataSets.get(i) == null) return;
 		if(dataSets.get(i).isRectPlotDataSet()) {
 			if (dataSets.get(i) != null && dataSets.get(i).getRNM().src != DataSource.FILE) {
 				RectPlotNewMeasurement nm = dataSets.get(i).getRNM();
