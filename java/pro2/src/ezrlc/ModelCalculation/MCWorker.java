@@ -153,6 +153,17 @@ public class MCWorker extends Thread {
 			userCircuits.get(userCircuits.size() - 1).setZ0(rref);
 		}
 
+		// ----------------------------------------
+		// if manual select, stop here
+		// ----------------------------------------
+		if (ops.modelAutoSelect == false) {
+			MCEqCircuit eqc = createManualCircuit();
+			eqc.setWVector(w);
+			eqc.setOps(ops);
+			success(eqc);
+			return;
+		}
+		
 		// Create circuit list for analytical solver
 		CircuitType[] solverCircuitTypes = { CircuitType.MODEL0, CircuitType.MODEL1, CircuitType.MODEL2,
 				CircuitType.MODEL3, CircuitType.MODEL4, CircuitType.MODEL5, CircuitType.MODEL6, CircuitType.MODEL7 };
@@ -188,16 +199,7 @@ public class MCWorker extends Thread {
 		// Generate rank of equivalent circuits
 		ArrayList<MCEqCircuit> sortedList = MCRank.sortByErrorZAbs(ys, solverCircuits);
 
-		// ----------------------------------------
-		// Check which mode is requested
-		// ----------------------------------------
-		if (ops.modelAutoSelect == false) {
-			MCEqCircuit eqc = createManualCircuit();
-			eqc.setWVector(w);
-			eqc.setOps(ops);
-			success(eqc);
-			return;
-		}
+		
 
 		int min = ops.nElementsMin;
 		int max = ops.nElementsMax;
