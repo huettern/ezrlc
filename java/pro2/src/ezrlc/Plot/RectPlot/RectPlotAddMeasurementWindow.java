@@ -41,7 +41,6 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	// ================================================================================
 	// Local Variables
 	// ================================================================================
-	private Controller controller;
 	private Figure figure;
 
 	private JDialog dialog;
@@ -82,10 +81,9 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	 *            figure object
 	 */
 	public RectPlotAddMeasurementWindow(Controller controller, Figure fig) {
-		this.controller = controller;
 		this.figure = fig;
 
-		builtRectPlotAddMeasurementWindow();
+		builtRectPlotAddMeasurementWindow(controller, fig);
 	}
 
 	// ================================================================================
@@ -94,7 +92,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	/**
 	 * built the whole Window for the reactangular plot to add measurements
 	 */
-	private void builtRectPlotAddMeasurementWindow() {
+	private void builtRectPlotAddMeasurementWindow(Controller controller, Figure fig) {
 		dialog = new JDialog(controller.getMainView());
 		dialog.setResizable(false);
 		dialog.setTitle("Add Measurement");

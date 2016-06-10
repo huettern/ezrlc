@@ -32,7 +32,6 @@ import ezrlc.View.JEngineerField;
  */
 public class RectPlotSettingsWindow implements ActionListener {
 
-	private Controller controller;
 	private Figure figure;
 
 	private JDialog dialog;
@@ -58,13 +57,12 @@ public class RectPlotSettingsWindow implements ActionListener {
 	 *            figure object
 	 */
 	public RectPlotSettingsWindow(Controller controller, Figure fig) {
-		this.controller = controller;
 		this.figure = fig;
 
-		builtRectPlotSettingsWindow();
+		builtRectPlotSettingsWindow(controller, fig);
 	}
 
-	private void builtRectPlotSettingsWindow() {
+	private void builtRectPlotSettingsWindow(Controller controller, Figure fig) {
 		dialog = new JDialog(controller.getMainView());
 		dialog.setResizable(false);
 		dialog.setTitle("Graph Settings");
