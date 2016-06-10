@@ -711,7 +711,7 @@ public class MCEqCircuit implements Runnable {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
 			Complex Zr0 = new Complex(r0 * (1 + Math.pow(wvector[i] / w0, a)), 0);
 			Complex Yc0 = Zc0.reciprocal(); 
-			res[i] = Complex.add(Complex.div(new Complex(1, 0), Complex.add(Yc0, new Complex(1 / r0, 0))), Zr0);
+			res[i] = Complex.add(Complex.div(new Complex(1, 0), Complex.add(Yc0, new Complex(1 / r1, 0))), Zr0);
 		}
 		return res;
 	}
