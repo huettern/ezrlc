@@ -1,5 +1,7 @@
 package ezrlc.ModelCalculation;
 
+import java.util.Arrays;
+
 import org.apache.commons.math3.analysis.MultivariateFunction;
 
 import ezrlc.util.Complex;
@@ -100,6 +102,7 @@ public class MCErrorSum implements MultivariateFunction {
 		}
 		// calc error
 		double error = MCErrorSum.getError(magmeas, magS);
+//		System.out.println(Thread.currentThread().getName() + ": params: " +Arrays.toString(params) +"error="+error);
 		return error;
 	}
 

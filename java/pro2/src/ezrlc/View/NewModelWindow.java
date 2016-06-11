@@ -574,7 +574,7 @@ public class NewModelWindow implements ActionListener {
 
 		// Check values
 		parseError = Errors.None;
-		if (!ops.nElementsMaxAuto && !ops.nElementsMinAuto) {
+		if (!ops.nElementsMaxAuto || !ops.nElementsMinAuto) {
 			if (ops.nElementsMax < ops.nElementsMin) {
 				parseError = Errors.CompMaxSmallerMin;
 				return null;

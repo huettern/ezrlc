@@ -1,5 +1,7 @@
 package ezrlc.ModelCalculation;
 
+import java.util.Arrays;
+
 import org.apache.commons.math3.analysis.MultivariateFunction;
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.optim.InitialGuess;
@@ -45,7 +47,7 @@ public class MCEqCircuit implements Runnable {
 
 	private double[] wvector;
 
-	private double z0 = 50.0;
+	private double z0;
 
 	// Used for threadded optimizing
 	private Complex[] ys;
@@ -90,7 +92,8 @@ public class MCEqCircuit implements Runnable {
 	public MCEqCircuit(CircuitType circuitType, double[] params) {
 		this.circuitType = circuitType;
 		initOptimizer();
-		System.arraycopy(params, 0, parameters, 0, params.length);
+		parameters = new double[7];
+		System.arraycopy(params, 0, this.parameters, 0, params.length);
 	}
 
 	// ================================================================================
@@ -399,7 +402,6 @@ public class MCEqCircuit implements Runnable {
 		errorFunction = new MCErrorSum(ys, this);
 		optimum = null;
 		try {
-			System.out.println("Starting Optimizer on Thread" + Thread.currentThread().getName());
 			optimum = optimizer.optimize(new MaxEval(100000), new ObjectiveFunction(errorFunction), GoalType.MINIMIZE,
 					new InitialGuess(shortParameters), new NelderMeadSimplex(optStep));
 		} catch (TooManyEvaluationsException ex) {
@@ -407,7 +409,6 @@ public class MCEqCircuit implements Runnable {
 		}
 		// save new parameters
 		parameters = MCUtil.topo2Param(circuitType, optimum.getPoint());
-		System.out.println("Optimizer done on Thread" + Thread.currentThread().getName());
 	}
 
 	/**

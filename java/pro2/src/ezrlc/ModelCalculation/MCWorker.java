@@ -79,7 +79,6 @@ public class MCWorker extends Thread {
 	 * Starts the thread
 	 */
 	public void start() {
-		System.out.println("Starting " + workerName);
 		if (t == null) {
 			t = new Thread(this, workerName);
 			t.start();
@@ -115,15 +114,14 @@ public class MCWorker extends Thread {
 		// ----------------------------------------
 		// get necessary data
 		double[] f = rfData.getfData();
-		Complex[] s = rfData.getSData(50);
+		Complex[] s;
 		Complex[] z = rfData.getzData();
 
 		// S Scaler
-		double rref = MCSScaler.scale(s);
+		double rref = MCSScaler.scale(rfData.getSData(50));
 
 		// Get new S Data
 		s = rfData.getSData(rref);
-		// s = rfData.getSData(50.0);
 
 		// if mode is optimize only, do it now
 		if (workerMode == WorkerMode.OPT_ONLY) {
@@ -308,9 +306,23 @@ public class MCWorker extends Thread {
 		// Sort them
 		rank = MCRank.sortByErrorZAbs(yz, rank, 1);
 
-		// Done doing magic
-		rank.get(0).setOps(ops);
-		success(rank.get(0));
+		// Done doing magic, wait for all threads to complete
+		try {
+			t2_0.join();
+			t2_1.join();
+			if (do3ElementOptimize) {
+				t1_0.join();
+				t1_1.join();
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// create new model for thread safety
+		MCEqCircuit best = new MCEqCircuit(rank.get(0).getCircuitType(), rank.get(0).getParameters());
+		best.setOps(ops);
+		best.setWVector(w);
+		best.setZ0(rref);
+		success(best);
 	}
 
 	/**
@@ -344,7 +356,6 @@ public class MCWorker extends Thread {
 	// ================================================================================
 	private void success(MCEqCircuit eqc) {
 		if(stopWorker == false) {
-			System.out.println("MCWorker " + workerName + " has successfully completed");
 			parentModel.mcWorkerSuccess(eqc, this.workerMode);
 		}
 	}

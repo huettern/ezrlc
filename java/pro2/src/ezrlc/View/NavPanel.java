@@ -329,7 +329,6 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 		// New model button disable
 		btnNewModel.setEnabled(true);
 		btnNewModel.setToolTipText("");
-		updateUI();
 	}
 
 	// ================================================================================
@@ -419,9 +418,11 @@ public class NavPanel extends JPanel implements ActionListener, Observer {
 			btnNewModel.setEnabled(true);
 			updateUI();
 		}
-		for (ModelLabelPanel modelLabelPanel : modelLabelPanels) {
-			if (modelLabelPanel != null)
-				modelLabelPanel.update(o, arg);
+		if (arg == UpdateEvent.CHANGE_EQC || arg == UpdateEvent.NEW_EQC) {
+			for (ModelLabelPanel modelLabelPanel : modelLabelPanels) {
+				if (modelLabelPanel != null)
+					modelLabelPanel.update(o, arg);
+			}
 		}
 	}
 
