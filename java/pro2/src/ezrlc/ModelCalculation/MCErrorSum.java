@@ -77,15 +77,23 @@ public class MCErrorSum implements MultivariateFunction {
 	 * Returns the Error sum
 	 * 
 	 * @param measured
-	 *            measured data
+	 *            measured data (abs)
 	 * @param simulated
-	 *            simulated data
+	 *            simulated data (abs)
 	 * @return error
 	 */
 	public static final double getError(double[] measured, double[] simulated) {
 		return leastSquare(measured, simulated);
 	}
-	
+	/**
+	 * Returns the Error sum
+	 * 
+	 * @param measured
+	 *            measured data (Complex)
+	 * @param simulated
+	 *            simulated data (Complex)
+	 * @return error
+	 */
 	public static final double getError(Complex[] measured, Complex[] simulated) {
 		return leastSquare(measured, simulated);
 	}
