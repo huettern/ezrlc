@@ -72,12 +72,12 @@ public class MCUtil {
 		if (format == DATA_FORMAT.OMEGA)
 			mul = 2.0 * Math.PI;
 
-		double wMin = mul * ops.fMin;
+		double wMin = mul * ops.fMin+Double.MIN_VALUE;
 		double wMax = mul * ops.fMax;
 		if (ops.fMaxAuto)
 			wMax = Double.MAX_VALUE;
 		if (ops.fMinAuto)
-			wMin = -Double.MAX_VALUE;
+			wMin = Double.MIN_VALUE;
 
 		double[] w = new double[f.length];
 		for (int ctr = 0; ctr < w.length; ctr++) {
@@ -132,12 +132,12 @@ public class MCUtil {
 	 */
 	public static final double[] applyMCOpsToData(MCOptions ops, double[] f, double[] data) {
 		// conver f to w
-		double wMin = 2.0 * Math.PI * ops.fMin;
+		double wMin = 2.0 * Math.PI * ops.fMin+Double.MIN_VALUE;
 		double wMax = 2.0 * Math.PI * ops.fMax;
 		if (ops.fMaxAuto)
 			wMax = Double.MAX_VALUE;
 		if (ops.fMinAuto)
-			wMin = -Double.MAX_VALUE;
+			wMin = Double.MIN_VALUE;
 		double[] w = new double[f.length];
 		for (int ctr = 0; ctr < w.length; ctr++) {
 			w[ctr] = 2.0 * Math.PI * f[ctr];

@@ -419,6 +419,7 @@ public class MCWorker extends Thread {
 		circuits.get(3).setParameter(5, imagy21 / w21); // C
 		circuits.get(3).setParameter(0, 1 / (realy21)); // R
 
+
 		// EqCircuit 4
 		C = (-(Math.pow(w21, 2) - Math.pow(w22, 2))) / (w21 * w22 * (w21 * imagz22 - w22 * imagz21));
 		L = (imagz21 + 1 / (w21 * C)) / w21;
