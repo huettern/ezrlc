@@ -62,6 +62,8 @@ public class MCEqCircuit implements Runnable {
 	private PointValuePair optimum;
 	private MCErrorSum errorFunction;
 	private double[] optStep;
+	
+	private double small = 0.00000000000000000000000000001;
 
 	// ================================================================================
 	// Constructor
@@ -453,7 +455,7 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model0() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, p[4]+Double.MIN_VALUE, p[0]);
+		Polynomial pn = new Polynomial(0, 0, p[4]+small, p[0]);
 		Polynomial pd = new Polynomial(0, 0, 0, 1);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
@@ -467,8 +469,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model1() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, (p[4]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), 0);
-		Polynomial pd = new Polynomial(0, 0, (p[4]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE));
+		Polynomial pn = new Polynomial(0, 0, (p[4]+small) * (p[0]+small), 0);
+		Polynomial pd = new Polynomial(0, 0, (p[4]+small), (p[0]+small));
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -481,10 +483,11 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model2() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, (p[5]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), 1);
-		Polynomial pd = new Polynomial(0, 0, (p[5]+Double.MIN_VALUE), 0);
+		Polynomial pn = new Polynomial(0, 0, (p[5]+small) * (p[0]+small), 1);
+		Polynomial pd = new Polynomial(0, 0, (p[5]+small), 0);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
+
 		return res;
 	}
 
@@ -495,8 +498,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model3() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, 0, (p[0]+Double.MIN_VALUE));
-		Polynomial pd = new Polynomial(0, 0, (p[5]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), 1);
+		Polynomial pn = new Polynomial(0, 0, 0, (p[0]+small));
+		Polynomial pd = new Polynomial(0, 0, (p[5]+small) * (p[0]+small), 1);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -509,8 +512,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model4() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, (p[4]+Double.MIN_VALUE) * (p[5]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE) * (p[5]+Double.MIN_VALUE), 1);
-		Polynomial pd = new Polynomial(0, 0, (p[5]+Double.MIN_VALUE), 0);
+		Polynomial pn = new Polynomial(0, (p[4]+small) * (p[5]+small), (p[0]+small) * (p[5]+small), 1);
+		Polynomial pd = new Polynomial(0, 0, (p[5]+small), 0);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -523,8 +526,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model5() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, (p[0]+Double.MIN_VALUE) * (p[4]+Double.MIN_VALUE), 0);
-		Polynomial pd = new Polynomial(0, (p[5]+Double.MIN_VALUE) * (p[4]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), (p[4]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE));
+		Polynomial pn = new Polynomial(0, 0, (p[0]+small) * (p[4]+small), 0);
+		Polynomial pd = new Polynomial(0, (p[5]+small) * (p[4]+small) * (p[0]+small), (p[4]+small), (p[0]+small));
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -537,8 +540,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model6() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, (p[4]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE));
-		Polynomial pd = new Polynomial(0, (p[5]+Double.MIN_VALUE) * (p[4]+Double.MIN_VALUE), (p[5]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), 1);
+		Polynomial pn = new Polynomial(0, 0, (p[4]+small), (p[0]+small));
+		Polynomial pd = new Polynomial(0, (p[5]+small) * (p[4]+small), (p[5]+small) * (p[0]+small), 1);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -551,8 +554,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model7() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, (p[5]+Double.MIN_VALUE) * (p[4]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), (p[4]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE));
-		Polynomial pd = new Polynomial(0, 0, (p[5]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), 1);
+		Polynomial pn = new Polynomial(0, (p[5]+small) * (p[4]+small) * (p[0]+small), (p[4]+small), (p[0]+small));
+		Polynomial pd = new Polynomial(0, 0, (p[5]+small) * (p[0]+small), 1);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -565,8 +568,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model8() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, (p[5]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE) * (p[3]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE) + (p[3]+Double.MIN_VALUE));
-		Polynomial pd = new Polynomial(0, 0, (p[5]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), 1);
+		Polynomial pn = new Polynomial(0, 0, (p[5]+small) * (p[0]+small) * (p[3]+small), (p[0]+small) + (p[3]+small));
+		Polynomial pd = new Polynomial(0, 0, (p[5]+small) * (p[0]+small), 1);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -579,8 +582,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model9() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, (p[4]+Double.MIN_VALUE) * (p[5]+Double.MIN_VALUE) * (p[3]+Double.MIN_VALUE), (p[4]+Double.MIN_VALUE) + (p[5]+Double.MIN_VALUE) * (p[3]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE) + (p[3]+Double.MIN_VALUE));
-		Polynomial pd = new Polynomial(0, 0, (p[5]+Double.MIN_VALUE) * (p[3]+Double.MIN_VALUE), 1);
+		Polynomial pn = new Polynomial(0, (p[4]+small) * (p[5]+small) * (p[3]+small), (p[4]+small) + (p[5]+small) * (p[3]+small) * (p[0]+small), (p[0]+small) + (p[3]+small));
+		Polynomial pd = new Polynomial(0, 0, (p[5]+small) * (p[3]+small), 1);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -593,8 +596,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model10() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, (p[5]+Double.MIN_VALUE) * (p[4]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE) * (p[3]+Double.MIN_VALUE), (p[4]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE) + (p[4]+Double.MIN_VALUE) * (p[3]+Double.MIN_VALUE), (p[3]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE));
-		Polynomial pd = new Polynomial(0, (p[5]+Double.MIN_VALUE) * (p[4]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), (p[4]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE));
+		Polynomial pn = new Polynomial(0, (p[5]+small) * (p[4]+small) * (p[0]+small) * (p[3]+small), (p[4]+small) * (p[0]+small) + (p[4]+small) * (p[3]+small), (p[3]+small) * (p[0]+small));
+		Polynomial pd = new Polynomial(0, (p[5]+small) * (p[4]+small) * (p[0]+small), (p[4]+small), (p[0]+small));
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -607,8 +610,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model11() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, (p[4]+Double.MIN_VALUE)*(p[0]+Double.MIN_VALUE), (p[3]+Double.MIN_VALUE)*(p[0]+Double.MIN_VALUE));
-		Polynomial pd = new Polynomial(0, (p[5]+Double.MIN_VALUE) * (p[4]+Double.MIN_VALUE)*(p[0]+Double.MIN_VALUE), (p[5]+Double.MIN_VALUE) * (p[3]+Double.MIN_VALUE)*(p[0]+Double.MIN_VALUE) + (p[4]+Double.MIN_VALUE), (p[3]+Double.MIN_VALUE) + (p[0]+Double.MIN_VALUE));
+		Polynomial pn = new Polynomial(0, 0, (p[4]+small)*(p[0]+small), (p[3]+small)*(p[0]+small));
+		Polynomial pd = new Polynomial(0, (p[5]+small) * (p[4]+small)*(p[0]+small), (p[5]+small) * (p[3]+small)*(p[0]+small) + (p[4]+small), (p[3]+small) + (p[0]+small));
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -621,8 +624,8 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model12() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, (p[4]+Double.MIN_VALUE) * (p[6]+Double.MIN_VALUE), (p[0]+Double.MIN_VALUE) * (p[6]+Double.MIN_VALUE), 1);
-		Polynomial pd = new Polynomial((p[5]+Double.MIN_VALUE) * (p[6]+Double.MIN_VALUE) * (p[4]+Double.MIN_VALUE), (p[5]+Double.MIN_VALUE) * (p[6]+Double.MIN_VALUE) * (p[0]+Double.MIN_VALUE), (p[5]+Double.MIN_VALUE) + (p[6]+Double.MIN_VALUE), 0);
+		Polynomial pn = new Polynomial(0, (p[4]+small) * (p[6]+small), (p[0]+small) * (p[6]+small), 1);
+		Polynomial pd = new Polynomial((p[5]+small) * (p[6]+small) * (p[4]+small), (p[5]+small) * (p[6]+small) * (p[0]+small), (p[5]+small) + (p[6]+small), 0);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
 		return res;
@@ -634,11 +637,11 @@ public class MCEqCircuit implements Runnable {
 	 * @return impedance parameters
 	 */
 	private Complex[] model13() {
-		double r0 = this.parameters[0]+Double.MIN_VALUE;
-		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
-		double a = this.parameters[2]+Double.MIN_VALUE;
-		double l = this.parameters[4]+Double.MIN_VALUE;
-		double c0 = this.parameters[5]+Double.MIN_VALUE;
+		double r0 = this.parameters[0]+small;
+		double w0 = (this.parameters[1] * 2 * Math.PI)+small;
+		double a = this.parameters[2]+small;
+		double l = this.parameters[4]+small;
+		double c0 = this.parameters[5]+small;
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
@@ -655,11 +658,11 @@ public class MCEqCircuit implements Runnable {
 	 * @return impedance parameters
 	 */
 	private Complex[] model14() {
-		double r0 = this.parameters[0]+Double.MIN_VALUE;
-		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
-		double a = this.parameters[2]+Double.MIN_VALUE;
-		double l = this.parameters[4]+Double.MIN_VALUE;
-		double c0 = this.parameters[5]+Double.MIN_VALUE;
+		double r0 = this.parameters[0]+small;
+		double w0 = (this.parameters[1] * 2 * Math.PI)+small;
+		double a = this.parameters[2]+small;
+		double l = this.parameters[4]+small;
+		double c0 = this.parameters[5]+small;
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
@@ -679,11 +682,11 @@ public class MCEqCircuit implements Runnable {
 	 * @return impedance parameters
 	 */
 	private Complex[] model15() {
-		double r0 = this.parameters[0]+Double.MIN_VALUE;
-		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
-		double a = this.parameters[2]+Double.MIN_VALUE;
-		double l = this.parameters[4]+Double.MIN_VALUE;
-		double c0 = this.parameters[5]+Double.MIN_VALUE;
+		double r0 = this.parameters[0]+small;
+		double w0 = (this.parameters[1] * 2 * Math.PI)+small;
+		double a = this.parameters[2]+small;
+		double l = this.parameters[4]+small;
+		double c0 = this.parameters[5]+small;
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
@@ -702,11 +705,11 @@ public class MCEqCircuit implements Runnable {
 	 * @return impedance parameters
 	 */
 	private Complex[] model16() {
-		double r0 = this.parameters[0]+Double.MIN_VALUE;
-		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
-		double a = this.parameters[2]+Double.MIN_VALUE;
-		double r1 = this.parameters[3]+Double.MIN_VALUE;
-		double c0 = this.parameters[5]+Double.MIN_VALUE;
+		double r0 = this.parameters[0]+small;
+		double w0 = (this.parameters[1] * 2 * Math.PI)+small;
+		double a = this.parameters[2]+small;
+		double r1 = this.parameters[3]+small;
+		double c0 = this.parameters[5]+small;
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
@@ -723,12 +726,12 @@ public class MCEqCircuit implements Runnable {
 	 * @return impedance parameters
 	 */
 	private Complex[] model17() {
-		double r0 = this.parameters[0]+Double.MIN_VALUE;
-		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
-		double a = this.parameters[2]+Double.MIN_VALUE;
-		double r1 = this.parameters[3]+Double.MIN_VALUE;
-		double l = this.parameters[4]+Double.MIN_VALUE;
-		double c0 = this.parameters[5]+Double.MIN_VALUE;
+		double r0 = this.parameters[0]+small;
+		double w0 = (this.parameters[1] * 2 * Math.PI)+small;
+		double a = this.parameters[2]+small;
+		double r1 = this.parameters[3]+small;
+		double l = this.parameters[4]+small;
+		double c0 = this.parameters[5]+small;
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
@@ -747,12 +750,12 @@ public class MCEqCircuit implements Runnable {
 	 * @return impedance parameters
 	 */
 	private Complex[] model18() {
-		double r0 = this.parameters[0]+Double.MIN_VALUE;
-		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
-		double a = this.parameters[2]+Double.MIN_VALUE;
-		double r1 = this.parameters[3]+Double.MIN_VALUE;
-		double l = this.parameters[4]+Double.MIN_VALUE;
-		double c0 = this.parameters[5]+Double.MIN_VALUE;
+		double r0 = this.parameters[0]+small;
+		double w0 = (this.parameters[1] * 2 * Math.PI)+small;
+		double a = this.parameters[2]+small;
+		double r1 = this.parameters[3]+small;
+		double l = this.parameters[4]+small;
+		double c0 = this.parameters[5]+small;
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
@@ -773,12 +776,12 @@ public class MCEqCircuit implements Runnable {
 	 * @return impedance parameters
 	 */
 	private Complex[] model19() {
-		double r0 = this.parameters[0]+Double.MIN_VALUE;
-		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
-		double a = this.parameters[2]+Double.MIN_VALUE;
-		double r1 = this.parameters[3]+Double.MIN_VALUE;
-		double l = this.parameters[4]+Double.MIN_VALUE;
-		double c0 = this.parameters[5]+Double.MIN_VALUE;
+		double r0 = this.parameters[0]+small;
+		double w0 = (this.parameters[1] * 2 * Math.PI)+small;
+		double a = this.parameters[2]+small;
+		double r1 = this.parameters[3]+small;
+		double l = this.parameters[4]+small;
+		double c0 = this.parameters[5]+small;
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));
@@ -797,12 +800,12 @@ public class MCEqCircuit implements Runnable {
 	 * @return impedance parameters
 	 */
 	private Complex[] model20() {
-		double w0 = (this.parameters[1] * 2 * Math.PI)+Double.MIN_VALUE;
-		double a = this.parameters[2]+Double.MIN_VALUE;
-		double r0 = this.parameters[0]+Double.MIN_VALUE;
-		double l = this.parameters[4]+Double.MIN_VALUE;
-		double c0 = this.parameters[5]+Double.MIN_VALUE;
-		double c1 = this.parameters[6]+Double.MIN_VALUE;
+		double w0 = (this.parameters[1] * 2 * Math.PI)+small;
+		double a = this.parameters[2]+small;
+		double r0 = this.parameters[0]+small;
+		double l = this.parameters[4]+small;
+		double c0 = this.parameters[5]+small;
+		double c1 = this.parameters[6]+small;
 		Complex[] res = new Complex[wvector.length];
 		for (int i = 0; i < wvector.length; i++) {
 			Complex Zc0 = new Complex(0, -1 / (wvector[i] * c0));

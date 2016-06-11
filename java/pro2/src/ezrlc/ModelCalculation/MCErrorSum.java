@@ -59,6 +59,18 @@ public class MCErrorSum implements MultivariateFunction {
 
 		return error;
 	}
+	
+	private static double leastSquare(Complex[] measured, Complex[] simulated) {
+		double error = 0;
+		Complex delta = new Complex(0,0);
+
+		for (int ctr = 0; ctr < measured.length; ctr++) {
+			delta = Complex.sub(simulated[ctr],measured[ctr]);
+			error = error + Math.pow(delta.abs(), 2);
+		}
+
+		return error;
+	}
 
 	// ================================================================================
 	// Public static Functions
@@ -67,12 +79,24 @@ public class MCErrorSum implements MultivariateFunction {
 	 * Returns the Error sum
 	 * 
 	 * @param measured
-	 *            measured data
+	 *            measured data (abs)
 	 * @param simulated
-	 *            simulated data
+	 *            simulated data (abs)
 	 * @return error
 	 */
 	public static final double getError(double[] measured, double[] simulated) {
+		return leastSquare(measured, simulated);
+	}
+	/**
+	 * Returns the Error sum
+	 * 
+	 * @param measured
+	 *            measured data (Complex)
+	 * @param simulated
+	 *            simulated data (Complex)
+	 * @return error
+	 */
+	public static final double getError(Complex[] measured, Complex[] simulated) {
 		return leastSquare(measured, simulated);
 	}
 
@@ -101,8 +125,7 @@ public class MCErrorSum implements MultivariateFunction {
 			magmeas[i] = this.measured[i].abs();
 		}
 		// calc error
-		double error = MCErrorSum.getError(magmeas, magS);
-//		System.out.println(Thread.currentThread().getName() + ": params: " +Arrays.toString(params) +"error="+error);
+		double error = MCErrorSum.getError(this.measured, s); //Complex oder mag??
 		return error;
 	}
 

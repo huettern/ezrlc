@@ -102,7 +102,7 @@ public class MCRank {
 				magmeas[i] = yz[i].abs();
 			}
 			// calculate error
-			error[j][0] = MCErrorSum.getError(magmeas, magmod);
+			error[j][0] = MCErrorSum.getError(yz, data);
 		}
 
 		// Sort error array by first col[0], so second col is listed indexes
