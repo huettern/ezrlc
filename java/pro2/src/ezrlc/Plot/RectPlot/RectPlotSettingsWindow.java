@@ -147,6 +147,9 @@ public class RectPlotSettingsWindow implements ActionListener {
 		gbc_spinXmax.gridy = 1;
 		pnlX.add(txtXmax, gbc_spinXmax);
 
+		txtXmin.setMinValue(0.0);
+		txtXmax.setMinValue(0.0);
+		
 		JLabel lblStepsX = new JLabel("Steps:");
 		GridBagConstraints gbc_lblStepsX = new GridBagConstraints();
 		gbc_lblStepsX.anchor = GridBagConstraints.WEST;
@@ -362,6 +365,10 @@ public class RectPlotSettingsWindow implements ActionListener {
 		// Step Spinners
 		if (e.getSource() == rdbtnLogX) {
 			txtXstep.setEnabled(false);
+			txtXmin.setMinValue(0.0);
+			txtXmax.setMinValue(0.0);
+			if(txtXmin.getValue() < 0.0) txtXmin.setValue(1);
+			if(txtXmax.getValue() < 0.0) txtXmax.setValue(1);
 			if (txtXmin.getValue() == 0) {
 				txtXmin.setValue(1);
 				txtXmax.setValue(1000);
@@ -369,11 +376,17 @@ public class RectPlotSettingsWindow implements ActionListener {
 		}
 
 		if (e.getSource() == rdbtnLinX) {
+			txtXmin.setMinValue(-Double.MAX_VALUE);
+			txtXmax.setMinValue(-Double.MAX_VALUE);
 			txtXstep.setEnabled(true);
 		}
 
 		if (e.getSource() == rdbtnLogY) {
 			txtYstep.setEnabled(false);
+			txtYmin.setMinValue(0.0);
+			txtYmax.setMinValue(0.0);
+			if(txtYmin.getValue() < 0.0) txtYmin.setValue(1);
+			if(txtYmax.getValue() < 0.0) txtYmax.setValue(1);
 			if (txtYmin.getValue() == 0) {
 				txtYmin.setValue(1);
 				txtYmax.setValue(1000);
@@ -381,6 +394,8 @@ public class RectPlotSettingsWindow implements ActionListener {
 		}
 
 		if (e.getSource() == rdbtnLinY) {
+			txtYmin.setMinValue(-Double.MAX_VALUE);
+			txtYmax.setMinValue(-Double.MAX_VALUE);
 			txtYstep.setEnabled(true);
 		}
 

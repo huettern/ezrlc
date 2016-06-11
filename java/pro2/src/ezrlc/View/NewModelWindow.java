@@ -624,17 +624,17 @@ public class NewModelWindow implements ActionListener {
 		}
 
 		if (e.getSource() == btnAllAuto) {
-			txtAlpha.setText("");
-			txtR0.setText("");
-			txtC0.setText("");
-			txtC1.setText("");
+			txtAlpha.setValue(0.0);
+			txtR0.setValue(0.0);
+			txtC0.setValue(0.0);
+			txtC1.setValue(0.0);
 			txtCompMax.setText("");
 			txtCompMin.setText("");
-			txtF.setText("");
+			txtF.setValue(0.0);
 			txtFmax.setText("");
 			txtFmin.setText("");
-			txtR1.setText("");
-			txtL.setText("");
+			txtR1.setValue(0.0);
+			txtL.setValue(0.0);
 			list.setSelectedIndex(0);
 		}
 

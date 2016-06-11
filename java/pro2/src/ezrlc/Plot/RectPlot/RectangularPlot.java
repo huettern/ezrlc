@@ -93,7 +93,7 @@ public class RectangularPlot extends JPanel implements Observer {
 		this.horAxis = new Axis(this, x, Axis.Orientation.HORIZONTAL, origin, rightMargin, settings.xAxisMinimum,
 				settings.xAxisMaximum, settings.xAxisSteps, 20);		
 		this.verAxis = new Axis(this, y, Axis.Orientation.VERTICAL, origin, topMargin, settings.yAxisMinimum,
-				settings.yAxisMaximum, settings.xAxisSteps, -30);
+				settings.yAxisMaximum, settings.xAxisSteps, -50);
 		// Add Grid
 		this.verGrid = new Grid(this, Orientation.VERTICAL, Color.LIGHT_GRAY, horAxis, 40);
 		this.horGrid = new Grid(this, Orientation.HORIZONTAL, Color.LIGHT_GRAY, verAxis, 40);

@@ -33,8 +33,8 @@ public class IGAssistPanel extends JPanel {
 	// ================================================================================
 	// Settings
 	// ================================================================================
-	private final String[] plotTitles = { "R - Series Resistance in Ohm", "L - Series Iductance in H",
-			"R - Parallel Resistance in Ohm", "L - Parallel Iductance in H", "R - Series Resistance in Ohm",
+	private final String[] plotTitles = { "R - Series Resistance in Ohm", "L - Series Inductance in H",
+			"R - Parallel Resistance in Ohm", "L - Parallel Inductance in H", "R - Series Resistance in Ohm",
 			"C - Series Capacitance in F", "R - Parallel Resistance in Ohm", "C - Parallel Capacitance in F" };
 
 	// ================================================================================
