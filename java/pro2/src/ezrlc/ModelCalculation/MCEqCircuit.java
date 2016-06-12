@@ -63,7 +63,7 @@ public class MCEqCircuit implements Runnable {
 	private MCErrorSum errorFunction;
 	private double[] optStep;
 	
-	private double small = 0.00000000000000000000000000001;
+	private double small = Math.pow(10, -50);
 
 	// ================================================================================
 	// Constructor
@@ -404,7 +404,7 @@ public class MCEqCircuit implements Runnable {
 		errorFunction = new MCErrorSum(ys, this);
 		optimum = null;
 		try {
-			optimum = optimizer.optimize(new MaxEval(100000), new ObjectiveFunction(errorFunction), GoalType.MINIMIZE,
+			optimum = optimizer.optimize(new MaxEval(10000), new ObjectiveFunction(errorFunction), GoalType.MINIMIZE,
 					new InitialGuess(shortParameters), new NelderMeadSimplex(optStep));
 		} catch (TooManyEvaluationsException ex) {
 			System.out.println("Optimizer reached MaxEval");
@@ -455,7 +455,7 @@ public class MCEqCircuit implements Runnable {
 	 */
 	private Complex[] model0() {
 		double[] p = this.parameters;
-		Polynomial pn = new Polynomial(0, 0, p[4]+small, p[0]);
+		Polynomial pn = new Polynomial(0, 0, p[4]+small, p[0]+small);
 		Polynomial pd = new Polynomial(0, 0, 0, 1);
 		Complex[] res;
 		res = pn.polydiv(pd, wvector);
@@ -515,7 +515,7 @@ public class MCEqCircuit implements Runnable {
 		Polynomial pn = new Polynomial(0, (p[4]+small) * (p[5]+small), (p[0]+small) * (p[5]+small), 1);
 		Polynomial pd = new Polynomial(0, 0, (p[5]+small), 0);
 		Complex[] res;
-		res = pn.polydiv(pd, wvector);
+		res = pn.polydiv(pd, wvector);		
 		return res;
 	}
 
