@@ -9,6 +9,7 @@ import java.util.Observable;
 import ezrlc.Model.RectPlotNewMeasurement.Unit;
 import ezrlc.ModelCalculation.MCEqCircuit;
 import ezrlc.ModelCalculation.MCOptions;
+import ezrlc.ModelCalculation.MCUtil;
 import ezrlc.ModelCalculation.MCWorker;
 import ezrlc.ModelCalculation.MCWorker.WorkerMode;
 import ezrlc.RFData.RFData;
@@ -200,10 +201,13 @@ public class Model extends Observable {
 				break;
 			}
 			// get larger data size
-			int size = outdata.length > outdatacompare.length ? outdatacompare.length : outdata.length;
+			// outdata: model
+			// outdatacompare: File
+			int size = outdata.length;
+			int filestartidx = MCUtil.getFirstFIndex(eqCircuits.get(nm.eqCircuitID).getOps(), rfDataFile.getfData());
 			double[] diff = new double[size];
 			for (int i = 0; i < size; i++) {
-				diff[i] = Math.abs(outdata[i] - outdatacompare[i]);
+				diff[i] = Math.abs(outdata[i] - outdatacompare[i+filestartidx]);
 			}
 			// convert to db
 			if (nm.unit == Unit.dB) {
