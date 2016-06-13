@@ -30,6 +30,7 @@ public class EzRLC {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				Thread.currentThread().setPriority(8); //Thread.MAX_PRIORITY
 				Model model = new Model();
 				MainView view = new MainView();
 				Controller controller = new Controller(model, view);
