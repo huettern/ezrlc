@@ -406,11 +406,13 @@ public class MCEqCircuit implements Runnable {
 		try {
 			optimum = optimizer.optimize(new MaxEval(10000), new ObjectiveFunction(errorFunction), GoalType.MINIMIZE,
 					new InitialGuess(shortParameters), new NelderMeadSimplex(optStep));
+			parameters = MCUtil.topo2Param(circuitType, optimum.getPoint());
 		} catch (TooManyEvaluationsException ex) {
-			System.out.println("Optimizer reached MaxEval");
+			// This exception can be ignored. If max eval is reached, the recent parameters are stored
+			// and no null pointer can appear
+			parameters = new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 		}
 		// save new parameters
-		parameters = MCUtil.topo2Param(circuitType, optimum.getPoint());
 	}
 
 	/**

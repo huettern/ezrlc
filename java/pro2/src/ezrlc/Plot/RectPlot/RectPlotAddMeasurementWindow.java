@@ -402,6 +402,11 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbc_btnOk.gridy = 0;
 		pnlButtons.add(btnOk, gbc_btnOk);
 
+		rdbtnFile.setEnabled(false);
+		rdbtnModel.setEnabled(false);
+		rdbtnCompare.setEnabled(false);
+		btnOk.setEnabled(false);
+		
 		dialog.getRootPane().setDefaultButton(btnOk);
 	}
 
@@ -508,7 +513,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 			rdbtnFile.setEnabled(true);
 			rdbtnFile.setSelected(true);
 			rdbtnModel.setSelected(false);
-			rdbtnCompare.setEnabled(true);
+			btnOk.setEnabled(true);
 		} else {
 			rdbtnFile.setEnabled(false);
 			rdbtnModel.setSelected(true);
@@ -562,6 +567,9 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 
 		for (int i = 0; i < modelIDs.length; i++) {
 			cbModelList.addItem(modelNames[i]);
+			btnOk.setEnabled(true);
+			rdbtnCompare.setEnabled(true);
+			rdbtnModel.setEnabled(true);
 		}
 		resetButtons();
 	}
