@@ -19,9 +19,8 @@ public class EzRLC {
 	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
-		
-	   try 
-	    { 
+	   //look and feel
+	   try { 
 	        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
 	    } 
 	    catch(Exception e){ 
