@@ -35,7 +35,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	// Local Variables
 	// ================================================================================
 	private Controller controller;
-	private boolean lockUpdate;
+	private boolean lockUpdate = false;
 	private boolean modelPanelBuilt = false;
 
 	private JEngineerField txtC0;
@@ -335,6 +335,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			this.parseValues();
 			controller.updateEqcParams(eqcID, parameters);
 			lockUpdate = false;
+			controller.manualNotify();
 		}
 	}
 
@@ -365,10 +366,8 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;
 		if (lockUpdate == false && modelPanelBuilt) {
-			lockUpdate = true;
 			updateParams(m.getEquivalentCircuit(this.eqcID));
 			updateUI();
-			lockUpdate = false;
 		}
 	}
 

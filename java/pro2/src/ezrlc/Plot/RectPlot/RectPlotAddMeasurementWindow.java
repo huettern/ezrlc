@@ -98,7 +98,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		dialog.setTitle("Add Measurement");
 		dialog.setModal(true);
 		dialog.setLocation(250, 150);
-		dialog.setSize(300, 350);
+		dialog.setSize(300, 450);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 45, 0, 0, 0, 0 };
@@ -113,7 +113,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		pnlDataSource.setToolTipText("");
 		pnlDataSource.setName("");
 		GridBagConstraints gbc_pnlDataSource = new GridBagConstraints();
-		gbc_pnlDataSource.insets = new Insets(5, 5, 5, 0);
+		gbc_pnlDataSource.insets = new Insets(5, 5, 5, 5);
 		gbc_pnlDataSource.fill = GridBagConstraints.BOTH;
 		gbc_pnlDataSource.gridx = 0;
 		gbc_pnlDataSource.gridy = 0;
@@ -210,7 +210,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		pnlMeasurementType.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Measurement Type",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlMeasurementType = new GridBagConstraints();
-		gbc_pnlMeasurementType.insets = new Insets(0, 5, 5, 0);
+		gbc_pnlMeasurementType.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlMeasurementType.fill = GridBagConstraints.BOTH;
 		gbc_pnlMeasurementType.gridx = 0;
 		gbc_pnlMeasurementType.gridy = 1;
@@ -219,7 +219,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		gbl_pnlMeasurementType.columnWidths = new int[] { 0, 0, 0, 0 };
 		gbl_pnlMeasurementType.rowHeights = new int[] { 0, 0 };
 		gbl_pnlMeasurementType.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		gbl_pnlMeasurementType.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_pnlMeasurementType.rowWeights = new double[] { 1.0, 1.0 };
 		pnlMeasurementType.setLayout(gbl_pnlMeasurementType);
 
 		rdbtnZ = new JRadioButton("Z");
@@ -274,7 +274,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		pnlComplexModifier.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Complex Modifier",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlComplexModifier = new GridBagConstraints();
-		gbc_pnlComplexModifier.insets = new Insets(0, 5, 5, 0);
+		gbc_pnlComplexModifier.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlComplexModifier.fill = GridBagConstraints.BOTH;
 		gbc_pnlComplexModifier.gridx = 0;
 		gbc_pnlComplexModifier.gridy = 2;
@@ -329,7 +329,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		pnlUnit.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Measurement Unit", TitledBorder.CENTER,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_pnlUnit = new GridBagConstraints();
-		gbc_pnlUnit.insets = new Insets(0, 5, 5, 0);
+		gbc_pnlUnit.insets = new Insets(0, 5, 5, 5);
 		gbc_pnlUnit.fill = GridBagConstraints.BOTH;
 		gbc_pnlUnit.gridx = 0;
 		gbc_pnlUnit.gridy = 3;
@@ -337,8 +337,8 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		GridBagLayout gbl_pnlUnit = new GridBagLayout();
 		gbl_pnlUnit.columnWidths = new int[] { 0 };
 		gbl_pnlUnit.rowHeights = new int[] { 0 };
-		gbl_pnlUnit.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		gbl_pnlUnit.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_pnlUnit.columnWeights = new double[] { 1.0, 1.0 };
+		gbl_pnlUnit.rowWeights = new double[] { 1.0 };
 		pnlUnit.setLayout(gbl_pnlUnit);
 
 		rdbtnLinear = new JRadioButton("Linear");
@@ -396,7 +396,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		btnOk.setPreferredSize(new Dimension(0, 0));
 		btnOk.addActionListener(this);
 		GridBagConstraints gbc_btnOk = new GridBagConstraints();
-		gbc_btnOk.insets = new Insets(0, 5, 0, 2);
+		gbc_btnOk.insets = new Insets(0, 5, 0, 5);
 		gbc_btnOk.fill = GridBagConstraints.BOTH;
 		gbc_btnOk.gridx = 1;
 		gbc_btnOk.gridy = 0;
@@ -447,7 +447,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		if (this.getSelectedButton(this.btngrpSource) == rdbtnCompare) {
 			nm.src = DataSource.COMPARE;
 			nm.eqCircuitID = Integer.parseInt(cbModelList.getSelectedItem().toString().split("( )")[1]);
-			nm.src_name = "Compare " +cbModelList.getSelectedItem().toString();
+			nm.src_name = "Delta " +cbModelList.getSelectedItem().toString();
 		}
 		// Measurement Tyoe
 		if (this.getSelectedButton(this.btngrpMeasType) == rdbtnS) {

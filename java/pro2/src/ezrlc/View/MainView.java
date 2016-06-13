@@ -99,31 +99,31 @@ public class MainView extends JFrame implements Observer {
 		pack();
 		setMinimumSize(getPreferredSize());
 
-		// Look and feel
-		try {
-			switch (laf) {
-			case METAL:
-				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-				break;
-			case OCEAN:
-				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-				MetalLookAndFeel.setCurrentTheme(new OceanTheme());
-				break;
-			case SYSTEM:
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				break;
-			case NIMROD:
-				// UIManager.setLookAndFeel(new
-				// MyNimRODLookAndFeel("DarkGray.theme"));
-				break;
-			}
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
-		if (laf != LAF.SYSTEM) {
-			setUndecorated(true);
-			getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
-		}
+//		// Look and feel
+//		try {
+//			switch (laf) {
+//			case METAL:
+//				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+//				break;
+//			case OCEAN:
+//				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+//				MetalLookAndFeel.setCurrentTheme(new OceanTheme());
+//				break;
+//			case SYSTEM:
+//				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//				break;
+//			case NIMROD:
+//				// UIManager.setLookAndFeel(new
+//				// MyNimRODLookAndFeel("DarkGray.theme"));
+//				break;
+//			}
+//		} catch (Exception exception) {
+//			exception.printStackTrace();
+//		}
+//		if (laf != LAF.SYSTEM) {
+//			setUndecorated(true);
+//			getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
+//		}
 
 	}
 

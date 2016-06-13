@@ -2,6 +2,8 @@ package ezrlc;
 
 import java.awt.EventQueue;
 
+import javax.swing.UIManager;
+
 import ezrlc.Controller.Controller;
 import ezrlc.Model.Model;
 import ezrlc.View.MainView;
@@ -17,9 +19,18 @@ public class EzRLC {
 	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
+		
+	   try 
+	    { 
+	        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
+	    } 
+	    catch(Exception e){ 
+	    }
+		   
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				Thread.currentThread().setPriority(8); //Thread.MAX_PRIORITY
 				Model model = new Model();
 				MainView view = new MainView();
 				Controller controller = new Controller(model, view);
