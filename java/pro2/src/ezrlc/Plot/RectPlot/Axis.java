@@ -154,13 +154,7 @@ public class Axis {
 	 *            minimum value
 	 */
 	public void setMinimum(double min) {
-		if (this.scale == Scale.LOG && min == 0)
-			min = Double.MIN_VALUE;
 		this.min = min;
-		// if scale is log, roun to next even number
-		logLowerBound = Math.floor(Math.log10(Math.abs(min)));
-		if (this.scale == Scale.LOG)
-			this.min = Math.signum(min) * Math.pow(10, logLowerBound);
 	}
 
 	/**
@@ -171,10 +165,6 @@ public class Axis {
 	 */
 	public void setMaximum(double max) {
 		this.max = max;
-		// if scale is log, roun to next even number
-		logUpperBound = Math.ceil(Math.log10(Math.abs(max)));
-		if (this.scale == Scale.LOG)
-			this.max = Math.signum(max) * Math.pow(10, logUpperBound);
 	}
 
 	/**
@@ -358,6 +348,21 @@ public class Axis {
 		// calculate exponent
 		calcExponent();
 
+		// log stuff
+		if(scale == Scale.LOG) {
+			// catch same min and max values match
+			if (min == max) max += 1.0;
+			if (min == 0) min = Math.pow(10, -12);
+			// if scale is log, round to next even number
+			logLowerBound = Math.floor(Math.log10(Math.abs(min)));
+			if (this.scale == Scale.LOG)
+				this.min = Math.signum(min) * Math.pow(10, logLowerBound);
+			// if scale is log, round to next even number
+			logUpperBound = Math.ceil(Math.log10(Math.abs(max)));
+			if (this.scale == Scale.LOG)
+				this.max = Math.signum(max) * Math.pow(10, logUpperBound);
+		}
+		
 		if (or == Orientation.HORIZONTAL) {
 			// Calculate origins
 			this.start_x = this.origin_x;
