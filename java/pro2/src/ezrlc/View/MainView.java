@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.apple.eawt.Application;
+//import com.apple.eawt.Application;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -92,9 +92,9 @@ public class MainView extends JFrame implements Observer {
 		this.setIconImage(icon.getImage());
 		
 		// For Apple
-		Application.getApplication().setDockIconImage(UIUtil.loadResourceImage("pro2LogoTransparent.png"));
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-    	System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Test");
+		//Application.getApplication().setDockIconImage(UIUtil.loadResourceImage("pro2LogoTransparent.png"));
+		//System.setProperty("apple.laf.useScreenMenuBar", "true");
+    	//System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Test");
     	
 		pack();
 		setMinimumSize(getPreferredSize());

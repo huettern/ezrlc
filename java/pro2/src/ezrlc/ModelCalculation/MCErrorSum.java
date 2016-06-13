@@ -125,7 +125,7 @@ public class MCErrorSum implements MultivariateFunction {
 			magmeas[i] = this.measured[i].abs();
 		}
 		// calc error
-		double error = MCErrorSum.getError(this.measured, s); //Complex oder mag??
+		double error = MCErrorSum.getError(magmeas, magS); //Complex oder mag??
 		return error;
 	}
 
