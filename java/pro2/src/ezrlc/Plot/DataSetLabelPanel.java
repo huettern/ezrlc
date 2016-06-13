@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.PackedColorModel;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -48,7 +49,7 @@ public class DataSetLabelPanel extends JPanel implements ActionListener {
 		this.id = id;
 		this.figure = fig;
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(80, 130));
+		setPreferredSize(new Dimension(80, 102));
 		setMaximumSize(new Dimension(32767, 32767));
 		setMinimumSize(new Dimension(10, 100));
 		setBorder(new LineBorder(Color.BLACK));
