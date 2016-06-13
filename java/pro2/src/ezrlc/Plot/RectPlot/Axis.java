@@ -345,9 +345,6 @@ public class Axis {
 	 * Caluclates all the necessary pixel values of the Axis to paint it
 	 */
 	private void evalSize() {
-		// calculate exponent
-		calcExponent();
-
 		// log stuff
 		if(scale == Scale.LOG) {
 			// catch same min and max values match
@@ -362,6 +359,8 @@ public class Axis {
 			if (this.scale == Scale.LOG)
 				this.max = Math.signum(max) * Math.pow(10, logUpperBound);
 		}
+		// calculate exponent
+		calcExponent();
 		
 		if (or == Orientation.HORIZONTAL) {
 			// Calculate origins
