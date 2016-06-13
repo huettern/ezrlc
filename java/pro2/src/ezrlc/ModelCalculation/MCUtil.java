@@ -72,8 +72,8 @@ public class MCUtil {
 		if (format == DATA_FORMAT.OMEGA)
 			mul = 2.0 * Math.PI;
 
-		double wMin = mul * ops.fMin+Double.MIN_VALUE;
-		double wMax = mul * ops.fMax;
+		double wMin = (2.0 * Math.PI * ops.fMin) + Double.MIN_VALUE;
+		double wMax = 2.0 * Math.PI * ops.fMax;
 		if (ops.fMaxAuto)
 			wMax = Double.MAX_VALUE;
 		if (ops.fMinAuto)
@@ -118,6 +118,31 @@ public class MCUtil {
 			}
 		}
 		return w_out;
+	}
+	
+	/**
+	 * Returns the first index of the given f-vector that is affected by the MCOptions,
+	 * including cutting all 0-frequency points
+	 * @param ops MCOptions
+	 * @param f frequency vector being processed in Hertz
+	 * @return first index of the f array that is in the allowed range
+	 */
+	public static int getFirstFIndex (MCOptions ops, double[] f) {
+		int idx = 0;
+
+		double fMin = (ops.fMin) + Double.MIN_VALUE;
+		if (ops.fMinAuto)
+			fMin = Double.MIN_VALUE;
+
+		// search low limit
+		for (int ctr = 0; ctr < f.length; ctr++) {
+			if (f[ctr] >= fMin) {
+				idx = ctr;
+				break;
+			}
+		}
+		
+		return idx;
 	}
 
 	/**
