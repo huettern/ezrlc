@@ -98,7 +98,7 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 		dialog.setTitle("Add Measurement");
 		dialog.setModal(true);
 		dialog.setLocation(250, 150);
-		dialog.setSize(300, 350);
+		dialog.setSize(300, 450);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 45, 0, 0, 0, 0 };
