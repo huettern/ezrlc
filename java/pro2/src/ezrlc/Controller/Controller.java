@@ -114,6 +114,10 @@ public class Controller {
 	 */
 	public void deleteFigure(Figure figure) {
 		view.deleteFigure(figure);
+		// delete all datasets in the model
+		for(int i = 0; i < figure.getDataSetIDs().length; i++) {
+			model.removeDataset(figure.getDataSetIDs()[i]);
+		}
 		// notify view to enable new graph button
 		view.setNewGraphButtonEnabled(true);
 	}

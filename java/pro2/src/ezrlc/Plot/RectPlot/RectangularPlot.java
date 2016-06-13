@@ -452,4 +452,16 @@ public class RectangularPlot extends JPanel implements Observer {
 	public void setTitle(String s) {
 		title = s;
 	}
+
+	/**
+	 * Returns the dataset IDs displayed in the plot
+	 * @return
+	 */
+	public int[] getDataSetIDs() {
+		int[] ids = new int[dataSetIDs.size()];
+		for(int i = 0; i < dataSetIDs.size(); i++) {
+			ids [i] = dataSetIDs.get(i);
+		}
+		return ids;
+	}
 }

@@ -180,4 +180,15 @@ public class SmithChart extends JPanel implements Observer {
 		this.repaint();
 	}
 
+	/**
+	 * Returns the dataset IDs displayed in the plot
+	 * @return
+	 */
+	public int[] getDataSetIDs() {
+		int[] ids = new int[dataSetIDs.size()];
+		for(int i = 0; i < dataSetIDs.size(); i++) {
+			ids [i] = dataSetIDs.get(i);
+		}
+		return ids;
+	}
 }

@@ -347,6 +347,20 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 			smithChart.removeDataset(id);
 		controller.removeDataset(id);
 	}
+	
+	/**
+	 * Returns the dataset IDs displayed in the plot
+	 * @return
+	 */
+	public int[] getDataSetIDs() {
+		int[] ids = null;
+		if(plotType == ENPlotType.RECTANGULAR) {
+			ids = rectPlot.getDataSetIDs();
+		} else if (plotType == ENPlotType.SMITH) {
+			ids = smithChart.getDataSetIDs();
+		}
+		return ids;
+	}
 
 	// ================================================================================
 	// Interfaces
