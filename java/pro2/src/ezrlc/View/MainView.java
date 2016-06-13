@@ -126,7 +126,14 @@ public class MainView extends JFrame implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		long startTime = System.currentTimeMillis();
+
+
 		workPanel.update(o, arg);
+
+	      long stopTime = System.currentTimeMillis();
+	      long elapsedTime = stopTime - startTime;
+	      System.out.println(elapsedTime);
 		navPanel.update(o, arg);
 
 	}
