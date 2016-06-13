@@ -11,12 +11,7 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JSplitPane;
-import javax.swing.UIManager;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.OceanTheme;
-
 import ezrlc.Controller.Controller;
 import ezrlc.Plot.Figure;
 import ezrlc.Plot.Figure.ENPlotType;
@@ -39,12 +34,6 @@ public class MainView extends JFrame implements Observer {
 
 	private Controller controller;
 	private JSplitPane splitPane = new JSplitPane();
-
-	private static enum LAF {
-		METAL, OCEAN, SYSTEM, NIMROD
-	}
-
-	private static LAF laf = LAF.SYSTEM;
 
 	// ================================================================================
 	// Constructors
@@ -98,33 +87,6 @@ public class MainView extends JFrame implements Observer {
     	
 		pack();
 		setMinimumSize(getPreferredSize());
-
-//		// Look and feel
-//		try {
-//			switch (laf) {
-//			case METAL:
-//				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-//				break;
-//			case OCEAN:
-//				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-//				MetalLookAndFeel.setCurrentTheme(new OceanTheme());
-//				break;
-//			case SYSTEM:
-//				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//				break;
-//			case NIMROD:
-//				// UIManager.setLookAndFeel(new
-//				// MyNimRODLookAndFeel("DarkGray.theme"));
-//				break;
-//			}
-//		} catch (Exception exception) {
-//			exception.printStackTrace();
-//		}
-//		if (laf != LAF.SYSTEM) {
-//			setUndecorated(true);
-//			getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
-//		}
-
 	}
 
 	/**
