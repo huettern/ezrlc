@@ -381,10 +381,12 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 		}
 		if (e.getSource() == btnAddMeasurement) {
 			if (plotType == ENPlotType.RECTANGULAR) {
+				newRectMeasurementWindow.reset();
 				newRectMeasurementWindow.setFilename(controller.getFilename());
 				newRectMeasurementWindow.setModels(controller.getModelIDs());
 				newRectMeasurementWindow.show();
 			} else if (plotType == ENPlotType.SMITH) {
+				newSmithMeasurementWindow.reset();
 				newSmithMeasurementWindow.setFilename(controller.getFilename());
 				newSmithMeasurementWindow.setDatasets(smithChart.getDataSetSettings());
 				newSmithMeasurementWindow.setModels(controller.getModelIDs());

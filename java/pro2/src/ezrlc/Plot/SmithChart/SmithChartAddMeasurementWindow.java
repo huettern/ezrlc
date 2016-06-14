@@ -175,6 +175,7 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 		gbc_btnOk.gridy = 0;
 		pnlButtons.add(btnOk, gbc_btnOk);
 
+		reset();
 		dialog.getRootPane().setDefaultButton(btnOk);
 	}
 
@@ -221,12 +222,22 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 	// ================================================================================
 	// Public Functions
 	// ================================================================================
+	/**
+	 * Resets the dialog to its default settings
+	 */
+	public void reset() {
+		rdbtnModel.setEnabled(false);
+		rdbtnFile.setEnabled(true);
+		btnOk.setEnabled(false);
+	}
+	
 	public void setFilename(String s) {
 		if (s != null) {
 			this.lblFileName.setText(s);
 			rdbtnFile.setEnabled(true);
 			rdbtnFile.setSelected(true);
 			rdbtnModel.setSelected(false);
+			btnOk.setEnabled(true);
 		} else {
 			rdbtnFile.setEnabled(false);
 			rdbtnModel.setSelected(true);
@@ -296,6 +307,8 @@ public class SmithChartAddMeasurementWindow implements ActionListener {
 
 		for (int i = 0; i < modelIDs.length; i++) {
 			cbModelList.addItem(modelNames[i]);
+			rdbtnModel.setEnabled(true);
+			btnOk.setEnabled(true);
 		}
 		rdbtnFile.setSelected(true);
 		rdbtnModel.setSelected(false);
