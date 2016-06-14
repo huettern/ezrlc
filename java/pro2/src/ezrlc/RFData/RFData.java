@@ -74,6 +74,8 @@ public class RFData {
 
 	// Frequency points
 	private double[] fData;
+	
+	private int maxDataPoints = 1005;
 
 	// ================================================================================
 	// Constructors
@@ -200,6 +202,9 @@ public class RFData {
 		for (int i = 0; i < rawData.size(); i++) {
 			fData[i] = rawData.get(i).getFreq();
 		}
+		
+		// cut measurement
+		cutMeasurement();
 	}
 
 	// ================================================================================
@@ -381,7 +386,32 @@ public class RFData {
 			break;
 		}
 	}
-
+	
+	/**
+	 * Cuts the measurement to fit the reguired max number of points
+	 */
+	private void cutMeasurement() {
+		int length = normalizedData.length;
+		if(length <= maxDataPoints) return;
+		int step = (int)(length / maxDataPoints);
+		int newsize = (int)(length/step);
+		double[] f = new double[newsize];
+		Complex[] z = new Complex[newsize];
+		Complex[] y = new Complex[newsize];
+		Complex[] s = new Complex[newsize];
+		for(int i = 0; i < newsize; i++) {
+			f[i] = fData[i*step];
+			z[i] = zData[i*step];
+			y[i] = yData[i*step];
+			s[i] = sData[i*step];
+		}
+		fData = f;
+		sData = s;
+		yData = y;
+		zData = z;
+		System.out.println("fData leng" +fData.length);
+	}
+	
 	// ================================================================================
 	// Getters
 	// ================================================================================
