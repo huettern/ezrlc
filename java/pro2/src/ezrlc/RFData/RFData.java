@@ -189,6 +189,7 @@ public class RFData {
 		}
 		// close file stream
 		br.close();
+		file.close();
 
 		this.normalizeRawData();
 		this.compensateMeasurementResistance();
