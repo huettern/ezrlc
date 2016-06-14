@@ -350,7 +350,7 @@ public class Figure extends JPanel implements ActionListener, Observer, Document
 	
 	/**
 	 * Returns the dataset IDs displayed in the plot
-	 * @return
+	 * @return int array of data set ids
 	 */
 	public int[] getDataSetIDs() {
 		int[] ids = null;
