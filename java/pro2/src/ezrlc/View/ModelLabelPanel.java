@@ -335,7 +335,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			this.parseValues();
 			controller.updateEqcParams(eqcID, parameters);
 			lockUpdate = false;
-			controller.manualNotify();
+//			controller.manualNotify();
 		}
 	}
 

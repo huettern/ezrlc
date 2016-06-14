@@ -135,7 +135,7 @@ public class MainView extends JFrame implements Observer {
 	      long elapsedTime = stopTime - startTime;
 	      System.out.println(elapsedTime);
 		navPanel.update(o, arg);
-
+		revalidate();
 	}
 
 	/**

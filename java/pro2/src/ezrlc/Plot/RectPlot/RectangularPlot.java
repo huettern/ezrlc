@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import ezrlc.util.UIUtil;
  * @author noah
  *
  */
-public class RectangularPlot extends JPanel implements Observer {
+public class RectangularPlot extends JPanel implements Observer, ComponentListener {
 	private static final long serialVersionUID = 1L;
 	// ================================================================================
 	// Private Data
@@ -40,6 +42,8 @@ public class RectangularPlot extends JPanel implements Observer {
 	private int topMargin = 40;
 	private int plotWidth = 0;
 	private int plotHeight = 0;
+	
+	private boolean componentChanged = true;
 
 	private Axis horAxis;
 	private Axis verAxis;
@@ -98,6 +102,8 @@ public class RectangularPlot extends JPanel implements Observer {
 		this.verGrid = new Grid(this, Orientation.VERTICAL, Color.LIGHT_GRAY, horAxis, 40);
 		this.horGrid = new Grid(this, Orientation.HORIZONTAL, Color.LIGHT_GRAY, verAxis, 40);
 
+		addComponentListener(this);
+		
 		repaint();
 	}
 
@@ -214,11 +220,13 @@ public class RectangularPlot extends JPanel implements Observer {
 		this.evalSize();
 		Area plotArea = new Area(new Rectangle2D.Double(origin.x, this.topMargin, plotWidth, plotHeight));
 
-		// Paint axis and grid
-		this.horAxis.paint(g);
-		this.verAxis.paint(g);
-		this.verGrid.paint(g);
-		this.horGrid.paint(g);
+		if(componentChanged == true) {
+			// Paint axis and grid
+			this.horAxis.paint(g);
+			this.verAxis.paint(g);
+			this.verGrid.paint(g);
+			this.horGrid.paint(g);
+		}
 
 		// Paint datasets
 		for (PlotDataSet plotDataSet : this.dataSets) {
@@ -327,7 +335,8 @@ public class RectangularPlot extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		Model model = (Model) o;
 		this.updateDatasets(model);
-		repaint();
+		//repaint();
+		paintImmediately(0, 0, getWidth(), getHeight());
 	}
 
 	/**
@@ -463,5 +472,28 @@ public class RectangularPlot extends JPanel implements Observer {
 			ids [i] = dataSetIDs.get(i);
 		}
 		return ids;
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		componentChanged = true;
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
