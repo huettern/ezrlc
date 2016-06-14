@@ -504,6 +504,16 @@ public class RectPlotAddMeasurementWindow implements ActionListener {
 	// Public Functions
 	// ================================================================================
 	/**
+	 * Resets the dialog to its default settings
+	 */
+	public void reset() {
+		resetButtons();
+		rdbtnFile.setEnabled(false);
+		rdbtnModel.setEnabled(false);
+		rdbtnCompare.setEnabled(false);
+		btnOk.setEnabled(false);
+	}
+	/**
 	 * Set the filename
 	 * @param s filename
 	 */
