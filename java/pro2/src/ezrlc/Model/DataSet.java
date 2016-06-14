@@ -62,9 +62,6 @@ public class DataSet {
 	 * @return double array
 	 */
 	public double[] getXData() {
-//		double[] d = new double[this.x_data.length];
-//		System.arraycopy(this.x_data, 0, d, 0, this.x_data.length);
-//		return d;
 		return this.x_data;
 	}
 	
@@ -73,9 +70,6 @@ public class DataSet {
 	 * @return double array
 	 */
 	public double[] getYData() {
-//		double[] d = new double[this.y_data.length];
-//		System.arraycopy(this.y_data, 0, d, 0, this.y_data.length);
-//		return d;
 		return this.y_data;
 	}
 	
@@ -84,9 +78,6 @@ public class DataSet {
 	 * @return complex array
 	 */
 	public Complex[] getYDataComplex() {
-//		Complex[] d = new Complex[this.y_data_cpx.length];
-//		System.arraycopy(this.y_data_cpx, 0, d, 0, this.y_data_cpx.length);
-//		return d;
 		return this.y_data_cpx;
 	}
 	

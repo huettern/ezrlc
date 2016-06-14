@@ -31,7 +31,6 @@ public class Grid {
 
 	private int size = 0; // Size of the grid (height or width)
 
-//	List<GridLine> lines = new ArrayList<GridLine>();
 	private GridLine[] lines;
 
 	// ================================================================================
@@ -85,20 +84,17 @@ public class Grid {
 		this.numLines = points.size();
 		int length = 0;
 
-//		lines = new ArrayList<GridLine>(numLines);
 		lines = new GridLine[numLines];
 		int ctr = 0;
 		if (this.or == Orientation.VERTICAL) {
 			length = this.size;
 			for (Point point : points) {
-//				lines.add(new GridLine(this.color, point, new Point(point.x, length)));
 				lines[ctr++] = new GridLine(this.color, point, new Point(point.x, length));
 			}
 		}
 		if (this.or == Orientation.HORIZONTAL) {
 			length = parent.getWidth() - this.size;
 			for (Point point : points) {
-//				lines.add(new GridLine(this.color, point, new Point(length, point.y)));
 				lines[ctr++] = new GridLine(this.color, point, new Point(length, point.y));
 			}
 		}
