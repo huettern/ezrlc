@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="javadoc">
-    <target name="javadoc">
-        <javadoc access="public" author="true" classpath="lib/commons-math3-3.6/commons-math3-3.6-javadoc.jar:/Users/noah/.m2/repository/org/apache/commons/commons-math3/3.6/commons-math3-3.6.jar:lib/commons-math3-3.6/commons-math3-3.6.jar" destdir="doc/javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="ezrlc.MVC,ezrlc.View,ezrlc.RFData,ezrlc.Plot,ezrlc.util,ezrlc.ModelCalculation,ezrlc.Plot.RectPlot,ezrlc.Plot.SmithChart,ezrlc" source="1.8" sourcepath="src" splitindex="true" use="true" version="true"/>
-    </target>
-</project>
