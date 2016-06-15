@@ -464,7 +464,7 @@ public class RectangularPlot extends JPanel implements Observer, ComponentListen
 
 	/**
 	 * Returns the dataset IDs displayed in the plot
-	 * @return
+	 * @return int array of data set ids
 	 */
 	public int[] getDataSetIDs() {
 		int[] ids = new int[dataSetIDs.size()];

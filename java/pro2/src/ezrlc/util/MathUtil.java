@@ -468,9 +468,9 @@ public class MathUtil {
 	/**
 	 * Sanitizes a double array, meaning
 	 * - replace NaN by zero
-	 * - replace -infinity by -Double.MAX_VALUE
-	 * - replace infinity by Double.MAX_VALUE
-	 * @param outdata
+	 * - replace -infinity by zero
+	 * - replace infinity by zero
+	 * @param outdata data to be processed
 	 */
 	public static void sanitize(double[] outdata) {
 		for(int i = 0; i < outdata.length; i++) {

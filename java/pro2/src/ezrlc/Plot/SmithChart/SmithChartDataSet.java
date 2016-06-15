@@ -51,8 +51,6 @@ public class SmithChartDataSet {
 	 *            List of complex data
 	 * @param freq
 	 *            frequency points
-	 * @param grid
-	 *            grid
 	 * @param nm
 	 *            new measurement
 	 */

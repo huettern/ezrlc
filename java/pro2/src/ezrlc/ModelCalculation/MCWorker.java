@@ -128,6 +128,7 @@ public class MCWorker extends Thread {
 			Complex[] ys = MCUtil.applyMCOpsToData(eqCircuit.getOps(), f, s);
 			eqCircuit.setZ0(rref);
 			eqCircuit.optimize(ys);
+			absParams(eqCircuit);
 			success(eqCircuit);
 			return;
 		}
@@ -322,6 +323,7 @@ public class MCWorker extends Thread {
 		best.setOps(ops);
 		best.setWVector(w);
 		best.setZ0(rref);
+		absParams(best);
 		success(best);
 	}
 
@@ -349,6 +351,17 @@ public class MCWorker extends Thread {
 			p[6] = ops.params[6];
 		eqc.setParameters(p);
 		return eqc;
+	}
+	
+	/**
+	 * Changes all the parameters in the Equivalent circuit c with their absolute value
+	 * @param c MCEqCircuit to be changed
+	 */
+	private void absParams(MCEqCircuit c) {
+		// absolute the parameters
+		for(int i = 0; i < 7; i++) {
+			c.setParameter(i, Math.abs(c.getParameters()[i]));
+		}
 	}
 
 	// ================================================================================
