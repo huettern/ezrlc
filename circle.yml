@@ -9,9 +9,4 @@ dependencies:
   ## Customize test commands
 test:
   override:
-  - ls -al 
-  - cd java 
-  - ls -al
-  - cd java
-  - ls -al
-  - ant
+  - ant -buildfile java/build.xml
