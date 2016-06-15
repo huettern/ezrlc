@@ -180,6 +180,7 @@ public class UIUtil {
 			img = ImageIO.read(input);
 			tracker.addImage(img, 0);
 			tracker.waitForID(0);
+			input.close();
 		} catch (Exception e) {
 			System.out.println("Can not load image: " + strBild);
 		}
@@ -207,6 +208,7 @@ public class UIUtil {
 			img = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 			tracker.addImage(img, 0);
 			tracker.waitForID(0);
+			input.close();
 		} catch (InterruptedException ex) {
 			System.out.println("Can not load image: " + strBild);
 		} catch (IOException ex) {
@@ -228,10 +230,11 @@ public class UIUtil {
 	 * @return Icon
 	 */
 	public static ImageIcon loadResourceIcon(String strBild, int width, int height) {
-		InputStream input = UIUtil.class.getResourceAsStream("/img/" + strBild);
 		ImageIcon icon = null;
 		try {
+			InputStream input = UIUtil.class.getResourceAsStream("/img/" + strBild);
 			icon = new ImageIcon(ImageIO.read(input).getScaledInstance(width, height, Image.SCALE_SMOOTH));
+			input.close();
 		} catch (IOException e) {
 			System.out.println("Can not load image: " + strBild);
 		}
@@ -245,10 +248,11 @@ public class UIUtil {
 	 * @return Icon
 	 */
 	public static ImageIcon loadResourceIcon(String strBild) {
-		InputStream input = UIUtil.class.getResourceAsStream("/img/" + strBild);
 		ImageIcon icon = null;
 		try {
+			InputStream input = UIUtil.class.getResourceAsStream("/img/" + strBild);
 			icon = new ImageIcon(ImageIO.read(input));
+			input.close();
 		} catch (IOException e) {
 			System.out.println("Can not load image: " + strBild);
 		}

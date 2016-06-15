@@ -2,6 +2,7 @@ package ezrlc;
 
 import java.awt.EventQueue;
 
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import ezrlc.Controller.Controller;
@@ -26,7 +27,7 @@ public class EzRLC {
 	    catch(Exception e){ 
 	    }
 		   
-		EventQueue.invokeLater(new Runnable() {
+	   SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				Thread.currentThread().setPriority(8); //Thread.MAX_PRIORITY

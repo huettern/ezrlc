@@ -128,7 +128,7 @@ public class MainView extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		workPanel.update(o, arg);
 		navPanel.update(o, arg);
-
+		revalidate();
 	}
 
 	/**
