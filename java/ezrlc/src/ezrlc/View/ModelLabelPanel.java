@@ -37,7 +37,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	// Local Variables
 	// ================================================================================
 	private Controller controller;
-	private boolean lockUpdate;
+	private boolean lockUpdate = false;
 	private boolean modelPanelBuilt = false;
 
 	private JEngineerField txtC0;
