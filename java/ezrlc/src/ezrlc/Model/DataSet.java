@@ -32,6 +32,7 @@ public class DataSet {
 	 *            x data
 	 * @param y_data
 	 *            y data
+	 * @param nm nm
 	 */
 	public DataSet(double[] x_data, double[] y_data, RectPlotNewMeasurement nm) {
 		// Copy Data
@@ -50,6 +51,7 @@ public class DataSet {
 	 *            x data
 	 * @param y_data
 	 *            y data
+	 * @param nm nm
 	 */
 	public DataSet(double[] x_data, Complex[] y_data, SmithChartNewMeasurement nm) {
 		// Copy Data

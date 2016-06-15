@@ -23,7 +23,7 @@ hs_err_pid*
 .recommenders/
 
 # Maven
-java/pro2/target/
+java/ezrlc/target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -36,5 +36,5 @@ buildNumber.properties
 # Other
 *.tmp
 *log.txt
-java/pro2/tmp.txt
-java/pro2/doc/javadoc/*
+java/ezrlc/tmp.txt
+java/ezrlc/doc/*

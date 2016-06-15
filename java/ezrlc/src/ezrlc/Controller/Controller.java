@@ -124,8 +124,6 @@ public class Controller {
 	/**
 	 * removes a dataset in the model
 	 * 
-	 * @param plottype
-	 *            plottype
 	 * @param id
 	 *            id
 	 */
@@ -215,6 +213,7 @@ public class Controller {
 
 	/**
 	 * Stops the worker and deletes all eqc related data
+	 * @param eqcID eqcID
 	 */
 	public void killWorker(int eqcID) {
 		model.killWorker();
