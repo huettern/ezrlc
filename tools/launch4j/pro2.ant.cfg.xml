@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>/Users/noah/git/pro2/java/pro2/target/archive-tmp/pro2-.jar</jar>
-  <outfile>/Users/noah/Desktop/pro2-0.1.exe</outfile>
+  <jar>/Users/noah/git/pro2/java/ezrlc/ezrlc.jar</jar>
+  <outfile>/Users/noah/Desktop/ezrlc-0.1.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
