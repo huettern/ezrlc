@@ -9,8 +9,6 @@ FHNW 2nd Semester project for calculating equivalent circuits based upon touchst
 | Branch   | Status |
 |----------|--------|
 | **master**   | [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/master.svg?style=shield&amp;circle-token=1242b68593e38e62a5369f0a6cf95e30adc733d2)](https://circleci.com/gh/noah95/pro2/tree/master)       |
-| **solver**   | [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/solver.svg?style=shield&amp;circle-token=1242b68593e38e62a5369f0a6cf95e30adc733d2)](https://circleci.com/gh/noah95/pro2/tree/master)       |
-| **igassist** | [![Circle CI](https://circleci.com/gh/noah95/pro2/tree/igassist.svg?style=shield&amp;circle-token=1242b68593e38e62a5369f0a6cf95e30adc733d2)](https://circleci.com/gh/noah95/pro2/tree/master)       |
 
 ------------
 
@@ -26,7 +24,7 @@ java -jar ezrlc/ezrlc.jar
 ### Build javadoc
 ```
 cd java/
-ant -buildfile pro2/javadoc.xml
+ant -buildfile ezrlc/javadoc.xml
 ```
 To push javadoc to github pages, follow the following guide: https://vaadin.com/blog/-/blogs/host-your-javadoc-s-online-in-github
 
