@@ -10,4 +10,5 @@ dependencies:
 test:
   override: 
   - cd java
-  - ant -buildfile build.xml 
+  - ls -al
+  - ant
