@@ -303,133 +303,156 @@ public class MCUtil {
 	 * @return parameter list
 	 */
 	public static final double[] topo2Param(CircuitType t, double[] p) {
-		double[] res = { 0, 0, 0, 0, 0, 0, 0 };
+		boolean[] lock = { false, false, false, false, false, false, false };
+		double[] pzero = { 0, 0, 0, 0, 0, 0, 0 };
+		return MCUtil.topo2Param(t, p, lock, pzero);
+	}
 
+	/**
+	 * Converts a shortenned, CircuitType specific parameterlist p to the
+	 * universal parameter list, adding locked parameters
+	 * 
+	 * @param t
+	 *            topology
+	 * @param p
+	 *            short form parameters
+	 * @param lock
+	 *            parameter lock array
+	 * @param orig
+	 *            original parameters
+	 * @return parameter list
+	 */
+	public static final double[] topo2Param(CircuitType t, double[] p, boolean[] lock, double[] orig) {
+		double[] res = new double[7];
+		for(int i = 0; i < 7; i++) res[i] = orig[i];
+
+		int ctr = 0;
+		ctr = 0;
 		switch (t) {
 		case MODEL0:
-			res[0] = p[0];
-			res[4] = p[1];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
 			break;
 		case MODEL1:
-			res[0] = p[0];
-			res[4] = p[1];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
 			break;
 		case MODEL2:
-			res[0] = p[0];
-			res[5] = p[1];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL3:
-			res[0] = p[0];
-			res[5] = p[1];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL4:
-			res[0] = p[0];
-			res[4] = p[1];
-			res[5] = p[2];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL5:
-			res[0] = p[0];
-			res[4] = p[1];
-			res[5] = p[2];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL6:
-			res[0] = p[0];
-			res[4] = p[1];
-			res[5] = p[2];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL7:
-			res[0] = p[0];
-			res[4] = p[1];
-			res[5] = p[2];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL8:
-			res[0] = p[0];
-			res[3] = p[1];
-			res[5] = p[2];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[3] == false) res[3] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL9:
-			res[0] = p[0];
-			res[3] = p[1];
-			res[5] = p[2];
-			res[5] = p[3];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[3] == false) res[3] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL10:
-			res[0] = p[0];
-			res[3] = p[1];
-			res[4] = p[2];
-			res[5] = p[3];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[3] == false) res[3] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL11:
-			res[0] = p[0];
-			res[3] = p[1];
-			res[4] = p[2];
-			res[5] = p[3];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[3] == false) res[3] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL12:
-			res[0] = p[0];
-			res[4] = p[1];
-			res[5] = p[2];
-			res[6] = p[3];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
+			if(lock[6] == false) res[6] = p[ctr++];
 			break;
 		case MODEL13:
-			res[0] = p[0];
-			res[1] = p[1];
-			res[2] = p[2];
-			res[4] = p[3];
-			res[5] = p[4];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[1] == false) res[1] = p[ctr++];
+			if(lock[2] == false) res[2] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL14:
-			res[0] = p[0];
-			res[1] = p[1];
-			res[2] = p[2];
-			res[4] = p[3];
-			res[5] = p[4];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[1] == false) res[1] = p[ctr++];
+			if(lock[2] == false) res[2] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL15:
-			res[0] = p[0];
-			res[1] = p[1];
-			res[2] = p[2];
-			res[4] = p[3];
-			res[5] = p[4];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[1] == false) res[1] = p[ctr++];
+			if(lock[2] == false) res[2] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL16:
-			res[0] = p[0];
-			res[1] = p[1];
-			res[2] = p[2];
-			res[3] = p[3];
-			res[5] = p[4];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[1] == false) res[1] = p[ctr++];
+			if(lock[2] == false) res[2] = p[ctr++];
+			if(lock[3] == false) res[3] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL17:
-			res[0] = p[0];
-			res[1] = p[1];
-			res[2] = p[2];
-			res[3] = p[3];
-			res[4] = p[4];
-			res[5] = p[5];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[1] == false) res[1] = p[ctr++];
+			if(lock[2] == false) res[2] = p[ctr++];
+			if(lock[3] == false) res[3] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL18:
-			res[0] = p[0];
-			res[1] = p[1];
-			res[2] = p[2];
-			res[3] = p[3];
-			res[4] = p[4];
-			res[5] = p[5];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[1] == false) res[1] = p[ctr++];
+			if(lock[2] == false) res[2] = p[ctr++];
+			if(lock[3] == false) res[3] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL19:
-			res[0] = p[0];
-			res[1] = p[1];
-			res[2] = p[2];
-			res[3] = p[3];
-			res[4] = p[4];
-			res[5] = p[5];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[1] == false) res[1] = p[ctr++];
+			if(lock[2] == false) res[2] = p[ctr++];
+			if(lock[3] == false) res[3] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
 			break;
 		case MODEL20:
-			res[0] = p[0];
-			res[1] = p[1];
-			res[2] = p[2];
-			res[4] = p[3];
-			res[5] = p[4];
-			res[6] = p[5];
+			if(lock[0] == false) res[0] = p[ctr++];
+			if(lock[1] == false) res[1] = p[ctr++];
+			if(lock[2] == false) res[2] = p[ctr++];
+			if(lock[4] == false) res[4] = p[ctr++];
+			if(lock[5] == false) res[5] = p[ctr++];
+			if(lock[6] == false) res[6] = p[ctr++];
 			break;
 		}
 
@@ -446,24 +469,40 @@ public class MCUtil {
 	 * @return shortenned parameter array
 	 */
 	public static final double[] shortenParam(CircuitType type, double[] p) {
-		// int ctr = 0;
-		// int ctr2 = 0;
-		// for (int i = 0; i < p.length; i++){
-		// if(p[i] != 0.0) ctr++;
-		// }
-		// copy
 		int n = modelNParameters[type.ordinal()];
 		double[] res = new double[n];
-		// for (int i = 0; i < p.length; i++){
-		// if(p[i] != 0.0) res[ctr2++] = p[i];
-		// }
-		//
 		for (int i = 0; i < 7; i++) {
 			if (parameter2TopoIdx[type.ordinal()][i] <= n) {
 				res[parameter2TopoIdx[type.ordinal()][i]] = p[i];
 			}
 		}
+		return res;
+	}
 
+	/**
+	 * Shortens the input array by deleting all zero valeus and locked values
+	 * 
+	 * @param p
+	 *            parameter array
+	 * @param type
+	 *            Circuit type
+	 * @param lock
+	 *            parameter lock array
+	 * @return shortenned parameter array
+	 */
+	public static final double[] shortenParam(CircuitType type, double[] p, boolean[] lock) {
+		int n = 0;
+		for (int i = 0; i < 7; i++) {
+			if ((lock[i] == false) && (parameter2TopoIdx[type.ordinal()][i] < 7))
+				n++;
+		}
+		double[] res = new double[n];
+		int ctr = 0;
+		for (int i = 0; i < 7; i++) {
+			if ((parameter2TopoIdx[type.ordinal()][i] < 7) && (lock[i] == false)) {
+				res[ctr++] = p[i];
+			}
+		}
 		return res;
 	}
 }

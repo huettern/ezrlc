@@ -1,6 +1,7 @@
 package ezrlc.View;
 
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,7 @@ import java.util.Observable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -47,6 +49,14 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	private JEngineerField txtL0;
 	private JEngineerField txtF;
 	private JEngineerField txtR1;
+
+	private JCheckBox chbxC0lock;
+	private JCheckBox chbxR0lock;
+	private JCheckBox chbxFlock;
+	private JCheckBox chbxAlphalock;
+	private JCheckBox chbxR1lock;
+	private JCheckBox chbxL0lock;
+	private JCheckBox chbxC1lock;
 
 	private double[] parameters;
 
@@ -204,8 +214,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			txtR0 = new JEngineerField(4, 3, "E24");
 			txtR0.getDocument().addDocumentListener(this);
 			txtR0.addActionListener(this);
-			paramPanel.add(txtR0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
+			paramPanel.add(txtR0, new GridBagConstraints(1, yctr, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			chbxR0lock = new JCheckBox();
+			chbxR0lock.setToolTipText("Lock component value");
+			paramPanel.add(chbxR0lock, new GridBagConstraints(2, yctr++, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		}
 		if (f0EditableLUT[ordinal]) {
 			JLabel lblF = new JLabel("f");
@@ -214,8 +228,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			txtF = new JEngineerField(4, 3, "E24");
 			txtF.getDocument().addDocumentListener(this);
 			txtF.addActionListener(this);
-			paramPanel.add(txtF, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
+			paramPanel.add(txtF, new GridBagConstraints(1, yctr, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			chbxFlock = new JCheckBox();
+			chbxFlock.setToolTipText("Lock component value");
+			paramPanel.add(chbxFlock, new GridBagConstraints(2, yctr++, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		}
 		if (alphaEditableLUT[ordinal]) {
 			JLabel lbla = new JLabel("\u03B1");
@@ -224,8 +242,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			txtAlpha = new JEngineerField(4, 3, "E24");
 			txtAlpha.getDocument().addDocumentListener(this);
 			txtAlpha.addActionListener(this);
-			paramPanel.add(txtAlpha, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
+			paramPanel.add(txtAlpha, new GridBagConstraints(1, yctr, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			chbxAlphalock = new JCheckBox();
+			chbxAlphalock.setToolTipText("Lock component value");
+			paramPanel.add(chbxAlphalock, new GridBagConstraints(2, yctr++, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		}
 		if (r1EditableLUT[ordinal]) {
 			JLabel lblR1 = new JLabel("<html> R<sub>1</sub> </html>");
@@ -234,8 +256,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			txtR1 = new JEngineerField(4, 3, "E24");
 			txtR1.getDocument().addDocumentListener(this);
 			txtR1.addActionListener(this);
-			paramPanel.add(txtR1, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
+			paramPanel.add(txtR1, new GridBagConstraints(1, yctr, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			chbxR1lock = new JCheckBox();
+			chbxR1lock.setToolTipText("Lock component value");
+			paramPanel.add(chbxR1lock, new GridBagConstraints(2, yctr++, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		}
 		if (lEditableLUT[ordinal]) {
 			JLabel lblL = new JLabel("L");
@@ -244,8 +270,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			txtL0 = new JEngineerField(4, 3, "E24");
 			txtL0.getDocument().addDocumentListener(this);
 			txtL0.addActionListener(this);
-			paramPanel.add(txtL0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
+			paramPanel.add(txtL0, new GridBagConstraints(1, yctr, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			chbxL0lock = new JCheckBox();
+			chbxL0lock.setToolTipText("Lock component value");
+			paramPanel.add(chbxL0lock, new GridBagConstraints(2, yctr++, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		}
 		if (c0EditableLUT[ordinal]) {
 			JLabel lblc0 = new JLabel("<html> C<sub>0</sub> </html>");
@@ -254,8 +284,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			txtC0 = new JEngineerField(4, 3, "E24");
 			txtC0.getDocument().addDocumentListener(this);
 			txtC0.addActionListener(this);
-			paramPanel.add(txtC0, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
+			paramPanel.add(txtC0, new GridBagConstraints(1, yctr, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			chbxC0lock = new JCheckBox();
+			chbxC0lock.setToolTipText("Lock component value");
+			paramPanel.add(chbxC0lock, new GridBagConstraints(2, yctr++, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		}
 		if (c1EditableLUT[ordinal]) {
 			JLabel lblc1 = new JLabel("<html> C<sub>1</sub> </html>");
@@ -264,8 +298,12 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			txtC1 = new JEngineerField(4, 3, "E24");
 			txtC1.getDocument().addDocumentListener(this);
 			txtC1.addActionListener(this);
-			paramPanel.add(txtC1, new GridBagConstraints(1, yctr++, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
+			paramPanel.add(txtC1, new GridBagConstraints(1, yctr, 1, 1, 1.0, 0.0, GridBagConstraints.WEST,
 					GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			chbxC1lock = new JCheckBox();
+			chbxC1lock.setToolTipText("Lock component value");
+			paramPanel.add(chbxC1lock, new GridBagConstraints(2, yctr++, 1, 1, 0.0, 0.0, GridBagConstraints.WEST,
+					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		}
 		modelPanelBuilt = true;
 	}
@@ -332,6 +370,22 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 			lockUpdate = false;
 		}
 	}
+	
+	/**
+	 * Reads the lock chechboxes and stores them into an array fitting to the parameter array
+	 * @return parameter array with lock flags
+	 */
+	private boolean[] parseLockBox() {
+		boolean[] l = new boolean[7];
+		if(chbxR0lock != null) l[0] = chbxR0lock.isSelected(); else l[0] = false;
+		if(chbxFlock != null) l[1] = chbxFlock.isSelected(); else l[1] = false;
+		if(chbxAlphalock != null) l[2] = chbxAlphalock.isSelected(); else l[2] = false;
+		if(chbxR1lock != null) l[3] = chbxR1lock.isSelected(); else l[3] = false;
+		if(chbxL0lock != null) l[4] = chbxL0lock.isSelected(); else l[4] = false;
+		if(chbxC0lock != null) l[5] = chbxC0lock.isSelected(); else l[5] = false;
+		if(chbxC1lock != null) l[6] = chbxC1lock.isSelected(); else l[6] = false;
+		return l;
+	}
 
 	// ================================================================================
 	// Public Functions
@@ -350,8 +404,9 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		} else if (e.getSource() == btnOptimize) {
 			btnOptimize.setEnabled(false);
 			btnDelete.setEnabled(false);
+			boolean[] lock = parseLockBox();
 			title.setText("Optimizing Model...");
-			controller.optimizeEqCircuit(eqcID);
+			controller.optimizeEqCircuit(eqcID, lock);
 		} else {
 			tuner();
 		}

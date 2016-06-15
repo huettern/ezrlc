@@ -1,5 +1,7 @@
 package ezrlc.ModelCalculation;
 
+import java.util.Arrays;
+
 import org.apache.commons.math3.analysis.MultivariateFunction;
 
 import ezrlc.util.Complex;
@@ -112,7 +114,7 @@ public class MCErrorSum implements MultivariateFunction {
 	@Override
 	public double value(double[] params) {
 		// set new parameter
-		double[] p = MCUtil.topo2Param(this.circuit.getCircuitType(), params);
+		double[] p = MCUtil.topo2Param(this.circuit.getCircuitType(), params, circuit.getLock(), circuit.getParameters());
 		circuit.setParameters(p);
 		// get s parameters
 		Complex[] s = circuit.getS();
@@ -125,6 +127,8 @@ public class MCErrorSum implements MultivariateFunction {
 		}
 		// calc error
 		double error = MCErrorSum.getError(magmeas, magS); // Complex oder mag??
+//		System.out.println("Params: " +Arrays.toString(p));
+//		System.out.println("   Err: " +error);
 		return error;
 	}
 

@@ -41,6 +41,7 @@ public class MCEqCircuit implements Runnable {
 
 	private double[] parameters;
 	private double[] shortParameters;
+	private boolean[] lock = {false,false,false,false,false,false,false};
 
 	private double[] wvector;
 
@@ -73,7 +74,7 @@ public class MCEqCircuit implements Runnable {
 	 */
 	public MCEqCircuit(CircuitType circuitType) {
 		this.circuitType = circuitType;
-		initOptimizer();
+		initOptimizer(MCUtil.modelNParameters[this.circuitType.ordinal()]);
 		parameters = new double[7];
 		for (int i = 0; i < 7; i++) {
 			parameters[i] = 0.0;
@@ -90,7 +91,7 @@ public class MCEqCircuit implements Runnable {
 	 */
 	public MCEqCircuit(CircuitType circuitType, double[] params) {
 		this.circuitType = circuitType;
-		initOptimizer();
+		initOptimizer(MCUtil.modelNParameters[this.circuitType.ordinal()]);
 		parameters = new double[7];
 		System.arraycopy(params, 0, this.parameters, 0, params.length);
 	}
@@ -160,6 +161,23 @@ public class MCEqCircuit implements Runnable {
 
 	public MCOptions getOps() {
 		return ops;
+	}
+	
+	/**
+	 * Stores the lock parameters array
+	 * @param lock
+	 *            lock parameter array
+	 */
+	public void setLock(boolean[] lock) {
+		this.lock = lock;
+	}
+	
+	/**
+	 * Returns the parameter lock array
+	 * @return parameter lock array
+	 */
+	public boolean[] getLock() {
+		return lock;
 	}
 
 	// ================================================================================
@@ -396,18 +414,21 @@ public class MCEqCircuit implements Runnable {
 	 */
 	public void optimize(Complex[] ys) {
 		// shorten parameters to optimize
-		shortParameters = MCUtil.shortenParam(circuitType, parameters);
+		shortParameters = MCUtil.shortenParam(circuitType, parameters, lock);
+		if(shortParameters.length == 0) return;
+		initOptimizer(shortParameters.length);
 		errorFunction = new MCErrorSum(ys, this);
 		optimum = null;
 		try {
 			optimum = optimizer.optimize(new MaxEval(10000), new ObjectiveFunction(errorFunction), GoalType.MINIMIZE,
 					new InitialGuess(shortParameters), new NelderMeadSimplex(optStep));
-			parameters = MCUtil.topo2Param(circuitType, optimum.getPoint());
+			parameters = MCUtil.topo2Param(circuitType, optimum.getPoint(), lock, parameters);
 		} catch (TooManyEvaluationsException ex) {
 			// This exception can be ignored. If max eval is reached, the recent
 			// parameters are stored
 			// and no null pointer can appear
-			parameters = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+			//parameters = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+			System.err.println("Max Eval");
 		}
 		// save new parameters
 	}
@@ -438,8 +459,7 @@ public class MCEqCircuit implements Runnable {
 	/**
 	 * Inits the optimizer
 	 */
-	private void initOptimizer() {
-		int nelements = MCUtil.modelNParameters[this.circuitType.ordinal()];
+	private void initOptimizer(int nelements) {
 		optStep = new double[nelements];
 		for (int i = 0; i < nelements; i++) {
 			optStep[i] = optStepDefault;

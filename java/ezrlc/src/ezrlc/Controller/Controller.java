@@ -206,14 +206,18 @@ public class Controller {
 	 * 
 	 * @param eqcID
 	 *            eqcID
+	 * @param lock
+	 *            lock parameter array
 	 */
-	public void optimizeEqCircuit(int eqcID) {
-		model.optimizeEqCircuit(eqcID);
+	public void optimizeEqCircuit(int eqcID, boolean[] lock) {
+		model.optimizeEqCircuit(eqcID, lock);
 	}
 
 	/**
 	 * Stops the worker and deletes all eqc related data
-	 * @param eqcID eqcID
+	 * 
+	 * @param eqcID
+	 *            eqcID
 	 */
 	public void killWorker(int eqcID) {
 		model.killWorker();

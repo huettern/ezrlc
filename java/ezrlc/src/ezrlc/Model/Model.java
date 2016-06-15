@@ -577,11 +577,14 @@ public class Model extends Observable {
 	 * 
 	 * @param eqcID
 	 *            id
+	 * @param lock
+	 *            lock parameter array
 	 */
-	public void optimizeEqCircuit(int eqcID) {
+	public void optimizeEqCircuit(int eqcID, boolean[] lock) {
 		// Create worker, set data and start it
 		worker = new MCWorker(this, "MCWorker-EQCOptimizer-" + eqcID);
 		worker.setEQCircuit(eqCircuits.get(eqcID));
+		worker.setLock(lock);
 		worker.start();
 	}
 

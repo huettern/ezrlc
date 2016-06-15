@@ -34,6 +34,7 @@ public class MCWorker extends Thread {
 
 	private MCOptions ops;
 	private MCEqCircuit eqCircuit;
+	private boolean[] lock;
 
 	private WorkerMode workerMode;
 
@@ -71,6 +72,15 @@ public class MCWorker extends Thread {
 		eqCircuit = mcEqCircuit;
 		ops = eqCircuit.getOps();
 		workerMode = WorkerMode.OPT_ONLY;
+	}
+
+	/**
+	 * Stores the lock parameters array
+	 * @param lock
+	 *            lock parameter array
+	 */
+	public void setLock(boolean[] lock) {
+		this.lock = lock;
 	}
 
 	// ================================================================================
@@ -128,6 +138,7 @@ public class MCWorker extends Thread {
 		if (workerMode == WorkerMode.OPT_ONLY) {
 			Complex[] ys = MCUtil.applyMCOpsToData(eqCircuit.getOps(), f, s);
 			eqCircuit.setZ0(rref);
+			eqCircuit.setLock(lock);
 			eqCircuit.optimize(ys);
 			absParams(eqCircuit);
 			success(eqCircuit);

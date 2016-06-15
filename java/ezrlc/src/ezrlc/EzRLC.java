@@ -1,10 +1,14 @@
 package ezrlc;
 
+import java.util.Arrays;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import ezrlc.Controller.Controller;
 import ezrlc.Model.Model;
+import ezrlc.ModelCalculation.MCUtil;
+import ezrlc.ModelCalculation.MCEqCircuit.CircuitType;
 import ezrlc.View.MainView;
 
 /**
