@@ -8,7 +8,10 @@ dependencies:
 
   ## Customize test commands
 test:
-  override: 
+  override:
+  - ls -al 
+  - cd java 
+  - ls -al
   - cd java
   - ls -al
   - ant
