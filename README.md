@@ -20,8 +20,7 @@ FHNW 2nd Semester project for calculating equivalent circuits based upon touchst
 ```
 cd java/
 ant
-cp pro2/target/archive-tmp/pro2-.jar .
-java -jar pro2-.jar
+java -jar ezrlc/ezrlc.jar
 ```
 
 ### Build javadoc

@@ -343,8 +343,6 @@ public class RectangularPlot extends JPanel implements Observer, ComponentListen
 	public void update(Observable o, Object arg) {
 		Model model = (Model) o;
 		this.updateDatasets(model);
-		// repaint();
-		paintImmediately(0, 0, getWidth(), getHeight());
 	}
 
 	/**
