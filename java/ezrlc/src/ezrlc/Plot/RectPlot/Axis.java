@@ -383,7 +383,7 @@ public class Axis {
 					tic_pos[i].x = this.start_x + (int) (i * spacing);
 					tic_pos[i].y = this.start_y;
 				}
-				expLabelLocation.x = label_posx[label_count];
+				expLabelLocation.x = label_posx[label_count-1];
 			} else if (this.scale == Scale.LOG) {
 				// calculate min and max exponent
 				double min_exp = Math.log10(this.min);
