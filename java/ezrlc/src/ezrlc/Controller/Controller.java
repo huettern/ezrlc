@@ -5,6 +5,7 @@ import java.io.File;
 import ezrlc.Model.Model;
 import ezrlc.Model.RectPlotNewMeasurement;
 import ezrlc.Model.SmithChartNewMeasurement;
+import ezrlc.ModelCalculation.MCOptSettings;
 import ezrlc.ModelCalculation.MCOptions;
 import ezrlc.Plot.Figure;
 import ezrlc.View.MainView;
@@ -72,6 +73,16 @@ public class Controller {
 	 */
 	public void manualNotify() {
 		model.manualNotify();
+	}
+
+	/**
+	 * Forces the model to trigger a notify to the observers
+	 * 
+	 * @param arg
+	 *            notify argument
+	 */
+	public void manualNotify(Object arg) {
+		model.manualNotify(arg);
 	}
 
 	/**
@@ -208,9 +219,11 @@ public class Controller {
 	 *            eqcID
 	 * @param lock
 	 *            lock parameter array
+	 * @param ops
+	 *            Optimizer options
 	 */
-	public void optimizeEqCircuit(int eqcID, boolean[] lock) {
-		model.optimizeEqCircuit(eqcID, lock);
+	public void optimizeEqCircuit(int eqcID, boolean[] lock, MCOptSettings ops) {
+		model.optimizeEqCircuit(eqcID, lock, ops);
 	}
 
 	/**

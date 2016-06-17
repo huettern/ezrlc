@@ -8,6 +8,7 @@ import java.util.Observable;
 
 import ezrlc.Model.RectPlotNewMeasurement.Unit;
 import ezrlc.ModelCalculation.MCEqCircuit;
+import ezrlc.ModelCalculation.MCOptSettings;
 import ezrlc.ModelCalculation.MCOptions;
 import ezrlc.ModelCalculation.MCUtil;
 import ezrlc.ModelCalculation.MCWorker;
@@ -353,6 +354,18 @@ public class Model extends Observable {
 	}
 
 	/**
+	 * Triggers a notify to the observers
+	 * 
+	 * @param arg
+	 *            notify argument
+	 */
+	public void manualNotify(Object arg) {
+		// mark as value changed
+		setChanged();
+		notifyObservers(arg);
+	}
+
+	/**
 	 * Get a dataset by its ID
 	 * 
 	 * @param id
@@ -579,12 +592,15 @@ public class Model extends Observable {
 	 *            id
 	 * @param lock
 	 *            lock parameter array
+	 * @param ops
+	 *            Optimizer options
 	 */
-	public void optimizeEqCircuit(int eqcID, boolean[] lock) {
+	public void optimizeEqCircuit(int eqcID, boolean[] lock, MCOptSettings ops) {
 		// Create worker, set data and start it
 		worker = new MCWorker(this, "MCWorker-EQCOptimizer-" + eqcID);
 		worker.setEQCircuit(eqCircuits.get(eqcID));
 		worker.setLock(lock);
+		worker.setOptimizerOps(ops);
 		worker.start();
 	}
 

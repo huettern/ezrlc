@@ -6,6 +6,7 @@ import java.util.List;
 import ezrlc.Model.Model;
 import ezrlc.ModelCalculation.MCEqCircuit.CircuitType;
 import ezrlc.RFData.RFData;
+import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.Complex;
 import ezrlc.util.MathUtil;
 
@@ -35,7 +36,8 @@ public class MCWorker extends Thread {
 	private MCOptions ops;
 	private MCEqCircuit eqCircuit;
 	private boolean[] lock;
-
+	private MCOptSettings optimizerOps = new MCOptSettings();
+	
 	private WorkerMode workerMode;
 
 	private boolean stopWorker = false;
@@ -82,6 +84,14 @@ public class MCWorker extends Thread {
 	public void setLock(boolean[] lock) {
 		this.lock = lock;
 	}
+	
+	/**
+	 * Set the optimizer options
+	 * @param ops optimizer options
+	 */
+	public void setOptimizerOps(MCOptSettings ops) {
+		this.optimizerOps = ops;
+	}
 
 	// ================================================================================
 	// Start Method
@@ -127,6 +137,7 @@ public class MCWorker extends Thread {
 		double[] f = rfData.getfData();
 		Complex[] s;
 		Complex[] z = rfData.getzData();
+		Complex[] y = rfData.getyData();
 
 		// S Scaler
 		double rref = MCSScaler.scale(rfData.getSData(50));
@@ -134,12 +145,21 @@ public class MCWorker extends Thread {
 		// Get new S Data
 		s = rfData.getSData(rref);
 
+
+		// ----------------------------------------
+		// Get Measurement value for opt
+		// ----------------------------------------
+		Complex[] ymeas = null;
+		if(optimizerOps.measType == MeasurementType.S) ymeas = MCUtil.applyMCOpsToData(ops, f, s);
+		if(optimizerOps.measType == MeasurementType.Y) ymeas = MCUtil.applyMCOpsToData(ops, f, y);
+		if(optimizerOps.measType == MeasurementType.Z) ymeas = MCUtil.applyMCOpsToData(ops, f, z);
+		
 		// if mode is optimize only, do it now
 		if (workerMode == WorkerMode.OPT_ONLY) {
-			Complex[] ys = MCUtil.applyMCOpsToData(eqCircuit.getOps(), f, s);
 			eqCircuit.setZ0(rref);
 			eqCircuit.setLock(lock);
-			eqCircuit.optimize(ys);
+			eqCircuit.setOptimizerOps(optimizerOps);
+			eqCircuit.optimize(ymeas);
 			absParams(eqCircuit);
 			success(eqCircuit);
 			return;
@@ -235,10 +255,10 @@ public class MCWorker extends Thread {
 		// get 2 best
 		branch2 = MCRank.sortByErrorZAbs(yz, branch2, 2);
 		// Optimize them
-		branch2.get(0).optimizeThreaded(ys);
+		branch2.get(0).optimizeThreaded(ymeas, optimizerOps);
 		t2_0 = new Thread(branch2.get(0), "EQC-Thread-t2_0");
 		t2_0.start();
-		branch2.get(1).optimizeThreaded(ys);
+		branch2.get(1).optimizeThreaded(ymeas, optimizerOps);
 		t2_1 = new Thread(branch2.get(1), "EQC-Thread-t2_1");
 		t2_1.start();
 
@@ -260,10 +280,10 @@ public class MCWorker extends Thread {
 			// get 2 best
 			branch1 = MCRank.sortByErrorZAbs(yz, branch1, 2);
 			// Optimize them
-			branch1.get(0).optimizeThreaded(ys);
+			branch1.get(0).optimizeThreaded(ymeas, optimizerOps);
 			t1_0 = new Thread(branch1.get(0), "EQC-Thread-t1_0");
 			t1_0.start();
-			branch1.get(1).optimizeThreaded(ys);
+			branch1.get(1).optimizeThreaded(ymeas, optimizerOps);
 			t1_1 = new Thread(branch1.get(1), "EQC-Thread-t1_1");
 			t1_1.start();
 		}

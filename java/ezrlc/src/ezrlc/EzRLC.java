@@ -10,6 +10,7 @@ import ezrlc.Model.Model;
 import ezrlc.ModelCalculation.MCUtil;
 import ezrlc.ModelCalculation.MCEqCircuit.CircuitType;
 import ezrlc.View.MainView;
+import ezrlc.View.OptimizerSettingsWindow;
 
 /**
  * EzRLC, contains main routine
@@ -25,6 +26,15 @@ public class EzRLC {
 	 *            command line arguments
 	 */
 	public static void main(String[] args) {
+//		Model model = new Model();
+//		MainView view = new MainView();
+//		Controller controller = new Controller(model, view);
+//
+//		view.setController(controller);
+//
+//		view.build();
+//		OptimizerSettingsWindow w= new OptimizerSettingsWindow(controller);
+//		w.show();
 		// look and feel
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

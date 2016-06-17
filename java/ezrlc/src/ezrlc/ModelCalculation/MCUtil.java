@@ -1,6 +1,7 @@
 package ezrlc.ModelCalculation;
 
 import ezrlc.ModelCalculation.MCEqCircuit.CircuitType;
+import ezrlc.RFData.RFData.ComplexModifier;
 import ezrlc.util.Complex;
 
 /**
@@ -324,135 +325,219 @@ public class MCUtil {
 	 */
 	public static final double[] topo2Param(CircuitType t, double[] p, boolean[] lock, double[] orig) {
 		double[] res = new double[7];
-		for(int i = 0; i < 7; i++) res[i] = orig[i];
+		for (int i = 0; i < 7; i++)
+			res[i] = orig[i];
 
 		int ctr = 0;
 		ctr = 0;
 		switch (t) {
 		case MODEL0:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
 			break;
 		case MODEL1:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
 			break;
 		case MODEL2:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL3:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL4:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL5:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL6:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL7:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL8:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[3] == false) res[3] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[3] == false)
+				res[3] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL9:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[3] == false) res[3] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[3] == false)
+				res[3] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL10:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[3] == false) res[3] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[3] == false)
+				res[3] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL11:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[3] == false) res[3] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[3] == false)
+				res[3] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL12:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
-			if(lock[6] == false) res[6] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
+			if (lock[6] == false)
+				res[6] = p[ctr++];
 			break;
 		case MODEL13:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[1] == false) res[1] = p[ctr++];
-			if(lock[2] == false) res[2] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[1] == false)
+				res[1] = p[ctr++];
+			if (lock[2] == false)
+				res[2] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL14:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[1] == false) res[1] = p[ctr++];
-			if(lock[2] == false) res[2] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[1] == false)
+				res[1] = p[ctr++];
+			if (lock[2] == false)
+				res[2] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL15:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[1] == false) res[1] = p[ctr++];
-			if(lock[2] == false) res[2] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[1] == false)
+				res[1] = p[ctr++];
+			if (lock[2] == false)
+				res[2] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL16:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[1] == false) res[1] = p[ctr++];
-			if(lock[2] == false) res[2] = p[ctr++];
-			if(lock[3] == false) res[3] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[1] == false)
+				res[1] = p[ctr++];
+			if (lock[2] == false)
+				res[2] = p[ctr++];
+			if (lock[3] == false)
+				res[3] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL17:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[1] == false) res[1] = p[ctr++];
-			if(lock[2] == false) res[2] = p[ctr++];
-			if(lock[3] == false) res[3] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[1] == false)
+				res[1] = p[ctr++];
+			if (lock[2] == false)
+				res[2] = p[ctr++];
+			if (lock[3] == false)
+				res[3] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL18:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[1] == false) res[1] = p[ctr++];
-			if(lock[2] == false) res[2] = p[ctr++];
-			if(lock[3] == false) res[3] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[1] == false)
+				res[1] = p[ctr++];
+			if (lock[2] == false)
+				res[2] = p[ctr++];
+			if (lock[3] == false)
+				res[3] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL19:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[1] == false) res[1] = p[ctr++];
-			if(lock[2] == false) res[2] = p[ctr++];
-			if(lock[3] == false) res[3] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[1] == false)
+				res[1] = p[ctr++];
+			if (lock[2] == false)
+				res[2] = p[ctr++];
+			if (lock[3] == false)
+				res[3] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
 			break;
 		case MODEL20:
-			if(lock[0] == false) res[0] = p[ctr++];
-			if(lock[1] == false) res[1] = p[ctr++];
-			if(lock[2] == false) res[2] = p[ctr++];
-			if(lock[4] == false) res[4] = p[ctr++];
-			if(lock[5] == false) res[5] = p[ctr++];
-			if(lock[6] == false) res[6] = p[ctr++];
+			if (lock[0] == false)
+				res[0] = p[ctr++];
+			if (lock[1] == false)
+				res[1] = p[ctr++];
+			if (lock[2] == false)
+				res[2] = p[ctr++];
+			if (lock[4] == false)
+				res[4] = p[ctr++];
+			if (lock[5] == false)
+				res[5] = p[ctr++];
+			if (lock[6] == false)
+				res[6] = p[ctr++];
 			break;
 		}
 
@@ -503,6 +588,33 @@ public class MCUtil {
 				res[ctr++] = p[i];
 			}
 		}
+		return res;
+	}
+
+	/**
+	 * Applies the options stored in ops to the data. Extract real, imag, mag or
+	 * angle from the data
+	 * 
+	 * @param ops
+	 *            Optimizer Options
+	 * @param data
+	 *            input data
+	 * @return double array with processed data
+	 */
+	public static final double[] applyOptimizerOpsToData(MCOptSettings ops, Complex[] data) {
+		double[] res = new double[data.length];
+		if (ops.cpxMod == ComplexModifier.REAL)
+			for (int i = 0; i < data.length; i++)
+				res[i] = data[i].re();
+		if (ops.cpxMod == ComplexModifier.IMAG)
+			for (int i = 0; i < data.length; i++)
+				res[i] = data[i].im();
+		if (ops.cpxMod == ComplexModifier.MAG)
+			for (int i = 0; i < data.length; i++)
+				res[i] = data[i].abs();
+		if (ops.cpxMod == ComplexModifier.ANGLE)
+			for (int i = 0; i < data.length; i++)
+				res[i] = data[i].angle();
 		return res;
 	}
 }

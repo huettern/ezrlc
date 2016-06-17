@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import org.apache.commons.math3.analysis.MultivariateFunction;
 
+import ezrlc.RFData.RFData.ComplexModifier;
+import ezrlc.RFData.RFData.MeasurementType;
 import ezrlc.util.Complex;
 
 /**
@@ -19,7 +21,8 @@ public class MCErrorSum implements MultivariateFunction {
 	// ================================================================================
 	private MCEqCircuit circuit;
 	private Complex[] measured;
-
+	private double[] measuredValue;
+	
 	// ================================================================================
 	// Constructors
 	// ================================================================================
@@ -35,6 +38,8 @@ public class MCErrorSum implements MultivariateFunction {
 		this.circuit = circuit;
 		this.measured = new Complex[measured.length];
 		System.arraycopy(measured, 0, this.measured, 0, measured.length);
+		// calculate value
+		measuredValue = MCUtil.applyOptimizerOpsToData(circuit.getOptimizerOps(), measured);
 	}
 
 	// ================================================================================
@@ -116,19 +121,18 @@ public class MCErrorSum implements MultivariateFunction {
 		// set new parameter
 		double[] p = MCUtil.topo2Param(this.circuit.getCircuitType(), params, circuit.getLock(), circuit.getParameters());
 		circuit.setParameters(p);
-		// get s parameters
-		Complex[] s = circuit.getS();
-		// build magnitude
-		double[] magS = new double[s.length];
-		double[] magmeas = new double[s.length];
-		for (int i = 0; i < s.length; i++) {
-			magS[i] = s[i].abs();
-			magmeas[i] = this.measured[i].abs();
-		}
+		
+		// Get values of model
+		Complex[] modelData = new Complex[circuit.getWSize()];
+		if(circuit.getOptimizerOps().measType == MeasurementType.S) modelData = circuit.getS();
+		if(circuit.getOptimizerOps().measType == MeasurementType.Y) modelData = circuit.getY();
+		if(circuit.getOptimizerOps().measType == MeasurementType.Z) modelData = circuit.getZ();
+		double[] modelVal = MCUtil.applyOptimizerOpsToData(circuit.getOptimizerOps(), modelData);
+		
 		// calc error
-		double error = MCErrorSum.getError(magmeas, magS); // Complex oder mag??
-//		System.out.println("Params: " +Arrays.toString(p));
-//		System.out.println("   Err: " +error);
+		double error = MCErrorSum.getError(measuredValue, modelVal); // Complex oder mag??
+		System.out.println("Params: " +Arrays.toString(p));
+		System.out.println("   Err: " +error);
 		return error;
 	}
 

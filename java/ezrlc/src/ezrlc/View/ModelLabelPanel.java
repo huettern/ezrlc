@@ -41,7 +41,8 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	private Controller controller;
 	private boolean lockUpdate = false;
 	private boolean modelPanelBuilt = false;
-
+	private OptimizerSettingsWindow optWindow;
+	
 	private JEngineerField txtC0;
 	private JEngineerField txtR0;
 	private JEngineerField txtAlpha;
@@ -88,20 +89,6 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	// ================================================================================
 	// Constructors
 	// ================================================================================
-	/**
-	 * Builds a new ModelLabelPanel with the id to the equivalent circuit and
-	 * the circuit type
-	 * 
-	 * @param id
-	 *            ID to the EQC in the model
-	 * @param t
-	 *            CircuitType of the model
-	 */
-	public ModelLabelPanel(int id, CircuitType t) {
-		eqcID = id;
-		circuitType = t;
-		build(t, id);
-	}
 
 	/**
 	 * Creates an empty ModelLabelPanel
@@ -111,6 +98,7 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 	 */
 	public ModelLabelPanel(Controller c) {
 		controller = c;
+		optWindow = new OptimizerSettingsWindow(c);
 		buildEmpty();
 		modelPanelBuilt = false;
 	}
@@ -404,9 +392,11 @@ public class ModelLabelPanel extends JPanel implements ActionListener, DocumentL
 		} else if (e.getSource() == btnOptimize) {
 			btnOptimize.setEnabled(false);
 			btnDelete.setEnabled(false);
-			boolean[] lock = parseLockBox();
 			title.setText("Optimizing Model...");
-			controller.optimizeEqCircuit(eqcID, lock);
+			boolean[] lock = parseLockBox();
+			optWindow.setEqcID(eqcID);
+			optWindow.setLock(lock);
+			optWindow.show();
 		} else {
 			tuner();
 		}
